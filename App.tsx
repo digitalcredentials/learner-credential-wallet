@@ -1,8 +1,6 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Header } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
