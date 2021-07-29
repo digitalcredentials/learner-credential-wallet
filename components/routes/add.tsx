@@ -8,7 +8,7 @@ export default () => (
   <>
     <Header
       centerComponent={{ text: 'Add', style: { color: Theme.textPrimary }}}
-      containerStyle={{ backgroundColor: Theme.backgroundSecondary }}
+      containerStyle={{ backgroundColor: Theme.backgroundSecondary, borderBottomWidth: 0 }}
     />
     <View style={{
       flex: 1,
