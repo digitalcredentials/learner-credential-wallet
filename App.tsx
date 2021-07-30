@@ -9,6 +9,9 @@ import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@exp
 
 import AppNavigation from './navigation/AppNavigation';
 
+const walletIsInitialized = true;
+const isLoggedIn = false;
+
 export default function App() {
   const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  }); 
   const [initialRouteName, setInitialRouteName] = useState('');
@@ -16,11 +19,13 @@ export default function App() {
   const loading = !fontsLoaded || initialRouteName === '';
 
   useState(() => {
-    // TODO: replace with false with isLoggedIn predicate
-    if (false) {
+    if (!walletIsInitialized) {
+      setInitialRouteName('Setup');
+    } else if (!isLoggedIn) {
+      // TODO: Add login
       setInitialRouteName('HomeNavigation');
     } else {
-      setInitialRouteName('Setup');
+      setInitialRouteName('HomeNavigation');
     }
   });
 
