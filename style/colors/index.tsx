@@ -7,6 +7,7 @@ enum ThemeColor {
   TextSecondary = 'textSecondary',
   IconActive = 'iconActive',
   IconInactive = 'iconInactive',
+  ButtonPrimary = 'buttonPrimary',
 }
 
 const Theme: {[key in ThemeColor]: string} = {
@@ -18,6 +19,7 @@ const Theme: {[key in ThemeColor]: string} = {
   [ThemeColor.TextSecondary]: '#D1D5DB',
   [ThemeColor.IconActive]: '#FFF',
   [ThemeColor.IconInactive]: '#9CA3AF',
+  [ThemeColor.ButtonPrimary]: '#24D3EE',
 };
 
 export default Theme;
