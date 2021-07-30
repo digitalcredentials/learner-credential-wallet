@@ -22,8 +22,7 @@ export default function App() {
     if (!walletIsInitialized) {
       setInitialRouteName('Setup');
     } else if (!isLoggedIn) {
-      // TODO: Add login
-      setInitialRouteName('HomeNavigation');
+      setInitialRouteName('Login');
     } else {
       setInitialRouteName('HomeNavigation');
     }

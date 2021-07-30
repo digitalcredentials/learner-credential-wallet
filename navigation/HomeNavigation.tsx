@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Text, View } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
