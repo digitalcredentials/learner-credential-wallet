@@ -11,8 +11,10 @@ import { RootState } from '../store';
 const Stack = createStackNavigator();
 
 export default () => {
-  const isUnlocked = useSelector<RootState, boolean>(({ wallet }) => wallet.isUnlocked);
-  const isInitialized = useSelector<RootState, boolean>(({ wallet }) => wallet.isInitialized);
+  const {
+    isUnlocked,
+    isInitialized,
+  } = useSelector<RootState, boolean>(({ wallet }) => wallet);
 
   const initialRouteName: string = useMemo(() => (
     !isInitialized ? 'Setup' :
