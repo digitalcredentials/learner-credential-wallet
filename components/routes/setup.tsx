@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { Header, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
 import Theme from '../../style/colors';
 import { FontStyle } from '../../style/fonts';
