@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -11,11 +11,18 @@ import { RootState } from '../store';
 const Stack = createStackNavigator();
 
 export default () => {
-  const isLoggedIn = useSelector<RootState, boolean>(({ loginState }) => loginState.isLoggedIn);
+  const isUnlocked = useSelector<RootState, boolean>(({ wallet }) => wallet.isUnlocked);
+  const isInitialized = useSelector<RootState, boolean>(({ wallet }) => wallet.isInitialized);
+
+  const initialRouteName: string = useMemo(() => (
+    !isInitialized ? 'Setup' :
+    !isUnlocked ? 'Login' :
+    'HomeNavigation'
+  ), []);
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
-      {isLoggedIn ? (
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
+      {isUnlocked ? (
         <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
       ) : (
         <>

@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { DefaultRootState } from 'react-redux';
-import loginState, { LoginState } from './slices/login';
+import wallet, { WalletState } from './slices/wallet';
 
 export interface RootState extends DefaultRootState {
-  loginState: LoginState;
+  wallet: WalletState;
 }
 
 const store = configureStore({
   reducer: {
-    loginState,
+    wallet,
   },
 });
 

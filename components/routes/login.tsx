@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import Theme from '../../style/colors';
 import { FontStyle } from '../../style/fonts';
-import { login } from '../../store/slices/login';
+import { unlock } from '../../store/slices/wallet';
 
 const walletImage = require('../../assets/wallet.png');
 
@@ -41,7 +41,7 @@ export default () => {
         containerStyle={styles.buttonPrimaryContainer}
         titleStyle={styles.buttonPrimaryTitle}
         title="Unlock Wallet"
-        onPress={() => dispatch(login())}
+        onPress={() => dispatch(unlock())}
       />
     </KeyboardAwareScrollView>
   );
