@@ -4,10 +4,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialIcons } from '@expo/vector-icons';
 
 import Theme from '../style/colors';
-import Home from '../components/routes/home';
-import Share from '../components/routes/share';
-import Add from '../components/routes/add';
-import Settings from '../components/routes/settings';
+import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -22,19 +19,19 @@ export default () => {
         backgroundColor: Theme.backgroundSecondary,
       }}
     >
-      <Tab.Screen name="Home" component={Home} options={{
+      <Tab.Screen name="HomeScreen" component={HomeScreen} options={{
         title: "Home",
         tabBarIcon: ({ color }) => <MaterialIcons name="home" color={color} size={22} />,
       }}/>
-      <Tab.Screen name="Share" component={Share} options={{
+      <Tab.Screen name="ShareScreen" component={ShareScreen} options={{
         title: "Share",
         tabBarIcon: ({ color }) => <MaterialIcons name="share" color={color} size={22} />,
       }}/>
-      <Tab.Screen name="Add" component={Add} options={{
+      <Tab.Screen name="AddScreen" component={AddScreen} options={{
         title: "Add",
         tabBarIcon: ({ color }) => <MaterialIcons name="add-circle" color={color} size={22} />,
       }}/>
-      <Tab.Screen name="Settings" component={Settings} options={{
+      <Tab.Screen name="SettingsScreen" component={SettingsScreen} options={{
         title: "Settings",
         tabBarIcon: ({ color }) => <MaterialIcons name="settings" color={color} size={22} />,
       }}/>

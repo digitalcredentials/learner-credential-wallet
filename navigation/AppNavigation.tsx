@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeNavigation from './HomeNavigation';
-import Setup from '../components/routes/setup';
-import Login from '../components/routes/login';
+import { SetupScreen, LoginScreen } from '../screens';
 import { RootState } from '../store';
 
 const Stack = createStackNavigator();
@@ -17,8 +16,8 @@ export default () => {
   } = useSelector<RootState, boolean>(({ wallet }) => wallet);
 
   const initialRouteName: string = useMemo(() => (
-    !isInitialized ? 'Setup' :
-    !isUnlocked ? 'Login' :
+    !isInitialized ? 'SetupScreen' :
+    !isUnlocked ? 'LoginScreen' :
     'HomeNavigation'
   ), []);
 
@@ -28,8 +27,8 @@ export default () => {
         <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
       ) : (
         <>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Setup" component={Setup} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="SetupScreen" component={SetupScreen} />
         </>
       )}
     </Stack.Navigator>
