@@ -1,18 +1,4 @@
 import { StyleSheet } from 'react-native';
-import Theme from '../../style/colors';
+import theme from '../../styles/theme';
 
-export default StyleSheet.create({
-  headerTitle: { 
-    color: Theme.textPrimary
-  },
-  headerContainer: { 
-    backgroundColor: Theme.backgroundSecondary, 
-    borderBottomWidth: 0,
-  },
-  bodyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Theme.backgroundPrimary,
-  }
-})
+export default StyleSheet.create({});

@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
-
-import Theme from '../../style/colors';
-import { FontStyle } from '../../style/fonts';
+import theme from '../../styles/theme';
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: Theme.backgroundPrimary,
+    backgroundColor: theme.color.backgroundPrimary,
   },
   contentContainer: {
     flex: 1,
@@ -18,15 +16,15 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   title: {
-    fontFamily: FontStyle.Bold,
-    fontSize: 36,
-    color: Theme.textPrimary,
+    fontFamily: theme.fontFamily.bold,
+    fontSize: theme.fontSize.title,
+    color: theme.color.textPrimary,
     padding: 16,
   },
   paragraph: {
-    fontFamily: FontStyle.Regular,
-    fontSize: 18,
-    color: Theme.textSecondary,
+    fontFamily: theme.fontFamily.regular,
+    fontSize: theme.fontSize.regular,
+    color: theme.color.textSecondary,
     lineHeight: 28,
     textAlign: 'center',
     marginBottom: 48,
@@ -35,21 +33,21 @@ export default StyleSheet.create({
     height: 40,
     borderStyle: 'solid',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: theme.borderRadius,
     padding: 10,
     width: "100%",
-    color: Theme.textPrimary,
-    borderColor: Theme.textPrimary,
+    color: theme.color.textPrimary,
+    borderColor: theme.color.textPrimary,
   },
   buttonPrimary: {
-    backgroundColor: Theme.buttonPrimary,
+    backgroundColor: theme.color.buttonPrimary,
     padding: 16,
-    borderRadius: 5,
+    borderRadius: theme.borderRadius,
   },
   buttonPrimaryTitle: {
-    fontFamily: FontStyle.Medium,
-    fontSize: 16,
-    color: Theme.backgroundSecondary,
+    fontFamily: theme.fontFamily.medium,
+    fontSize: theme.fontSize.regular,
+    color: theme.color.backgroundSecondary,
   },
   buttonPrimaryContainer: {
     width: '100%',

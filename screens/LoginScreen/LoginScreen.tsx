@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import styles from './LoginScreen.style';
-import Theme from '../../style/colors';
+import theme from '../../styles/theme';
 import { unlock } from '../../store/slices/wallet';
 
 const walletImage = require('../../assets/wallet.png');
@@ -32,7 +32,7 @@ export default () => {
         autoCorrect={false}
         value={password}
         placeholder="Password"
-        placeholderTextColor={Theme.textSecondary}
+        placeholderTextColor={theme.color.textSecondary}
         onChangeText={setPassword}
         keyboardAppearance="dark"
       />

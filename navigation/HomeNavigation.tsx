@@ -3,7 +3,7 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import Theme from '../style/colors';
+import theme from '../styles/theme';
 import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../screens';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -11,12 +11,12 @@ const Tab = createMaterialBottomTabNavigator();
 export default () => {
   return (
     <Tab.Navigator
-      activeColor={Theme.iconActive}
-      inactiveColor={Theme.iconInactive}
+      activeColor={theme.color.iconActive}
+      inactiveColor={theme.color.iconInactive}
       labeled={false}
       shifting={true}
       barStyle={{
-        backgroundColor: Theme.backgroundSecondary,
+        backgroundColor: theme.color.backgroundSecondary,
       }}
     >
       <Tab.Screen name="HomeScreen" component={HomeScreen} options={{
