@@ -24,9 +24,14 @@ export default () => {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
-      <Stack.Screen name="SetupScreen" component={SetupScreen} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
+      {isUnlocked ? (
+        <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
+      ) : (
+        <>
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="SetupScreen" component={SetupScreen} />
+        </>
+      )}
     </Stack.Navigator>
   );
 }
