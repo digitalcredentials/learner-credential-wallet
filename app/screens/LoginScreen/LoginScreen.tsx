@@ -10,9 +10,14 @@ import { unlock } from '../../store/slices/wallet';
 
 const walletImage = require('../../assets/wallet.png');
 
-export default () => {
+export default ({ navigation }) => {
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
+
+  function _login() {
+    dispatch(unlock());
+    navigation.navigate('HomeNavigation');
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -41,7 +46,7 @@ export default () => {
         containerStyle={styles.buttonPrimaryContainer}
         titleStyle={styles.buttonPrimaryTitle}
         title="Unlock Wallet"
-        onPress={() => dispatch(unlock())}
+        onPress={_login}
       />
     </KeyboardAwareScrollView>
   );

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Text, View } from 'react-native';
 
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,14 +24,9 @@ export default () => {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
-      {isUnlocked ? (
-        <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
-      ) : (
-        <>
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="SetupScreen" component={SetupScreen} />
-        </>
-      )}
+      <Stack.Screen name="SetupScreen" component={SetupScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
     </Stack.Navigator>
   );
 }

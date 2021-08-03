@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,7 +8,13 @@ import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default () => {
+export default ({ navigation }) => {
+  // Prevent users from going back
+  useEffect(
+    () => navigation.addListener('beforeRemove', (e) => e.preventDefault()), 
+    [navigation]
+  );
+
   return (
     <Tab.Navigator
       activeColor={theme.color.iconActive}
