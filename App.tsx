@@ -8,8 +8,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik';
 
-import store from './store';
-import AppNavigation from './navigation/AppNavigation';
+import store from './app/store';
+import AppNavigation from './app/navigation/AppNavigation';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  }); 
