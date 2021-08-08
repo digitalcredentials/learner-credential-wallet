@@ -68,6 +68,8 @@ export default class DatabaseAccess {
   }
 
   public static async lock(): Promise<void> {
+    if (!(await this.isUnlocked)) return;
+
     await Promise.all([
       SecureStore.setItemAsync(PRIVILEGED_KEY_STATUS_ID, LOCKED),
       SecureStore.setItemAsync(PRIVILEGED_KEY_KID, ''),
