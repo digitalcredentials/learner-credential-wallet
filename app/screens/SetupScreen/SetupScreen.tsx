@@ -118,7 +118,7 @@ const PasswordStep = ({ navigation }: PasswordStepProps) => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorText, setErrorText] = useState('');
 
-  const isPasswordValid = password.length > 0 && password === passwordConfirm;
+  const isPasswordValid = password.length >= 10 && password === passwordConfirm;
 
   useEffect(() => {
     if (isPasswordValid) {
@@ -128,7 +128,8 @@ const PasswordStep = ({ navigation }: PasswordStepProps) => {
 
   function _onInputBlur() {
     if (password && passwordConfirm) {
-      if (password !== passwordConfirm) setErrorText('Passwords must match');
+      if (password.length < 10) setErrorText('Password must contain at least 10 characters');
+      else if (password !== passwordConfirm) setErrorText('Passwords must match');
       else setErrorText('');
     }
   }
@@ -148,7 +149,9 @@ const PasswordStep = ({ navigation }: PasswordStepProps) => {
       <View style={styles.inputGroup}>
         <TextInput
           style={mixins.input}
-          autoCompleteType="password"
+          autoCompleteType="off"
+          textContentType="newPassword"
+          passwordRules="minlength: 10;"
           secureTextEntry
           autoCorrect={false}
           value={password}
@@ -161,7 +164,9 @@ const PasswordStep = ({ navigation }: PasswordStepProps) => {
         <View style={styles.inputSeparator} />
         <TextInput
           style={mixins.input}
-          autoCompleteType="password"
+          autoCompleteType="off"
+          textContentType="newPassword"
+          passwordRules="minlength: 10;"
           secureTextEntry
           autoCorrect={false}
           value={passwordConfirm}
