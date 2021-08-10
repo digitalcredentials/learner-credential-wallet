@@ -2,20 +2,22 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import DatabaseAccess from '../../model';
 
 export type WalletState = {
-  isUnlocked: boolean;
-  isInitialized: boolean;
+  isUnlocked: boolean | null;
+  isInitialized: boolean | null;
 }
 
 const initialState: WalletState = {
-  isUnlocked: false,
-  // TODO: This value will need to be pre-loaded by
-  // checking the initialization state of the wallet
-  // database.
-  isInitialized: false,
+  isUnlocked: null,
+  isInitialized: null,
 };
 
-const lock = createAsyncThunk('walletState/lock', () => {
-  DatabaseAccess.lock();
+const fetchInitialWalletState = createAsyncThunk('walletState/fetchInitial', async () => ({
+  isUnlocked: await DatabaseAccess.isUnlocked(),
+  isInitialized: await DatabaseAccess.isInitialized(),
+}));
+
+const lock = createAsyncThunk('walletState/lock', async () => {
+  await DatabaseAccess.lock();
 });
 
 const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string) => {
@@ -52,8 +54,18 @@ const walletSlice = createSlice({
       isInitialized: true,
       isUnlocked: true,
     }));
+
+    builder.addCase(fetchInitialWalletState.fulfilled, (state, action) => ({
+      ...state,
+      ...action.payload,
+    }));
   },
 });
 
 export default walletSlice.reducer;
-export { unlock, lock, initialize };
+export {
+  unlock,
+  lock,
+  initialize,
+  fetchInitialWalletState,
+};

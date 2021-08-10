@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik';
 
 import store from './app/store';
+import { fetchInitialWalletState } from './app/store/slices/wallet';
 import theme from './app/styles/theme';
 import AppNavigation from './app/navigation/AppNavigation';
 
@@ -23,8 +24,21 @@ const navigatorTheme = {
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  }); 
+  const {
+    wallet: {
+      isUnlocked,
+      isInitialized,
+    },
+  } = store.getState();
+  const walletStateInitialized = isUnlocked !== null && isInitialized !== null;
 
-  if (!fontsLoaded) {
+  useEffect(() => {
+    if (!walletStateInitialized) {
+      store.dispatch(fetchInitialWalletState());
+    }
+  }, [walletStateInitialized]); 
+
+  if (!fontsLoaded || !walletStateInitialized) {
     return <AppLoading />;
   }
 
