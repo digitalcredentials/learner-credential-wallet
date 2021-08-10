@@ -15,7 +15,6 @@ import Animated, {
 
 import theme from '../../styles/theme';
 import styles from './LoadingIndicator.styles';
-import useAnimation from '../../hooks/useAnimation';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
