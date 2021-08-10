@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Header } from 'react-native-elements';
 
-import styles from './AddScreen.style';
 import mixins from '../../styles/mixins';
 
 export default () => (

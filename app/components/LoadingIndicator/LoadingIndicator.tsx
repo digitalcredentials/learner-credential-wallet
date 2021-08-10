@@ -1,7 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { Svg, Circle, Path } from 'react-native-svg';
+import { Svg, Path } from 'react-native-svg';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Animated, {
   useSharedValue,

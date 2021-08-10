@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef, createRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet,
   Text,
   TextInput,
   View,
   Image,
-  Animated,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -59,7 +57,6 @@ const StartStep = ({ navigation }: StartStepProps) => {
 };
 
 const CreateStep = ({ navigation }: CreateStepProps) => {
-  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
