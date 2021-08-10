@@ -67,7 +67,8 @@ export default class DatabaseAccess {
 
     // Attempt database decryption to see if key is valid
     try {
-      await DatabaseAccess.withInstance((_) => {});
+      const instance = await DatabaseAccess.instance();
+      instance.close();
     } catch (err) {
       console.error(err);
       await DatabaseAccess.lock();
