@@ -18,8 +18,8 @@ export default () => {
 
   const initialRouteName: string = useMemo(() => (
     !isInitialized ? 'SetupScreen' :
-    !isUnlocked ? 'LoginScreen' :
-    'HomeNavigation'
+      !isUnlocked ? 'LoginScreen' :
+        'HomeNavigation'
   ), []);
 
   return (
@@ -34,4 +34,4 @@ export default () => {
       )}
     </Stack.Navigator>
   );
-}
+};

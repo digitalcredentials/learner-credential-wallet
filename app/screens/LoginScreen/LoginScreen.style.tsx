@@ -32,7 +32,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: theme.borderRadius,
     padding: 10,
-    width: "100%",
+    width: '100%',
     color: theme.color.textPrimary,
     borderColor: theme.color.textPrimary,
   },

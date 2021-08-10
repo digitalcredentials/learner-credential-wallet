@@ -35,8 +35,8 @@ export default ({ loading = false }) => {
     if (loading) {
       setPercent(25);
       rotate.value = withRepeat(withTiming(1, {
-       duration: 1000,
-       easing: Easing.linear,
+        duration: 1000,
+        easing: Easing.linear,
       }), -1);
       path.value = 0;
     } else {

@@ -26,21 +26,21 @@ export default ({ navigation }) => {
       }}
     >
       <Tab.Screen name="HomeScreen" component={HomeScreen} options={{
-        title: "Home",
+        title: 'Home',
         tabBarIcon: ({ color }) => <MaterialIcons name="home" color={color} size={theme.iconSize} />,
       }}/>
       <Tab.Screen name="ShareScreen" component={ShareScreen} options={{
-        title: "Share",
+        title: 'Share',
         tabBarIcon: ({ color }) => <MaterialIcons name="share" color={color} size={theme.iconSize} />,
       }}/>
       <Tab.Screen name="AddScreen" component={AddScreen} options={{
-        title: "Add",
+        title: 'Add',
         tabBarIcon: ({ color }) => <MaterialIcons name="add-circle" color={color} size={theme.iconSize} />,
       }}/>
       <Tab.Screen name="SettingsScreen" component={SettingsScreen} options={{
-        title: "Settings",
+        title: 'Settings',
         tabBarIcon: ({ color }) => <MaterialIcons name="settings" color={color} size={theme.iconSize} />,
       }}/>
     </Tab.Navigator>
   );
-}
+};

@@ -14,12 +14,12 @@ import AppNavigation from './app/navigation/AppNavigation';
 
 
 const navigatorTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      background: theme.color.backgroundPrimary,
-    },
-  };
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: theme.color.backgroundPrimary,
+  },
+};
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  }); 
