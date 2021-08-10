@@ -13,7 +13,7 @@ import theme from './app/styles/theme';
 import AppNavigation from './app/navigation/AppNavigation';
 
 
-const NavigatorTheme = {
+const navigatorTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
@@ -32,7 +32,7 @@ export default function App() {
     <Provider store={store}>
       <SafeAreaProvider>
         <StatusBar style="light" />
-        <NavigationContainer theme={NavigatorTheme}>
+        <NavigationContainer theme={navigatorTheme}>
           <AppNavigation />
         </NavigationContainer>
       </SafeAreaProvider>
