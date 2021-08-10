@@ -96,13 +96,13 @@ export default class DatabaseAccess {
    * to the database when you call this method.
    */
   public static async initialize(passphrase: string): Promise<void> {
-    const decoder = new encoding.TextDecoder();
-    const rawSalt = await generateSecureRandom(64);
-    const salt: string = decoder.decode(rawSalt);
-
     if (await DatabaseAccess.isUnlocked()) {
       throw new Error('Cannot initialize unlocked wallet.');
     }
+
+    const decoder = new encoding.TextDecoder();
+    const rawSalt = await generateSecureRandom(64);
+    const salt: string = decoder.decode(rawSalt);
 
     if (await DatabaseAccess.isInitialized()) {
       /**
