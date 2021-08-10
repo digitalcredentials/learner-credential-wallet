@@ -1,7 +1,11 @@
 import Realm from 'realm';
 import * as SecureStore from 'expo-secure-store';
-import { CredentialSchema } from './schema/credential';
+import * as RNFS from 'react-native-fs';
+import * as encoding from 'text-encoding';
+import { generateSecureRandom } from 'react-native-securerandom';
 import { NativeModules } from 'react-native';
+
+import { CredentialSchema } from './schema/credential';
 
 const Aes = NativeModules.Aes;
 
@@ -10,12 +14,8 @@ const PRIVILEGED_KEY_STATUS_ID: string = 'privileged_key_status';
 const UNLOCKED: string = 'locked';
 const LOCKED: string = 'unlocked';
 
-/** This salt was derived randomly once, but we should probably generate a novel
- * one each time the wallet is initialized. TODO: Find out a safe place to persist
- * the salt.
- */
 const PBKDF2_ITERATIONS: number = 10000;
-const PBKDF2_SALT: string = '�+x�\f\t���#�[�\fo0��E�Ö&\u0011\u0017��#:m\u001bdnc<���\u0015I�V��ʕ\u000b�rj����\u0007X�<�\u0007�\u0019_';
+const PBKDF2_SALT_PATH: string = `${RNFS.DocumentDirectoryPath}/edu-wallet-salt`;
 
 export default class DatabaseAccess {
   public static async withInstance(callback: (instance: Realm) => void | Promise<void>): Promise<void> {
@@ -32,14 +32,15 @@ export default class DatabaseAccess {
     }
   }
 
-  public static get isUnlocked(): Promise<boolean> {
-    return SecureStore
-      .getItemAsync(PRIVILEGED_KEY_STATUS_ID)
-      .then(keyStatus => keyStatus === UNLOCKED)
-      .catch(err => {
-        console.error(err);
-        return false;
-      });
+  public static async isUnlocked(): Promise<boolean> {
+    try {
+      const keyStatus = await SecureStore.getItemAsync(PRIVILEGED_KEY_STATUS_ID);
+
+      return keyStatus === UNLOCKED;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
   }
 
   /**
@@ -50,9 +51,14 @@ export default class DatabaseAccess {
    *   2. Never store the key generated in any place but SecureStorage
    */
   public static async unlock(passphrase: string): Promise<void> {
-    if (await this.isUnlocked) return;
+    if (await this.isUnlocked()) return;
 
-    const key = await Aes.pbkdf2(passphrase, PBKDF2_SALT, PBKDF2_ITERATIONS, 256);
+    const key = await Aes.pbkdf2(
+      passphrase,
+      await DatabaseAccess.salt(),
+      PBKDF2_ITERATIONS,
+      256,
+    );
 
     await Promise.all([
       SecureStore.setItemAsync(PRIVILEGED_KEY_STATUS_ID, UNLOCKED),
@@ -68,7 +74,7 @@ export default class DatabaseAccess {
   }
 
   public static async lock(): Promise<void> {
-    if (!(await this.isUnlocked)) return;
+    if (!(await this.isUnlocked())) return;
 
     await Promise.all([
       SecureStore.setItemAsync(PRIVILEGED_KEY_STATUS_ID, LOCKED),
@@ -76,8 +82,50 @@ export default class DatabaseAccess {
     ]);
   }
 
+  private static async salt(): Promise<string> {
+    return RNFS.readFile(PBKDF2_SALT_PATH, 'utf8');
+  }
+
+  public static async isInitialized(): Promise<boolean> {
+    return RNFS.exists(Realm.defaultPath);
+  }
+
+  /**
+   * WARNING: Calling this function is destructive. It will wipe out the
+   * existing salt and database. There should also be no active connections
+   * to the database when you call this method.
+   */
+  public static async initialize(passphrase: string): Promise<void> {
+    const decoder = new encoding.TextDecoder();
+    const rawSalt = await generateSecureRandom(64);
+    const salt: string = decoder.decode(rawSalt);
+
+    if (await DatabaseAccess.isUnlocked()) {
+      throw new Error('Cannot initialize unlocked wallet.');
+    }
+
+    if (await DatabaseAccess.isInitialized()) {
+      /**
+       * Realm does not provide a way to initialize a database, so we just
+       * delete all of the files it creates.
+       */
+      await Promise.all([
+        RNFS.unlink(`${Realm.defaultPath}.lock`),
+        RNFS.unlink(`${Realm.defaultPath}.note`),
+        RNFS.unlink(`${Realm.defaultPath}.management`),
+        RNFS.unlink(Realm.defaultPath),
+      ]);
+    }
+
+    await RNFS.writeFile(PBKDF2_SALT_PATH, salt, 'utf8');
+
+    // The first call to unlock will create/encrypt the Realm with the pass
+    await DatabaseAccess.unlock(passphrase);
+    await DatabaseAccess.lock();
+  }
+
   private static async instance(): Promise<Realm> {
-    if (!(await this.isUnlocked)) {
+    if (!(await this.isUnlocked())) {
       throw new Error('Wallet is not unlocked.');
     }
 
@@ -87,11 +135,10 @@ export default class DatabaseAccess {
       throw new Error('Key not present in keychain.');
     }
 
-    const encoder = new TextEncoder();
+    const encoder = new encoding.TextEncoder();
     const encryptionKey: Int8Array = new Int8Array(encoder.encode(key));
 
     const realm = await Realm.open({
-      path: 'edu-wallet-encrypted',
       schema: [CredentialSchema],
       encryptionKey,
     });
