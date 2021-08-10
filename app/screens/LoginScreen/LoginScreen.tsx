@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, Image } from 'react-native';
+import { Text, TextInput, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
@@ -38,7 +38,7 @@ export default () => {
         containerStyle={styles.buttonPrimaryContainer}
         titleStyle={styles.buttonPrimaryTitle}
         title="Unlock Wallet"
-        onPress={() => dispatch(unlock())}
+        onPress={() => dispatch(unlock(password))}
       />
     </SafeScreenView>
   );

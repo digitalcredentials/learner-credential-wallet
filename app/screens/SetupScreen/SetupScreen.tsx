@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
-import { unlock } from '../../store/slices/wallet';
+import { initialize } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
 import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
 
@@ -186,7 +186,7 @@ const PasswordStep = ({ navigation }: PasswordStepProps) => {
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Finalize"
-          onPress={() => dispatch(unlock())}
+          onPress={() => dispatch(initialize(password))}
           disabled={!isPasswordValid}
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
