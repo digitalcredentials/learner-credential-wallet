@@ -18,8 +18,8 @@ export type CreateStepProps = {
 }
 
 export type PasswordStepProps = {
-  route: RouteProp<StackParamList, 'StartStep'>;
-  navigation: StackNavigationProp<StackParamList, 'StartStep'>;
+  route: RouteProp<StackParamList, 'PasswordStep'>;
+  navigation: StackNavigationProp<StackParamList, 'PasswordStep'>;
 }
 
 export type ForFadeType = StackNavigationOptions['cardStyleInterpolator']

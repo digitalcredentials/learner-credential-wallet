@@ -10,7 +10,7 @@ import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@exp
 
 import store from './app/store';
 import theme from './app/styles/theme';
-import AppNavigation from './app/navigation/AppNavigation';
+import AppNavigation from './app/navigation/AppNavigation/AppNavigation';
 
 
 const navigatorTheme = {
@@ -21,7 +21,7 @@ const navigatorTheme = {
   },
 };
 
-export default function App() {
+export default function App(): JSX.Element {
   const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  }); 
 
   if (!fontsLoaded) {

@@ -17,7 +17,13 @@ import styles from './LoadingIndicator.styles';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export default ({ loading = false }) => {
+export interface LoadingIndicatorProps {
+  loading: boolean;
+}
+
+export default function ({
+  loading = false,
+}: LoadingIndicatorProps): JSX.Element {
   const [percent, setPercent] = useState(25);
 
   const rotate = useSharedValue(0);
@@ -33,10 +39,13 @@ export default ({ loading = false }) => {
   useEffect(() => {
     if (loading) {
       setPercent(25);
-      rotate.value = withRepeat(withTiming(1, {
-        duration: 1000,
-        easing: Easing.linear,
-      }), -1);
+      rotate.value = withRepeat(
+        withTiming(1, {
+          duration: 1000,
+          easing: Easing.linear,
+        }),
+        -1
+      );
       path.value = 0;
     } else {
       setPercent(100);
@@ -76,4 +85,4 @@ export default ({ loading = false }) => {
       </View>
     </View>
   );
-};
+}

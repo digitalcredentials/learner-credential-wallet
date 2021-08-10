@@ -14,6 +14,7 @@ const theme: ThemeType = {
     iconInactive: Color.Gray400,
     buttonPrimary: Color.DarkCyan,
     buttonDisabled: Color.Gray500,
+    buttonClear: Color.Transparent,
     shadow: Color.Black,
     success: Color.Green,
     error: Color.Red,
