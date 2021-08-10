@@ -10,7 +10,7 @@ const initialState: WalletState = {
   // TODO: This value will need to be pre-loaded by
   // checking the initialization state of the wallet
   // database.
-  isInitialized: true,
+  isInitialized: false,
 };
 
 const walletSlice = createSlice({
@@ -23,7 +23,7 @@ const walletSlice = createSlice({
     }),
     lock: (state: WalletState): WalletState => ({
       ...state,
-      isUnlocked: true,
+      isUnlocked: false,
     }),
   },
 });

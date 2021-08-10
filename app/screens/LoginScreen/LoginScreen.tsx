@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, Image } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import styles from './LoginScreen.style';
 import theme from '../../styles/theme';
 import { unlock } from '../../store/slices/wallet';
+import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
 
 const walletImage = require('../../assets/wallet.png');
 
@@ -15,10 +15,7 @@ export default () => {
   const [password, setPassword] = useState('');
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
+    <SafeScreenView style={styles.container}>
       <Image style={styles.image} source={walletImage} />
       <Text style={styles.title}>EDU Wallet</Text>
       <Text style={styles.paragraph}>
@@ -43,6 +40,6 @@ export default () => {
         title="Unlock Wallet"
         onPress={() => dispatch(unlock())}
       />
-    </KeyboardAwareScrollView>
+    </SafeScreenView>
   );
 }

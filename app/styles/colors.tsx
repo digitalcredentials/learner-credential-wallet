@@ -1,8 +1,11 @@
 export enum Color {
   LightCyan = '#67E8F9',
   DarkCyan = '#24D3EE',
+  Green = '#A3E534',
+  Red = '#EF4444',
 
   White = '#FFFFFF',
+  Black = '#000000',
 
   Gray100 = '#F3F4F6',
   Gray200 = '#E5E7EB',
