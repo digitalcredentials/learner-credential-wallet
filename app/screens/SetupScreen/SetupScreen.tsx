@@ -15,6 +15,7 @@ import mixins from '../../styles/mixins';
 import { unlock } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
 import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
+import walletImage from '../../assets/wallet.png';
 
 import styles from './SetupScreen.style';
 import type {
@@ -23,8 +24,6 @@ import type {
   PasswordStepProps,
   ForFadeType,
 } from './SetupScreen.d';
-
-const walletImage = require('../../assets/wallet.png');
 
 const Stack = createStackNavigator();
 

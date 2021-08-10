@@ -7,8 +7,7 @@ import styles from './LoginScreen.style';
 import theme from '../../styles/theme';
 import { unlock } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
-
-const walletImage = require('../../assets/wallet.png');
+import walletImage from '../../assets/wallet.png';
 
 export default () => {
   const dispatch = useDispatch();
