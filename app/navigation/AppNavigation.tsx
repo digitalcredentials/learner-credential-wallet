@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import { Text, View } from 'react-native';
 
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeNavigation from './HomeNavigation';
 import { SetupScreen, LoginScreen } from '../screens';
+import { WalletState } from '../store/slices/wallet';
 import { RootState } from '../store';
 
 const Stack = createStackNavigator();
@@ -14,7 +14,7 @@ export default () => {
   const {
     isUnlocked,
     isInitialized,
-  } = useSelector<RootState, boolean>(({ wallet }) => wallet);
+  } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
 
   const initialRouteName: string = useMemo(() => (
     !isInitialized ? 'SetupScreen' :
