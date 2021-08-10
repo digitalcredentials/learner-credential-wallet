@@ -7,12 +7,16 @@ const theme: ThemeType = {
     backgroundPrimary: Color.Gray800,
     backgroundSecondary: Color.Gray900,
     foregroundPrimary: Color.Gray700,
-    textTitle: Color.LightCyan,
+    textHeader: Color.LightCyan,
     textPrimary: Color.Gray100,
     textSecondary: Color.Gray300,
     iconActive: Color.White,
     iconInactive: Color.Gray400,
     buttonPrimary: Color.DarkCyan,
+    buttonDisabled: Color.Gray500,
+    shadow: Color.Black,
+    success: Color.Green,
+    error: Color.Red,
   },
   fontFamily: {
     regular: FontFamily.RubikRegular,
@@ -21,10 +25,13 @@ const theme: ThemeType = {
   },
   fontSize: {
     title: 36,
+    header: 24,
     medium: 18,
     regular: 16,
+    small: 12,
   },
   borderRadius: 5,
+  iconSize: 22,
 }
 
 export default theme;

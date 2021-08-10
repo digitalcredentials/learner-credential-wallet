@@ -3,9 +3,6 @@ import theme from '../../styles/theme';
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: theme.color.backgroundPrimary,
-  },
-  contentContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
