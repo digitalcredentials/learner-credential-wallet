@@ -18,6 +18,12 @@ const PBKDF2_ITERATIONS: number = 10000;
 const PBKDF2_SALT_PATH: string = `${RNFS.DocumentDirectoryPath}/edu-wallet-salt`;
 
 export default class DatabaseAccess {
+  /**
+   * Do not store off the instance from withInstance for any reason. If a wallet is locked,
+   * instances are not closed and may introduce a vulnerability where the database could
+   * be read after a wallet is locked. If you need to do work on the database, do all of it
+   * within the callback to withInstance.
+   */
   public static async withInstance(callback: (instance: Realm) => void | Promise<void>): Promise<void> {
     const database = await DatabaseAccess.instance();
 
