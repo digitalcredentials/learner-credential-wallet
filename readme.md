@@ -31,6 +31,7 @@ This project uses TypeScript and React Native. It would be best to use an editor
 
 ## Project Structure
 
+```
 ├── app
 │   ├── assets ← Image assets 
 │   ├── components ← React components
@@ -42,3 +43,4 @@ This project uses TypeScript and React Native. It would be best to use an editor
 │   └── styles ← All app style definitions
 ├── android ← Auto-generated android build folder, can still be manually edited if needed
 └── ios ← Same as android, except it also uses Cocoapods for dependency management
+```
