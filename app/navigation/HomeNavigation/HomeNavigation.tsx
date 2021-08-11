@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
-import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../screens';
+import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../../screens';
 import type { TabIconProps } from './HomeNavigation.d';
 import type { HomeNavigationProps } from '../AppNavigation/AppNavigation.d';
 

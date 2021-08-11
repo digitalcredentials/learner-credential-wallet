@@ -4,7 +4,7 @@ export enum Color {
   Green = '#A3E534',
   Red = '#EF4444',
 
-  Transparent = 'Transparent',
+  Transparent = 'transparent',
   White = '#FFFFFF',
   Black = '#000000',
 
