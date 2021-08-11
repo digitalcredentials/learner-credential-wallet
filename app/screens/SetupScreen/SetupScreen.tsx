@@ -10,6 +10,7 @@ import mixins from '../../styles/mixins';
 import { initialize } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
 import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
+import walletImage from '../../assets/wallet.png';
 
 import styles from './SetupScreen.style';
 import type {
@@ -19,8 +20,6 @@ import type {
   ForFadeType,
 } from './SetupScreen.d';
 
-const walletImage = require('../../assets/wallet.png');
-
 const Stack = createStackNavigator();
 
 const forFade: ForFadeType = ({ current }) => ({
@@ -29,7 +28,23 @@ const forFade: ForFadeType = ({ current }) => ({
   },
 });
 
-const StartStep = ({ navigation }: StartStepProps) => {
+export default function SetupScreen(): JSX.Element {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, gestureEnabled: false }}
+    >
+      <Stack.Screen name="StartStep" component={StartStep} />
+      <Stack.Screen name="CreateStep" component={CreateStep} />
+      <Stack.Screen
+        name="PasswordStep"
+        component={PasswordStep}
+        options={{ cardStyleInterpolator: forFade }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function StartStep({ navigation }: StartStepProps) {
   return (
     <SafeScreenView style={[styles.container, styles.containerMiddle]}>
       <Image style={styles.image} source={walletImage} />
@@ -49,9 +64,9 @@ const StartStep = ({ navigation }: StartStepProps) => {
       </View>
     </SafeScreenView>
   );
-};
+}
 
-const CreateStep = ({ navigation }: CreateStepProps) => {
+function CreateStep({ navigation }: CreateStepProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -102,9 +117,9 @@ const CreateStep = ({ navigation }: CreateStepProps) => {
       </View>
     </SafeScreenView>
   );
-};
+}
 
-const PasswordStep = ({ navigation }: PasswordStepProps) => {
+function PasswordStep ({ navigation }: PasswordStepProps) {
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -194,20 +209,4 @@ const PasswordStep = ({ navigation }: PasswordStepProps) => {
       </View>
     </SafeScreenView>
   );
-};
-
-export default () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, gestureEnabled: false }}
-    >
-      <Stack.Screen name="StartStep" component={StartStep} />
-      <Stack.Screen name="CreateStep" component={CreateStep} />
-      <Stack.Screen
-        name="PasswordStep"
-        component={PasswordStep}
-        options={{ cardStyleInterpolator: forFade }}
-      />
-    </Stack.Navigator>
-  );
-};
+}

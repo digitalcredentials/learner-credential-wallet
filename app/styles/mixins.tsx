@@ -8,7 +8,7 @@ const shadow = {
   shadowOffset: {
     height: 5,
     width: 0,
-  }
+  },
 };
 
 export default StyleSheet.create({
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     borderBottomWidth: 0,
   },
   headerTitle: { 
-    color: theme.color.textPrimary
+    color: theme.color.textPrimary,
   },
   bodyContainer: {
     flex: 1,

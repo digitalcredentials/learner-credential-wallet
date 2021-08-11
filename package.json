@@ -4,7 +4,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint --max-warnings 0 ./app ./App.tsx && tsc --noEmit"
   },
   "dependencies": {
     "@expo-google-fonts/rubik": "^0.2.0",
@@ -14,6 +15,7 @@
     "@react-navigation/native": "^6.0.1",
     "@react-navigation/stack": "^6.0.1",
     "@reduxjs/toolkit": "^1.6.1",
+    "@types/text-encoding": "^0.0.36",
     "expo": "~42.0.1",
     "expo-app-loading": "^1.1.2",
     "expo-font": "~9.2.1",
@@ -50,6 +52,11 @@
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-native": "^3.11.0",
     "typescript": "~4.0.0"
   },
   "private": true,

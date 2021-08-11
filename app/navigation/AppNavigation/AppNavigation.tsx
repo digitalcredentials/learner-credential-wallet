@@ -3,14 +3,14 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeNavigation from './HomeNavigation';
-import { SetupScreen, LoginScreen } from '../screens';
-import { WalletState } from '../store/slices/wallet';
-import { RootState } from '../store';
+import HomeNavigation from '../HomeNavigation/HomeNavigation';
+import { SetupScreen, LoginScreen } from '../../screens';
+import { WalletState } from '../../store/slices/wallet';
+import { RootState } from '../../store';
 
 const Stack = createStackNavigator();
 
-export default () => {
+export default function AppNavigation(): JSX.Element {
   const {
     isUnlocked,
     isInitialized,
@@ -18,8 +18,8 @@ export default () => {
 
   const initialRouteName: string = useMemo(() => (
     !isInitialized ? 'SetupScreen' :
-    !isUnlocked ? 'LoginScreen' :
-    'HomeNavigation'
+      !isUnlocked ? 'LoginScreen' :
+        'HomeNavigation'
   ), []);
 
   return (

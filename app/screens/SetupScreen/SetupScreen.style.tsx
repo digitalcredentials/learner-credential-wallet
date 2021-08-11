@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import theme from '../../styles/theme';
-import mixins from '../../styles/mixins';
 
 export default StyleSheet.create({
   container: {
@@ -31,7 +30,7 @@ export default StyleSheet.create({
   },
   stepContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   stepText: {
     color: theme.color.iconInactive,
@@ -75,7 +74,7 @@ export default StyleSheet.create({
     backgroundColor: theme.color.buttonPrimary,
   },
   buttonClear: {
-    backgroundColor: 'transparent',
+    backgroundColor: theme.color.buttonClear,
   },
   buttonClearTitle: {
     color: theme.color.textSecondary,
@@ -99,5 +98,5 @@ export default StyleSheet.create({
     marginTop: 24,
     fontFamily: theme.fontFamily.medium,
     color: theme.color.error,
-  }
+  },
 });

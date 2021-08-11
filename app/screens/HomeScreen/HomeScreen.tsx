@@ -2,17 +2,18 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Header } from 'react-native-elements';
 
-import styles from './HomeScreen.style';
 import mixins from '../../styles/mixins';
 
-export default () => (
-  <>
-    <Header
-      centerComponent={{ text: 'Home', style: mixins.headerTitle}}
-      containerStyle={mixins.headerContainer}
-    />
-    <View style={mixins.bodyContainer}>
-      <Text>Home</Text>
-    </View>
-  </>
-);
+export default function HomeScreen(): JSX.Element {
+  return (
+    <>
+      <Header
+        centerComponent={{ text: 'Home', style: mixins.headerTitle}}
+        containerStyle={mixins.headerContainer}
+      />
+      <View style={mixins.bodyContainer}>
+        <Text>Home</Text>
+      </View>
+    </>
+  );
+}

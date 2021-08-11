@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import mixins from '../../styles/mixins';
 import { lock } from '../../store/slices/wallet';
 
-export default () => {
+export default function SettingsScreen(): JSX.Element {
   const dispatch = useDispatch();
   return (
     <>
@@ -21,4 +21,4 @@ export default () => {
       </View>
     </>
   );
-};
+}

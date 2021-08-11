@@ -7,10 +7,9 @@ import styles from './LoginScreen.style';
 import theme from '../../styles/theme';
 import { unlock } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
+import walletImage from '../../assets/wallet.png';
 
-const walletImage = require('../../assets/wallet.png');
-
-export default () => {
+export default function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
 
