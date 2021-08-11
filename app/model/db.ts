@@ -76,8 +76,9 @@ export default class DatabaseAccess {
       const instance = await DatabaseAccess.instance();
       instance.close();
     } catch (err) {
-      console.error(err);
       await DatabaseAccess.lock();
+
+      throw err;
     }
   }
 

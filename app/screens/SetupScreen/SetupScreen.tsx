@@ -1,12 +1,5 @@
-import React, { useState, useEffect, useRef, createRef } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Image,
-  Animated,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, TextInput, View, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -14,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
-import { unlock } from '../../store/slices/wallet';
+import { initialize } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
 import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
 
@@ -59,7 +52,6 @@ const StartStep = ({ navigation }: StartStepProps) => {
 };
 
 const CreateStep = ({ navigation }: CreateStepProps) => {
-  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -194,7 +186,7 @@ const PasswordStep = ({ navigation }: PasswordStepProps) => {
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Finalize"
-          onPress={() => dispatch(unlock())}
+          onPress={() => dispatch(initialize(password))}
           disabled={!isPasswordValid}
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
