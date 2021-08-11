@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { useSelector } from 'react-redux';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -7,6 +8,8 @@ import theme from '../../styles/theme';
 import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../../screens';
 import type { TabIconProps } from './HomeNavigation.d';
 import type { HomeNavigationProps } from '../AppNavigation/AppNavigation.d';
+import { WalletState } from '../../store/slices/wallet';
+import { RootState } from '../../store';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -16,6 +19,17 @@ const AddTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="add-circle"
 const SettingsTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="settings" color={color} size={theme.iconSize} />;
 
 export default function HomeNavigation({ navigation }: HomeNavigationProps): JSX.Element {
+  const {
+    isUnlocked,
+    isInitialized,
+  } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
+
+  useEffect(() => {
+    if (isInitialized && !isUnlocked) {
+      navigation.navigate('LoginScreen');
+    }
+  }, [isUnlocked, isInitialized]);
+
   // Prevent users from going back
   useEffect(
     () => navigation.addListener('beforeRemove', (e) => e.preventDefault()), 

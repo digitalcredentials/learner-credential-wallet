@@ -37,7 +37,7 @@ export default function LoginScreen(): JSX.Element {
         containerStyle={styles.buttonPrimaryContainer}
         titleStyle={styles.buttonPrimaryTitle}
         title="Unlock Wallet"
-        onPress={() => dispatch(unlock())}
+        onPress={() => dispatch(unlock(password))}
       />
     </SafeScreenView>
   );

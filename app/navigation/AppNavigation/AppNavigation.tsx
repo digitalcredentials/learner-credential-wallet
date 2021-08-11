@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeNavigation from '../HomeNavigation/HomeNavigation';
 import { SetupScreen, LoginScreen } from '../../screens';
+import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
 
 const Stack = createStackNavigator();
@@ -13,7 +14,7 @@ export default function AppNavigation(): JSX.Element {
   const {
     isUnlocked,
     isInitialized,
-  } = useSelector<RootState, boolean>(({ wallet }) => wallet);
+  } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
 
   const initialRouteName: string = useMemo(() => (
     !isInitialized ? 'SetupScreen' :

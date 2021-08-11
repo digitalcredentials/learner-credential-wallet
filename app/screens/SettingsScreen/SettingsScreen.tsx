@@ -1,10 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Header } from 'react-native-elements';
+import { Button } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
 
 import mixins from '../../styles/mixins';
+import { lock } from '../../store/slices/wallet';
 
 export default function SettingsScreen(): JSX.Element {
+  const dispatch = useDispatch();
   return (
     <>
       <Header
@@ -13,6 +17,7 @@ export default function SettingsScreen(): JSX.Element {
       />
       <View style={mixins.bodyContainer}>
         <Text>Settings</Text>
+        <Button title="Lock Wallet" onPress={() => dispatch(lock())} />
       </View>
     </>
   );
