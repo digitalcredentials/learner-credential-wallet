@@ -9,13 +9,13 @@ import { CredentialSchema } from './schema/credential';
 
 const Aes = NativeModules.Aes;
 
-const PRIVILEGED_KEY_KID: string = 'privileged_key';
-const PRIVILEGED_KEY_STATUS_ID: string = 'privileged_key_status';
-const UNLOCKED: string = 'locked';
-const LOCKED: string = 'unlocked';
+const PRIVILEGED_KEY_KID = 'privileged_key';
+const PRIVILEGED_KEY_STATUS_ID = 'privileged_key_status';
+const UNLOCKED = 'locked';
+const LOCKED = 'unlocked';
 
-const PBKDF2_ITERATIONS: number = 10000;
-const PBKDF2_SALT_PATH: string = `${RNFS.DocumentDirectoryPath}/edu-wallet-salt`;
+const PBKDF2_ITERATIONS = 10000;
+const PBKDF2_SALT_PATH = `${RNFS.DocumentDirectoryPath}/edu-wallet-salt`;
 
 export default class DatabaseAccess {
   /**

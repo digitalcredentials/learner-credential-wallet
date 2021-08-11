@@ -33,7 +33,7 @@ export default function HomeNavigation({ navigation }: HomeNavigationProps): JSX
   // Prevent users from going back
   useEffect(
     () => navigation.addListener('beforeRemove', (e) => e.preventDefault()), 
-    [navigation]
+    [navigation],
   );
 
   return (

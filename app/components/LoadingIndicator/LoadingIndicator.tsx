@@ -44,7 +44,7 @@ export default function ({
           duration: 1000,
           easing: Easing.linear,
         }),
-        -1
+        -1,
       );
       path.value = 0;
     } else {

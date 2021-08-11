@@ -30,7 +30,7 @@ export default StyleSheet.create({
   },
   stepContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   stepText: {
     color: theme.color.iconInactive,
@@ -98,5 +98,5 @@ export default StyleSheet.create({
     marginTop: 24,
     fontFamily: theme.fontFamily.medium,
     color: theme.color.error,
-  }
+  },
 });

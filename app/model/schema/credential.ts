@@ -10,7 +10,7 @@ export type Issuer = IssuerURI | IssuerObject;
 
 export interface CreditValue {
   value?: number;
-};
+}
 
 export interface CompletionDocument {
   readonly type?: string[];
@@ -20,12 +20,12 @@ export interface CompletionDocument {
   readonly numberOfCredits?: CreditValue;
   readonly startDate?: string;
   readonly endDate?: string;
-};
+}
 
 export interface EducationalOperationalCredentialExtensions {
   readonly type?: string[];
   readonly awardedOnCompletionOf?: CompletionDocument;
-};
+}
 
 // https://schema.org/EducationalOccupationalCredential (this doesn't really conform)
 export interface EducationalOperationalCredential extends EducationalOperationalCredentialExtensions {
@@ -37,11 +37,11 @@ interface SubjectExtensions {
   readonly type?: string;
   readonly name?: string;
   readonly hasCredential?: EducationalOperationalCredential; // https://schema.org/hasCredential
-};
+}
 
 export interface Subject extends SubjectExtensions {
   readonly id?: string;
-};
+}
 
 // https://digitalcredentials.github.io/dcc/v1/dcc-context-v1.json
 export type Credential = {
