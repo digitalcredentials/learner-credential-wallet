@@ -1,8 +1,8 @@
+<img src="https://user-images.githubusercontent.com/7339800/129089107-fa190c95-76fd-4a93-8e36-ff4d3ae5681c.png" alt="icon" width="100px" />
+
 # EDU Wallet
 
 [![Lint](https://github.com/atomicjolt/learner-credential-wallet/actions/workflows/lint-project.yml/badge.svg)](https://github.com/atomicjolt/learner-credential-wallet/actions/workflows/lint-project.yml)
-
-![icon](https://user-images.githubusercontent.com/7339800/129089107-fa190c95-76fd-4a93-8e36-ff4d3ae5681c.png | width=100)
 
 EDU Wallet is a cross-platform mobile application for storing digital credentials as specified in the DCC Wallet [specification draft](https://cdn.filestackcontent.com/preview/FeqEJI3S5KelmLv8XJss) and [W3C VC data model](https://w3c.github.io/vc-data-model/).
 
