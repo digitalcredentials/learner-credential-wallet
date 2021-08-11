@@ -21,9 +21,7 @@ export interface LoadingIndicatorProps {
   loading: boolean;
 }
 
-export default function ({
-  loading = false,
-}: LoadingIndicatorProps): JSX.Element {
+export default function ({ loading }: LoadingIndicatorProps): JSX.Element {
   const [percent, setPercent] = useState(25);
 
   const rotate = useSharedValue(0);
