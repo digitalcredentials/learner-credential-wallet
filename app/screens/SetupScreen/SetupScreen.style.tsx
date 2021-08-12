@@ -74,7 +74,7 @@ export default StyleSheet.create({
     backgroundColor: theme.color.buttonPrimary,
   },
   buttonClear: {
-    backgroundColor: theme.color.buttonClear,
+    backgroundColor: theme.color.transparent,
   },
   buttonClearTitle: {
     color: theme.color.textSecondary,
