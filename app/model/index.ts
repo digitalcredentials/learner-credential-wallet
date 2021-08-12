@@ -1,3 +1,14 @@
-import DatabaseAccess from './db';
+import Realm from 'realm';
 
-export default DatabaseAccess;
+import DatabaseAccess from './db';
+import { CredentialRecord } from './credential';
+
+const models: Realm.ObjectClass[] = [
+  CredentialRecord,
+];
+
+export {
+  models,
+  DatabaseAccess as db,
+  CredentialRecord,
+};

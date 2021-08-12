@@ -5,7 +5,18 @@ import * as encoding from 'text-encoding';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { NativeModules } from 'react-native';
 
-import { CredentialSchema } from './schema/credential';
+import { models } from '../';
+
+/**
+ * TODO: This file should probably be the root index of the model
+ * direcetory if Realm's schema classes work. Otherwise, we should
+ * make our own DAOs or Model pattern.
+ *
+ * Ideally, either this access object will expose the realm instance
+ * and an easy way of interacting with it, or we don't want to be interacting
+ * with this layer at all. The DAOs would talk using the API exposed in this file,
+ * and the app would use the DAOs (or Models).;
+ */
 
 const Aes = NativeModules.Aes;
 
@@ -24,11 +35,11 @@ export default class DatabaseAccess {
    * be read after a wallet is locked. If you need to do work on the database, do all of it
    * within the callback to withInstance.
    */
-  public static async withInstance(callback: (instance: Realm) => void | Promise<void>): Promise<void> {
+  public static async withInstance<T>(callback: (instance: Realm) => T | Promise<T>): Promise<T> {
     const database = await DatabaseAccess.instance();
 
     try {
-      await callback(database);
+      return callback(database);
     } catch (err) {
       database.close();
 
@@ -148,7 +159,7 @@ export default class DatabaseAccess {
     const encryptionKey: Int8Array = new Int8Array(encoder.encode(key));
 
     const realm = await Realm.open({
-      schema: [CredentialSchema],
+      schema: models,
       encryptionKey,
     });
 

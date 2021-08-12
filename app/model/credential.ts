@@ -1,3 +1,5 @@
+import Realm from 'realm';
+
 export type IssuerURI = string;
 export interface IssuerObject {
   readonly id: IssuerURI;
@@ -53,23 +55,29 @@ export type Credential = {
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
 }
 
-export type CredentialRecord = {
-  _id: number;
-  credential: CredentialRecord;
-}
-
 /**
  * The DCC VC standard is in flux right now,
  * so we are choosing to store credentials as
  * stringified JSON.
  */
-export const CredentialSchema = {
-  name: 'Credential',
-  properties: {
-    _id: 'int',
-    credential: 'string',
-    createdAt: 'date',
-    updatedAt: 'date',
-  },
-  primaryKey: '_id',
-};
+export class CredentialRecord {
+  _id!: number;
+  createdAt!: Date;
+  updatedAt!: Date;
+  rawCredential!: string;
+
+  static schema: Realm.ObjectSchema = {
+    name: 'CredentialRecord',
+    properties: {
+      _id: 'int',
+      rawCredential: 'string',
+      createdAt: 'date',
+      updatedAt: 'date',
+    },
+    primaryKey: '_id',
+  };
+
+  get credential(): Credential{
+    return JSON.parse(this.rawCredential) as Credential;
+  }
+}
