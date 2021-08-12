@@ -43,6 +43,14 @@ export interface Subject extends SubjectExtensions {
   readonly id?: string;
 }
 
+export interface Proof {
+  type: string;
+  created: string;
+  verificationMethod: string;
+  proofPurpose: string;
+  proofValue: string;
+}
+
 // https://digitalcredentials.github.io/dcc/v1/dcc-context-v1.json
 export type Credential = {
   readonly '@context': string[];         // https://w3c.github.io/vc-data-model/#contexts
@@ -51,4 +59,5 @@ export type Credential = {
   readonly issuer: Issuer;               // https://w3c.github.io/vc-data-model/#issuer
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
+  readonly proof: Proof;                 // https://w3c.github.io/vc-data-model/#proofs-signatures
 }
