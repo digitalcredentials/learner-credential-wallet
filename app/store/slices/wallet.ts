@@ -5,16 +5,27 @@ import { Credential } from '../../types/credential';
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
+  credentials: Credential[];
 }
 
 const initialState: WalletState = {
   isUnlocked: null,
   isInitialized: null,
+  credentials: [],
 };
 
 const fetchInitialWalletState = createAsyncThunk('walletState/fetchInitial', async () => ({
   isUnlocked: await db.isUnlocked(),
   isInitialized: await db.isInitialized(),
+  credentials: await db.withInstance(instance => {
+    const results = instance.objects<CredentialRecord>(CredentialRecord.name);
+
+    if (results.length) {
+      return results.map(record => record.credential);
+    }
+
+    return [];
+  }),
 }));
 
 const lock = createAsyncThunk('walletState/lock', async () => {
