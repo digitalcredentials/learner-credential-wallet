@@ -9,11 +9,11 @@ export interface IssuerObject {
 export type Issuer = IssuerURI | IssuerObject;
 
 export interface CreditValue {
-  value?: number;
+  value?: string;
 }
 
 export interface CompletionDocument {
-  readonly type?: string[];
+  readonly type?: string;
   readonly identifier?: string;
   readonly name?: string;
   readonly description?: string;
