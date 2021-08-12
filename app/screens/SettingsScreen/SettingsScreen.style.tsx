@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import theme from '../../styles/theme';
+import { Color } from '../../styles/colors';
 
 export default StyleSheet.create({
   bodyContainer: {
@@ -15,5 +16,13 @@ export default StyleSheet.create({
     backgroundColor: theme.color.backgroundPrimary,
     borderBottomColor: theme.color.backgroundSecondary,
     borderBottomWidth: 3,
+  },
+  buttonStyle: {
+    backgroundColor: Color.Transparent,
+  },
+  iconStyle: {
+    color: theme.color.textPrimary,
+    position: 'absolute',
+    paddingLeft: 5,
   },
 });
