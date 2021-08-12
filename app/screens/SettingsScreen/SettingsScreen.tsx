@@ -4,49 +4,21 @@ import { Header, ListItem, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import mixins from '../../styles/mixins';
 import style from './SettingsScreen.style';
 import mockCredential from '../../mock/credential';
+import { lock, addCredential } from '../../store/slices/wallet';
 import {
-  lock,
-  addCredential,
-} from '../../store/slices/wallet';
+  SettingsItemProps,
+  BackButtonProps,
+  SettingsProps,
+  RestoreProps,
+  BackupProps,
+  AboutProps,
+} from './SettingsScreen.d';
 
 const Stack = createStackNavigator();
-
-type SettingsItemProps = {
-  readonly title: string;
-  readonly onPress: () => void;
-}
-
-type BackButtonProps = {
-  onPress: () => void;
-}
-
-type StackParamList = {
-  Settings: undefined;
-  Backup: undefined;
-  Restore: undefined;
-  About: undefined;
-};
-
-type SettingsProps = {
-  navigation: StackNavigationProp<StackParamList, 'Settings'>;
-}
-
-type RestoreProps = {
-  navigation: StackNavigationProp<StackParamList, 'Restore'>;
-}
-
-type BackupProps = {
-  navigation: StackNavigationProp<StackParamList, 'Backup'>;
-}
-
-type AboutProps = {
-  navigation: StackNavigationProp<StackParamList, 'About'>;
-}
 
 function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
   return (
