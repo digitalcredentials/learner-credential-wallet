@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Button, Header, ListItem } from 'react-native-elements';
+import { View } from 'react-native';
+import {Header, ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import mixins from '../../styles/mixins';
