@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import { db, CredentialRecord } from '../../model';
 import { Credential } from '../../types/credential';
 
@@ -43,12 +44,12 @@ const walletSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(unlock.fulfilled, (state) => (console.log('fulfilled'), {
+    builder.addCase(unlock.fulfilled, (state) => ({
       ...state,
       isUnlocked: true,
     }));
 
-    builder.addCase(unlock.rejected, (state) => (console.log('rejected'), {
+    builder.addCase(unlock.rejected, (state) => ({
       ...state,
       isUnlocked: false,
     }));
