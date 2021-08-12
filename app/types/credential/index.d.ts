@@ -9,11 +9,11 @@ export interface IssuerObject {
 export type Issuer = IssuerURI | IssuerObject;
 
 export interface CreditValue {
-  value?: number;
+  value?: string;
 }
 
 export interface CompletionDocument {
-  readonly type?: string[];
+  readonly type?: string;
   readonly identifier?: string;
   readonly name?: string;
   readonly description?: string;
@@ -52,24 +52,3 @@ export type Credential = {
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
 }
-
-export type CredentialRecord = {
-  _id: number;
-  credential: CredentialRecord;
-}
-
-/**
- * The DCC VC standard is in flux right now,
- * so we are choosing to store credentials as
- * stringified JSON.
- */
-export const CredentialSchema = {
-  name: 'Credential',
-  properties: {
-    _id: 'int',
-    credential: 'string',
-    createdAt: 'date',
-    updatedAt: 'date',
-  },
-  primaryKey: '_id',
-};
