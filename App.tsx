@@ -9,7 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik';
 
 import store from './app/store';
-import { fetchInitialWalletState } from './app/store/slices/wallet';
+import { pollWalletState } from './app/store/slices/wallet';
 import theme from './app/styles/theme';
 import AppNavigation from './app/navigation/AppNavigation/AppNavigation';
 
@@ -34,7 +34,7 @@ export default function App(): JSX.Element {
 
   useEffect(() => {
     if (!walletStateInitialized) {
-      store.dispatch(fetchInitialWalletState());
+      store.dispatch(pollWalletState());
     }
   }, [walletStateInitialized]); 
 
