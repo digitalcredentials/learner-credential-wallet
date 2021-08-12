@@ -16,4 +16,12 @@ export default StyleSheet.create({
     borderBottomColor: theme.color.backgroundSecondary,
     borderBottomWidth: 3,
   },
+  buttonStyle: {
+    backgroundColor: theme.color.transparent,
+  },
+  iconStyle: {
+    color: theme.color.textPrimary,
+    position: 'absolute',
+    paddingLeft: 5,
+  },
 });
