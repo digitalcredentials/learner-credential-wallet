@@ -1,5 +1,5 @@
 import Realm from 'realm';
-import BSON from 'bson';
+import BSON, { ObjectID} from 'bson';
 
 import { Credential } from '../types/credential';
 
@@ -9,7 +9,7 @@ import { Credential } from '../types/credential';
  * stringified JSON.
  */
 export interface CredentialRecordRaw {
-  readonly _id: BSON.ObjectID;
+  readonly _id: ObjectID;
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly rawCredential: string;
@@ -33,7 +33,7 @@ export interface CredentialRecordRaw {
  * ```
  */
 export class CredentialRecord implements CredentialRecordRaw {
-  readonly _id!: BSON.ObjectId;
+  readonly _id!: ObjectID;
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
   readonly rawCredential!: string;
