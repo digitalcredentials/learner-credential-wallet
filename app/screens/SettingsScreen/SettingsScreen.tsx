@@ -5,7 +5,11 @@ import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import mixins from '../../styles/mixins';
-import { lock } from '../../store/slices/wallet';
+import mockCredential from '../../mock/credential';
+import {
+  lock,
+  addCredential,
+} from '../../store/slices/wallet';
 
 export default function SettingsScreen(): JSX.Element {
   const dispatch = useDispatch();
@@ -18,6 +22,7 @@ export default function SettingsScreen(): JSX.Element {
       <View style={mixins.bodyContainer}>
         <Text>Settings</Text>
         <Button title="Lock Wallet" onPress={() => dispatch(lock())} />
+        <Button title="Add Credential" onPress={() => dispatch(addCredential(mockCredential))} />
       </View>
     </>
   );

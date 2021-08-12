@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import DatabaseAccess from '../../model';
+import { db, CredentialRecord } from '../../model';
+import { Credential } from '../../types/credential';
 
 export type WalletState = {
   isUnlocked: boolean | null;
@@ -12,21 +13,29 @@ const initialState: WalletState = {
 };
 
 const fetchInitialWalletState = createAsyncThunk('walletState/fetchInitial', async () => ({
-  isUnlocked: await DatabaseAccess.isUnlocked(),
-  isInitialized: await DatabaseAccess.isInitialized(),
+  isUnlocked: await db.isUnlocked(),
+  isInitialized: await db.isInitialized(),
 }));
 
 const lock = createAsyncThunk('walletState/lock', async () => {
-  await DatabaseAccess.lock();
+  await db.lock();
 });
 
 const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string) => {
-  await DatabaseAccess.unlock(passphrase);
+  await db.unlock(passphrase);
 });
 
 const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string) => {
-  await DatabaseAccess.initialize(passphrase);
-  await DatabaseAccess.unlock(passphrase);
+  await db.initialize(passphrase);
+  await db.unlock(passphrase);
+});
+
+const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential) => {
+  await db.withInstance(instance => {
+    instance.write(() => {
+      instance.create(CredentialRecord.name, CredentialRecord.fromRaw(credential));
+    });
+  });
 });
 
 const walletSlice = createSlice({
@@ -68,4 +77,5 @@ export {
   lock,
   initialize,
   fetchInitialWalletState,
+  addCredential,
 };
