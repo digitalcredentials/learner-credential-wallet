@@ -7,17 +7,6 @@ import { NativeModules } from 'react-native';
 
 import { models } from '../';
 
-/**
- * TODO: This file should probably be the root index of the model
- * direcetory if Realm's schema classes work. Otherwise, we should
- * make our own DAOs or Model pattern.
- *
- * Ideally, either this access object will expose the realm instance
- * and an easy way of interacting with it, or we don't want to be interacting
- * with this layer at all. The DAOs would talk using the API exposed in this file,
- * and the app would use the DAOs (or Models).;
- */
-
 const Aes = NativeModules.Aes;
 
 const PRIVILEGED_KEY_KID = 'privileged_key';
