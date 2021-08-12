@@ -14,7 +14,7 @@ const initialState: WalletState = {
   credentials: [],
 };
 
-const fetchInitialWalletState = createAsyncThunk('walletState/fetchInitial', async () => ({
+const pollWalletState = createAsyncThunk('walletState/pollState', async () => ({
   isUnlocked: await db.isUnlocked(),
   isInitialized: await db.isInitialized(),
   credentials: await db.withInstance(instance => {
@@ -36,17 +36,19 @@ const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string)
   await db.unlock(passphrase);
 });
 
-const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string) => {
+const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string, { dispatch }) => {
   await db.initialize(passphrase);
-  await db.unlock(passphrase);
+  await dispatch(unlock(passphrase));
 });
 
-const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential) => {
+const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential, { dispatch }) => {
   await db.withInstance(instance => {
     instance.write(() => {
       instance.create(CredentialRecord.name, CredentialRecord.fromRaw(credential));
     });
   });
+
+  await dispatch(pollWalletState());
 });
 
 const walletSlice = createSlice({
@@ -75,7 +77,7 @@ const walletSlice = createSlice({
       isUnlocked: true,
     }));
 
-    builder.addCase(fetchInitialWalletState.fulfilled, (state, action) => ({
+    builder.addCase(pollWalletState.fulfilled, (state, action) => ({
       ...state,
       ...action.payload,
     }));
@@ -87,6 +89,6 @@ export {
   unlock,
   lock,
   initialize,
-  fetchInitialWalletState,
+  pollWalletState,
   addCredential,
 };
