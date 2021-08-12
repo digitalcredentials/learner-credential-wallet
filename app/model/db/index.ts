@@ -19,23 +19,13 @@ const PBKDF2_SALT_PATH = `${RNFS.DocumentDirectoryPath}/edu-wallet-salt`;
 
 export default class DatabaseAccess {
   /**
-   * Do not store off the instance from withInstance for any reason. If a wallet is locked,
-   * instances are not closed and may introduce a vulnerability where the database could
-   * be read after a wallet is locked. If you need to do work on the database, do all of it
-   * within the callback to withInstance.
+   * Do not store off the instance from withInstance for any reason. If you need
+   * to do work on the database, do all of it within the callback to withInstance.
    */
   public static async withInstance<T>(callback: (instance: Realm) => T | Promise<T>): Promise<T> {
     const database = await DatabaseAccess.instance();
 
-    try {
-      return callback(database);
-    } catch (err) {
-      database.close();
-
-      throw err;
-    } finally {
-      database.close();
-    }
+    return callback(database);
   }
 
   public static async isUnlocked(): Promise<boolean> {
@@ -85,6 +75,11 @@ export default class DatabaseAccess {
   public static async lock(): Promise<void> {
     if (!(await this.isUnlocked())) return;
 
+    if (DatabaseAccess.realm !== null) {
+      DatabaseAccess.realm.close();
+      DatabaseAccess.realm = null;
+    }
+
     await Promise.all([
       SecureStore.setItemAsync(PRIVILEGED_KEY_STATUS_ID, LOCKED),
       SecureStore.setItemAsync(PRIVILEGED_KEY_KID, ''),
@@ -133,10 +128,13 @@ export default class DatabaseAccess {
     await DatabaseAccess.lock();
   }
 
+  private static realm: Realm | null = null;
   private static async instance(): Promise<Realm> {
     if (!(await this.isUnlocked())) {
       throw new Error('Wallet is not unlocked.');
     }
+
+    if (DatabaseAccess.realm) return DatabaseAccess.realm;
 
     const key = await SecureStore.getItemAsync(PRIVILEGED_KEY_KID);
 
@@ -147,11 +145,9 @@ export default class DatabaseAccess {
     const encoder = new encoding.TextEncoder();
     const encryptionKey: Int8Array = new Int8Array(encoder.encode(key));
 
-    const realm = await Realm.open({
+    return DatabaseAccess.realm = await Realm.open({
       schema: models,
       encryptionKey,
     });
-
-    return realm;
   }
 }
