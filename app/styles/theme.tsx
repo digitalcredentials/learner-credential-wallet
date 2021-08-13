@@ -32,7 +32,7 @@ const theme: ThemeType = {
     small: 12,
   },
   borderRadius: 5,
-  iconSize: 22,
+  iconSize: 24,
 };
 
 export default theme;

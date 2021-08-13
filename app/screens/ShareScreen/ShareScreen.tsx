@@ -8,7 +8,7 @@ export default function ShareScreen(): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'Share', style: mixins.headerTitle }}
+        centerComponent={{ text: 'Share', style: mixins.headerText }}
         containerStyle={mixins.headerContainer}
       />
       <View style={mixins.bodyContainer}>
