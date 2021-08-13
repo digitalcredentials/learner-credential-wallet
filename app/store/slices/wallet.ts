@@ -15,9 +15,6 @@ const initialState: WalletState = {
   credentials: [],
 };
 
-db.isUnlocked().then(console.log);
-db.isInitialized().then(console.log);
-
 const getAllCredentials = createAsyncThunk('walletState/getAllCredentials', async () => ({
   credentials: await db.withInstance(instance => {
     const results = instance.objects<CredentialRecord>(CredentialRecord.name);
