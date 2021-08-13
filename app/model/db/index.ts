@@ -101,7 +101,7 @@ export default class DatabaseAccess {
    */
   public static async reset(): Promise<void> {
     if (await DatabaseAccess.isUnlocked()) {
-      throw new Error('Cannot initialize unlocked wallet.');
+      throw new Error('Cannot reset unlocked wallet.');
     }
 
     /**
