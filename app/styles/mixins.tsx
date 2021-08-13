@@ -50,6 +50,19 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.regular,
     color: theme.color.backgroundSecondary,
   },
+  buttonIcon: {
+    ...shadow,
+    justifyContent: 'space-between',
+    backgroundColor: theme.color.foregroundPrimary,
+    borderRadius: theme.borderRadius,
+    marginVertical: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+  },
+  buttonIconTitle: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: theme.fontSize.medium,
+  },
 
   /* Input mixins */
   input: {
