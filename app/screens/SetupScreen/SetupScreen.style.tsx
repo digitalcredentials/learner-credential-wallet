@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import theme from '../../styles/theme';
+import mixins from '../../styles/mixins';
 
 export default StyleSheet.create({
   container: {
@@ -21,10 +22,8 @@ export default StyleSheet.create({
     padding: 16,
   },
   paragraph: {
-    fontFamily: theme.fontFamily.regular,
+    ...mixins.paragraphText,
     fontSize: theme.fontSize.medium,
-    color: theme.color.textSecondary,
-    lineHeight: 28,
     textAlign: 'center',
     marginBottom: 48,
   },
@@ -54,10 +53,7 @@ export default StyleSheet.create({
     marginTop: 32,
   },
   paragraphRegular: {
-    fontSize: theme.fontSize.regular,
-    fontFamily: theme.fontFamily.regular,
-    color: theme.color.textSecondary,
-    lineHeight: 28,
+    ...mixins.paragraphText,
     textAlign: 'center',
     margin: 8,
   },

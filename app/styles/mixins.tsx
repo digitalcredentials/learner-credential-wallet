@@ -17,8 +17,16 @@ export default StyleSheet.create({
     backgroundColor: theme.color.backgroundSecondary, 
     borderBottomWidth: 0,
   },
-  headerTitle: { 
+  headerText: { 
     color: theme.color.textPrimary,
+    fontFamily: theme.fontFamily.bold,
+    fontSize: theme.fontSize.regular,
+  },
+  paragraphText: {
+    fontFamily: theme.fontFamily.regular,
+    fontSize: theme.fontSize.regular,
+    color: theme.color.textSecondary,
+    lineHeight: 28,
   },
   bodyContainer: {
     flex: 1,
