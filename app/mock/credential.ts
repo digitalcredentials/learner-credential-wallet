@@ -27,7 +27,7 @@ const credential: Credential = {
         'EducationalOccupationalCredential',
         'ProgramCompletionCredential',
       ],
-      name: 'DCC Program Completion Credential',
+      'name': 'DCC Program Completion Credential',
       description: 'Awarded on completion of the digital credential program',
       awardedOnCompletionOf: {
         type: 'EducationalOccupationalProgram',
@@ -41,6 +41,13 @@ const credential: Credential = {
         endDate: '',
       },
     },
+  },
+  proof: {
+    type: 'Ed25519Signature2020',
+    created: '2021-08-12T23:31:42Z',
+    verificationMethod: 'did:web:digitalcredentials.github.io#z6MkrXSQTybtqyMasfSxeRBJxDvDUGqb7mt9fFVXkVn6xTG7',
+    proofPurpose: 'assertionMethod',
+    proofValue: 'z2XTjvotGstxV4WyyvoAyARFhQuY5rTG8HgomrBhHqnGCZyk1mzYqCqzWPuyhmc3QpiEAyQqL7EwYuyWogcjrXB71',
   },
 };
 
