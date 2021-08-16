@@ -95,10 +95,27 @@ export default class DatabaseAccess {
   }
 
   /**
-   * WARNING: Calling this function is destructive. It will wipe out the
+   * WARNING: Calling these two functions are destructive. They will wipe out the
    * existing salt and database. There should also be no active connections
    * to the database when you call this method.
    */
+  public static async reset(): Promise<void> {
+    if (await DatabaseAccess.isUnlocked()) {
+      throw new Error('Cannot reset unlocked wallet.');
+    }
+
+    /**
+     * Realm does not provide a way to initialize a database, so we just
+     * delete all of the files it creates.
+     */
+    await Promise.all([
+      RNFS.unlink(`${Realm.defaultPath}.lock`),
+      RNFS.unlink(`${Realm.defaultPath}.note`),
+      RNFS.unlink(`${Realm.defaultPath}.management`),
+      RNFS.unlink(Realm.defaultPath),
+    ]);
+  }
+
   public static async initialize(passphrase: string): Promise<void> {
     if (await DatabaseAccess.isUnlocked()) {
       throw new Error('Cannot initialize unlocked wallet.');
@@ -109,16 +126,7 @@ export default class DatabaseAccess {
     const salt: string = decoder.decode(rawSalt);
 
     if (await DatabaseAccess.isInitialized()) {
-      /**
-       * Realm does not provide a way to initialize a database, so we just
-       * delete all of the files it creates.
-       */
-      await Promise.all([
-        RNFS.unlink(`${Realm.defaultPath}.lock`),
-        RNFS.unlink(`${Realm.defaultPath}.note`),
-        RNFS.unlink(`${Realm.defaultPath}.management`),
-        RNFS.unlink(Realm.defaultPath),
-      ]);
+      await DatabaseAccess.reset();
     }
 
     await RNFS.writeFile(PBKDF2_SALT_PATH, salt, 'utf8');

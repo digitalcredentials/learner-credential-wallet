@@ -8,7 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import mixins from '../../styles/mixins';
 import style from './SettingsScreen.style';
 import mockCredential from '../../mock/credential';
-import { lock, addCredential } from '../../store/slices/wallet';
+import { lock, reset, addCredential } from '../../store/slices/wallet';
 import {
   SettingsItemProps,
   BackButtonProps,
@@ -53,6 +53,10 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem
           title="Add credential (dev)"
           onPress={() => dispatch(addCredential(mockCredential))}
+        />
+        <SettingsItem
+          title="Reset wallet (dev)"
+          onPress={async () => dispatch(reset())}
         />
       </View>
     </>

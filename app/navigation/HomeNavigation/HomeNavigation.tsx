@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -8,7 +8,7 @@ import theme from '../../styles/theme';
 import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../../screens';
 import type { TabIconProps } from './HomeNavigation.d';
 import type { HomeNavigationProps } from '../AppNavigation/AppNavigation.d';
-import { WalletState } from '../../store/slices/wallet';
+import { WalletState, getAllCredentials } from '../../store/slices/wallet';
 import { RootState } from '../../store';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -19,6 +19,7 @@ const AddTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="add-circle"
 const SettingsTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="settings" color={color} size={theme.iconSize} />;
 
 export default function HomeNavigation({ navigation }: HomeNavigationProps): JSX.Element {
+  const dispatch = useDispatch();
   const {
     isUnlocked,
     isInitialized,
@@ -29,6 +30,10 @@ export default function HomeNavigation({ navigation }: HomeNavigationProps): JSX
       navigation.navigate('LoginScreen');
     }
   }, [isUnlocked, isInitialized]);
+
+  useEffect(() => {
+    dispatch(getAllCredentials());
+  }, []);
 
   // Prevent users from going back
   useEffect(
