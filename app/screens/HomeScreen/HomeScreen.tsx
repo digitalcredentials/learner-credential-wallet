@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text, View, FlatList } from 'react-native';
 import { Header, Button } from 'react-native-elements';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
 import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
 import CredentialItem from '../../components/CredentialItem/CredentialItem';
+import AddCredentialView from '../../components/AddCredentialView/AddCredentialView';
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
 
@@ -40,42 +41,13 @@ export default function HomeScreen(): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'My Wallet', style: mixins.headerText }}
+        centerComponent={{ text: 'Home', style: mixins.headerText}}
         containerStyle={mixins.headerContainer}
       />
       {credentials.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.header}>Looks like your wallet is empty.</Text>
-          <Text style={styles.paragraph}>
-            To add credentials, follow an approved link from an issuer (most
-            often a University) or use the options below.
-          </Text>
-          <Button
-            title="Scan QR code"
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            iconRight
-            icon={
-              <MaterialIcons
-                name="qr-code-scanner"
-                size={theme.iconSize}
-                color={theme.color.iconInactive}
-              />
-            }
-          />
-          <Button
-            title="Restore from a file"
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            iconRight
-            icon={
-              <MaterialCommunityIcons
-                name="file-upload"
-                size={theme.iconSize}
-                color={theme.color.iconInactive}
-              />
-            }
-          />
+          <AddCredentialView />
         </View>
       ) : (
         <FlatList
@@ -86,8 +58,8 @@ export default function HomeScreen(): JSX.Element {
           ListFooterComponent={
             <Button
               title="Add Credential"
-              buttonStyle={styles.button}
-              titleStyle={styles.buttonTitle}
+              buttonStyle={mixins.buttonIcon}
+              titleStyle={mixins.buttonIconTitle}
               iconRight
               icon={
                 <MaterialIcons
