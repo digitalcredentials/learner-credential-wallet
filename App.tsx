@@ -37,6 +37,7 @@ export default function App(): JSX.Element {
     }
   }, [walletStateInitialized]); 
 
+
   if (!fontsLoaded || !walletStateInitialized) {
     return <AppLoading />;
   }
