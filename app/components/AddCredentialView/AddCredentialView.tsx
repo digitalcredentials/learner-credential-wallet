@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleProp, ViewStyle } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
@@ -7,9 +7,13 @@ import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
 import styles from './AddCredentialView.style';
 
-export default function AddCredentialView(): JSX.Element {
+export interface AddCredentialViewProps {
+  style?: StyleProp<ViewStyle>;
+}
+
+export default function AddCredentialView({ style }: AddCredentialViewProps): JSX.Element {
   return (
-    <View>
+    <View style={style}>
       <Text style={styles.paragraph}>
         To add credentials, follow an approved link from an issuer (most often a
         University) or use the options below.
