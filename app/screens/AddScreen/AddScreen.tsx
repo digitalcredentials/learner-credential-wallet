@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Header } from 'react-native-elements';
 
 import mixins from '../../styles/mixins';
