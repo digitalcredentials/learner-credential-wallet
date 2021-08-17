@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
@@ -20,6 +21,6 @@ export default function AppNavigation(): JSX.Element {
   } else if (!isUnlocked && !isInitialized) {
     return <SetupScreen />;
   } else {
-    throw new Error('Wallet state is corrupted');
+    return <View />;
   }
 }
