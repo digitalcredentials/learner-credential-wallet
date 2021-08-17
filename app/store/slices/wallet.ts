@@ -15,9 +15,7 @@ const initialState: WalletState = {
   credentials: [],
 };
 
-const pollWalletState = createAsyncThunk('walletState/pollState', async () => ({
-  isUnlocked: await db.isUnlocked(),
-  isInitialized: await db.isInitialized(),
+const getAllCredentials = createAsyncThunk('walletState/getAllCredentials', async () => ({
   credentials: await db.withInstance(instance => {
     const results = instance.objects<CredentialRecord>(CredentialRecord.name);
 
@@ -28,6 +26,13 @@ const pollWalletState = createAsyncThunk('walletState/pollState', async () => ({
     return [];
   }),
 }));
+
+const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
+  return {
+    isUnlocked: await db.isUnlocked(),
+    isInitialized: await db.isInitialized(),
+  };
+});
 
 const lock = createAsyncThunk('walletState/lock', async () => {
   await db.lock();
@@ -42,6 +47,11 @@ const initialize = createAsyncThunk('walletState/initialize', async (passphrase:
   await dispatch(unlock(passphrase));
 });
 
+const reset = createAsyncThunk('walletState/reset', async () => {
+  await db.lock();
+  await db.reset();
+});
+
 const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential, { dispatch }) => {
   await db.withInstance(instance => {
     instance.write(() => {
@@ -49,7 +59,7 @@ const addCredential = createAsyncThunk('walletState/addCredential', async (crede
     });
   });
 
-  await dispatch(pollWalletState());
+  await dispatch(getAllCredentials());
 });
 
 const walletSlice = createSlice({
@@ -78,7 +88,18 @@ const walletSlice = createSlice({
       isUnlocked: true,
     }));
 
+    builder.addCase(reset.fulfilled, (state) => ({
+      ...state,
+      isInitialized: false,
+      isUnlocked: false,
+    }));
+
     builder.addCase(pollWalletState.fulfilled, (state, action) => ({
+      ...state,
+      ...action.payload,
+    }));
+
+    builder.addCase(getAllCredentials.fulfilled, (state, action) => ({
       ...state,
       ...action.payload,
     }));
@@ -90,6 +111,8 @@ export {
   unlock,
   lock,
   initialize,
+  reset,
   pollWalletState,
+  getAllCredentials,
   addCredential,
 };

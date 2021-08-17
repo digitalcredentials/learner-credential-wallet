@@ -13,7 +13,6 @@ import { pollWalletState } from './app/store/slices/wallet';
 import theme from './app/styles/theme';
 import AppNavigation from './app/navigation/AppNavigation/AppNavigation';
 
-
 const navigatorTheme = {
   ...DefaultTheme,
   colors: {

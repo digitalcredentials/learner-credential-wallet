@@ -34,6 +34,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-get-random-values": "^1.7.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-pager-view": "5.0.12",
     "react-native-paper": "^4.9.2",
