@@ -88,11 +88,7 @@ const walletSlice = createSlice({
       isUnlocked: true,
     }));
 
-    builder.addCase(reset.fulfilled, (state) => ({
-      ...state,
-      isInitialized: false,
-      isUnlocked: false,
-    }));
+    builder.addCase(reset.fulfilled, () => initialState);
 
     builder.addCase(pollWalletState.fulfilled, (state, action) => ({
       ...state,
