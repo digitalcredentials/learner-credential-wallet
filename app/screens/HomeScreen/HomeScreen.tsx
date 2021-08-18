@@ -10,6 +10,7 @@ import CredentialItem from '../../components/CredentialItem/CredentialItem';
 import AddCredentialView from '../../components/AddCredentialView/AddCredentialView';
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
+import { HomeScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
 
 import styles from './HomeScreen.style';
 import { RenderItemProps } from './HomeScreen.d';
