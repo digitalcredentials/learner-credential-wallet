@@ -8,6 +8,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+    backgroundColor: theme.color.backgroundPrimary,
   },
   image: {
     height: 72,

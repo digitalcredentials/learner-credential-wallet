@@ -1,14 +1,12 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import AppLoading from 'expo-app-loading';
 
 import { useSelector } from 'react-redux';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeNavigation from '../HomeNavigation/HomeNavigation';
 import { SetupScreen, LoginScreen } from '../../screens';
 import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
-
-const Stack = createStackNavigator();
 
 export default function AppNavigation(): JSX.Element {
   const {
@@ -16,22 +14,13 @@ export default function AppNavigation(): JSX.Element {
     isInitialized,
   } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
 
-  const initialRouteName: string = useMemo(() => (
-    !isInitialized ? 'SetupScreen' :
-      !isUnlocked ? 'LoginScreen' :
-        'HomeNavigation'
-  ), []);
-
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
-      {isUnlocked ? (
-        <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
-      ) : (
-        <>
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="SetupScreen" component={SetupScreen} />
-        </>
-      )}
-    </Stack.Navigator>
-  );
+  if (isUnlocked && isInitialized) {
+    return <HomeNavigation />;
+  } else if (!isUnlocked && isInitialized) {
+    return <LoginScreen />;
+  } else if (!isUnlocked && !isInitialized) {
+    return <SetupScreen />;
+  } else {
+    return <AppLoading />;
+  }
 }
