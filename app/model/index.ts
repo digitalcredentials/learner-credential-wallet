@@ -101,13 +101,16 @@ class DatabaseAccess {
    * existing salt and database.
    */
   public static async reset(): Promise<void> {
-    if (!(await DatabaseAccess.isUnlocked())) {
-      throw new Error('Cannot reset locked wallet.');
+    if (await DatabaseAccess.isUnlocked()) {
+      throw new Error('Cannot reset unlocked wallet.');
     }
 
-    Realm.deleteFile(await DatabaseAccess.config());
-
-    await DatabaseAccess.lock();
+    await Promise.all([
+      RNFS.unlink(`${Realm.defaultPath}.lock`),
+      RNFS.unlink(`${Realm.defaultPath}.note`),
+      RNFS.unlink(`${Realm.defaultPath}.management`),
+      RNFS.unlink(Realm.defaultPath),
+    ]);
   }
 
   public static async initialize(passphrase: string): Promise<void> {
