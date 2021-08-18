@@ -100,8 +100,7 @@ class DatabaseAccess {
 
   /**
    * WARNING: Calling these two functions are destructive. They will wipe out the
-   * existing salt and database. There should also be no active connections
-   * to the database when you call this method.
+   * existing salt and database.
    */
   public static async reset(): Promise<void> {
     if (!(await DatabaseAccess.isUnlocked())) {
