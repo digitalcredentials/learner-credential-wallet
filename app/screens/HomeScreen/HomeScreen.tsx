@@ -14,7 +14,7 @@ import theme from '../../styles/theme';
 import styles from './HomeScreen.style';
 import { RenderItemProps } from './HomeScreen.d';
 
-export default function HomeScreen(): JSX.Element {
+export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
   const { credentials } = useSelector<RootState, WalletState>(
     ({ wallet }) => wallet,
   );
@@ -25,7 +25,7 @@ export default function HomeScreen(): JSX.Element {
       typeof item.issuer !== 'string' && item.issuer.name !== undefined
         ? item.issuer.name
         : '';
-    const onPress = () => void null;
+    const onPress = () => navigation.navigate('CredentialScreen', { credential: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (

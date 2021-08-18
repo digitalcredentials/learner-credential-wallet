@@ -4,7 +4,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
-import { HomeScreen, ShareScreen, AddScreen, SettingsScreen } from '../../screens';
+import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
+import { ShareScreen, AddScreen, SettingsScreen } from '../../screens';
 import type { TabIconProps } from './HomeNavigation.d';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -25,7 +26,7 @@ export default function HomeNavigation(): JSX.Element {
         backgroundColor: theme.color.backgroundSecondary,
       }}
     >
-      <Tab.Screen name="HomeScreen" component={HomeScreen} options={{
+      <Tab.Screen name="CredentialNavigation" component={CredentialNavigation} options={{
         title: 'Home',
         tabBarIcon: HomeTabIcon,
       }}/>
