@@ -48,7 +48,6 @@ const initialize = createAsyncThunk('walletState/initialize', async (passphrase:
 });
 
 const reset = createAsyncThunk('walletState/reset', async () => {
-  await db.lock();
   await db.reset();
 });
 
