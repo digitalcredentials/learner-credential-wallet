@@ -67,8 +67,7 @@ class DatabaseAccess {
 
     // Attempt database decryption to see if key is valid
     try {
-      const instance = await DatabaseAccess.instance();
-      instance.close();
+      await DatabaseAccess.instance();
     } catch (err) {
       await DatabaseAccess.lock();
 
@@ -80,7 +79,6 @@ class DatabaseAccess {
     if (!(await this.isUnlocked())) return;
 
     if (DatabaseAccess.realm !== null) {
-      DatabaseAccess.realm.close();
       DatabaseAccess.realm = null;
     }
 
