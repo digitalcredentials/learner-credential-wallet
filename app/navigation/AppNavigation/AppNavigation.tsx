@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import AppLoading from 'expo-app-loading';
 
 import { useSelector } from 'react-redux';
 
@@ -21,6 +21,6 @@ export default function AppNavigation(): JSX.Element {
   } else if (!isUnlocked && !isInitialized) {
     return <SetupScreen />;
   } else {
-    return <View />;
+    return <AppLoading />;
   }
 }
