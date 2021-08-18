@@ -91,6 +91,10 @@ export default class DatabaseAccess {
   }
 
   public static async isInitialized(): Promise<boolean> {
+    /**
+     * We can't use `Realm.exists` here because the config is
+     * only available for the unlocked state.
+     */
     return RNFS.exists(Realm.defaultPath);
   }
 
@@ -100,20 +104,13 @@ export default class DatabaseAccess {
    * to the database when you call this method.
    */
   public static async reset(): Promise<void> {
-    if (await DatabaseAccess.isUnlocked()) {
-      throw new Error('Cannot reset unlocked wallet.');
+    if (!(await DatabaseAccess.isUnlocked())) {
+      throw new Error('Cannot reset locked wallet.');
     }
 
-    /**
-     * Realm does not provide a way to initialize a database, so we just
-     * delete all of the files it creates.
-     */
-    await Promise.all([
-      RNFS.unlink(`${Realm.defaultPath}.lock`),
-      RNFS.unlink(`${Realm.defaultPath}.note`),
-      RNFS.unlink(`${Realm.defaultPath}.management`),
-      RNFS.unlink(Realm.defaultPath),
-    ]);
+    Realm.deleteFile(await DatabaseAccess.config());
+
+    await DatabaseAccess.lock();
   }
 
   public static async initialize(passphrase: string): Promise<void> {
@@ -121,13 +118,13 @@ export default class DatabaseAccess {
       throw new Error('Cannot initialize unlocked wallet.');
     }
 
+    if (await DatabaseAccess.isInitialized()) {
+      throw new Error('Wallet must be in reset state to be initialized');
+    }
+
     const decoder = new encoding.TextDecoder();
     const rawSalt = await generateSecureRandom(64);
     const salt: string = decoder.decode(rawSalt);
-
-    if (await DatabaseAccess.isInitialized()) {
-      await DatabaseAccess.reset();
-    }
 
     await RNFS.writeFile(PBKDF2_SALT_PATH, salt, 'utf8');
 
@@ -136,13 +133,10 @@ export default class DatabaseAccess {
     await DatabaseAccess.lock();
   }
 
-  private static realm: Realm | null = null;
-  private static async instance(): Promise<Realm> {
+  private static async encryptionKey(): Promise<Int8Array> {
     if (!(await this.isUnlocked())) {
       throw new Error('Wallet is not unlocked.');
     }
-
-    if (DatabaseAccess.realm) return DatabaseAccess.realm;
 
     const key = await SecureStore.getItemAsync(PRIVILEGED_KEY_KID);
 
@@ -151,11 +145,22 @@ export default class DatabaseAccess {
     }
 
     const encoder = new encoding.TextEncoder();
-    const encryptionKey: Int8Array = new Int8Array(encoder.encode(key));
+    return new Int8Array(encoder.encode(key));
+  }
 
-    return DatabaseAccess.realm = await Realm.open({
+  private static async config(): Promise<Realm.Configuration> {
+    return {
       schema: models,
-      encryptionKey,
-    });
+      encryptionKey: await DatabaseAccess.encryptionKey(),
+    };
+  }
+
+  private static realm: Realm | null = null;
+  private static async instance(): Promise<Realm> {
+    if (DatabaseAccess.realm !== null) {
+      return DatabaseAccess.realm;
+    } else {
+      return DatabaseAccess.realm = await Realm.open(await DatabaseAccess.config());
+    }
   }
 }
