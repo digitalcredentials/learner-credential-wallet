@@ -4,6 +4,7 @@ import { ListItem } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
+import mixins from '../../styles/mixins';
 import styles from './CredentialItem.style';
 import type { CredentialItemProps } from './CredentialItem.d';
 
@@ -21,12 +22,12 @@ export default function CredentialItem({
     >
       <ListItem.Content style={styles.listItemContentContainer}>
         {image ? (
-          <Image source={image} style={styles.listItemImage} />
+          <Image source={image} style={mixins.imageIcon} />
         ) : (
-          <View style={styles.listItemImage}>
+          <View style={mixins.imageIcon}>
             <MaterialCommunityIcons
               name="certificate"
-              size={40}
+              size={mixins.imageIcon.width}
               color={theme.color.iconActive}
             />
           </View>

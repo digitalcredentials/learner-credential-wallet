@@ -41,7 +41,7 @@ export default function HomeScreen(): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'Home', style: mixins.headerText}}
+        centerComponent={{ text: 'Home', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
       {credentials.length === 0 ? (

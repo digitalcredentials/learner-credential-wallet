@@ -9,7 +9,7 @@ export default function AddScreen(): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'Add Credential', style: mixins.headerText}}
+        centerComponent={{ text: 'Add Credential', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
       <AddCredentialView style={styles.container} />

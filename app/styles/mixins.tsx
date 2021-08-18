@@ -13,26 +13,51 @@ const shadow = {
 
 export default StyleSheet.create({
   shadow,
+  bodyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.color.backgroundPrimary,
+  },
+  imageIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 3,
+    marginRight: 12,
+    resizeMode: 'contain',
+  },
+
+  /* Header mixins */
   headerContainer: { 
     backgroundColor: theme.color.backgroundSecondary, 
     borderBottomWidth: 0,
+    zIndex: 1,
   },
-  headerText: { 
+  headerTitle: { 
     color: theme.color.textPrimary,
     fontFamily: theme.fontFamily.bold,
     fontSize: theme.fontSize.regular,
+  },
+  headerIcon: {
+    color: theme.color.textPrimary,
+    fontSize: theme.iconSize,
+    padding: 4,
+  },
+  headerComponentContainer: {
+    justifyContent: 'center',
+  },
+
+  /* Typographic mixins */
+  headerText: {
+    fontFamily: theme.fontFamily.bold,
+    color: theme.color.textHeader,
+    fontSize: theme.fontSize.medium,
   },
   paragraphText: {
     fontFamily: theme.fontFamily.regular,
     fontSize: theme.fontSize.regular,
     color: theme.color.textSecondary,
     lineHeight: 28,
-  },
-  bodyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.color.backgroundPrimary,
   },
   
   /* Button mixins */
