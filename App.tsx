@@ -9,7 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik';
 
 import store from './app/store';
-import { pollWalletState } from './app/store/slices/wallet';
+import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
 import theme from './app/styles/theme';
 import AppNavigation from './app/navigation/AppNavigation/AppNavigation';
 
@@ -37,6 +37,11 @@ export default function App(): JSX.Element {
     }
   }, [walletStateInitialized]); 
 
+  useEffect(() => {
+    if (walletStateInitialized && isUnlocked) {
+      store.dispatch(getAllCredentials());
+    }
+  }, [walletStateInitialized, isUnlocked]);
 
   if (!fontsLoaded || !walletStateInitialized) {
     return <AppLoading />;
