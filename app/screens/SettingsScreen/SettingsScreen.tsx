@@ -128,7 +128,7 @@ function About({ navigation: { goBack } }: AboutProps): JSX.Element {
 export default function SettingsScreen(): JSX.Element {
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, gestureEnabled: false }}
+      screenOptions={{ headerShown: false }}
       initialRouteName="Settings"
     >
       <Stack.Screen name="Settings" component={Settings} />
