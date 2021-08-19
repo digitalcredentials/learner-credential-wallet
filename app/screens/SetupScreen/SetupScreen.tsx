@@ -59,14 +59,16 @@ function StartStep({ navigation }: StartStepProps) {
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Start Setup"
-          onPress={() => navigation.navigate('CreateStep')}
+          onPress={() => navigation.navigate('PasswordStep')}
         />
       </View>
     </SafeScreenView>
   );
 }
 
-function CreateStep({ navigation }: CreateStepProps) {
+function CreateStep({ navigation, route }: CreateStepProps) {
+  const { password } = route.params;
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -92,15 +94,15 @@ function CreateStep({ navigation }: CreateStepProps) {
           containerStyle={mixins.buttonContainer}
           titleStyle={[mixins.buttonTitle, styles.buttonClearTitle]}
           title="Cancel"
-          onPress={() => navigation.navigate('StartStep')}
+          onPress={() => navigation.navigate('PasswordStep')}
         />
         <View style={styles.buttonSeparator} />
         <Button
           buttonStyle={mixins.button}
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
-          title="Next"
-          onPress={() => navigation.navigate('PasswordStep')}
+          title="View My Wallet"
+          onPress={() => dispatch(initialize(password))}
           disabled={loading}
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
@@ -120,7 +122,6 @@ function CreateStep({ navigation }: CreateStepProps) {
 }
 
 function PasswordStep ({ navigation }: PasswordStepProps) {
-  const dispatch = useDispatch();
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -201,7 +202,7 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Finalize"
-          onPress={() => dispatch(initialize(password))}
+          onPress={() => navigation.navigate('CreateStep', { password })}
           disabled={!isPasswordValid}
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
