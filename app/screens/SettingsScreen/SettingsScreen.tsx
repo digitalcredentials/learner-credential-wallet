@@ -42,7 +42,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'Settings', style: mixins.headerText}}
+        centerComponent={{ text: 'Settings', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
       <View style={style.bodyContainer}>
@@ -84,7 +84,7 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'Restore', style: mixins.headerText}}
+        centerComponent={{ text: 'Restore', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
         leftComponent={<BackButton onPress={goBack} />}
       />
@@ -99,7 +99,7 @@ function Backup({ navigation: { goBack } }: BackupProps): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'Backup', style: mixins.headerText}}
+        centerComponent={{ text: 'Backup', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
         leftComponent={<BackButton onPress={goBack} />}
       />
@@ -114,7 +114,7 @@ function About({ navigation: { goBack } }: AboutProps): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'About', style: mixins.headerText}}
+        centerComponent={{ text: 'About', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
         leftComponent={<BackButton onPress={goBack} />}
       />

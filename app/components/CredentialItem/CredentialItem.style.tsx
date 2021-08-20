@@ -14,12 +14,6 @@ export default StyleSheet.create({
   listItemContentContainer: {
     flexDirection: 'row',
   },
-  listItemImage: {
-    width: 40,
-    height: 40,
-    resizeMode: 'contain',
-    marginRight: 12,
-  },
   listItemTextContainer: {
     flex: 1,
   },

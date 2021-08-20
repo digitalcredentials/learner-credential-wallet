@@ -1,4 +1,5 @@
 import AddScreen from './AddScreen/AddScreen';
+import CredentialScreen from './CredentialScreen/CredentialScreen';
 import HomeScreen from './HomeScreen/HomeScreen';
 import LoginScreen from './LoginScreen/LoginScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
@@ -7,6 +8,7 @@ import ShareScreen from './ShareScreen/ShareScreen';
 
 export {
   AddScreen,
+  CredentialScreen,
   HomeScreen,
   LoginScreen,
   SettingsScreen,

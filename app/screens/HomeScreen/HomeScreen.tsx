@@ -10,11 +10,12 @@ import CredentialItem from '../../components/CredentialItem/CredentialItem';
 import AddCredentialView from '../../components/AddCredentialView/AddCredentialView';
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
+import { HomeScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
 
 import styles from './HomeScreen.style';
 import { RenderItemProps } from './HomeScreen.d';
 
-export default function HomeScreen(): JSX.Element {
+export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
   const { credentials } = useSelector<RootState, WalletState>(
     ({ wallet }) => wallet,
   );
@@ -25,7 +26,7 @@ export default function HomeScreen(): JSX.Element {
       typeof item.issuer !== 'string' && item.issuer.name !== undefined
         ? item.issuer.name
         : '';
-    const onPress = () => void null;
+    const onPress = () => navigation.navigate('CredentialScreen', { credential: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (
@@ -41,7 +42,7 @@ export default function HomeScreen(): JSX.Element {
   return (
     <>
       <Header
-        centerComponent={{ text: 'Home', style: mixins.headerText}}
+        centerComponent={{ text: 'Home', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
       {credentials.length === 0 ? (
