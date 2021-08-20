@@ -3,7 +3,9 @@ import { StackNavigationProp, StackNavigationOptions } from '@react-navigation/s
 
 type StackParamList = {
   StartStep: undefined;
-  CreateStep: undefined;
+  CreateStep: {
+    password: string;
+  };
   PasswordStep: undefined;
 };
 
