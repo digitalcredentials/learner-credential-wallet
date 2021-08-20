@@ -6,7 +6,7 @@ import theme from '../../styles/theme';
 import styles from './MenuItem.style';
 
 export interface MenuItemProps {
-  icon: 'share' | 'bug-report' | 'delete'; // TODO: Find MaterialIcons name prop type
+  icon: React.ComponentProps<typeof MaterialIcons>['name'];
   title: string;
   onPress: () => void;
 }
