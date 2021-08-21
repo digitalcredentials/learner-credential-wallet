@@ -30,7 +30,6 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const image = null; // TODO: Decide where to pull image from.
   const verified = true; // TODO: Add logic for verifying credential.
 
-
   const HeaderRightComponent = (
     <>
       <MaterialIcons

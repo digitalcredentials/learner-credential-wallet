@@ -11,6 +11,7 @@ import AddCredentialView from '../../components/AddCredentialView/AddCredentialV
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
 import { HomeScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
+import { navigationRef } from '../../../App';
 
 import styles from './HomeScreen.style';
 import { RenderItemProps } from './HomeScreen.d';
@@ -39,6 +40,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
     );
   }
 
+  function goToAddScreen() {
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('AddScreen');
+    }
+  }
+
   return (
     <>
       <Header
@@ -61,6 +68,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
               title="Add Credential"
               buttonStyle={mixins.buttonIcon}
               titleStyle={mixins.buttonIconTitle}
+              onPress={goToAddScreen}
               iconRight
               icon={
                 <MaterialIcons

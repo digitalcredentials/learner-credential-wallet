@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 
-type TabParamList = {
+export type TabParamList = {
   HomeScreen: undefined;
   ShareScreen: undefined;
   AddScreen: undefined;

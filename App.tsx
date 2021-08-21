@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createNavigationContainerRef } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik';
 
@@ -12,7 +13,9 @@ import store from './app/store';
 import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
 import theme from './app/styles/theme';
 import AppNavigation from './app/navigation/AppNavigation/AppNavigation';
+import type { TabParamList } from './app/navigation/HomeNavigation/HomeNavigation.d';
 
+export const navigationRef = createNavigationContainerRef<TabParamList>();
 const navigatorTheme = {
   ...DefaultTheme,
   colors: {
@@ -22,7 +25,7 @@ const navigatorTheme = {
 };
 
 export default function App(): JSX.Element {
-  const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  }); 
+  const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  });
   const {
     wallet: {
       isUnlocked,
@@ -35,7 +38,7 @@ export default function App(): JSX.Element {
     if (!walletStateInitialized) {
       store.dispatch(pollWalletState());
     }
-  }, [walletStateInitialized]); 
+  }, [walletStateInitialized]);
 
   useEffect(() => {
     if (walletStateInitialized && isUnlocked) {
@@ -51,7 +54,7 @@ export default function App(): JSX.Element {
     <Provider store={store}>
       <SafeAreaProvider>
         <StatusBar style="light" />
-        <NavigationContainer theme={navigatorTheme}>
+        <NavigationContainer theme={navigatorTheme} ref={navigationRef}>
           <AppNavigation />
         </NavigationContainer>
       </SafeAreaProvider>
