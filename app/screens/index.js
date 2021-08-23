@@ -1,17 +1,9 @@
-import AddScreen from './AddScreen/AddScreen';
-import CredentialScreen from './CredentialScreen/CredentialScreen';
-import HomeScreen from './HomeScreen/HomeScreen';
-import LoginScreen from './LoginScreen/LoginScreen';
-import SettingsScreen from './SettingsScreen/SettingsScreen';
-import SetupScreen from './SetupScreen/SetupScreen';
-import ShareScreen from './ShareScreen/ShareScreen';
-
-export {
-  AddScreen,
-  CredentialScreen,
-  HomeScreen,
-  LoginScreen,
-  SettingsScreen,
-  SetupScreen,
-  ShareScreen,
-};
+export { default as AddScreen } from './AddScreen/AddScreen';
+export { default as CredentialScreen } from './CredentialScreen/CredentialScreen';
+export { default as HomeScreen } from './HomeScreen/HomeScreen';
+export { default as LoginScreen } from './LoginScreen/LoginScreen';
+export { default as SettingsScreen } from './SettingsScreen/SettingsScreen';
+export { default as SetupScreen } from './SetupScreen/SetupScreen';
+export { default as ShareScreen } from './ShareScreen/ShareScreen';
+export { default as QRScreen } from './QRScreen/QRScreen';
+export { default as ImportScreen } from './ImportScreen/ImportScreen';
