@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleProp, ViewStyle } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
@@ -15,8 +14,6 @@ export interface AddCredentialViewProps {
 }
 
 export default function AddCredentialView({ style, goToQR, goToImport }: AddCredentialViewProps): JSX.Element {
-  const navigation = useNavigation();
-
   return (
     <View style={style}>
       <Text style={styles.paragraph}>
