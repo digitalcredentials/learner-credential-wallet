@@ -4,7 +4,7 @@ import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bott
 export type TabParamList = {
   HomeScreen: undefined;
   ShareScreen: undefined;
-  AddScreen: undefined;
+  AddCredentialNavigation: undefined;
   SettingsScreen: undefined;
 };
 
@@ -18,9 +18,9 @@ export type ShareScreenProps = {
   navigation: MaterialBottomTabNavigationProp<TabParamList, 'ShareScreen'>;
 }
 
-export type AddScreenProps = {
-  route: RouteProp<TabParamList, 'AddScreen'>;
-  navigation: MaterialBottomTabNavigationProp<TabParamList, 'AddScreen'>;
+export type AddCredentialNavigationProps = {
+  route: RouteProp<TabParamList, 'AddCredentialNavigation'>;
+  navigation: MaterialBottomTabNavigationProp<TabParamList, 'AddCredentialNavigation'>;
 }
 
 export type SettingsScreenProps = {
