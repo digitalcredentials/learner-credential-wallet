@@ -1,3 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-export default StyleSheet.create({});
+import theme from '../../styles/theme';
+
+export default StyleSheet.create({
+  cameraStyle: {
+    height: Dimensions.get('window').height,
+  },
+  markerStyle: {
+    borderColor: theme.color.textPrimary,
+  },
+  emptyContainer: {
+    height: 0,
+    flex: 0,
+  },
+});
