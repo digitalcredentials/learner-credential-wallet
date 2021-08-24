@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Header, ListItem, Button } from 'react-native-elements';
+import { Header, ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MaterialIcons } from '@expo/vector-icons';
 
 import mixins from '../../styles/mixins';
 import style from './SettingsScreen.style';
 import mockCredential from '../../mock/credential';
 import { lock, reset, addCredential } from '../../store/slices/wallet';
+import NavHeader from '../../components/NavHeader/NavHeader';
 import {
   SettingsItemProps,
-  BackButtonProps,
   SettingsProps,
   RestoreProps,
   BackupProps,
@@ -63,31 +62,10 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   );
 }
 
-function BackButton({ onPress }: BackButtonProps): JSX.Element {
-  return (
-    <Button
-      onPress={onPress}
-      buttonStyle={style.buttonStyle}
-      icon={(
-        <MaterialIcons
-          name="arrow-back-ios"
-          size={20}
-          style={style.iconStyle}
-        />
-      )}
-      title=""
-    />
-  );
-}
-
 function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Restore', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-        leftComponent={<BackButton onPress={goBack} />}
-      />
+      <NavHeader goBack={goBack} title="Restore" />
       <View style={style.bodyContainer}>
         <Text>Restore</Text>
       </View>
@@ -98,11 +76,7 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
 function Backup({ navigation: { goBack } }: BackupProps): JSX.Element {
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Backup', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-        leftComponent={<BackButton onPress={goBack} />}
-      />
+      <NavHeader goBack={goBack} title="Backup" />
       <View style={style.bodyContainer}>
         <Text>Backup</Text>
       </View>
@@ -113,11 +87,7 @@ function Backup({ navigation: { goBack } }: BackupProps): JSX.Element {
 function About({ navigation: { goBack } }: AboutProps): JSX.Element {
   return (
     <>
-      <Header
-        centerComponent={{ text: 'About', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-        leftComponent={<BackButton onPress={goBack} />}
-      />
+      <NavHeader goBack={goBack} title="About" />
       <View style={style.bodyContainer}>
         <Text>About</Text>
       </View>
