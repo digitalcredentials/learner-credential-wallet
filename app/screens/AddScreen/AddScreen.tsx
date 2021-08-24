@@ -1,17 +1,12 @@
 import React from 'react';
 import { Header } from 'react-native-elements';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import mixins from '../../styles/mixins';
 import AddCredentialView from '../../components/AddCredentialView/AddCredentialView';
-import QRScreen from '../QRScreen/QRScreen';
-import ImportScreen from '../ImportScreen/ImportScreen';
 import styles from './AddScreen.style';
-import type { StackParamList, AddCredentialHomeProps } from './AddScreen.d';
+import { AddScreenProps } from '../../navigation/AddCredentialNavigation/AddCredentialNavigation.d';
 
-const Stack = createStackNavigator<StackParamList>();
-
-function AddCredentialHome({ navigation }: AddCredentialHomeProps): JSX.Element {
+export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   return (
     <>
       <Header
@@ -25,15 +20,5 @@ function AddCredentialHome({ navigation }: AddCredentialHomeProps): JSX.Element 
         goToImport={() => navigation.navigate('ImportScreen')}
       />
     </>
-  );
-}
-
-export default function AddScreen(): JSX.Element {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="AddCredentialHome" component={AddCredentialHome} />
-      <Stack.Screen name="QRScreen" component={QRScreen} />
-      <Stack.Screen name="ImportScreen" component={ImportScreen} />
-    </Stack.Navigator>
   );
 }

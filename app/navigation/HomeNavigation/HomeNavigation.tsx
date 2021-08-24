@@ -5,7 +5,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
 import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
-import { ShareScreen, AddScreen, SettingsScreen } from '../../screens';
+import AddCredentialNavigation from '../../navigation/AddCredentialNavigation/AddCredentialNavigation';
+import { ShareScreen, SettingsScreen } from '../../screens';
 import type { TabIconProps } from './HomeNavigation.d';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -34,7 +35,7 @@ export default function HomeNavigation(): JSX.Element {
         title: 'Share',
         tabBarIcon: ShareTabIcon,
       }}/>
-      <Tab.Screen name="AddScreen" component={AddScreen} options={{
+      <Tab.Screen name="AddCredentialNavigation" component={AddCredentialNavigation} options={{
         title: 'Add',
         tabBarIcon: AddTabIcon,
       }}/>
