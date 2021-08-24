@@ -55,7 +55,10 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
       {credentials.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.header}>Looks like your wallet is empty.</Text>
-          <AddCredentialView />
+          <AddCredentialView
+            goToQR={() => {}}
+            goToImport={() => {}}
+          />
         </View>
       ) : (
         <FlatList
