@@ -10,9 +10,11 @@ import styles from './AddCredentialView.style';
 
 export interface AddCredentialViewProps {
   style?: StyleProp<ViewStyle>;
+  goToQR: () => void;
+  goToImport: () => void;
 }
 
-export default function AddCredentialView({ style }: AddCredentialViewProps): JSX.Element {
+export default function AddCredentialView({ style, goToQR, goToImport }: AddCredentialViewProps): JSX.Element {
   const navigation = useNavigation();
 
   return (
@@ -26,7 +28,7 @@ export default function AddCredentialView({ style }: AddCredentialViewProps): JS
         buttonStyle={mixins.buttonIcon}
         titleStyle={mixins.buttonIconTitle}
         iconRight
-        onPress={() => navigation.navigate('QRScreen')}
+        onPress={() => goToQR()}
         icon={
           <MaterialIcons
             name="qr-code-scanner"
@@ -40,7 +42,7 @@ export default function AddCredentialView({ style }: AddCredentialViewProps): JS
         buttonStyle={mixins.buttonIcon}
         titleStyle={mixins.buttonIconTitle}
         iconRight
-        onPress={() => navigation.navigate('QRScreen')}
+        onPress={() => goToImport()}
         icon={
           <MaterialCommunityIcons
             name="file-upload"
