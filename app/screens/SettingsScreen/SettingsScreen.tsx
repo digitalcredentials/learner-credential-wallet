@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, Linking } from 'react-native';
 import { Header, ListItem, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import walletImage from '../../assets/wallet.png';
 import mixins from '../../styles/mixins';
 import style from './SettingsScreen.style';
 import mockCredential from '../../mock/credential';
@@ -20,8 +21,7 @@ import {
 
 const Stack = createStackNavigator();
 
-function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
-  return (
+function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element { return (
     <ListItem
       containerStyle={style.listItemContainer}
       onPress={onPress}
@@ -45,7 +45,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         centerComponent={{ text: 'Settings', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
-      <View style={style.bodyContainer}>
+      <View style={style.settingsContainer}>
         <SettingsItem title="Restore" onPress={() => navigation.navigate('Restore')} />
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
@@ -119,7 +119,17 @@ function About({ navigation: { goBack } }: AboutProps): JSX.Element {
         leftComponent={<BackButton onPress={goBack} />}
       />
       <View style={style.bodyContainer}>
-        <Text>About</Text>
+        <Image style={style.image} source={walletImage} />
+        <Text style={style.paragraph}>EDU Wallet</Text>
+        <Text style={style.paragraph}>
+          This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
+        </Text>
+        <Text style={style.paragraph}>
+            More information at <Text style={style.link} onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')} >https://digitalcredentials.mit.edu</Text>.
+        </Text>
+        <Text style={style.paragraph}>
+          Copyright 2021 Massachusetts Institute of Technology
+        </Text>
       </View>
     </>
   );

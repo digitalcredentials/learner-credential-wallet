@@ -4,6 +4,7 @@ import { FontFamily } from './fonts';
 
 const theme: ThemeType = {
   color: {
+    linkColor: Color.DarkCyan,
     backgroundPrimary: Color.Gray800,
     backgroundSecondary: Color.Gray900,
     foregroundPrimary: Color.Gray700,
