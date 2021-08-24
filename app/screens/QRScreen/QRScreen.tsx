@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Header, ListItem, Button } from 'react-native-elements';
+import { Header, Button } from 'react-native-elements';
 
 // TODO: Move add screen into navigation
 import { QRScreenProps } from '../../screens/AddScreen/AddScreen.d';
