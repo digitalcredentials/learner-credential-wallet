@@ -21,7 +21,8 @@ import {
 
 const Stack = createStackNavigator();
 
-function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element { return (
+function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
+  return (
     <ListItem
       containerStyle={style.listItemContainer}
       onPress={onPress}
