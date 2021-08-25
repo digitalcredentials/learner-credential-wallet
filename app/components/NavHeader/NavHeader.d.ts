@@ -1,8 +1,7 @@
-export type NavHeaderProps = {
+import { HeaderProps } from 'react-native-elements';
+
+export interface NavHeaderProps extends HeaderProps {
   title: string;
   goBack: () => void;
-}
-
-export type BackButtonProps = {
-  onPress: () => void;
+  rightComponent: JSX.Element;
 }

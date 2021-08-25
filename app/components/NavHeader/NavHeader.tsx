@@ -1,35 +1,30 @@
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Header, Button } from 'react-native-elements';
+import { Header } from 'react-native-elements';
 
-import type { NavHeaderProps, BackButtonProps } from './NavHeader.d';
+import type { NavHeaderProps } from './NavHeader.d';
 import mixins from '../../styles/mixins';
-import styles from './NavHeader.styles';
 
-// TODO: Make this it's own component to be DRY (also in settings screen)
-function BackButton({ onPress }: BackButtonProps): JSX.Element {
-  return (
-    <Button
-      onPress={onPress}
-      buttonStyle={styles.buttonStyle}
-      icon={(
-        <MaterialIcons
-          name="arrow-back-ios"
-          size={20}
-          style={styles.iconStyle}
-        />
-      )}
-      title=""
-    />
-  );
-}
-
-export default function NavHeader({ title, goBack }: NavHeaderProps): JSX.Element {
+export default function NavHeader({
+  title,
+  goBack,
+  ...headerProps
+}: NavHeaderProps): JSX.Element {
   return (
     <Header
-      centerComponent={{ text: title, style: mixins.headerTitle}}
+      leftContainerStyle={mixins.headerComponentContainer}
+      centerContainerStyle={mixins.headerComponentContainer}
+      rightContainerStyle={mixins.headerComponentContainer}
+      leftComponent={{
+        icon: 'arrow-back',
+        iconStyle: mixins.headerIcon,
+        onPress: goBack,
+      }}
+      centerComponent={{
+        text: title,
+        style: mixins.headerTitle,
+      }}
       containerStyle={mixins.headerContainer}
-      leftComponent={<BackButton onPress={goBack} />}
+      {...headerProps}
     />
   );
 }
