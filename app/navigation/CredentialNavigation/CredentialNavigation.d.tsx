@@ -1,10 +1,10 @@
 import type { StackScreenProps } from '@react-navigation/stack';
-import type { Credential } from '../../types/credential';
+import type { CredentialObject } from '../../model/dao/Credential';
 
 type StackParamList = {
   HomeScreen: undefined;
   CredentialScreen: {
-    credential: Credential;
+    credentialObject: CredentialObject;
   };
 };
 
