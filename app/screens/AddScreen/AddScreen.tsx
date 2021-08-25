@@ -7,8 +7,15 @@ import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
 import style from './AddScreen.style';
 import { AddScreenProps } from '../../navigation/AddCredentialNavigation/AddCredentialNavigation.d';
+import { navigationRef } from '../../../App';
 
 export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
+  function goToImport() {
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('SettingsScreen', { screen: 'Restore' });
+    }
+  }
+
   return (
     <>
       <Header
@@ -39,7 +46,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
           buttonStyle={mixins.buttonIcon}
           titleStyle={mixins.buttonIconTitle}
           iconRight
-          onPress={() => navigation.navigate('ImportScreen')}
+          onPress={goToImport}
           icon={
             <MaterialCommunityIcons
               name="file-upload"

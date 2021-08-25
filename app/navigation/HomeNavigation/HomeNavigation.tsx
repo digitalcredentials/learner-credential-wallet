@@ -7,9 +7,9 @@ import theme from '../../styles/theme';
 import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
 import AddCredentialNavigation from '../../navigation/AddCredentialNavigation/AddCredentialNavigation';
 import { ShareScreen, SettingsScreen } from '../../screens';
-import type { TabIconProps } from './HomeNavigation.d';
+import type { TabParamList, TabIconProps } from './HomeNavigation.d';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
 const HomeTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="home" color={color} size={theme.iconSize} />;
 const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" color={color} size={theme.iconSize} />;
