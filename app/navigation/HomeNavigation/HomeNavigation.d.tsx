@@ -2,10 +2,11 @@ import { RouteProp, NavigatorScreenParams } from '@react-navigation/native';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 
 import type { StackParamList as AddCredentialNavigationParamList } from '../AddCredentialNavigation/AddCredentialNavigation.d';
+import type { StackParamList as CredentialNavigationParamList } from '../CredentialNavigation/CredentialNavigation.d';
 import type { StackParamList as SettingsNavigationParamList } from '../SettingsNavigation/SettingsNavigation.d';
 
 export type TabParamList = {
-  CredentialNavigation: undefined;
+  CredentialNavigation: NavigatorScreenParams<CredentialNavigationParamList>;
   ShareScreen: undefined;
   AddCredentialNavigation: NavigatorScreenParams<AddCredentialNavigationParamList>;
   SettingsNavigation: NavigatorScreenParams<SettingsNavigationParamList>;
