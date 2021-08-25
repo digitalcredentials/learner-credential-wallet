@@ -53,9 +53,9 @@ function StartStep({ navigation }: StartStepProps) {
         A place to store all your credentials. They stay on your device until
         you decide to share them.
       </Text>
-      <View style={styles.buttonGroup}>
+      <View style={mixins.buttonGroup}>
         <Button
-          buttonStyle={[mixins.button, styles.buttonPrimary]}
+          buttonStyle={[mixins.button, mixins.buttonPrimary]}
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Start Setup"
@@ -88,7 +88,7 @@ function CreateStep({ navigation, route }: CreateStepProps) {
       <View style={styles.loadingContainer}>
         <LoadingIndicator loading={loading} />
       </View>
-      <View style={styles.buttonGroup}>
+      <View style={mixins.buttonGroup}>
         <Button
           buttonStyle={[mixins.button, styles.buttonClear]}
           containerStyle={mixins.buttonContainer}
@@ -96,7 +96,7 @@ function CreateStep({ navigation, route }: CreateStepProps) {
           title="Cancel"
           onPress={() => navigation.navigate('PasswordStep')}
         />
-        <View style={styles.buttonSeparator} />
+        <View style={mixins.buttonSeparator} />
         <Button
           buttonStyle={mixins.button}
           containerStyle={mixins.buttonContainer}
@@ -188,7 +188,7 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           {errorText}
         </Text>
       </View>
-      <View style={styles.buttonGroup}>
+      <View style={mixins.buttonGroup}>
         <Button
           buttonStyle={[mixins.button, styles.buttonClear]}
           containerStyle={mixins.buttonContainer}
@@ -196,9 +196,9 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           title="Cancel"
           onPress={() => navigation.navigate('StartStep')}
         />
-        <View style={styles.buttonSeparator} />
+        <View style={mixins.buttonSeparator} />
         <Button
-          buttonStyle={[mixins.button, styles.buttonPrimary]}
+          buttonStyle={[mixins.button, mixins.buttonPrimary]}
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Finalize"

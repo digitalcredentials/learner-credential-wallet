@@ -13,6 +13,7 @@ const theme: ThemeType = {
     iconActive: Color.White,
     iconInactive: Color.Gray400,
     buttonPrimary: Color.DarkCyan,
+    buttonSecondary: Color.Gray600,
     buttonDisabled: Color.Gray500,
     shadow: Color.Black,
     success: Color.Green,

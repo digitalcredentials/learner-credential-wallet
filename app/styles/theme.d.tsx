@@ -12,6 +12,7 @@ export type ThemeType = {
     iconActive: Color;
     iconInactive: Color;
     buttonPrimary: Color;
+    buttonSecondary: Color;
     buttonDisabled: Color;
     shadow: Color;
     success: Color;
