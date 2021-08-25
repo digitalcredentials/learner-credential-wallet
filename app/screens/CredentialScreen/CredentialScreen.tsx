@@ -3,18 +3,25 @@ import { View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-n
 import { Header } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
 import type { CredentialScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
 import MenuItem from '../../components/MenuItem/MenuItem';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
+import { deleteCredential } from '../../store/slices/wallet';
 
 import styles from './CredentialScreen.style';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
+  const dispatch = useDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const { credential } = route.params;
+  const { credentialObject } = route.params;
+  const { credential } = credentialObject;
+
   const title = credential.credentialSubject.hasCredential?.name ?? '';
   const description = credential.credentialSubject.hasCredential?.description ?? '';
   const issuer =
@@ -30,7 +37,6 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const image = null; // TODO: Decide where to pull image from.
   const verified = true; // TODO: Add logic for verifying credential.
 
-
   const HeaderRightComponent = (
     <>
       <MaterialIcons
@@ -42,7 +48,10 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         <View style={styles.menuContainer}>
           <MenuItem icon="share" title="Share" onPress={() => null} />
           <MenuItem icon="bug-report" title="Debug" onPress={() => null} />
-          <MenuItem icon="delete" title="Delete" onPress={() => null} />
+          <MenuItem icon="delete" title="Delete" onPress={() => {
+            setMenuIsOpen(false);
+            setModalIsOpen(true);
+          }}/>
         </View>
       ) : null}
     </>
@@ -66,6 +75,22 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         rightComponent={HeaderRightComponent}
         containerStyle={mixins.headerContainer}
       />
+      <ConfirmModal
+        open={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(!modalIsOpen)}
+        onConfirm={() => {
+          dispatch(deleteCredential(credentialObject));
+          navigation.goBack();
+        }}
+        title="Delete Credential"
+        confirmText="Delete"
+      >
+        <Text style={styles.modalBodyText}>
+          Are you sure you want to remove {'\n'}
+          {title} {'\n'}
+          from your wallet?
+        </Text>
+      </ConfirmModal>
       <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)}>
         <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>
           <View style={styles.container}>
