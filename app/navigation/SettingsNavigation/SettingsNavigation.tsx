@@ -7,7 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
-import style from './SettingsNavigation.style';
+import styles from './SettingsNavigation.styles';
 import mockCredential from '../../mock/credential';
 import { lock, reset, addCredential } from '../../store/slices/wallet';
 import NavHeader from '../../components/NavHeader/NavHeader';
@@ -24,11 +24,11 @@ const Stack = createStackNavigator();
 function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
   return (
     <ListItem
-      containerStyle={style.listItemContainer}
+      containerStyle={styles.listItemContainer}
       onPress={onPress}
     >
       <ListItem.Content>
-        <ListItem.Title style={style.listItemTitle}>
+        <ListItem.Title style={styles.listItemTitle}>
           {title}
         </ListItem.Title>
       </ListItem.Content>
@@ -46,7 +46,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         centerComponent={{ text: 'Settings', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
-      <View style={style.settingsContainer}>
+      <View style={styles.settingsContainer}>
         <SettingsItem title="Restore" onPress={() => navigation.navigate('Restore')} />
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
@@ -68,8 +68,8 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
   return (
     <>
       <NavHeader goBack={goBack} title="Restore" />
-      <View style={style.bodyContainer}>
-        <Text style={style.paragraph}>Select a walllet file (.extension) from your device to restore from.</Text>
+      <View style={styles.bodyContainer}>
+        <Text style={styles.paragraph}>Select a walllet file (.extension) from your device to restore from.</Text>
         <Button
           title="Choose a file"
           buttonStyle={mixins.buttonIcon}
@@ -92,8 +92,8 @@ function Backup({ navigation: { goBack } }: BackupProps): JSX.Element {
   return (
     <>
       <NavHeader goBack={goBack} title="Backup" />
-      <View style={style.bodyContainer}>
-        <Text style={style.paragraph}>This will export your wallet contents into a file for you to download.</Text>
+      <View style={styles.bodyContainer}>
+        <Text style={styles.paragraph}>This will export your wallet contents into a file for you to download.</Text>
         <Button
           title="Backup my wallet"
           buttonStyle={mixins.buttonIcon}
@@ -116,7 +116,7 @@ function About({ navigation: { goBack } }: AboutProps): JSX.Element {
   return (
     <>
       <NavHeader goBack={goBack} title="About" />
-      <View style={style.bodyContainer}>
+      <View style={styles.bodyContainer}>
         <Text>About</Text>
       </View>
     </>

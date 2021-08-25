@@ -12,7 +12,7 @@ import theme from '../../styles/theme';
 import { HomeScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
 import { navigationRef } from '../../../App';
 
-import styles from './HomeScreen.style';
+import styles from './HomeScreen.styles';
 import { RenderItemProps } from './HomeScreen.d';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {

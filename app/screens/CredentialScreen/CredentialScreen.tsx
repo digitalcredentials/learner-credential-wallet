@@ -9,7 +9,7 @@ import theme from '../../styles/theme';
 import type { CredentialScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
 import MenuItem from '../../components/MenuItem/MenuItem';
 
-import styles from './CredentialScreen.style';
+import styles from './CredentialScreen.styles';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const [menuIsOpen, setMenuIsOpen] = useState(false);

@@ -12,7 +12,7 @@ import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
 import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
 import walletImage from '../../assets/wallet.png';
 
-import styles from './SetupScreen.style';
+import styles from './SetupScreen.styles';
 import type {
   StartStepProps,
   CreateStepProps,

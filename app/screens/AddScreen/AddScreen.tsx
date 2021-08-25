@@ -5,7 +5,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
-import style from './AddScreen.style';
+import styles from './AddScreen.styles';
 import { AddScreenProps } from '../../navigation/AddCredentialNavigation/AddCredentialNavigation.d';
 import { navigationRef } from '../../../App';
 
@@ -22,8 +22,8 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
         centerComponent={{ text: 'Add Credential', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
-      <View style={style.container}>
-        <Text style={style.paragraph}>
+      <View style={styles.container}>
+        <Text style={styles.paragraph}>
           To add credentials, follow an approved link from an issuer (most often a
           University) or use the options below.
         </Text>

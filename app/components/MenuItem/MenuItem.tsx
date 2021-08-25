@@ -3,7 +3,7 @@ import { ListItem } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
-import styles from './MenuItem.style';
+import styles from './MenuItem.styles';
 
 export interface MenuItemProps {
   icon: React.ComponentProps<typeof MaterialIcons>['name'];
