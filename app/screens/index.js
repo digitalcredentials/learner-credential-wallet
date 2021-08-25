@@ -5,4 +5,3 @@ export { default as LoginScreen } from './LoginScreen/LoginScreen';
 export { default as SetupScreen } from './SetupScreen/SetupScreen';
 export { default as ShareScreen } from './ShareScreen/ShareScreen';
 export { default as QRScreen } from './QRScreen/QRScreen';
-export { default as ImportScreen } from './ImportScreen/ImportScreen';

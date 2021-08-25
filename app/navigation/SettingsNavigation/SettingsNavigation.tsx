@@ -88,10 +88,10 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
   );
 }
 
-function Backup({ navigation: { goBack } }: BackupProps): JSX.Element {
+function Backup({ navigation }: BackupProps): JSX.Element {
   return (
     <>
-      <NavHeader goBack={goBack} title="Backup" />
+      <NavHeader goBack={() => navigation.navigate('Settings')} title="Backup" />
       <View style={styles.bodyContainer}>
         <Text style={styles.paragraph}>This will export your wallet contents into a file for you to download.</Text>
         <Button
@@ -112,10 +112,10 @@ function Backup({ navigation: { goBack } }: BackupProps): JSX.Element {
   );
 }
 
-function About({ navigation: { goBack } }: AboutProps): JSX.Element {
+function About({ navigation }: AboutProps): JSX.Element {
   return (
     <>
-      <NavHeader goBack={goBack} title="About" />
+      <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <View style={styles.bodyContainer}>
         <Text>About</Text>
       </View>
