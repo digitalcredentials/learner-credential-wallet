@@ -39,9 +39,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
     );
   }
 
-  function goToAddScreen() {
+  function goToCredentialList() {
     if (navigationRef.isReady()) {
-      navigationRef.navigate('AddCredentialNavigation');
+      navigationRef.navigate('CredentialNavigation');
     }
   }
 
@@ -51,7 +51,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         title="Add Credential"
         buttonStyle={mixins.buttonIcon}
         titleStyle={mixins.buttonIconTitle}
-        onPress={goToAddScreen}
+        onPress={goToCredentialList}
         iconRight
         icon={
           <MaterialIcons

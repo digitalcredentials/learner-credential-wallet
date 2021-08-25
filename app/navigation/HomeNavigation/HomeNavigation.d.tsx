@@ -2,18 +2,18 @@ import { RouteProp, NavigatorScreenParams } from '@react-navigation/native';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 
 import type { StackParamList as AddCredentialNavigationParamList } from '../AddCredentialNavigation/AddCredentialNavigation.d';
-import type { StackParamList as SettingsScreenParamList } from '../../screens/SettingsScreen/SettingsScreen.d';
+import type { StackParamList as SettingsNavigationParamList } from '../SettingsNavigation/SettingsNavigation.d';
 
 export type TabParamList = {
-  HomeScreen: undefined;
+  CredentialNavigation: undefined;
   ShareScreen: undefined;
   AddCredentialNavigation: NavigatorScreenParams<AddCredentialNavigationParamList>;
-  SettingsScreen: NavigatorScreenParams<SettingsScreenParamList>;
+  SettingsNavigation: NavigatorScreenParams<SettingsNavigationParamList>;
 };
 
 export type HomeScreenProps = {
-  route: RouteProp<TabParamList, 'HomeScreen'>;
-  navigation: MaterialBottomTabNavigationProp<TabParamList, 'HomeScreen'>;
+  route: RouteProp<TabParamList, 'CredentialNavigation'>;
+  navigation: MaterialBottomTabNavigationProp<TabParamList, 'CredentialNavigation'>;
 }
 
 export type ShareScreenProps = {
@@ -26,9 +26,9 @@ export type AddCredentialNavigationProps = {
   navigation: MaterialBottomTabNavigationProp<TabParamList, 'AddCredentialNavigation'>;
 }
 
-export type SettingsScreenProps = {
-  route: RouteProp<TabParamList, 'SettingsScreen'>;
-  navigation: MaterialBottomTabNavigationProp<TabParamList, 'SettingsScreen'>;
+export type SettingsNavigationProps = {
+  route: RouteProp<TabParamList, 'SettingsNavigation'>;
+  navigation: MaterialBottomTabNavigationProp<TabParamList, 'SettingsNavigation'>;
 }
 
 export type TabIconProps = {

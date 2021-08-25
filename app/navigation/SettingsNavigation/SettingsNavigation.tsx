@@ -7,7 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
-import style from './SettingsScreen.style';
+import style from './SettingsNavigation.style';
 import mockCredential from '../../mock/credential';
 import { lock, reset, addCredential } from '../../store/slices/wallet';
 import NavHeader from '../../components/NavHeader/NavHeader';
@@ -17,7 +17,7 @@ import {
   RestoreProps,
   BackupProps,
   AboutProps,
-} from './SettingsScreen.d';
+} from './SettingsNavigation.d';
 
 const Stack = createStackNavigator();
 
@@ -123,7 +123,7 @@ function About({ navigation: { goBack } }: AboutProps): JSX.Element {
   );
 }
 
-export default function SettingsScreen(): JSX.Element {
+export default function SettingsNavigation(): JSX.Element {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
