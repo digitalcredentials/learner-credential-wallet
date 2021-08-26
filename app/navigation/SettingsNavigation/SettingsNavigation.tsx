@@ -1,10 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Image, Linking } from 'react-native';
 import { Header, Text, Button, ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import walletImage from '../../assets/wallet.png';
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
 import styles from './SettingsNavigation.styles';
@@ -117,7 +118,17 @@ function About({ navigation }: AboutProps): JSX.Element {
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <View style={styles.bodyContainer}>
-        <Text>About</Text>
+        <Image style={styles.image} source={walletImage} />
+        <Text style={styles.paragraph}>EDU Wallet</Text>
+        <Text style={styles.paragraph}>
+          This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
+        </Text>
+        <Text style={styles.paragraph}>
+            More information at <Text style={styles.link} onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')} >https://digitalcredentials.mit.edu</Text>.
+        </Text>
+        <Text style={styles.paragraph}>
+          Copyright 2021 Massachusetts Institute of Technology
+        </Text>
       </View>
     </>
   );
