@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
