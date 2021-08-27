@@ -61,9 +61,9 @@ export default function ConfirmModal({
           <View style={[mixins.buttonGroup, styles.buttonGroupContainer]}>
             {cancelButton ? (
               <Button
-                buttonStyle={[mixins.button, styles.buttonSecondary]}
+                buttonStyle={styles.buttonSecondary}
                 containerStyle={mixins.buttonContainer}
-                titleStyle={[mixins.buttonTitle, styles.buttonSecondaryTitle]}
+                titleStyle={styles.buttonSecondaryTitle}
                 title={cancelText}
                 onPress={() => {
                   onRequestClose();
@@ -76,7 +76,7 @@ export default function ConfirmModal({
             ) : null }
             {confirmButton ? (
               <Button
-                buttonStyle={[mixins.button, mixins.buttonPrimary]}
+                buttonStyle={styles.buttonPrimary}
                 containerStyle={mixins.buttonContainer}
                 titleStyle={mixins.buttonTitle}
                 title={confirmText}

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import theme from '../../styles/theme';
+import mixins from '../../styles/mixins';
 
 export default StyleSheet.create({
   modalBackground: {
@@ -27,10 +28,16 @@ export default StyleSheet.create({
   buttonGroupContainer: {
     marginTop: 16,
   },
+  buttonPrimary: {
+    ...mixins.button, 
+    ...mixins.buttonPrimary,
+  },
   buttonSecondary: {
+    ...mixins.button,
     backgroundColor: theme.color.buttonSecondary,
   },
   buttonSecondaryTitle: {
+    ...mixins.buttonTitle,
     color: theme.color.textPrimary,
   },
 });
