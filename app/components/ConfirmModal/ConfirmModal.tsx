@@ -6,7 +6,7 @@ import mixins from '../../styles/mixins';
 
 import styles from './ConfirmModal.style';
 
-export interface ConfirmModalProps {
+export type ConfirmModalProps = React.PropsWithChildren<{
   open: boolean;
 
   onRequestClose: () => void;
@@ -20,9 +20,7 @@ export interface ConfirmModalProps {
   title?: string;
   confirmText?: string;
   cancelText?: string;
-
-  children?: React.ReactNode,
-}
+}>
 
 export default function ConfirmModal({
   open,
