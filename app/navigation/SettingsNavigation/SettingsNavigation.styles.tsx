@@ -14,18 +14,10 @@ export default StyleSheet.create({
     backgroundColor: theme.color.backgroundPrimary,
     padding: 16,
   },
-  settingsContainer: {
-    backgroundColor: theme.color.backgroundPrimary,
-  },
   listItemTitle: {
     color: theme.color.textSecondary,
     paddingTop: 8,
     paddingBottom: 8,
-  },
-  paragraph: {
-    ...mixins.paragraphText,
-    marginBottom: 24,
-    marginTop: 8,
   },
   listItemContainer: {
     backgroundColor: theme.color.backgroundPrimary,
