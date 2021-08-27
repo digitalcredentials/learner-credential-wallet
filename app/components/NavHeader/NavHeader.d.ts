@@ -1,6 +1,6 @@
 import { HeaderProps } from 'react-native-elements';
 
-export interface NavHeaderProps extends HeaderProps {
+export type NavHeaderProps = HeaderProps & {
   title: string;
   goBack: () => void;
 }

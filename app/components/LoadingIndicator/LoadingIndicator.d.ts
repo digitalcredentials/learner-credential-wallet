@@ -1,3 +1,3 @@
-export interface LoadingIndicatorProps {
+export type LoadingIndicatorProps = {
   loading: boolean;
 }

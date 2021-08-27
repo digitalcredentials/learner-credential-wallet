@@ -13,17 +13,17 @@ export type SettingsNavigationParamList = {
 };
 
 export type SettingsProps = {
-  navigation: StackNavigationProp<StackParamList, 'Settings'>;
+  navigation: StackNavigationProp<SettingsNavigationParamList, 'Settings'>;
 }
 
 export type RestoreProps = {
-  navigation: StackNavigationProp<StackParamList, 'Restore'>;
+  navigation: StackNavigationProp<SettingsNavigationParamList, 'Restore'>;
 }
 
 export type BackupProps = {
-  navigation: StackNavigationProp<StackParamList, 'Backup'>;
+  navigation: StackNavigationProp<SettingsNavigationParamList, 'Backup'>;
 }
 
 export type AboutProps = {
-  navigation: StackNavigationProp<StackParamList, 'About'>;
+  navigation: StackNavigationProp<SettingsNavigationParamList, 'About'>;
 }
