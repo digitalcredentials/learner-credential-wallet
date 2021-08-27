@@ -1,1 +1,1 @@
-export type { QRScreenProps } from '../../navigation/AddCredentialNavigation/AddCredentialNavigation.d';
+export type { QRScreenProps } from '../../navigation';

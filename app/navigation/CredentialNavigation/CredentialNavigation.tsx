@@ -3,8 +3,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeScreen, CredentialScreen } from '../../screens';
+import { CredentialNavigationParamList } from '../';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<CredentialNavigationParamList>();
 
 export default function CredentialNavigation(): JSX.Element {
   return (

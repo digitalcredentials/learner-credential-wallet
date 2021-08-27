@@ -4,14 +4,17 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
-import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
-import AddCredentialNavigation from '../../navigation/AddCredentialNavigation/AddCredentialNavigation';
-import SettingsNavigation from '../../navigation/SettingsNavigation/SettingsNavigation';
 import styles from './HomeNavigation.styles';
-import type { TabParamList, TabIconProps } from './HomeNavigation.d';
 import { ShareScreen } from '../../screens';
+import {
+  CredentialNavigation,
+  AddCredentialNavigation,
+  SettingsNavigation,
+  HomeNavigationParamList,
+  TabIconProps,
+} from '../../navigation';
 
-const Tab = createMaterialBottomTabNavigator<TabParamList>();
+const Tab = createMaterialBottomTabNavigator<HomeNavigationParamList>();
 
 const HomeTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="home" color={color} size={theme.iconSize} />;
 const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" color={color} size={theme.iconSize} />;

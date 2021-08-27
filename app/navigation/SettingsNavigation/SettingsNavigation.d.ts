@@ -5,7 +5,7 @@ export type SettingsItemProps = {
   readonly onPress: () => void;
 }
 
-export type StackParamList = {
+export type SettingsNavigationParamList = {
   Settings: undefined;
   Backup: undefined;
   Restore: undefined;

@@ -1,9 +1,9 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 
-export type StackParamList = {
+export type AddCredentialNavigationParamList = {
   AddScreen: undefined;
   QRScreen: undefined;
 };
 
-export type AddScreenProps = StackScreenProps<StackParamList, 'AddScreen'>;
-export type QRScreenProps = StackScreenProps<StackParamList, 'QRScreen'>;
+export type AddScreenProps = StackScreenProps<AddCredentialNavigationParamList, 'AddScreen'>;
+export type QRScreenProps = StackScreenProps<AddCredentialNavigationParamList, 'QRScreen'>;

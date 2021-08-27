@@ -1,1 +1,1 @@
-export type { AddScreenProps } from '../../navigation/AddCredentialNavigation/AddCredentialNavigation.d';
+export type { AddScreenProps } from '../../navigation';

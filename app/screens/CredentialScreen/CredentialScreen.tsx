@@ -5,8 +5,8 @@ import moment from 'moment';
 
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
-import MenuItem from '../../components/MenuItem/MenuItem';
-import NavHeader from '../../components/NavHeader/NavHeader';
+import { MenuItem } from '../../components';
+import { NavHeader } from '../../components';
 
 import type { CredentialScreenProps } from './CredentialScreen.d';
 import styles from './CredentialScreen.styles';

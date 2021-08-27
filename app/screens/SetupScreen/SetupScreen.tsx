@@ -9,7 +9,7 @@ import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
 import { initialize } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
-import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
+import { LoadingIndicator } from '../../components';
 import walletImage from '../../assets/wallet.png';
 
 import styles from './SetupScreen.styles';

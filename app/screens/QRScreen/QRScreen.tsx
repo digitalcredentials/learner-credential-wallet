@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
-import NavHeader from '../../components/NavHeader/NavHeader';
+import { NavHeader } from '../../components';
 import { QRScreenProps } from './QRScreen.d';
 import styles from './QRScreen.styles';
 
