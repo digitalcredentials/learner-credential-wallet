@@ -7,8 +7,9 @@ import theme from '../../styles/theme';
 import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
 import AddCredentialNavigation from '../../navigation/AddCredentialNavigation/AddCredentialNavigation';
 import SettingsNavigation from '../../navigation/SettingsNavigation/SettingsNavigation';
-import { ShareScreen } from '../../screens';
+import styles from './HomeNavigation.styles';
 import type { TabParamList, TabIconProps } from './HomeNavigation.d';
+import { ShareScreen } from '../../screens';
 
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
@@ -24,9 +25,7 @@ export default function HomeNavigation(): JSX.Element {
       inactiveColor={theme.color.iconInactive}
       labeled={false}
       shifting={true}
-      barStyle={{
-        backgroundColor: theme.color.backgroundSecondary,
-      }}
+      barStyle={styles.barStyle}
     >
       <Tab.Screen name="CredentialNavigation" component={CredentialNavigation} options={{
         title: 'Home',

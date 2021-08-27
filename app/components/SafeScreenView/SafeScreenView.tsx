@@ -1,15 +1,9 @@
 import React from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  SafeAreaView,
-  NativeSafeAreaViewProps,
-} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styles from './SafeScreenView.styles';
-
-export interface SafeScreenViewProps extends NativeSafeAreaViewProps {
-  children: React.ReactNode;
-}
+import type { SafeScreenViewProps } from './SafeScreenView.d';
 
 export default function SafeScreenView({
   children,

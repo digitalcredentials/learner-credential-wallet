@@ -4,12 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
 import styles from './MenuItem.styles';
-
-export interface MenuItemProps {
-  icon: React.ComponentProps<typeof MaterialIcons>['name'];
-  title: string;
-  onPress: () => void;
-}
+import type { MenuItemProps } from './MenuItem.d';
 
 export default function MenuItem({ icon, title, onPress }: MenuItemProps): JSX.Element {
   return (

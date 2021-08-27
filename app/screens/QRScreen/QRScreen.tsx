@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
-import { QRScreenProps } from '../../navigation/AddCredentialNavigation/AddCredentialNavigation.d';
 import NavHeader from '../../components/NavHeader/NavHeader';
+import { QRScreenProps } from './QRScreen.d';
 import styles from './QRScreen.styles';
 
 export default function QRScreen({ navigation: { goBack }}: QRScreenProps): JSX.Element {

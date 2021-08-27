@@ -6,7 +6,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
 import styles from './AddScreen.styles';
-import { AddScreenProps } from '../../navigation/AddCredentialNavigation/AddCredentialNavigation.d';
+import { AddScreenProps } from './AddScreen.d';
 import { navigationRef } from '../../../App';
 
 export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
