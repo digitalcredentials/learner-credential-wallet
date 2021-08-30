@@ -6,7 +6,7 @@ import { HomeScreen, CredentialScreen } from '../../screens';
 
 const Stack = createStackNavigator();
 
-export default function HomeNavigation(): JSX.Element {
+export default function CredentialNavigation(): JSX.Element {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />

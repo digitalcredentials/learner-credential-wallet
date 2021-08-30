@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import { Header } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 
@@ -8,8 +7,9 @@ import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
 import type { CredentialScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
 import MenuItem from '../../components/MenuItem/MenuItem';
+import NavHeader from '../../components/NavHeader/NavHeader';
 
-import styles from './CredentialScreen.style';
+import styles from './CredentialScreen.styles';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -30,7 +30,6 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const image = null; // TODO: Decide where to pull image from.
   const verified = true; // TODO: Add logic for verifying credential.
 
-
   const HeaderRightComponent = (
     <>
       <MaterialIcons
@@ -50,21 +49,10 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
 
   return (
     <>
-      <Header
-        leftContainerStyle={mixins.headerComponentContainer}
-        centerContainerStyle={mixins.headerComponentContainer}
-        rightContainerStyle={mixins.headerComponentContainer}
-        leftComponent={{
-          icon: 'arrow-back',
-          iconStyle: mixins.headerIcon,
-          onPress: () => navigation.goBack(),
-        }}
-        centerComponent={{
-          text: 'Credential Preview',
-          style: mixins.headerTitle,
-        }}
+      <NavHeader
+        title="Credential Preview"
+        goBack={() => navigation.goBack()}
         rightComponent={HeaderRightComponent}
-        containerStyle={mixins.headerContainer}
       />
       <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)}>
         <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>

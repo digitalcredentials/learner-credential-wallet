@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { Credential } from '../../types/credential';
 
-type StackParamList = {
+export type StackParamList = {
   HomeScreen: undefined;
   CredentialScreen: {
     credential: Credential;

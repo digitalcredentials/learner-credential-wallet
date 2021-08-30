@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
-import styles from './CredentialItem.style';
+import styles from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
 
 export default function CredentialItem({

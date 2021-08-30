@@ -10,6 +10,10 @@ target 'eduwallet' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  # For React Native Camera
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+
   # Uncomment to opt-in to using Flipper
   #
   # if !ENV['CI']

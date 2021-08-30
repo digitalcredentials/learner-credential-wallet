@@ -5,10 +5,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
 import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
-import { ShareScreen, AddScreen, SettingsScreen } from '../../screens';
-import type { TabIconProps } from './HomeNavigation.d';
+import AddCredentialNavigation from '../../navigation/AddCredentialNavigation/AddCredentialNavigation';
+import SettingsNavigation from '../../navigation/SettingsNavigation/SettingsNavigation';
+import { ShareScreen } from '../../screens';
+import type { TabParamList, TabIconProps } from './HomeNavigation.d';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
 const HomeTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="home" color={color} size={theme.iconSize} />;
 const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" color={color} size={theme.iconSize} />;
@@ -34,11 +36,11 @@ export default function HomeNavigation(): JSX.Element {
         title: 'Share',
         tabBarIcon: ShareTabIcon,
       }}/>
-      <Tab.Screen name="AddScreen" component={AddScreen} options={{
+      <Tab.Screen name="AddCredentialNavigation" component={AddCredentialNavigation} options={{
         title: 'Add',
         tabBarIcon: AddTabIcon,
       }}/>
-      <Tab.Screen name="SettingsScreen" component={SettingsScreen} options={{
+      <Tab.Screen name="SettingsNavigation" component={SettingsNavigation} options={{
         title: 'Settings',
         tabBarIcon: SettingsTabIcon,
       }}/>

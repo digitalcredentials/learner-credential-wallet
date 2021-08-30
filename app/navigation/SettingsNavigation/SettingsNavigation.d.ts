@@ -5,10 +5,6 @@ export type SettingsItemProps = {
   readonly onPress: () => void;
 }
 
-export type BackButtonProps = {
-  onPress: () => void;
-}
-
 export type StackParamList = {
   Settings: undefined;
   Backup: undefined;

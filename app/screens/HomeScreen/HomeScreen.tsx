@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux';
 import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
 import CredentialItem from '../../components/CredentialItem/CredentialItem';
-import AddCredentialView from '../../components/AddCredentialView/AddCredentialView';
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
 import { HomeScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
+import { navigationRef } from '../../../App';
 
-import styles from './HomeScreen.style';
+import styles from './HomeScreen.styles';
 import { RenderItemProps } from './HomeScreen.d';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
@@ -39,6 +39,31 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
     );
   }
 
+  function goToCredentialAdd() {
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('AddCredentialNavigation', { screen: 'AddScreen' });
+    }
+  }
+
+  function AddCredentialButton(): JSX.Element {
+    return (
+      <Button
+        title="Add Credential"
+        buttonStyle={mixins.buttonIcon}
+        titleStyle={mixins.buttonIconTitle}
+        onPress={goToCredentialAdd}
+        iconRight
+        icon={
+          <MaterialIcons
+            name="add-circle"
+            size={theme.iconSize}
+            color={theme.color.iconInactive}
+          />
+        }
+      />
+    );
+  }
+
   return (
     <>
       <Header
@@ -48,29 +73,15 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
       {credentials.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.header}>Looks like your wallet is empty.</Text>
-          <AddCredentialView />
+          <AddCredentialButton />
         </View>
       ) : (
         <FlatList
           style={styles.container}
           data={credentials}
           renderItem={renderItem}
-          keyExtractor={(item, index) => `${index}-{item.id}`}
-          ListFooterComponent={
-            <Button
-              title="Add Credential"
-              buttonStyle={mixins.buttonIcon}
-              titleStyle={mixins.buttonIconTitle}
-              iconRight
-              icon={
-                <MaterialIcons
-                  name="add-circle"
-                  size={theme.iconSize}
-                  color={theme.color.iconInactive}
-                />
-              }
-            />
-          }
+          keyExtractor={(item, index) => `${index}-${item.id}`}
+          ListFooterComponent={<AddCredentialButton />}
         />
       )}
     </>
