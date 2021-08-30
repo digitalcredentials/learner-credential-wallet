@@ -2,9 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { QRScreen, AddScreen } from '../../screens';
-import type { StackParamList } from './AddCredentialNavigation.d';
+import type { AddCredentialNavigationParamList } from '../';
 
-const Stack = createStackNavigator<StackParamList>();
+const Stack = createStackNavigator<AddCredentialNavigationParamList>();
 
 export default function AddCredentialNavigation(): JSX.Element {
   return (

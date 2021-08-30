@@ -12,10 +12,9 @@ import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@exp
 import store from './app/store';
 import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
 import theme from './app/styles/theme';
-import AppNavigation from './app/navigation/AppNavigation/AppNavigation';
-import type { TabParamList } from './app/navigation/HomeNavigation/HomeNavigation.d';
+import { AppNavigation, HomeNavigationParamList } from './app/navigation';
 
-export const navigationRef = createNavigationContainerRef<TabParamList>();
+export const navigationRef = createNavigationContainerRef<HomeNavigationParamList>();
 const navigatorTheme = {
   ...DefaultTheme,
   colors: {

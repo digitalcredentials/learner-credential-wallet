@@ -1,5 +1,5 @@
 export type IssuerURI = string;
-export interface IssuerObject {
+export type IssuerObject = {
   readonly id: IssuerURI;
   readonly type?: string;
   readonly name?: string;
@@ -8,11 +8,11 @@ export interface IssuerObject {
 }
 export type Issuer = IssuerURI | IssuerObject;
 
-export interface CreditValue {
+export type CreditValue = {
   value?: string;
 }
 
-export interface CompletionDocument {
+export type CompletionDocument = {
   readonly type?: string;
   readonly identifier?: string;
   readonly name?: string;
@@ -22,28 +22,28 @@ export interface CompletionDocument {
   readonly endDate?: string;
 }
 
-export interface EducationalOperationalCredentialExtensions {
+export type EducationalOperationalCredentialExtensions = {
   readonly type?: string[];
   readonly awardedOnCompletionOf?: CompletionDocument;
 }
 
 // https://schema.org/EducationalOccupationalCredential (this doesn't really conform)
-export interface EducationalOperationalCredential extends EducationalOperationalCredentialExtensions {
+export type EducationalOperationalCredential = EducationalOperationalCredentialExtensions & {
   readonly name?: string;
   readonly description?: string;
 }
 
-interface SubjectExtensions {
+type SubjectExtensions = {
   readonly type?: string;
   readonly name?: string;
   readonly hasCredential?: EducationalOperationalCredential; // https://schema.org/hasCredential
 }
 
-export interface Subject extends SubjectExtensions {
+export type Subject = SubjectExtensions & {
   readonly id?: string;
 }
 
-export interface Proof {
+export type Proof = {
   type: string;
   created: string;
   verificationMethod: string;

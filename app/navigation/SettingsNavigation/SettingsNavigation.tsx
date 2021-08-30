@@ -11,14 +11,14 @@ import theme from '../../styles/theme';
 import styles from './SettingsNavigation.styles';
 import mockCredential from '../../mock/credential';
 import { lock, reset, addCredential } from '../../store/slices/wallet';
-import NavHeader from '../../components/NavHeader/NavHeader';
+import { NavHeader } from '../../components';
 import {
   SettingsItemProps,
   SettingsProps,
   RestoreProps,
   BackupProps,
   AboutProps,
-} from './SettingsNavigation.d';
+} from '../';
 
 const Stack = createStackNavigator();
 

@@ -4,13 +4,17 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
-import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
-import AddCredentialNavigation from '../../navigation/AddCredentialNavigation/AddCredentialNavigation';
-import SettingsNavigation from '../../navigation/SettingsNavigation/SettingsNavigation';
+import styles from './HomeNavigation.styles';
 import { ShareScreen } from '../../screens';
-import type { TabParamList, TabIconProps } from './HomeNavigation.d';
+import {
+  CredentialNavigation,
+  AddCredentialNavigation,
+  SettingsNavigation,
+  HomeNavigationParamList,
+  TabIconProps,
+} from '../../navigation';
 
-const Tab = createMaterialBottomTabNavigator<TabParamList>();
+const Tab = createMaterialBottomTabNavigator<HomeNavigationParamList>();
 
 const HomeTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="home" color={color} size={theme.iconSize} />;
 const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" color={color} size={theme.iconSize} />;
@@ -24,9 +28,7 @@ export default function HomeNavigation(): JSX.Element {
       inactiveColor={theme.color.iconInactive}
       labeled={false}
       shifting={true}
-      barStyle={{
-        backgroundColor: theme.color.backgroundSecondary,
-      }}
+      barStyle={styles.barStyle}
     >
       <Tab.Screen name="CredentialNavigation" component={CredentialNavigation} options={{
         title: 'Home',

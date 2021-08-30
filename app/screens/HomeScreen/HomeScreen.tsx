@@ -6,14 +6,13 @@ import { useSelector } from 'react-redux';
 
 import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
-import CredentialItem from '../../components/CredentialItem/CredentialItem';
+import { CredentialItem } from '../../components';
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
-import { HomeScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
 import { navigationRef } from '../../../App';
 
 import styles from './HomeScreen.styles';
-import { RenderItemProps } from './HomeScreen.d';
+import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
   const { credentials } = useSelector<RootState, WalletState>(
