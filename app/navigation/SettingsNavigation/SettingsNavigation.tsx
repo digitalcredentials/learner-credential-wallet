@@ -70,7 +70,7 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
     <>
       <NavHeader goBack={goBack} title="Restore" />
       <View style={styles.bodyContainer}>
-        <Text style={styles.paragraph}>Select a walllet file (.extension) from your device to restore from.</Text>
+        <Text style={styles.paragraph}>Select a wallet file (.extension) from your device to restore from.</Text>
         <Button
           title="Choose a file"
           buttonStyle={mixins.buttonIcon}
