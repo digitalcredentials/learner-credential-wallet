@@ -12,7 +12,10 @@ import { navigationRef } from '../../../App';
 export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   function goToImport() {
     if (navigationRef.isReady()) {
-      navigationRef.navigate('SettingsNavigation', { screen: 'Restore' });
+      navigationRef.navigate('SettingsNavigation', {
+        screen: 'Restore',
+        initial: false,
+      });
     }
   }
 
