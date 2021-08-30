@@ -3,6 +3,7 @@ import { FontFamily } from './fonts';
 
 export type ThemeType = {
   color: {
+    linkColor: Color;
     backgroundPrimary: Color;
     backgroundSecondary: Color;
     foregroundPrimary: Color;
