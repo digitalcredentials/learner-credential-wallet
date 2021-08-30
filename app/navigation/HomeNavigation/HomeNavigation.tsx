@@ -5,9 +5,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
 import styles from './HomeNavigation.styles';
-import { ShareScreen } from '../../screens';
 import {
   CredentialNavigation,
+  ShareNavigation,
   AddCredentialNavigation,
   SettingsNavigation,
   HomeNavigationParamList,
@@ -34,7 +34,7 @@ export default function HomeNavigation(): JSX.Element {
         title: 'Home',
         tabBarIcon: HomeTabIcon,
       }}/>
-      <Tab.Screen name="ShareScreen" component={ShareScreen} options={{
+      <Tab.Screen name="ShareNavigation" component={ShareNavigation} options={{
         title: 'Share',
         tabBarIcon: ShareTabIcon,
       }}/>
