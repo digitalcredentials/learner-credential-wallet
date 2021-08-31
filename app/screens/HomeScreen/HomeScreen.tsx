@@ -25,7 +25,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
       typeof item.issuer !== 'string' && item.issuer.name !== undefined
         ? item.issuer.name
         : '';
-    const onPress = () => navigation.navigate('CredentialScreen', { credential: item });
+    const onSelect = () => navigation.navigate('CredentialScreen', { credential: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (
@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         title={title}
         subtitle={subtitle}
         image={image}
-        onPress={onPress}
+        onSelect={onSelect}
       />
     );
   }
