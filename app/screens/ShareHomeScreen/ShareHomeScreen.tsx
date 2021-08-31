@@ -62,7 +62,7 @@ export default function ShareHomeScreen({
     return (
       <Button
         title="Share Selected Credentials"
-        buttonStyle={mixins.buttonPrimary}
+        buttonStyle={styles.shareButton}
         titleStyle={mixins.buttonTitle}
         onPress={goToPreview}
       />
