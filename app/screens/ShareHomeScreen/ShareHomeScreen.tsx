@@ -46,6 +46,29 @@ export default function ShareHomeScreen({
     );
   }
 
+  function goToPreview() {
+    navigation.navigate('PresentationPreviewScreen', {
+      selectedCredentials: selected.map(
+        (index) => credentials[index],
+      ),
+    });
+  }
+
+  function ShareButton(): JSX.Element | null {
+    if (selected.length === 0) {
+      return null;
+    }
+
+    return (
+      <Button
+        title="Share Selected Credentials"
+        buttonStyle={mixins.buttonPrimary}
+        titleStyle={mixins.buttonTitle}
+        onPress={goToPreview}
+      />
+    );
+  }
+
   return (
     <>
       <Header
@@ -62,16 +85,7 @@ export default function ShareHomeScreen({
           renderItem={renderItem}
           keyExtractor={(item, index) => `${index}-${item.id}`}
         />
-        <Button
-          title="Share Selected Credentials"
-          buttonStyle={mixins.buttonPrimary}
-          titleStyle={mixins.buttonTitle}
-          onPress={() => navigation.navigate('PresentationPreviewScreen', {
-            selectedCredentials: selected.map(
-              (index) => credentials[index],
-            ),
-          })}
-        />
+        <ShareButton />
       </View>
     </>
   );
