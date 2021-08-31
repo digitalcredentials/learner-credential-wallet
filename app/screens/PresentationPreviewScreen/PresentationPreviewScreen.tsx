@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { Header, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
 import { mixins } from '../../styles';
-import { CredentialItem } from '../../components';
+import { CredentialItem, NavHeader } from '../../components';
 import styles from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
@@ -35,9 +35,9 @@ export default function PresentationPreviewScreen({
 
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Share Preview', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
+      <NavHeader
+        title="Share Preview"
+        goBack={() => navigation.navigate('ShareHomeScreen')}
       />
       <View style={styles.container}>
         <FlatList
