@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { Header, Text } from 'react-native-elements';
+import { Header, Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../store';
@@ -9,8 +9,11 @@ import { CredentialItem } from '../../components';
 import { mixins } from '../../styles';
 import styles from './ShareHomeScreen.styles';
 import type { RenderItemProps } from './ShareHomeScreen.d';
+import type { ShareHomeScreenProps } from '../../navigation';
 
-export default function ShareHomeScreen(): JSX.Element {
+export default function ShareHomeScreen({
+  navigation,
+}: ShareHomeScreenProps): JSX.Element {
   const [selected, setSelected] = useState<number[]>([]);
   const { credentials } = useSelector<RootState, WalletState>(
     ({ wallet }) => wallet,
@@ -58,6 +61,16 @@ export default function ShareHomeScreen(): JSX.Element {
           data={credentials}
           renderItem={renderItem}
           keyExtractor={(item, index) => `${index}-${item.id}`}
+        />
+        <Button
+          title="Share Selected Credentials"
+          buttonStyle={mixins.buttonPrimary}
+          titleStyle={mixins.buttonTitle}
+          onPress={() => navigation.navigate('PresentationPreviewScreen', {
+            selectedCredentials: selected.map(
+              (index) => credentials[index],
+            ),
+          })}
         />
       </View>
     </>

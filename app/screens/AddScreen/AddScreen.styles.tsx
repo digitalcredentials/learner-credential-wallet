@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import mixins from '../../styles/mixins';
+import { mixins } from '../../styles';
 
 export default StyleSheet.create({
   container: {
@@ -11,5 +11,8 @@ export default StyleSheet.create({
     ...mixins.paragraphText,
     marginBottom: 24,
     marginTop: 8,
+  },
+  shareButton: {
+    ...mixins.buttonPrimary,
   },
 });

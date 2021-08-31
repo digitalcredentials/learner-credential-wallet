@@ -67,6 +67,12 @@ export default StyleSheet.create({
     padding: 16,
     borderRadius: theme.borderRadius,
   },
+  buttonPrimary: {
+    ...shadow,
+    backgroundColor: theme.color.buttonPrimary,
+    padding: 16,
+    borderRadius: theme.borderRadius,
+  },
   buttonContainer: {
     flex: 1,
   },
