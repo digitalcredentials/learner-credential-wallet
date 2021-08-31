@@ -20,7 +20,7 @@ export default function PresentationPreviewScreen({
       typeof item.issuer !== 'string' && item.issuer.name !== undefined
         ? item.issuer.name
         : '';
-    const onSelect = () => navigation.navigate('ShareCredentialPreviewScreen', { credential: item });
+    const onSelect = () => navigation.navigate('CredentialScreen', { credential: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (

@@ -7,11 +7,11 @@ export type ShareNavigationParamsList = {
   PresentationPreviewScreen: {
     selectedCredentials: Credential[];
   };
-  ShareCredentialPreviewScreen: {
+  CredentialScreen: {
     credential: Credential;
   };
 };
 
 export type ShareHomeScreenProps = StackScreenProps<ShareNavigationParamsList, 'ShareHomeScreen'>;
 export type PresentationPreviewScreenProps = StackScreenProps<ShareNavigationParamsList, 'PresentationPreviewScreen'>;
-export type ShareCredentialPreviewScreenProps = StackScreenProps<ShareNavigationParamsList, 'ShareCredentialPreviewScreen'>;
+export type CredentialScreenShareProps = StackScreenProps<ShareNavigationParamsList, 'CredentialScreen'>;

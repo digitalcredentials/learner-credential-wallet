@@ -5,7 +5,7 @@ import { ShareNavigationParamsList } from '../';
 import {
   ShareHomeScreen,
   PresentationPreviewScreen,
-  ShareCredentialPreviewScreen,
+  CredentialScreen,
 } from '../../screens';
 
 const Stack = createStackNavigator<ShareNavigationParamsList>();
@@ -15,7 +15,7 @@ export default function ShareNavigation(): JSX.Element {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ShareHomeScreen" component={ShareHomeScreen} />
       <Stack.Screen name="PresentationPreviewScreen" component={PresentationPreviewScreen} />
-      <Stack.Screen name="ShareCredentialPreviewScreen" component={ShareCredentialPreviewScreen} />
+      <Stack.Screen name="CredentialScreen" component={CredentialScreen} />
     </Stack.Navigator>
   );
 }
