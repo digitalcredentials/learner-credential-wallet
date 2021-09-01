@@ -80,7 +80,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
           style={styles.container}
           data={credentialObjects}
           renderItem={renderItem}
-          keyExtractor={(item, index) => `${index}-${item.id}`}
+          keyExtractor={(item, index) => `${index}-${item.objectId}`}
           ListFooterComponent={<AddCredentialButton />}
         />
       )}
