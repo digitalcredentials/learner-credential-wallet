@@ -1,14 +1,14 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 
-import type { Credential } from '../../types/credential';
+import type { CredentialObject } from '../../model/dao/Credential';
 
 export type ShareNavigationParamsList = {
   ShareHomeScreen: undefined;
   PresentationPreviewScreen: {
-    selectedCredentials: Credential[];
+    selectedCredentials: CredentialObject[];
   };
   CredentialScreen: {
-    credential: Credential;
+    credentialObject: CredentialObject;
   };
 };
 

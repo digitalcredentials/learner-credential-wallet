@@ -15,7 +15,7 @@ export default function ShareHomeScreen({
   navigation,
 }: ShareHomeScreenProps): JSX.Element {
   const [selected, setSelected] = useState<number[]>([]);
-  const { credentials } = useSelector<RootState, WalletState>(
+  const { credentialObjects } = useSelector<RootState, WalletState>(
     ({ wallet }) => wallet,
   );
 
@@ -28,7 +28,8 @@ export default function ShareHomeScreen({
   }
 
   function renderItem({ item, index }: RenderItemProps): JSX.Element {
-    const { credentialSubject, issuer } = item;
+    const { credential } = item;
+    const { credentialSubject, issuer } = credential;
     const title = credentialSubject.hasCredential?.name ?? '';
     const subtitle =
       typeof issuer !== 'string' && issuer.name !== undefined
@@ -49,7 +50,7 @@ export default function ShareHomeScreen({
   function goToPreview() {
     navigation.navigate('PresentationPreviewScreen', {
       selectedCredentials: selected.map(
-        (index) => credentials[index],
+        (index) => credentialObjects[index],
       ),
     });
   }
@@ -81,9 +82,9 @@ export default function ShareHomeScreen({
         </Text>
         <FlatList
           style={styles.credentialList}
-          data={credentials}
+          data={credentialObjects}
           renderItem={renderItem}
-          keyExtractor={(item, index) => `${index}-${item.id}`}
+          keyExtractor={(item, index) => `${index}-${item.credential.id}`}
         />
         <ShareButton />
       </View>

@@ -16,12 +16,14 @@ export default function PresentationPreviewScreen({
   const { selectedCredentials } = route.params;
 
   function renderItem({ item }: RenderItemProps) {
-    const title = item.credentialSubject.hasCredential?.name ?? '';
+    const { credential } = item;
+    const { credentialSubject, issuer } = credential;
+    const title = credentialSubject.hasCredential?.name ?? '';
     const subtitle =
-      typeof item.issuer !== 'string' && item.issuer.name !== undefined
-        ? item.issuer.name
+      typeof issuer !== 'string' && issuer.name !== undefined
+        ? issuer.name
         : '';
-    const onSelect = () => navigation.navigate('CredentialScreen', { credential: item });
+    const onSelect = () => navigation.navigate('CredentialScreen', { credentialObject: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (

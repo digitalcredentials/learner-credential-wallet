@@ -29,7 +29,9 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "comma-dangle": ["error", "always-multiline"],
+    "react-native/sort-styles": "off",
     "react-native/no-raw-text": "off",
-    "react-native/sort-styles": "off"
+    "react-native/sort-styles": "off",
+    "@typescript-eslint/no-empty-function": "off"
   }
 }
