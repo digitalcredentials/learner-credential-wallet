@@ -1,10 +1,10 @@
 import Share from 'react-native-share';
 import * as RNFS from 'react-native-fs';
 
-import type { Credential } from '../types';
+import type { Credential } from '../types/credential';
 
 // TODO: Actually share a VP, not an array of credentials
-export async function sharePresentation(credentials: Credential[]): void {
+export async function sharePresentation(credentials: Credential[]): Promise<void> {
   const filePath = `${RNFS.DocumentDirectoryPath}/presentation.json`;
 
   await RNFS.writeFile(filePath, JSON.stringify(credentials), 'utf8');
