@@ -50,7 +50,7 @@ export default function PresentationPreviewScreen({
           keyExtractor={(item, index) => `${index}-${item.credential.id}`}
         />
         <Button
-          title="Share Selected Credentials"
+          title="Send"
           buttonStyle={mixins.buttonPrimary}
           titleStyle={mixins.buttonTitle}
           onPress={() => sharePresentation(selectedCredentials)}
