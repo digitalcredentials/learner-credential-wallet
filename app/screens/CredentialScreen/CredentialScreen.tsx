@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import { Header } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
-import type { CredentialScreenProps } from '../../navigation/CredentialNavigation/CredentialNavigation.d';
-import MenuItem from '../../components/MenuItem/MenuItem';
-import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 import { deleteCredential } from '../../store/slices/wallet';
+import { MenuItem, NavHeader, ConfirmModal } from '../../components';
 
-import styles from './CredentialScreen.style';
+import type { CredentialScreenProps } from './CredentialScreen.d';
+import styles from './CredentialScreen.styles';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const dispatch = useDispatch();
@@ -59,21 +57,10 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
 
   return (
     <>
-      <Header
-        leftContainerStyle={mixins.headerComponentContainer}
-        centerContainerStyle={mixins.headerComponentContainer}
-        rightContainerStyle={mixins.headerComponentContainer}
-        leftComponent={{
-          icon: 'arrow-back',
-          iconStyle: mixins.headerIcon,
-          onPress: () => navigation.goBack(),
-        }}
-        centerComponent={{
-          text: 'Credential Preview',
-          style: mixins.headerTitle,
-        }}
+      <NavHeader
+        title="Credential Preview"
+        goBack={() => navigation.goBack()}
         rightComponent={HeaderRightComponent}
-        containerStyle={mixins.headerContainer}
       />
       <ConfirmModal
         open={modalIsOpen}

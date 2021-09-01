@@ -1,13 +1,13 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { CredentialObject } from '../../model/dao/Credential';
 
-type StackParamList = {
+export type CredentialNavigationParamList = {
   HomeScreen: undefined;
   CredentialScreen: {
     credentialObject: CredentialObject;
   };
 };
 
-export type HomeScreenProps = StackScreenProps<StackParamList, 'HomeScreen'>;
-export type CredentialScreenProps = StackScreenProps<StackParamList, 'CredentialScreen'>;
+export type HomeScreenProps = StackScreenProps<CredentialNavigationParamList, 'HomeScreen'>;
+export type CredentialScreenProps = StackScreenProps<CredentialNavigationParamList, 'CredentialScreen'>;
 

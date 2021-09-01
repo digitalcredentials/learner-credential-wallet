@@ -8,7 +8,7 @@ import { Credential } from '../types/credential';
  * so we are choosing to store credentials as
  * stringified JSON.
  */
-export interface CredentialRecordRaw {
+export type CredentialRecordRaw = {
   readonly _id: ObjectID;
   readonly createdAt: Date;
   readonly updatedAt: Date;

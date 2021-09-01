@@ -1,31 +1,37 @@
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, NavigatorScreenParams } from '@react-navigation/native';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 
-type TabParamList = {
-  HomeScreen: undefined;
+import type {
+  AddCredentialNavigationParamList,
+  CredentialNavigationParamList,
+  SettingsNavigationParamList,
+} from '../';
+
+export type HomeNavigationParamList = {
+  CredentialNavigation: NavigatorScreenParams<CredentialNavigationParamList>;
   ShareScreen: undefined;
-  AddScreen: undefined;
-  SettingsScreen: undefined;
+  AddCredentialNavigation: NavigatorScreenParams<AddCredentialNavigationParamList>;
+  SettingsNavigation: NavigatorScreenParams<SettingsNavigationParamList>;
 };
 
-export type HomeScreenProps = {
-  route: RouteProp<TabParamList, 'HomeScreen'>;
-  navigation: MaterialBottomTabNavigationProp<TabParamList, 'HomeScreen'>;
+export type CredentialNavigationProps = {
+  route: RouteProp<HomeNavigationParamList, 'CredentialNavigation'>;
+  navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'CredentialNavigation'>;
 }
 
 export type ShareScreenProps = {
-  route: RouteProp<TabParamList, 'ShareScreen'>;
-  navigation: MaterialBottomTabNavigationProp<TabParamList, 'ShareScreen'>;
+  route: RouteProp<HomeNavigationParamList, 'ShareScreen'>;
+  navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'ShareScreen'>;
 }
 
-export type AddScreenProps = {
-  route: RouteProp<TabParamList, 'AddScreen'>;
-  navigation: MaterialBottomTabNavigationProp<TabParamList, 'AddScreen'>;
+export type AddCredentialNavigationProps = {
+  route: RouteProp<HomeNavigationParamList, 'AddCredentialNavigation'>;
+  navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'AddCredentialNavigation'>;
 }
 
-export type SettingsScreenProps = {
-  route: RouteProp<TabParamList, 'SettingsScreen'>;
-  navigation: MaterialBottomTabNavigationProp<TabParamList, 'SettingsScreen'>;
+export type SettingsNavigationProps = {
+  route: RouteProp<HomeNavigationParamList, 'SettingsNavigation'>;
+  navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'SettingsNavigation'>;
 }
 
 export type TabIconProps = {

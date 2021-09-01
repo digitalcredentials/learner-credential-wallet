@@ -3,13 +3,8 @@ import { ListItem } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
-import styles from './MenuItem.style';
-
-export interface MenuItemProps {
-  icon: React.ComponentProps<typeof MaterialIcons>['name'];
-  title: string;
-  onPress: () => void;
-}
+import styles from './MenuItem.styles';
+import type { MenuItemProps } from './MenuItem.d';
 
 export default function MenuItem({ icon, title, onPress }: MenuItemProps): JSX.Element {
   return (

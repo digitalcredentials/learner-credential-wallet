@@ -4,11 +4,17 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from '../../styles/theme';
-import CredentialNavigation from '../../navigation/CredentialNavigation/CredentialNavigation';
-import { ShareScreen, AddScreen, SettingsScreen } from '../../screens';
-import type { TabIconProps } from './HomeNavigation.d';
+import styles from './HomeNavigation.styles';
+import { ShareScreen } from '../../screens';
+import {
+  CredentialNavigation,
+  AddCredentialNavigation,
+  SettingsNavigation,
+  HomeNavigationParamList,
+  TabIconProps,
+} from '../../navigation';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator<HomeNavigationParamList>();
 
 const HomeTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="home" color={color} size={theme.iconSize} />;
 const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" color={color} size={theme.iconSize} />;
@@ -22,9 +28,7 @@ export default function HomeNavigation(): JSX.Element {
       inactiveColor={theme.color.iconInactive}
       labeled={false}
       shifting={true}
-      barStyle={{
-        backgroundColor: theme.color.backgroundSecondary,
-      }}
+      barStyle={styles.barStyle}
     >
       <Tab.Screen name="CredentialNavigation" component={CredentialNavigation} options={{
         title: 'Home',
@@ -34,11 +38,11 @@ export default function HomeNavigation(): JSX.Element {
         title: 'Share',
         tabBarIcon: ShareTabIcon,
       }}/>
-      <Tab.Screen name="AddScreen" component={AddScreen} options={{
+      <Tab.Screen name="AddCredentialNavigation" component={AddCredentialNavigation} options={{
         title: 'Add',
         tabBarIcon: AddTabIcon,
       }}/>
-      <Tab.Screen name="SettingsScreen" component={SettingsScreen} options={{
+      <Tab.Screen name="SettingsNavigation" component={SettingsNavigation} options={{
         title: 'Settings',
         tabBarIcon: SettingsTabIcon,
       }}/>

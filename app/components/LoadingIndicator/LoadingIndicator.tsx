@@ -14,12 +14,9 @@ import Animated, {
 
 import theme from '../../styles/theme';
 import styles from './LoadingIndicator.styles';
+import type { LoadingIndicatorProps } from './LoadingIndicator.d';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
-
-export interface LoadingIndicatorProps {
-  loading: boolean;
-}
 
 export default function ({ loading }: LoadingIndicatorProps): JSX.Element {
   const [percent, setPercent] = useState(25);

@@ -9,16 +9,16 @@ import theme from '../../styles/theme';
 import mixins from '../../styles/mixins';
 import { initialize } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
-import LoadingIndicator from '../../components/LoadingIndicator/LoadingIndicator';
+import { LoadingIndicator } from '../../components';
 import walletImage from '../../assets/wallet.png';
 
-import styles from './SetupScreen.style';
+import styles from './SetupNavigation.styles';
 import type {
   StartStepProps,
   CreateStepProps,
   PasswordStepProps,
   ForFadeType,
-} from './SetupScreen.d';
+} from './SetupNavigation.d';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +28,7 @@ const forFade: ForFadeType = ({ current }) => ({
   },
 });
 
-export default function SetupScreen(): JSX.Element {
+export default function SetupNavigation(): JSX.Element {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, gestureEnabled: false }}

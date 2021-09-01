@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { DefaultRootState } from 'react-redux';
 import wallet, { WalletState } from './slices/wallet';
 
-export interface RootState extends DefaultRootState {
+export type RootState = DefaultRootState & {
   wallet: WalletState;
 }
 

@@ -3,7 +3,7 @@ import { Text, TextInput, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
-import styles from './LoginScreen.style';
+import styles from './LoginScreen.styles';
 import theme from '../../styles/theme';
 import { unlock } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
