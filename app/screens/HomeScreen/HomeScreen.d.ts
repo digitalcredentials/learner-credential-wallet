@@ -1,6 +1,6 @@
-import type { Credential } from '../../types/credential/index.d';
+import type { CredentialObject } from '../../model/dao/Credential';
 export type { HomeScreenProps } from '../../navigation';
 
 export type RenderItemProps = {
-  item: Credential;
+  item: CredentialObject;
 }

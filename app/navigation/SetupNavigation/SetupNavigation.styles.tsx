@@ -60,15 +60,6 @@ export default StyleSheet.create({
   arrowIcon: {
     marginLeft: 20,
   },
-  buttonGroup: {
-    flexDirection: 'row',
-  },
-  buttonSeparator: {
-    width: 16,
-  },
-  buttonPrimary: {
-    backgroundColor: theme.color.buttonPrimary,
-  },
   buttonClear: {
     backgroundColor: theme.color.transparent,
   },

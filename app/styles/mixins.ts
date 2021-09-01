@@ -70,6 +70,12 @@ export default StyleSheet.create({
   buttonContainer: {
     flex: 1,
   },
+  buttonGroup: {
+    flexDirection: 'row',
+  },
+  buttonSeparator: {
+    width: 16,
+  },
   buttonTitle: {
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
@@ -87,6 +93,9 @@ export default StyleSheet.create({
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.medium,
+  },
+  buttonPrimary: {
+    backgroundColor: theme.color.buttonPrimary,
   },
 
   /* Input mixins */

@@ -1,30 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { db, CredentialRecord } from '../../model';
+import { db } from '../../model';
 import { Credential } from '../../types/credential';
+import CredentialDAO, { CredentialObject } from '../../model/dao/Credential';
 
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
-  credentials: Credential[];
+  credentialObjects: CredentialObject[];
 }
 
 const initialState: WalletState = {
   isUnlocked: null,
   isInitialized: null,
-  credentials: [],
+  credentialObjects: [],
 };
 
 const getAllCredentials = createAsyncThunk('walletState/getAllCredentials', async () => ({
-  credentials: await db.withInstance(instance => {
-    const results = instance.objects<CredentialRecord>(CredentialRecord.name);
-
-    if (results.length) {
-      return results.map(record => record.credential);
-    }
-
-    return [];
-  }),
+  credentialObjects: await CredentialDAO.getAllCredentials(),
 }));
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
@@ -53,12 +46,12 @@ const reset = createAsyncThunk('walletState/reset', async () => {
 });
 
 const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential, { dispatch }) => {
-  await db.withInstance(instance => {
-    instance.write(() => {
-      instance.create(CredentialRecord.name, CredentialRecord.fromRaw(credential));
-    });
-  });
+  await CredentialDAO.addCredential(credential);
+  await dispatch(getAllCredentials());
+});
 
+const deleteCredential = createAsyncThunk('walletState/deleteCredential', async (credentialObject: CredentialObject, { dispatch }) => {
+  await CredentialDAO.deleteCredential(credentialObject);
   await dispatch(getAllCredentials());
 });
 
@@ -111,4 +104,5 @@ export {
   pollWalletState,
   getAllCredentials,
   addCredential,
+  deleteCredential,
 };

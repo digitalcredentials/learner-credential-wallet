@@ -1,3 +1,4 @@
+export { default as ConfirmModal } from './ConfirmModal/ConfirmModal';
 export { default as CredentialItem } from './CredentialItem/CredentialItem';
 export { default as LoadingIndicator } from './LoadingIndicator/LoadingIndicator';
 export { default as MenuItem } from './MenuItem/MenuItem';

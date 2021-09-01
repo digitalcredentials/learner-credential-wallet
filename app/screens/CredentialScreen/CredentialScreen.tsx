@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
 import mixins from '../../styles/mixins';
 import theme from '../../styles/theme';
-import { MenuItem } from '../../components';
-import { NavHeader } from '../../components';
+import { deleteCredential } from '../../store/slices/wallet';
+import { MenuItem, NavHeader, ConfirmModal } from '../../components';
 
 import type { CredentialScreenProps } from './CredentialScreen.d';
 import styles from './CredentialScreen.styles';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
+  const dispatch = useDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const { credential } = route.params;
+  const { credentialObject } = route.params;
+  const { credential } = credentialObject;
+
   const title = credential.credentialSubject.hasCredential?.name ?? '';
   const description = credential.credentialSubject.hasCredential?.description ?? '';
   const issuer =
@@ -41,7 +46,10 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         <View style={styles.menuContainer}>
           <MenuItem icon="share" title="Share" onPress={() => null} />
           <MenuItem icon="bug-report" title="Debug" onPress={() => null} />
-          <MenuItem icon="delete" title="Delete" onPress={() => null} />
+          <MenuItem icon="delete" title="Delete" onPress={() => {
+            setMenuIsOpen(false);
+            setModalIsOpen(true);
+          }}/>
         </View>
       ) : null}
     </>
@@ -54,6 +62,22 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         goBack={() => navigation.goBack()}
         rightComponent={HeaderRightComponent}
       />
+      <ConfirmModal
+        open={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(!modalIsOpen)}
+        onConfirm={() => {
+          dispatch(deleteCredential(credentialObject));
+          navigation.goBack();
+        }}
+        title="Delete Credential"
+        confirmText="Delete"
+      >
+        <Text style={styles.modalBodyText}>
+          Are you sure you want to remove {'\n'}
+          {title} {'\n'}
+          from your wallet?
+        </Text>
+      </ConfirmModal>
       <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)}>
         <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>
           <View style={styles.container}>

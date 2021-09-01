@@ -64,4 +64,10 @@ export default StyleSheet.create({
   proofText: {
     marginHorizontal: 14,
   },
+  modalBodyText: {
+    ...mixins.paragraphText,
+    textAlign: 'center',
+    lineHeight: 24,
+    marginVertical: 8,
+  },
 });

@@ -15,17 +15,18 @@ import styles from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
-  const { credentials } = useSelector<RootState, WalletState>(
+  const { credentialObjects } = useSelector<RootState, WalletState>(
     ({ wallet }) => wallet,
   );
 
   function renderItem({ item }: RenderItemProps) {
-    const title = item.credentialSubject.hasCredential?.name ?? '';
+    const { credential } = item;
+    const title = credential.credentialSubject.hasCredential?.name ?? '';
     const subtitle =
-      typeof item.issuer !== 'string' && item.issuer.name !== undefined
-        ? item.issuer.name
+      typeof credential.issuer !== 'string' && credential.issuer.name !== undefined
+        ? credential.issuer.name
         : '';
-    const onPress = () => navigation.navigate('CredentialScreen', { credential: item });
+    const onPress = () => navigation.navigate('CredentialScreen', { credentialObject: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (
@@ -69,7 +70,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         centerComponent={{ text: 'Home', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
-      {credentials.length === 0 ? (
+      {credentialObjects.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.header}>Looks like your wallet is empty.</Text>
           <AddCredentialButton />
@@ -77,9 +78,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
       ) : (
         <FlatList
           style={styles.container}
-          data={credentials}
+          data={credentialObjects}
           renderItem={renderItem}
-          keyExtractor={(item, index) => `${index}-${item.id}`}
+          keyExtractor={(item, index) => `${index}-${item.objectId}`}
           ListFooterComponent={<AddCredentialButton />}
         />
       )}
