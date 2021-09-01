@@ -100,9 +100,6 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.medium,
   },
-  buttonPrimary: {
-    backgroundColor: theme.color.buttonPrimary,
-  },
 
   /* Input mixins */
   input: {

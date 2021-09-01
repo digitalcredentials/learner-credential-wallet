@@ -47,7 +47,7 @@ export default function PresentationPreviewScreen({
           style={styles.credentialList}
           data={selectedCredentials}
           renderItem={renderItem}
-          keyExtractor={(item, index) => `${index}-${item.id}`}
+          keyExtractor={(item, index) => `${index}-${item.credential.id}`}
         />
         <Button
           title="Share Selected Credentials"
