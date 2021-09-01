@@ -6543,6 +6543,11 @@ react-native-securerandom@^1.0.0:
   dependencies:
     base64-js "*"
 
+react-native-share@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-7.0.2.tgz#2d8dd25008a28ed1a74d65b94e86e6ca7ead91dd"
+  integrity sha512-eIcp27XgQq5saO3/LUgFtX5gWWYgYi/xXTZ3pP4boIM+3Rl374LsOn6U2YOzVQDW6m1MsOSI/Bnw7P6aUvZhYA==
+
 react-native-size-matters@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
