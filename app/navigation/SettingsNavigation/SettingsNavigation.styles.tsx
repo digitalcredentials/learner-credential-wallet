@@ -12,7 +12,6 @@ export default StyleSheet.create({
   },
   settingsContainer: {
     backgroundColor: theme.color.backgroundPrimary,
-    padding: 16,
   },
   listItemTitle: {
     color: theme.color.textSecondary,
