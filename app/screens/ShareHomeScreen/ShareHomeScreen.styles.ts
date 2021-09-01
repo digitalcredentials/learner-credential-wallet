@@ -5,6 +5,10 @@ import { mixins } from '../../styles';
 export default StyleSheet.create({
   container: {
     padding: 16,
+    paddingBottom: 0,
+    flex: 1,
+  },
+  credentialList: {
     flex: 1,
   },
   paragraph: {
@@ -14,5 +18,6 @@ export default StyleSheet.create({
   },
   shareButton: {
     ...mixins.buttonPrimary,
+    marginBottom: 10,
   },
 });

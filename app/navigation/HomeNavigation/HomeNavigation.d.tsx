@@ -9,7 +9,7 @@ import type {
 
 export type HomeNavigationParamList = {
   CredentialNavigation: NavigatorScreenParams<CredentialNavigationParamList>;
-  ShareScreen: undefined;
+  ShareNavigation: undefined;
   AddCredentialNavigation: NavigatorScreenParams<AddCredentialNavigationParamList>;
   SettingsNavigation: NavigatorScreenParams<SettingsNavigationParamList>;
 };
@@ -19,9 +19,9 @@ export type CredentialNavigationProps = {
   navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'CredentialNavigation'>;
 }
 
-export type ShareScreenProps = {
-  route: RouteProp<HomeNavigationParamList, 'ShareScreen'>;
-  navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'ShareScreen'>;
+export type ShareNavigationProps = {
+  route: RouteProp<HomeNavigationParamList, 'ShareNavigation'>;
+  navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'ShareNavigation'>;
 }
 
 export type AddCredentialNavigationProps = {

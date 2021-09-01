@@ -67,6 +67,12 @@ export default StyleSheet.create({
     padding: 16,
     borderRadius: theme.borderRadius,
   },
+  buttonPrimary: {
+    ...shadow,
+    backgroundColor: theme.color.buttonPrimary,
+    padding: 16,
+    borderRadius: theme.borderRadius,
+  },
   buttonContainer: {
     flex: 1,
   },
@@ -93,9 +99,6 @@ export default StyleSheet.create({
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.medium,
-  },
-  buttonPrimary: {
-    backgroundColor: theme.color.buttonPrimary,
   },
 
   /* Input mixins */
