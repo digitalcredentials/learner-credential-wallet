@@ -17,7 +17,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const { credentialObject } = route.params;
+  const { credentialObject, noShishKabob = false } = route.params;
   const { credential } = credentialObject;
 
   const title = credential.credentialSubject.hasCredential?.name ?? '';
@@ -35,32 +35,38 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const image = null; // TODO: Decide where to pull image from.
   const verified = true; // TODO: Add logic for verifying credential.
 
-  const HeaderRightComponent = (
-    <>
-      <MaterialIcons
-        name="more-vert"
-        style={mixins.headerIcon}
-        onPress={() => setMenuIsOpen(!menuIsOpen)}
-      />
-      {menuIsOpen ? (
-        <View style={styles.menuContainer}>
-          <MenuItem icon="share" title="Share" onPress={() => null} />
-          <MenuItem icon="bug-report" title="Debug" onPress={() => null} />
-          <MenuItem icon="delete" title="Delete" onPress={() => {
-            setMenuIsOpen(false);
-            setModalIsOpen(true);
-          }}/>
-        </View>
-      ) : null}
-    </>
-  );
+  function HeaderRightComponent(): JSX.Element | null {
+    if (noShishKabob) {
+      return null;
+    }
+
+    return (
+      <>
+        <MaterialIcons
+          name="more-vert"
+          style={mixins.headerIcon}
+          onPress={() => setMenuIsOpen(!menuIsOpen)}
+        />
+        {menuIsOpen ? (
+          <View style={styles.menuContainer}>
+            <MenuItem icon="share" title="Share" onPress={() => null} />
+            <MenuItem icon="bug-report" title="Debug" onPress={() => null} />
+            <MenuItem icon="delete" title="Delete" onPress={() => {
+              setMenuIsOpen(false);
+              setModalIsOpen(true);
+            }}/>
+          </View>
+        ) : null}
+      </>
+    );
+  }
 
   return (
     <>
       <NavHeader
         title="Credential Preview"
         goBack={() => navigation.goBack()}
-        rightComponent={HeaderRightComponent}
+        rightComponent={<HeaderRightComponent />}
       />
       <ConfirmModal
         open={modalIsOpen}

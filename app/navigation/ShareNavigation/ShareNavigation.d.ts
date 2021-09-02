@@ -9,6 +9,7 @@ export type ShareNavigationParamsList = {
   };
   CredentialScreen: {
     credentialObject: CredentialObject;
+    noShishKabob: boolean;
   };
 };
 
