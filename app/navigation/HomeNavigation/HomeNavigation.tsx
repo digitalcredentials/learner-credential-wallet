@@ -3,7 +3,7 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import theme from '../../styles/theme';
+import { theme } from '../../styles';
 import styles from './HomeNavigation.styles';
 import {
   CredentialNavigation,

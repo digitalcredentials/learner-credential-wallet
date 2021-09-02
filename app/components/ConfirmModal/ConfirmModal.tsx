@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import mixins from '../../styles/mixins';
+import { mixins } from '../../styles';
 
 import styles from './ConfirmModal.style';
 

@@ -12,7 +12,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 
-import theme from '../../styles/theme';
+import { theme } from '../../styles';
 import styles from './LoadingIndicator.styles';
 import type { LoadingIndicatorProps } from './LoadingIndicator.d';
 

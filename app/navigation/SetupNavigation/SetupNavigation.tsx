@@ -5,8 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
-import theme from '../../styles/theme';
-import mixins from '../../styles/mixins';
+import { theme, mixins } from '../../styles';
 import { initialize } from '../../store/slices/wallet';
 import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
 import { LoadingIndicator } from '../../components';

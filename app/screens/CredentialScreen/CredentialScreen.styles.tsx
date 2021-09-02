@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import theme from '../../styles/theme';
-import mixins from '../../styles/mixins';
+import { theme, mixins } from '../../styles';
 
 export default StyleSheet.create({
   menuContainer: {

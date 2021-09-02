@@ -6,8 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import walletImage from '../../assets/wallet.png';
-import mixins from '../../styles/mixins';
-import theme from '../../styles/theme';
+import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import mockCredential from '../../mock/credential';
 import { lock, reset, addCredential } from '../../store/slices/wallet';

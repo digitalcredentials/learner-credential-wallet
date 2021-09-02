@@ -7,8 +7,7 @@ import { useSelector } from 'react-redux';
 import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
 import { CredentialItem } from '../../components';
-import mixins from '../../styles/mixins';
-import theme from '../../styles/theme';
+import { theme, mixins } from '../../styles';
 import { navigationRef } from '../../../App';
 
 import styles from './HomeScreen.styles';

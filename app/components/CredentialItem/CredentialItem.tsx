@@ -3,8 +3,7 @@ import { Image, View } from 'react-native';
 import { ListItem, CheckBox } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import theme from '../../styles/theme';
-import mixins from '../../styles/mixins';
+import { theme, mixins } from '../../styles';
 import styles from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
 

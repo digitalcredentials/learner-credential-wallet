@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from 'react-native-elements';
 
 import type { NavHeaderProps } from './NavHeader.d';
-import mixins from '../../styles/mixins';
+import { mixins } from '../../styles';
 
 export default function NavHeader({
   title,

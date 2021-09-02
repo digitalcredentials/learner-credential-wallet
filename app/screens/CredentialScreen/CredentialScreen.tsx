@@ -4,8 +4,7 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
-import mixins from '../../styles/mixins';
-import theme from '../../styles/theme';
+import { theme, mixins } from '../../styles';
 import { deleteCredential } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal } from '../../components';
 

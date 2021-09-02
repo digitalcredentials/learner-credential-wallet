@@ -2,7 +2,7 @@ import React from 'react';
 import { ListItem } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import theme from '../../styles/theme';
+import { theme } from '../../styles';
 import styles from './MenuItem.styles';
 import type { MenuItemProps } from './MenuItem.d';
 

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import theme from './theme';
+import { theme } from './';
 
 const shadow = {
   shadowColor: theme.color.shadow,
