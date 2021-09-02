@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { Header, Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
@@ -18,6 +18,14 @@ export default function ShareHomeScreen({
   const { credentialObjects } = useSelector<RootState, WalletState>(
     ({ wallet }) => wallet,
   );
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setSelected([]);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   function toggle(credentialIndex: number): void {
     if (selected.includes(credentialIndex)) {
