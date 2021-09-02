@@ -5,7 +5,7 @@ export type CredentialNavigationParamList = {
   HomeScreen: undefined;
   CredentialScreen: {
     credentialObject: CredentialObject;
-    noShishKabob: boolean;
+    noShishKabob?: boolean;
   };
 };
 
