@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import mixins from '../../styles/mixins';
-import theme from '../../styles/theme';
+import { theme, mixins } from '../../styles';
 
 export default StyleSheet.create({
   bodyContainer: {
@@ -12,7 +11,6 @@ export default StyleSheet.create({
   },
   settingsContainer: {
     backgroundColor: theme.color.backgroundPrimary,
-    padding: 16,
   },
   listItemTitle: {
     color: theme.color.textSecondary,

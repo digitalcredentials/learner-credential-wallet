@@ -3,8 +3,7 @@ import { View } from 'react-native';
 import { Header, Text, Button } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-import theme from '../../styles/theme';
-import mixins from '../../styles/mixins';
+import { theme, mixins } from '../../styles';
 import styles from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { navigationRef } from '../../../App';

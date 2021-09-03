@@ -12,7 +12,7 @@ export async function sharePresentation(credentialObjects: CredentialObject[]): 
 
   Share.open({
     title: 'Presentation',
-    message: 'Share this presentation',
+    message: 'Share Credentials',
     url: `file://${filePath}`,
     type: 'text/plain',
     subject: 'Presentation',
