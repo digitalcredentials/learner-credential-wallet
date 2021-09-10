@@ -10,6 +10,9 @@ const store = configureStore({
   reducer: {
     wallet,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export default store;

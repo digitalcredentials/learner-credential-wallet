@@ -1,14 +1,14 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 
-import type { CredentialObject } from '../../model/dao/Credential';
+import type { CredentialRecordRaw } from '../../model/credential';
 
 export type ShareNavigationParamsList = {
   ShareHomeScreen: undefined;
   PresentationPreviewScreen: {
-    selectedCredentials: CredentialObject[];
+    selectedCredentials: CredentialRecordRaw[];
   };
   CredentialScreen: {
-    credentialObject: CredentialObject;
+    rawCredentialRecord: CredentialRecordRaw;
     noShishKabob?: boolean;
   };
 };

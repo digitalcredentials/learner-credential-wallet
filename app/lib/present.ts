@@ -1,12 +1,12 @@
 import Share from 'react-native-share';
 import * as RNFS from 'react-native-fs';
 
-import type { CredentialObject } from '../model/dao/Credential';
+import type { CredentialRecordRaw } from '../model/credential';
 
 // TODO: Actually share a VP, not an array of credentials
-export async function sharePresentation(credentialObjects: CredentialObject[]): Promise<void> {
+export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[]): Promise<void> {
   const filePath = `${RNFS.DocumentDirectoryPath}/presentation.json`;
-  const credentials = credentialObjects.map(({ credential }) => credential);
+  const credentials = rawCredentialRecords.map(({ credential }) => credential);
 
   await RNFS.writeFile(filePath, JSON.stringify(credentials), 'utf8');
 

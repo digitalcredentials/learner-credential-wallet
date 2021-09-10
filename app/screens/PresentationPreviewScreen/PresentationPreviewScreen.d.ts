@@ -1,7 +1,7 @@
-import type { CredentialObject } from '../../model/dao/Credential';
+import type { CredentialRecordRaw } from '../../model/credential';
 export type { PresentationPreviewScreenProps } from '../../navigation';
 
 export type RenderItemProps = {
-  item: CredentialObject;
+  item: CredentialRecordRaw;
   index: number;
 };

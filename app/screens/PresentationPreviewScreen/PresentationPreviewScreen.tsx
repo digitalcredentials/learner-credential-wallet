@@ -23,7 +23,7 @@ export default function PresentationPreviewScreen({
       typeof issuer !== 'string' && issuer.name !== undefined
         ? issuer.name
         : '';
-    const onSelect = () => navigation.navigate('CredentialScreen', { credentialObject: item });
+    const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (
