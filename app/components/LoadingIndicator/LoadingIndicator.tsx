@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, Animated, Easing } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  useAnimatedProps,
-  withTiming,
-  withRepeat,
-  cancelAnimation,
-  Easing,
-} from 'react-native-reanimated';
 
 import { theme } from '../../styles';
+import { useAnimation } from '../../hooks';
 import styles from './LoadingIndicator.styles';
 import type { LoadingIndicatorProps } from './LoadingIndicator.d';
 
@@ -21,40 +13,30 @@ const AnimatedPath = Animated.createAnimatedComponent(Path);
 export default function ({ loading }: LoadingIndicatorProps): JSX.Element {
   const [percent, setPercent] = useState(25);
 
-  const rotate = useSharedValue(0);
-  const path = useSharedValue(0);
-
-  const animatedCircleStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotate.value * 360}deg` }],
-  }));
-  const animatedPathProps = useAnimatedProps(() => ({
-    strokeDashoffset: (1 - path.value) * 35,
-  }));
+  const rotate = useAnimation(['0deg', '360deg'], { duration: 1000 });
+  const path = useAnimation([35, 0], { duration: 300, easing: Easing.in(Easing.ease) });
 
   useEffect(() => {
     if (loading) {
       setPercent(25);
-      rotate.value = withRepeat(
-        withTiming(1, {
-          duration: 1000,
-          easing: Easing.linear,
-        }),
-        -1,
-      );
-      path.value = 0;
+      rotate.reset();
+      path.reset();
+      Animated.loop(rotate).start();
     } else {
       setPercent(100);
-      cancelAnimation(rotate);
-      path.value = withTiming(1, {
-        duration: 300,
-        easing: Easing.in(Easing.ease),
-      });
+      rotate.stop();
+      path.start();
     }
+
+    return () => {
+      rotate.stop();
+      path.stop();
+    };
   }, [loading]);
 
   return (
     <View>
-      <Animated.View style={animatedCircleStyle}>
+      <Animated.View style={{ transform: [{ rotate: rotate.value }] }}>
         <AnimatedCircularProgress
           size={100}
           width={4}
@@ -67,12 +49,12 @@ export default function ({ loading }: LoadingIndicatorProps): JSX.Element {
       <View style={styles.checkmarkContainer}>
         <Svg width="52" height="40">
           <AnimatedPath
-            animatedProps={animatedPathProps}
             stroke={theme.color.success}
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
             scale="2"
+            strokeDashoffset={path.value}
             strokeDasharray="35"
             d="M1 11.2l7.1 7.2 16.7-16.8"
           />
