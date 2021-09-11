@@ -1,7 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Credential } from '../../types/credential';
-import { db, CredentialRecord, CredentialRecordRaw } from '../../model';
+import {
+  db,
+  CredentialRecord,
+  CredentialRecordRaw,
+  DidRecord,
+  DidRecordRaw,
+} from '../../model';
 
 export type WalletState = {
   isUnlocked: boolean | null;

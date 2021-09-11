@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { DefaultRootState } from 'react-redux';
 import wallet, { WalletState } from './slices/wallet';
-import didKey, { DidKeyState } from './slices/didKey';
+import did, { DidState } from './slices/did';
 
 export type RootState = DefaultRootState & {
   wallet: WalletState;
-  didKey: DidKeyState;
+  did: DidState;
 }
 
 const store = configureStore({
   reducer: {
     wallet,
-    didKey,
+    did,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false,

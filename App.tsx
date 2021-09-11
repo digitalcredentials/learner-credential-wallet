@@ -11,7 +11,7 @@ import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@exp
 
 import store from './app/store';
 import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
-import { getAllDidKeys } from './app/store/slices/didKey';
+import { getAllDidRecords } from './app/store/slices/did';
 import { theme } from './app/styles';
 import { AppNavigation, HomeNavigationParamList } from './app/navigation';
 
@@ -43,7 +43,7 @@ export default function App(): JSX.Element {
   useEffect(() => {
     if (walletStateInitialized && isUnlocked) {
       store.dispatch(getAllCredentials());
-      store.dispatch(getAllDidKeys());
+      store.dispatch(getAllDidRecords());
     }
   }, [walletStateInitialized, isUnlocked]);
 

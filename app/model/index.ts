@@ -6,14 +6,14 @@ import { generateSecureRandom } from 'react-native-securerandom';
 import { NativeModules } from 'react-native';
 
 import { CredentialRecord } from './credential';
-import { DidKeyRecord } from './didKey';
+import { DidRecord } from './did';
 
 export * from './credential';
-export * from './didKey';
+export * from './did';
 
 const models: Realm.ObjectClass[] = [
   CredentialRecord,
-  DidKeyRecord,
+  DidRecord,
 ];
 
 const Aes = NativeModules.Aes;
