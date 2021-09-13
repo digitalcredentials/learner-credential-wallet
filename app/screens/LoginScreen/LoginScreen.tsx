@@ -1,17 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, TextInput, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
-import styles from './LoginScreen.styles';
 import { theme } from '../../styles';
 import { unlock } from '../../store/slices/wallet';
-import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
+import { SafeScreenView, ErrorDialog } from '../../components';
 import walletImage from '../../assets/wallet.png';
+
+import styles from './LoginScreen.styles';
 
 export default function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
+  const [errorText, setErrorText] = useState('');
+
+  const isError = errorText !== '';
+  const passwordInputStyle = [
+    styles.passwordEntry,
+    isError ? styles.passwordError : null,
+  ];
+
+  async function _unlockWallet() {
+    try {
+      await dispatch(unlock(password));
+    } catch (err) {
+      setErrorText('Incorrect password');
+    }
+  }
+
+  // Removes error when user begins typing
+  useEffect(() => {
+    if (isError) {
+      setErrorText('');
+    }
+  }, [password]);
 
   return (
     <SafeScreenView style={styles.container}>
@@ -22,7 +45,7 @@ export default function LoginScreen(): JSX.Element {
         decide to share them.
       </Text>
       <TextInput
-        style={styles.passwordEntry}
+        style={passwordInputStyle}
         autoCompleteType="password"
         secureTextEntry
         autoCorrect={false}
@@ -32,13 +55,15 @@ export default function LoginScreen(): JSX.Element {
         onChangeText={setPassword}
         keyboardAppearance="dark"
       />
+      <ErrorDialog message={errorText} />
       <Button
         buttonStyle={styles.buttonPrimary}
         containerStyle={styles.buttonPrimaryContainer}
         titleStyle={styles.buttonPrimaryTitle}
         title="Unlock Wallet"
-        onPress={() => dispatch(unlock(password))}
+        onPress={_unlockWallet}
       />
+
     </SafeScreenView>
   );
 }
