@@ -66,7 +66,7 @@ const walletSlice = createSlice({
     }));
 
     builder.addCase(unlock.rejected, (state, action) => {
-      throw action.error
+      throw action.error;
     });
 
     builder.addCase(lock.fulfilled, (state) => ({
