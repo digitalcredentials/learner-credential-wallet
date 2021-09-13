@@ -11,7 +11,7 @@ export default function useAnimation(
   config: Partial<Animated.TimingAnimationConfig> = {},
 ): UseAnimationType {
   const animationValue = useRef(new Animated.Value(0)).current;
-  const animationRef = useRef(Animated.timing(animationValue, {
+  const animation = useRef(Animated.timing(animationValue, {
     toValue: 1,
     useNativeDriver: true,
     easing: Easing.linear,
@@ -28,5 +28,5 @@ export default function useAnimation(
     outputRange: range,
   });
 
-  return { ...animationRef, reset, value };
+  return { ...animation, reset, value };
 }
