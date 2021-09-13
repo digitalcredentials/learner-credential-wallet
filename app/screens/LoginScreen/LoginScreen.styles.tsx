@@ -25,14 +25,12 @@ export default StyleSheet.create({
     marginBottom: 48,
   },
   passwordEntry: {
-    height: 40,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: theme.borderRadius,
-    padding: 10,
+    ...mixins.input,
     width: '100%',
-    color: theme.color.textPrimary,
-    borderColor: theme.color.textPrimary,
+    marginBottom: 6,
+  },
+  passwordError: {
+    borderColor: theme.color.error,
   },
   buttonPrimary: {
     backgroundColor: theme.color.buttonPrimary,

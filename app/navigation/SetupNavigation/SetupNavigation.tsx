@@ -7,8 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import { theme, mixins } from '../../styles';
 import { initialize } from '../../store/slices/wallet';
-import SafeScreenView from '../../components/SafeScreenView/SafeScreenView';
-import { LoadingIndicator } from '../../components';
+import { LoadingIndicator, SafeScreenView, ErrorDialog } from '../../components';
 import walletImage from '../../assets/wallet.png';
 
 import styles from './SetupNavigation.styles';
@@ -183,9 +182,8 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           keyboardAppearance="dark"
           onBlur={_onInputBlur}
         />
-        <Text style={[styles.paragraphRegular, styles.errorText]}>
-          {errorText}
-        </Text>
+        <View style={styles.inputSeparator} />
+        <ErrorDialog message={errorText} />
       </View>
       <View style={mixins.buttonGroup}>
         <Button

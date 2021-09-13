@@ -80,9 +80,4 @@ export default StyleSheet.create({
   inputSeparator: {
     height: 20,
   },
-  errorText: {
-    marginTop: 24,
-    fontFamily: theme.fontFamily.medium,
-    color: theme.color.error,
-  },
 });
