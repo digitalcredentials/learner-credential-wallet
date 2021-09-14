@@ -10,7 +10,7 @@ export default function SafeScreenView({
   ...rest
 }: SafeScreenViewProps): JSX.Element {
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.contentContainer} style={styles.container}>
       <SafeAreaView {...rest}>{children}</SafeAreaView>
     </KeyboardAwareScrollView>
   );
