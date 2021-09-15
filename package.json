@@ -8,10 +8,10 @@
     "lint": "eslint --max-warnings 0 ./app ./App.tsx && tsc --noEmit"
   },
   "dependencies": {
-    "@digitalbazaar/did-method-key": "^2.0.0",
-    "@digitalbazaar/ed25519-verification-key-2020": "^3.1.0",
-    "@digitalbazaar/vc": "^1.0.0",
-    "@digitalbazaar/x25519-key-agreement-key-2020": "^2.0.0",
+    "@digitalcredentials/did-method-key": "^1.0.0",
+    "@digitalcredentials/ed25519-verification-key-2020": "^1.0.2",
+    "@digitalcredentials/vc": "^1.0.3",
+    "@digitalcredentials/x25519-key-agreement-key-2020": "^1.0.0",
     "@expo-google-fonts/rubik": "^0.2.0",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/masked-view": "0.1.10",
