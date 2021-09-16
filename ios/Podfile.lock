@@ -3,7 +3,7 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (3.2.0):
     - UMCore
-  - EXConstants (11.0.1):
+  - EXConstants (11.0.2):
     - ExpoModulesCore
     - UMCore
   - EXErrorRecovery (2.2.0):
@@ -31,12 +31,12 @@ PODS:
     - UMCore
   - EXSecureStore (10.2.0):
     - UMCore
-  - EXSplashScreen (0.11.2):
+  - EXSplashScreen (0.11.4):
     - React-Core
     - UMCore
   - EXStructuredHeaders (1.1.1):
     - UMCore
-  - EXUpdates (0.8.4):
+  - EXUpdates (0.8.5):
     - EXStructuredHeaders
     - EXUpdatesInterface
     - React-Core
@@ -233,15 +233,17 @@ PODS:
   - React-jsinspector (0.63.4)
   - react-native-aes-cipher (1.0.9):
     - React
-  - react-native-camera (4.0.3):
+  - react-native-camera (4.2.0):
     - React-Core
-    - react-native-camera/RCT (= 4.0.3)
-    - react-native-camera/RN (= 4.0.3)
-  - react-native-camera/RCT (4.0.3):
+    - react-native-camera/RCT (= 4.2.0)
+    - react-native-camera/RN (= 4.2.0)
+  - react-native-camera/RCT (4.2.0):
     - React-Core
-  - react-native-camera/RN (4.0.3):
+  - react-native-camera/RN (4.2.0):
     - React-Core
   - react-native-get-random-values (1.7.0):
+    - React-Core
+  - react-native-randombytes (3.6.1):
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
@@ -307,7 +309,7 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - RealmJS (10.6.1):
+  - RealmJS (10.8.0):
     - GCDWebServer
     - React
   - RNCMaskedView (0.1.10):
@@ -323,15 +325,15 @@ PODS:
     - React-RCTImage
   - RNSecureRandom (1.0.0):
     - React
-  - RNShare (7.0.2):
+  - RNShare (7.1.0):
     - React-Core
   - RNSVG (12.1.1):
     - React
   - RNVectorIcons (8.1.0):
     - React-Core
   - UMAppLoader (2.2.0)
-  - UMCore (7.1.1)
-  - UMReactNativeAdapter (6.3.5):
+  - UMCore (7.1.2)
+  - UMReactNativeAdapter (6.3.7):
     - ExpoModulesCore
     - React-Core
     - UMCore
@@ -374,6 +376,7 @@ DEPENDENCIES:
   - react-native-aes-cipher (from `../node_modules/react-native-aes-cipher`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-viewpager (from `../node_modules/react-native-pager-view`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -472,6 +475,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-randombytes:
+    :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-viewpager:
@@ -531,7 +536,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
-  EXConstants: 3babb61f8f4bb7dffe85b8b7d6eaa31d903e4d7e
+  EXConstants: 4cb52b6d8f636c767104a44bf7db3873e9c01a6f
   EXErrorRecovery: 404d827bc7d42f306c062d58a60b06afc4d082b3
   EXFileSystem: 0a04aba8da751b9ac954065911bcf166503f8267
   EXFont: 9846ba1bb6f5f5aed44e20eea3ac70693323832d
@@ -539,9 +544,9 @@ SPEC CHECKSUMS:
   EXKeepAwake: f4105ef469be7b283f66ce2d7234bb71ac80cd26
   ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
   EXSecureStore: 1aa80d49a3a101418bbd2675e2a0d32dceea10c2
-  EXSplashScreen: 6208ca88470ff5979fd49a08ef3feb01143a2b79
+  EXSplashScreen: 847e0d8026731c1090bf269ede3e15ac87d88958
   EXStructuredHeaders: e52b880264d15b8ad07d36670226c29476af6334
-  EXUpdates: af3ecad91644a171deaa310326e73b4e70f6963c
+  EXUpdates: 013d26649cb6ab4f8d8d80c35d3d4be150b47e7c
   EXUpdatesInterface: b68e78b912a03fff7901a5f46ec200c45e3506a5
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
@@ -560,8 +565,9 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-aes-cipher: 87362294a7e70f99e19576137818121aeab74962
-  react-native-camera: a6055b8538d741b5ac221fa73c866c526010c8c9
+  react-native-camera: fdfefd4139bbbb53f69e8b6fde1ee549b524eb88
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
+  react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-viewpager: 98a850d1c7ac6263122d82618a77062a5f427073
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
@@ -574,19 +580,19 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  RealmJS: 550ecbe8a0d55bd0e2abb79a63313d4da08bcf25
+  RealmJS: 7271bc9f8579716260511cb43b0fb6b0321ce206
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNPermissions: 7043bacbf928eae25808275cfe73799b8f618911
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSecureRandom: 0dcee021fdb3d50cd5cee5db0ebf583c42f5af0e
-  RNShare: 3acd1ed34a4baba2fd8541ba409045c37e5f62ff
+  RNShare: 072f63d19c2b90da3742adac614396d805e7ae22
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
-  UMCore: 2f671796d7439604a1cf8ac7bbe5809cd5c50437
-  UMReactNativeAdapter: f808906d586a16cebdc3844d86e1bdb8f114a873
+  UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
+  UMReactNativeAdapter: bb7922210cf6fdb5768f78685f3c3a2060299119
   UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
