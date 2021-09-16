@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { generateSecureRandom } from 'react-native-securerandom';
-import DidMethodKey from '@digitalcredentials/did-method-key';
+const DidMethodKey = require('@digitalcredentials/did-method-key');
+
+console.log({ DidMethodKey });
 
 import { DidKey, DidDocument } from '../../types/did';
 import { DidRecord, DidRecordRaw } from '../../model';
