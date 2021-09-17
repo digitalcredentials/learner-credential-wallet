@@ -43,6 +43,7 @@ export class DidRecord implements DidRecordRaw {
       _id: 'objectId',
       createdAt: 'date',
       updatedAt: 'date',
+      rawDidDocument: 'string',
       rawKeyAgreementKey: 'string',
       rawVerificationKey: 'string',
     },
@@ -57,7 +58,7 @@ export class DidRecord implements DidRecordRaw {
       rawDidDocument: this.rawDidDocument,
       didDocument: this.didDocument,
       rawKeyAgreementKey: this.rawKeyAgreementKey,
-      keyAgreementKey: this.agreementKey,
+      keyAgreementKey: this.keyAgreementKey,
       rawVerificationKey: this.rawVerificationKey,
       verificationKey: this.verificationKey,
     };
@@ -67,7 +68,7 @@ export class DidRecord implements DidRecordRaw {
   }
 
   static rawFrom(
-    didDocument: DidKey,
+    didDocument: DidDocument,
     verificationKey: DidKey,
     keyAgreementKey: DidKey,
   ): DidRecordRaw {
@@ -113,7 +114,7 @@ export class DidRecord implements DidRecordRaw {
     });
   }
 
-  static async deleteDidRecords(rawRecord: DidRecordRaw): Promise<void> {
+  static async deleteDidRecord(rawRecord: DidRecordRaw): Promise<void> {
     await db.withInstance((instance) => {
       const objectId = new ObjectID(rawRecord._id);
       const didRecord = instance.objectForPrimaryKey(DidRecord.name, objectId);
