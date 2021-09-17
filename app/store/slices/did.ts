@@ -22,12 +22,12 @@ const mintDid = createAsyncThunk('didState/mintDid', async (_, { dispatch }) => 
     randomBytes: await generateSecureRandom(32),
   });
 
+  const expandedMap: [string, DidKey][] = Array.from(keyPairs);
+
   const [
     verificationKey,
     keyAgreementKey,
-  ]: DidKey[] = Array.from(keyPairs.entries()).map(
-    (pair) => pair.export({ publicKey: true, privateKey: true }),
-  );
+  ]: DidKey[] = expandedMap.map(([, pair]): DidKey => pair);
 
   await dispatch(addDidRecord({ didDocument, verificationKey, keyAgreementKey }));
   await dispatch(getAllDidRecords());
@@ -47,7 +47,7 @@ const addDidRecord = createAsyncThunk('didState/addDidRecord', async ({
   keyAgreementKey: DidKey,
 }, { dispatch }) => {
   await DidRecord.addDidRecord(didDocument, verificationKey, keyAgreementKey);
-  await dispatch(getAllDidKeys());
+  await dispatch(getAllDidRecords());
 });
 
 const deleteDidRecord = createAsyncThunk('didState/deleteDidRecord', async (rawRecord: DidRecordRaw, { dispatch }) => {
