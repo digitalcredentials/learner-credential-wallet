@@ -8,6 +8,10 @@ import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020
 import type { CredentialRecordRaw } from '../model/credential';
 import type { DidRecordRaw } from '../model/did';
 
+import { securityLoader } from './documentLoader';
+
+const documentLoader = securityLoader();
+
 export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord: DidRecordRaw): Promise<void> {
   const filePath = `${RNFS.DocumentDirectoryPath}/presentation.json`;
   const credentials = rawCredentialRecords.map(({ credential }) => credential);
@@ -21,6 +25,7 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     presentation,
     suite,
     challenge,
+    documentLoader
   });
 
   await RNFS.writeFile(filePath, JSON.stringify(signedPresentation), 'utf8');
