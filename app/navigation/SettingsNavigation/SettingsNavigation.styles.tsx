@@ -53,7 +53,7 @@ export default StyleSheet.create({
   paragraph: {
     ...mixins.paragraphText,
     fontSize: theme.fontSize.medium,
-    marginTop: 30,
+    marginTop: 8,
   },
   paragraphCenter: {
     ...mixins.paragraphText,

@@ -120,14 +120,14 @@ function About({ navigation }: AboutProps): JSX.Element {
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <View style={styles.bodyContainerCenter}>
         <Image style={styles.image} source={walletImage} />
-        <Text style={styles.paragraph}>EDU Wallet</Text>
-        <Text style={styles.paragraph}>
+        <Text style={styles.paragraphCenter}>EDU Wallet</Text>
+        <Text style={styles.paragraphCenter}>
           This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
         </Text>
-        <Text style={styles.paragraph}>
+        <Text style={styles.paragraphCenter}>
             More information at <Text style={styles.link} onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')} >https://digitalcredentials.mit.edu</Text>.
         </Text>
-        <Text style={styles.paragraph}>
+        <Text style={styles.paragraphCenter}>
           Copyright 2021 Massachusetts Institute of Technology
         </Text>
       </View>

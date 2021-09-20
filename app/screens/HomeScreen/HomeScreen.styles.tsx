@@ -8,6 +8,6 @@ export default StyleSheet.create({
   header: {
     ...mixins.headerText,
     marginTop: 8,
-    marginBottom: 4,
+    marginBottom: 16,
   },
 });
