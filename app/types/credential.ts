@@ -29,8 +29,11 @@ export type EducationalOperationalCredentialExtensions = {
 
 // https://schema.org/EducationalOccupationalCredential (this doesn't really conform)
 export type EducationalOperationalCredential = EducationalOperationalCredentialExtensions & {
+  readonly id: string;
   readonly name?: string;
   readonly description?: string;
+  readonly competencyRequired?: string;
+  readonly credentialCategory?: string;
 }
 
 type SubjectExtensions = {
@@ -59,5 +62,5 @@ export type Credential = {
   readonly issuer: Issuer;               // https://w3c.github.io/vc-data-model/#issuer
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
-  readonly proof: Proof;                 // https://w3c.github.io/vc-data-model/#proofs-signatures
+  readonly proof?: Proof;                 // https://w3c.github.io/vc-data-model/#proofs-signatures
 }
