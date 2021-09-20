@@ -5,6 +5,11 @@ import { theme, mixins } from '../../styles';
 export default StyleSheet.create({
   bodyContainer: {
     flex: 1,
+    padding: 16,
+    backgroundColor: theme.color.backgroundPrimary,
+  },
+  bodyContainerCenter: {
+    flex: 1,
     alignItems: 'center',
     padding: 16,
     backgroundColor: theme.color.backgroundPrimary,
@@ -21,6 +26,10 @@ export default StyleSheet.create({
     backgroundColor: theme.color.backgroundPrimary,
     borderBottomColor: theme.color.backgroundSecondary,
     borderBottomWidth: 3,
+  },
+  buttonContainer: {
+    ...mixins.buttonIconContainer,
+    marginTop: 24,
   },
   buttonStyle: {
     backgroundColor: theme.color.transparent,
@@ -42,6 +51,11 @@ export default StyleSheet.create({
     ...mixins.headerText,
   },
   paragraph: {
+    ...mixins.paragraphText,
+    fontSize: theme.fontSize.medium,
+    marginTop: 30,
+  },
+  paragraphCenter: {
     ...mixins.paragraphText,
     fontSize: theme.fontSize.medium,
     textAlign: 'center',

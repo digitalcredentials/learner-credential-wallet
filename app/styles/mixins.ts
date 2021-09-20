@@ -1,7 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import theme from './theme';
 
 const shadow = {
+  overflow: 'visible' as ViewStyle['overflow'],
+  elevation: 5,
   shadowColor: theme.color.shadow,
   shadowOpacity: 0.15,
   shadowRadius: 15,
@@ -62,18 +64,17 @@ export default StyleSheet.create({
   
   /* Button mixins */
   button: {
-    ...shadow,
     backgroundColor: theme.color.iconActive,
     padding: 16,
     borderRadius: theme.borderRadius,
   },
   buttonPrimary: {
-    ...shadow,
     backgroundColor: theme.color.buttonPrimary,
     padding: 16,
     borderRadius: theme.borderRadius,
   },
   buttonContainer: {
+    ...shadow,
     flex: 1,
   },
   buttonGroup: {
@@ -88,13 +89,15 @@ export default StyleSheet.create({
     color: theme.color.backgroundSecondary,
   },
   buttonIcon: {
-    ...shadow,
     justifyContent: 'space-between',
     backgroundColor: theme.color.foregroundPrimary,
     borderRadius: theme.borderRadius,
-    marginVertical: 8,
     paddingVertical: 16,
     paddingHorizontal: 18,
+  },
+  buttonIconContainer: {
+    ...shadow,
+    marginVertical: 8,
   },
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,

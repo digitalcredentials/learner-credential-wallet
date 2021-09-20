@@ -72,6 +72,7 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
         <Text style={styles.paragraph}>Select a wallet file (.extension) from your device to restore from.</Text>
         <Button
           title="Choose a file"
+          containerStyle={styles.buttonContainer}
           buttonStyle={mixins.buttonIcon}
           titleStyle={mixins.buttonIconTitle}
           iconRight
@@ -96,6 +97,7 @@ function Backup({ navigation }: BackupProps): JSX.Element {
         <Text style={styles.paragraph}>This will export your wallet contents into a file for you to download.</Text>
         <Button
           title="Backup my wallet"
+          containerStyle={styles.buttonContainer}
           buttonStyle={mixins.buttonIcon}
           titleStyle={mixins.buttonIconTitle}
           iconRight
@@ -116,7 +118,7 @@ function About({ navigation }: AboutProps): JSX.Element {
   return (
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
-      <View style={styles.bodyContainer}>
+      <View style={styles.bodyContainerCenter}>
         <Image style={styles.image} source={walletImage} />
         <Text style={styles.paragraph}>EDU Wallet</Text>
         <Text style={styles.paragraph}>
