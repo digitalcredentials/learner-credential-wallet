@@ -77,9 +77,9 @@ function CreateStep({ navigation, route }: CreateStepProps) {
   return (
     <SafeScreenView style={styles.container}>
       <View style={styles.stepContainer}>
-        <Text style={[styles.stepText, styles.stepTextActive]}>Step 1</Text>
+        <Text style={styles.stepText}>1</Text>
         <View style={styles.stepDivider} />
-        <Text style={styles.stepText}>2</Text>
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
       </View>
       <Text style={styles.header}>Creating Wallet</Text>
       <Text style={styles.paragraphRegular}>This will only take a moment.</Text>
@@ -143,9 +143,9 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
   return (
     <SafeScreenView style={styles.container}>
       <View style={styles.stepContainer}>
-        <Text style={styles.stepText}>1</Text>
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 1</Text>
         <View style={styles.stepDivider} />
-        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
+        <Text style={styles.stepText}>2</Text>
       </View>
       <Text style={styles.header}>Password</Text>
       <Text style={styles.paragraphRegular}>
