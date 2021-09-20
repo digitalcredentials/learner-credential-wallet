@@ -8,18 +8,19 @@ import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020
 import type { CredentialRecordRaw } from '../model/credential';
 import type { DidRecordRaw } from '../model/did';
 
-// TODO: Actually share a VP, not an array of credentials
 export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord: DidRecordRaw): Promise<void> {
   const filePath = `${RNFS.DocumentDirectoryPath}/presentation.json`;
   const credentials = rawCredentialRecords.map(({ credential }) => credential);
   const verificationKeyPair = await Ed25519VerificationKey2020.from(didRecord.verificationKey);
   const suite = new Ed25519Signature2020({ key: verificationKeyPair });
+  const challenge = uuid.v4();
 
   const presentation = vc.createPresentation({ verifiableCredential: credentials });
 
   const signedPresentation = vc.signPresentation({
     presentation,
     suite,
+    challenge,
   });
 
   await RNFS.writeFile(filePath, JSON.stringify(signedPresentation), 'utf8');
@@ -32,3 +33,4 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     subject: 'Presentation',
   });
 }
+
