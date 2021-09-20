@@ -1,5 +1,6 @@
 import * as didKey from '@digitalbazaar/did-method-key';
 import {CachedResolver} from '@digitalbazaar/did-io';
+import dccCtx from 'dcc-context';
 import didContext from 'did-context';
 import ed25519 from 'ed25519-signature-2020-context';
 import x25519 from 'x25519-key-agreement-2020-context';
@@ -27,6 +28,8 @@ export function securityLoader() {
 
   loader.addStatic(CREDENTIALS_CONTEXT_V1_URL,
     credentialsContext.get(CREDENTIALS_CONTEXT_V1_URL));
+
+  loader.addStatic(dccCtx.CONTEXT_URL_V1, dccCtx.CONTEXT_V1);
 
   loader.setDidResolver(resolver);
 
