@@ -17,14 +17,6 @@ const didKeyDriver = didKey.driver();
 const resolver = new CachedResolver();
 resolver.use(didKeyDriver);
 
-console.log(JSON.stringify({
-  ed25519Context: ed25519.constants.CONTEXT_URL,
-  x25519Context: x25519.constants.CONTEXT_URL,
-  didContext: didContext.constants.DID_CONTEXT_URL,
-  credentialsV1Context: CREDENTIALS_CONTEXT_V1_URL,
-  dccContext: dccCtx.CONTEXT_URL_V1,
-}));
-
 export function securityLoader(): JsonLdDocumentLoader {
   const loader = new JsonLdDocumentLoader();
 
