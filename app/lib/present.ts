@@ -10,7 +10,7 @@ import type { DidRecordRaw } from '../model/did';
 
 import { securityLoader } from './documentLoader';
 
-const documentLoader = securityLoader();
+const documentLoader = securityLoader().build();
 
 export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord: DidRecordRaw): Promise<void> {
   const filePath = `${RNFS.DocumentDirectoryPath}/presentation.json`;
@@ -21,11 +21,11 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
 
   const presentation = vc.createPresentation({ verifiableCredential: credentials });
 
-  const signedPresentation = vc.signPresentation({
+  const signedPresentation = await vc.signPresentation({
     presentation,
     suite,
     challenge,
-    documentLoader
+    documentLoader,
   });
 
   await RNFS.writeFile(filePath, JSON.stringify(signedPresentation), 'utf8');
