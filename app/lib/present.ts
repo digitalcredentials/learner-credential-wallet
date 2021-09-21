@@ -32,7 +32,6 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
 
   Share.open({
     title: 'Presentation',
-    message: 'Share Credentials',
     url: `file://${filePath}`,
     type: 'text/plain',
     subject: 'Presentation',
