@@ -25,7 +25,7 @@ console.log(JSON.stringify({
   dccContext: dccCtx.CONTEXT_URL_V1,
 }));
 
-export function securityLoader() {
+export function securityLoader(): JsonLdDocumentLoader {
   const loader = new JsonLdDocumentLoader();
 
   loader.addStatic(
