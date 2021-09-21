@@ -10,11 +10,6 @@
   },
   "dependencies": {
     "@digitalbazaar/did-io": "digitalbazaar/did-io#noesm",
-    "credentials-context": "^2.0.0",
-    "dcc-context": "digitalcredentials/dcc#rc-1.0.1",
-    "did-context": "^3.1.1",
-    "ed25519-signature-2020-context": "^1.1.0",
-    "x25519-key-agreement-2020-context": "^1.0.0",
     "@digitalcredentials/did-method-key": "^2.0.1",
     "@digitalcredentials/ed25519-signature-2020": "^3.0.1",
     "@digitalcredentials/ed25519-verification-key-2020": "^3.1.1",
@@ -30,6 +25,10 @@
     "@types/bson": "^4.0.5",
     "@types/text-encoding": "^0.0.36",
     "bson": "^4.4.1",
+    "credentials-context": "^2.0.0",
+    "dcc-context": "digitalcredentials/dcc#rc-1.0.1",
+    "did-context": "^3.1.1",
+    "ed25519-signature-2020-context": "^1.1.0",
     "events": "^1.1.1",
     "expo": "~42.0.1",
     "expo-app-loading": "^1.1.2",
@@ -75,7 +74,8 @@
     "rn-nodeify": "tradle/rn-nodeify",
     "stream-browserify": "^1.0.0",
     "text-encoding": "^0.7.0",
-    "util": "^0.10.4"
+    "util": "^0.10.4",
+    "x25519-key-agreement-2020-context": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
