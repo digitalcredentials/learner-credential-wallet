@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, TextInput, View, Image } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
@@ -175,11 +176,20 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
-          title="Finalize"
+          title="Next"
           onPress={() => navigation.navigate('CreateStep', { password })}
           disabled={!isPasswordValid}
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
+          iconRight
+          icon={
+            <MaterialIcons
+              style={styles.arrowIcon}
+              name="arrow-forward"
+              color={theme.color.backgroundSecondary}
+              size={theme.iconSize}
+            />
+          }
         />
       </View>
     </SafeScreenView>
