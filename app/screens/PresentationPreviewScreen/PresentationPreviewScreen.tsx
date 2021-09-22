@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { RootState } from '../../store';
-import { DidState } from '../../store/slices/wallet';
+import { DidState } from '../../store/slices/did';
 import { mixins } from '../../styles';
 import { CredentialItem, NavHeader } from '../../components';
 import { sharePresentation } from '../../lib/present';
