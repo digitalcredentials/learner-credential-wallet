@@ -16,8 +16,8 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const { credentialObject, noShishKabob = false } = route.params;
-  const { credential } = credentialObject;
+  const { rawCredentialRecord, noShishKabob = false } = route.params;
+  const { credential } = rawCredentialRecord;
 
   const title = credential.credentialSubject.hasCredential?.name ?? '';
   const description = credential.credentialSubject.hasCredential?.description ?? '';
@@ -71,7 +71,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         open={modalIsOpen}
         onRequestClose={() => setModalIsOpen(!modalIsOpen)}
         onConfirm={() => {
-          dispatch(deleteCredential(credentialObject));
+          dispatch(deleteCredential(rawCredentialRecord));
           navigation.goBack();
         }}
         title="Delete Credential"

@@ -1,6 +1,7 @@
 import Realm from 'realm';
-import BSON, { ObjectID} from 'bson';
+import { ObjectID} from 'bson';
 
+import { db } from './';
 import { Credential } from '../types/credential';
 
 /**
@@ -13,30 +14,18 @@ export type CredentialRecordRaw = {
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly rawCredential: string;
+  readonly credential: Credential;
 }
 
-/**
- * This class is inherited from, in a way, by the Realm.Object
- * that gets returned from queries. In reality, the objects
- * returned are Proxies that use method lookups that can resolve
- * to methods in this class. Think of it like the method-missing
- * magic in Rails with ActiveRecord.
- *
- * Example:
- * ```typescript
- * db.withInstance(instance => {
- *   for (const cred of instance.objects<CredentialRecord>(CredentialRecord.name)) {
- *     // This method is defined on the class below
- *     console.log(cred.credential);
- *   }
- * });
- * ```
- */
 export class CredentialRecord implements CredentialRecordRaw {
   readonly _id!: ObjectID;
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
   readonly rawCredential!: string;
+
+  get credential(): Credential {
+    return JSON.parse(this.rawCredential) as Credential;
+  }
 
   static schema: Realm.ObjectSchema = {
     name: 'CredentialRecord',
@@ -49,16 +38,55 @@ export class CredentialRecord implements CredentialRecordRaw {
     primaryKey: '_id',
   };
 
-  public get credential(): Credential{
-    return JSON.parse(this.rawCredential) as Credential;
+  asRaw(): CredentialRecordRaw {
+    return {
+      _id: this._id,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      rawCredential: this.rawCredential,
+      credential: this.credential,
+    };
   }
 
-  public static fromRaw(credential: Credential): CredentialRecordRaw {
+  static rawFrom(credential: Credential): CredentialRecordRaw {
     return {
-      _id: new BSON.ObjectID(),
+      _id: new ObjectID(),
       createdAt: new Date(),
       updatedAt: new Date(),
       rawCredential: JSON.stringify(credential),
+      credential,
     };
+  }
+
+  static async addCredential(credential: Credential): Promise<void> { 
+    await db.withInstance((instance) => {
+      instance.write(() => {
+        instance.create(CredentialRecord.name, CredentialRecord.rawFrom(credential));
+      });
+    });
+  }
+
+  static getAllCredentials(): Promise<CredentialRecordRaw[]> {
+    return db.withInstance((instance) => {
+      const results = instance.objects<CredentialRecord>(CredentialRecord.name);
+
+      // Results is not an array, but supports map only if it has length... :/
+      if (results.length) {
+        return results.map((record) => record.asRaw());
+      }
+
+      return [];
+    });
+  }
+
+  static async deleteCredential(rawRecord: CredentialRecordRaw): Promise<void> {
+    await db.withInstance((instance) => {
+      const objectId = new ObjectID(rawRecord._id);
+      const credentialRecord = instance.objectForPrimaryKey(CredentialRecord.name, objectId);
+
+      instance.write(() => {
+        instance.delete(credentialRecord);
+      });
+    });
   }
 }

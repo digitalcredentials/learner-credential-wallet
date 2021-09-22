@@ -14,7 +14,7 @@ import styles from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
-  const { credentialObjects } = useSelector<RootState, WalletState>(
+  const { rawCredentialRecords } = useSelector<RootState, WalletState>(
     ({ wallet }) => wallet,
   );
 
@@ -25,7 +25,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
       typeof credential.issuer !== 'string' && credential.issuer.name !== undefined
         ? credential.issuer.name
         : '';
-    const onSelect = () => navigation.navigate('CredentialScreen', { credentialObject: item });
+    const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
     const image = null; // TODO: Decide where to pull image from.
 
     return (
@@ -69,7 +69,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         centerComponent={{ text: 'Home', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
       />
-      {credentialObjects.length === 0 ? (
+      {rawCredentialRecords.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.header}>Looks like your wallet is empty.</Text>
           <AddCredentialButton />
@@ -77,9 +77,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
       ) : (
         <FlatList
           style={styles.container}
-          data={credentialObjects}
+          data={rawCredentialRecords}
           renderItem={renderItem}
-          keyExtractor={(item, index) => `${index}-${item.objectId}`}
+          keyExtractor={(item, index) => `${index}-${item._id}`}
           ListFooterComponent={<AddCredentialButton />}
         />
       )}

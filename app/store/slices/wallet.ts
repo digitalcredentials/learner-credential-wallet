@@ -1,23 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { db } from '../../model';
 import { Credential } from '../../types/credential';
-import CredentialDAO, { CredentialObject } from '../../model/dao/Credential';
+import { mintDid } from './did';
+import {
+  db,
+  CredentialRecord,
+  CredentialRecordRaw,
+} from '../../model';
 
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
-  credentialObjects: CredentialObject[];
+  rawCredentialRecords: CredentialRecordRaw[];
 }
 
 const initialState: WalletState = {
   isUnlocked: null,
   isInitialized: null,
-  credentialObjects: [],
+  rawCredentialRecords: [],
 };
 
 const getAllCredentials = createAsyncThunk('walletState/getAllCredentials', async () => ({
-  credentialObjects: await CredentialDAO.getAllCredentials(),
+  rawCredentialRecords: await CredentialRecord.getAllCredentials(),
 }));
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
@@ -37,7 +41,8 @@ const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string)
 
 const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string, { dispatch }) => {
   await db.initialize(passphrase);
-  await dispatch(unlock(passphrase));
+  await db.unlock(passphrase);
+  dispatch(mintDid());
 });
 
 const reset = createAsyncThunk('walletState/reset', async () => {
@@ -46,12 +51,12 @@ const reset = createAsyncThunk('walletState/reset', async () => {
 });
 
 const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential, { dispatch }) => {
-  await CredentialDAO.addCredential(credential);
+  await CredentialRecord.addCredential(credential);
   await dispatch(getAllCredentials());
 });
 
-const deleteCredential = createAsyncThunk('walletState/deleteCredential', async (credentialObject: CredentialObject, { dispatch }) => {
-  await CredentialDAO.deleteCredential(credentialObject);
+const deleteCredential = createAsyncThunk('walletState/deleteCredential', async (rawRecord: CredentialRecordRaw, { dispatch }) => {
+  await CredentialRecord.deleteCredential(rawRecord);
   await dispatch(getAllCredentials());
 });
 
@@ -65,7 +70,7 @@ const walletSlice = createSlice({
       isUnlocked: true,
     }));
 
-    builder.addCase(unlock.rejected, (state, action) => {
+    builder.addCase(unlock.rejected, (_, action) => {
       throw action.error;
     });
 
