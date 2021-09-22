@@ -80,7 +80,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
           data={rawCredentialRecords}
           renderItem={renderItem}
           keyExtractor={(item, index) => `${index}-${item._id}`}
-          ListFooterComponent={<AddCredentialButton />}
+          ListHeaderComponent={<AddCredentialButton />}
         />
       )}
     </>
