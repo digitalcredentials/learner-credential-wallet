@@ -37,4 +37,3 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     subject: 'Presentation',
   });
 }
-

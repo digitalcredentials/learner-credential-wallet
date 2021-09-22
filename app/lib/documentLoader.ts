@@ -17,7 +17,12 @@ const didKeyDriver = didKey.driver();
 const resolver = new CachedResolver();
 resolver.use(didKeyDriver);
 
-export function securityLoader(): JsonLdDocumentLoader {
+/**
+ * Because none of the credential libraries are typed, we need to use implicit
+ * any here for the return type.
+ */
+/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
+export function securityLoader() {
   const loader = new JsonLdDocumentLoader();
 
   loader.addStatic(
