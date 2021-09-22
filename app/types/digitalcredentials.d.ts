@@ -1,0 +1,11 @@
+declare module '@digitalcredentials/did-method-key';
+declare module '@digitalcredentials/vc';
+declare module '@digitalcredentials/ed25519-verification-key-2020';
+declare module '@digitalcredentials/ed25519-signature-2020';
+declare module 'credentials-context';
+declare module 'jsonld-document-loader';
+declare module 'dcc-context';
+declare module 'did-context';
+declare module 'ed25519-signature-2020-context';
+declare module 'x25519-key-agreement-2020-context';
+declare module '@digitalbazaar/did-io';
