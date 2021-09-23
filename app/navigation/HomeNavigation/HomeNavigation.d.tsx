@@ -38,11 +38,6 @@ export type SettingsNavigationProps = {
   navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'SettingsNavigation'>;
 }
 
-export type DebugScreenProps = {
-  route: RouteProp<HomeNavigationParamList, 'DebugScreen'>;
-  navigation: MaterialBottomTabNavigationProp<HomeNavigationParamList, 'DebugScreen'>;
-}
-
 export type TabIconProps = {
   color: string;
 }

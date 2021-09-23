@@ -8,7 +8,7 @@ import { RootState } from '../../store';
 import { DidState } from '../../store/slices/did';
 
 import styles from './DebugScreen.styles';
-import { DebugScreenProps } from '../../navigation/HomeNavigation/HomeNavigation.d';
+import { DebugScreenProps } from '../../navigation';
 
 export default function DebugScreen({ navigation, route }: DebugScreenProps): JSX.Element {
   const { rawCredentialRecord } = route.params;
