@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { theme } from '../../styles';
 import styles from './HomeNavigation.styles';
+import { DebugScreen } from '../../screens';
 import {
   CredentialNavigation,
   ShareNavigation,
@@ -46,6 +47,7 @@ export default function HomeNavigation(): JSX.Element {
         title: 'Settings',
         tabBarIcon: SettingsTabIcon,
       }}/>
+      <Tab.Screen name="DebugScreen" component={DebugScreen} options={{ title: 'DebugScreen' }}/>
     </Tab.Navigator>
   );
 }
