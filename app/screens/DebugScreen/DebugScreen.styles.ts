@@ -8,13 +8,13 @@ export default StyleSheet.create({
   },
   paragraph: {
     ...mixins.paragraphText,
-    marginBottom: 16,
   },
   codeBlock: {
     color: theme.color.textPrimary,
     backgroundColor: theme.color.backgroundSecondary,
     padding: 10,
     fontFamily: theme.fontFamily.mono,
+    marginBottom: 16,
   },
   exitButton: {
     backgroundColor: theme.color.transparent,
