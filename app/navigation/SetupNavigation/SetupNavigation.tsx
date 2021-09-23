@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, TextInput, View, Image } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
 import { theme, mixins } from '../../styles';
@@ -64,56 +64,34 @@ function StartStep({ navigation }: StartStepProps) {
   );
 }
 
-function CreateStep({ navigation, route }: CreateStepProps) {
+function CreateStep({ route }: CreateStepProps) {
   const { password } = route.params;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 2000);
+    const t = setTimeout(() => {
+      setLoading(false);
+
+      setTimeout(() => {
+        dispatch(initialize(password));
+      }, 500);
+    }, 2000);
+
     return () => clearTimeout(t);
   }, []);
 
   return (
     <SafeScreenView style={styles.container}>
       <View style={styles.stepContainer}>
-        <Text style={[styles.stepText, styles.stepTextActive]}>Step 1</Text>
+        <Text style={styles.stepText}>1</Text>
         <View style={styles.stepDivider} />
-        <Text style={styles.stepText}>2</Text>
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
       </View>
       <Text style={styles.header}>Creating Wallet</Text>
       <Text style={styles.paragraphRegular}>This will only take a moment.</Text>
       <View style={styles.loadingContainer}>
         <LoadingIndicator loading={loading} />
-      </View>
-      <View style={mixins.buttonGroup}>
-        <Button
-          buttonStyle={[mixins.button, styles.buttonClear]}
-          containerStyle={mixins.buttonContainer}
-          titleStyle={[mixins.buttonTitle, styles.buttonClearTitle]}
-          title="Cancel"
-          onPress={() => navigation.navigate('PasswordStep')}
-        />
-        <View style={mixins.buttonSeparator} />
-        <Button
-          buttonStyle={mixins.button}
-          containerStyle={mixins.buttonContainer}
-          titleStyle={mixins.buttonTitle}
-          title="View My Wallet"
-          onPress={() => dispatch(initialize(password))}
-          disabled={loading}
-          disabledStyle={styles.buttonDisabled}
-          disabledTitleStyle={mixins.buttonTitle}
-          iconRight
-          icon={
-            <MaterialIcons
-              style={styles.arrowIcon}
-              name="arrow-forward"
-              color={theme.color.backgroundSecondary}
-              size={theme.iconSize}
-            />
-          }
-        />
       </View>
     </SafeScreenView>
   );
@@ -143,9 +121,9 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
   return (
     <SafeScreenView style={styles.container}>
       <View style={styles.stepContainer}>
-        <Text style={styles.stepText}>1</Text>
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 1</Text>
         <View style={styles.stepDivider} />
-        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
+        <Text style={styles.stepText}>2</Text>
       </View>
       <Text style={styles.header}>Password</Text>
       <Text style={styles.paragraphRegular}>
@@ -198,11 +176,20 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
-          title="Finalize"
+          title="Next"
           onPress={() => navigation.navigate('CreateStep', { password })}
           disabled={!isPasswordValid}
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
+          iconRight
+          icon={
+            <MaterialIcons
+              style={styles.arrowIcon}
+              name="arrow-forward"
+              color={theme.color.backgroundSecondary}
+              size={theme.iconSize}
+            />
+          }
         />
       </View>
     </SafeScreenView>

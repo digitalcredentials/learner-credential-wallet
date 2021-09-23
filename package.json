@@ -9,10 +9,12 @@
     "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack"
   },
   "dependencies": {
-    "@digitalcredentials/did-method-key": "^1.0.0",
-    "@digitalcredentials/ed25519-verification-key-2020": "^1.0.2",
-    "@digitalcredentials/vc": "^1.0.3",
-    "@digitalcredentials/x25519-key-agreement-key-2020": "^1.0.0",
+    "@digitalbazaar/did-io": "digitalbazaar/did-io#noesm",
+    "@digitalcredentials/did-method-key": "^2.0.1",
+    "@digitalcredentials/ed25519-signature-2020": "^3.0.1",
+    "@digitalcredentials/ed25519-verification-key-2020": "^3.1.1",
+    "@digitalcredentials/vc": "^1.0.4",
+    "@digitalcredentials/x25519-key-agreement-key-2020": "^2.0.2",
     "@expo-google-fonts/roboto": "^0.2.0",
     "@expo-google-fonts/rubik": "^0.2.0",
     "@expo/vector-icons": "^12.0.0",
@@ -24,6 +26,10 @@
     "@types/bson": "^4.0.5",
     "@types/text-encoding": "^0.0.36",
     "bson": "^4.4.1",
+    "credentials-context": "^2.0.0",
+    "dcc-context": "digitalcredentials/dcc#rc-1.0.1",
+    "did-context": "^3.1.1",
+    "ed25519-signature-2020-context": "^1.1.0",
     "events": "^1.1.1",
     "expo": "~42.0.1",
     "expo-app-loading": "^1.1.2",
@@ -32,6 +38,7 @@
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
     "expo-updates": "~0.8.1",
+    "jsonld-document-loader": "^1.2.0",
     "moment": "^2.29.1",
     "process": "^0.11.10",
     "react": "16.13.1",
@@ -68,7 +75,8 @@
     "rn-nodeify": "tradle/rn-nodeify",
     "stream-browserify": "^1.0.0",
     "text-encoding": "^0.7.0",
-    "util": "^0.10.4"
+    "util": "^0.10.4",
+    "x25519-key-agreement-2020-context": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
