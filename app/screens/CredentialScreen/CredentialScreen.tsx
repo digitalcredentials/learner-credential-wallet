@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { theme, mixins } from '../../styles';
+import { RootState } from '../../store';
+import { DidState } from '../../store/slices/did';
 import { deleteCredential } from '../../store/slices/wallet';
+import { sharePresentation } from '../../lib/present';
 import { MenuItem, NavHeader, ConfirmModal } from '../../components';
 
 import type { CredentialScreenProps } from './CredentialScreen.d';
@@ -17,6 +20,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const { rawCredentialRecord, noShishKabob = false } = route.params;
+  const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
   const { credential } = rawCredentialRecord;
 
   const title = credential.credentialSubject.hasCredential?.name ?? '';
@@ -34,6 +38,16 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const image = null; // TODO: Decide where to pull image from.
   const verified = true; // TODO: Add logic for verifying credential.
 
+  function share() {
+    if (rawDidRecords.length === 0) {
+      throw new Error('No DID generated. Something went wrong in wallet initialization.');
+    }
+
+    const [ rawDidRecord ] = rawDidRecords;
+
+    sharePresentation([rawCredentialRecord], rawDidRecord);
+  }
+
   function HeaderRightComponent(): JSX.Element | null {
     if (noShishKabob) {
       return null;
@@ -48,7 +62,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         />
         {menuIsOpen ? (
           <View style={styles.menuContainer}>
-            <MenuItem icon="share" title="Share" onPress={() => null} />
+            <MenuItem icon="share" title="Share" onPress={share} />
             <MenuItem icon="bug-report" title="Debug" onPress={() => null} />
             <MenuItem icon="delete" title="Delete" onPress={() => {
               setMenuIsOpen(false);
