@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Text, View, ScrollView } from 'react-native';
 import { Header, Button } from 'react-native-elements';
@@ -21,16 +21,19 @@ export default function DebugScreen({ navigation, route }: DebugScreenProps): JS
 
   function Exit(): JSX.Element {
     return (
-      <Button onPress={goBack}>
-        Exit
-      </Button>
+      <Button
+        buttonStyle={styles.exitButton}
+        titleStyle={styles.exitButtonTitle}
+        onPress={goBack}
+        title="Exit"
+      />
     );
   }
 
   return (
     <>
       <Header
-        centerComponent={{ text: 'Home', style: mixins.headerTitle}}
+        centerComponent={{ text: 'Debug', style: mixins.headerTitle}}
         containerStyle={mixins.headerContainer}
         rightComponent={<Exit />}
       />

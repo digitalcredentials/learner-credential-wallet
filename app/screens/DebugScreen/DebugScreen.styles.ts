@@ -16,4 +16,11 @@ export default StyleSheet.create({
     padding: 10,
     fontFamily: theme.fontFamily.mono,
   },
+  exitButton: {
+    backgroundColor: theme.color.transparent,
+    padding: 0,
+  },
+  exitButtonTitle: {
+    color: theme.color.textHeader,
+  },
 });
