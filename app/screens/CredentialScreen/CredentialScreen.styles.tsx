@@ -15,6 +15,7 @@ export default StyleSheet.create({
   },
   header: {
     ...mixins.headerText,
+    color: theme.color.textPrimary,
     fontSize: theme.fontSize.header,
     lineHeight: 30,
     marginVertical: 8,
@@ -49,6 +50,12 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: theme.fontSize.regular,
     color: theme.color.textPrimary,
+  },
+  link: {
+    fontFamily: theme.fontFamily.regular,
+    fontSize: theme.fontSize.regular,
+    color: theme.color.textPrimary,
+    textDecorationLine: 'underline',
   },
   flexRow: {
     flexDirection: 'row',

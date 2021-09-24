@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableWithoutFeedback, Linking } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
@@ -12,6 +12,8 @@ import { navigationRef } from '../../../App';
 import type { CredentialScreenProps } from './CredentialScreen.d';
 import styles from './CredentialScreen.styles';
 
+const NO_URL = 'None';
+
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const dispatch = useDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -19,21 +21,35 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
 
   const { rawCredentialRecord, noShishKabob = false } = route.params;
   const { credential } = rawCredentialRecord;
+  const { issuer, credentialSubject, issuanceDate } = credential;
 
-  const title = credential.credentialSubject.hasCredential?.name ?? '';
-  const description = credential.credentialSubject.hasCredential?.description ?? '';
-  const issuer =
-    typeof credential.issuer !== 'string' && credential.issuer.name !== undefined
-      ? credential.issuer.name
-      : '';
-  const issuanceDate = moment(credential.issuanceDate).format('MMM D, YYYY');
-  const subjectName = credential.credentialSubject.name;
-  const numberOfCredits = credential.credentialSubject.hasCredential?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
-  const startDate = credential.credentialSubject.hasCredential?.awardedOnCompletionOf?.startDate ?? '';
-  const endDate = credential.credentialSubject.hasCredential?.awardedOnCompletionOf?.endDate ?? '';
+  const title = credentialSubject.hasCredential?.name ?? '';
+  const description = credentialSubject.hasCredential?.description ?? '';
+  const formattedIssuanceDate = moment(issuanceDate).format('MMM D, YYYY');
+  const subjectName = credentialSubject.name;
+  const numberOfCredits = credentialSubject.hasCredential?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
+  const startDate = credentialSubject.hasCredential?.awardedOnCompletionOf?.startDate ?? '';
+  const endDate = credentialSubject.hasCredential?.awardedOnCompletionOf?.endDate ?? '';
+  const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
+  const issuerUrl = (typeof issuer === 'string' ? null : issuer?.url) ?? NO_URL;
+  const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
 
-  const image = null; // TODO: Decide where to pull image from.
   const verified = true; // TODO: Add logic for verifying credential.
+
+  function IssuerLink(): JSX.Element {
+    if (issuerUrl === NO_URL) {
+      return <Text style={styles.dataValue}>{issuerUrl}</Text>;
+    }
+
+    return (
+      <Text
+        style={styles.link}
+        onPress={() => Linking.openURL(issuerUrl)}
+      >
+        {issuerUrl}
+      </Text>
+    );
+  }
 
   function goToDebug() {
     if (navigationRef.isReady()) {
@@ -93,14 +109,13 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
       <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)}>
         <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>
           <View style={styles.container}>
-            <Text style={styles.header}>{title}</Text>
-            <Text style={styles.paragraph}>{description}</Text>
             <View style={styles.credentialContainer}>
               <View style={styles.dataContainer}>
+                <Text style={styles.header}>{title}</Text>
                 <Text style={styles.dataLabel}>Issuer</Text>
                 <View style={styles.flexRow}>
-                  {image ? (
-                    <Image source={image} style={styles.dataImage} />
+                  {issuerImage ? (
+                    <Image source={{ uri: issuerImage }} style={styles.dataImage} />
                   ) : (
                     <View style={styles.dataImage}>
                       <MaterialCommunityIcons
@@ -110,12 +125,16 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
                       />
                     </View>
                   )}
-                  <Text style={styles.dataValue}>{issuer}</Text>
+                  <Text style={styles.dataValue}>{issuerName}</Text>
                 </View>
               </View>
               <View style={styles.dataContainer}>
+                <Text style={styles.dataLabel}>Issuer URL</Text>
+                <IssuerLink />
+              </View>
+              <View style={styles.dataContainer}>
                 <Text style={styles.dataLabel}>Issuance Date</Text>
-                <Text style={styles.dataValue}>{issuanceDate}</Text>
+                <Text style={styles.dataValue}>{formattedIssuanceDate}</Text>
               </View>
               <View style={styles.dataContainer}>
                 <Text style={styles.dataLabel}>Subject Name</Text>
@@ -140,6 +159,10 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
                     <Text style={styles.dataValue}>{endDate}</Text>
                   </View>
                 ) : null}
+              </View>
+              <View style={styles.dataContainer}>
+                <Text style={styles.dataLabel}>Description</Text>
+                <Text style={styles.dataValue}>{description}</Text>
               </View>
             </View>
             {verified ? (
