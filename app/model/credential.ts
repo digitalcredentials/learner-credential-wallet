@@ -58,10 +58,10 @@ export class CredentialRecord implements CredentialRecordRaw {
     };
   }
 
-  static async addCredential(credential: Credential): Promise<void> { 
+  static async addCredential(credential: CredentialRecordRaw): Promise<void> { 
     await db.withInstance((instance) => {
       instance.write(() => {
-        instance.create(CredentialRecord.name, CredentialRecord.rawFrom(credential));
+        instance.create(CredentialRecord.name, credential);
       });
     });
   }

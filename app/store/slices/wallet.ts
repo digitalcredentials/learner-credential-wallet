@@ -51,7 +51,7 @@ const reset = createAsyncThunk('walletState/reset', async () => {
 });
 
 const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential, { dispatch }) => {
-  await CredentialRecord.addCredential(credential);
+  await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
   await dispatch(getAllCredentials());
 });
 
