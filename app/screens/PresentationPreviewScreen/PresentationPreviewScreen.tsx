@@ -2,32 +2,19 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { RootState } from '../../store';
-import { DidState } from '../../store/slices/did';
 import { mixins } from '../../styles';
 import { CredentialItem, NavHeader } from '../../components';
-import { sharePresentation } from '../../lib/present';
 import styles from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
-import { useSelector } from 'react-redux';
+import { useShare } from '../../hooks';
 
 export default function PresentationPreviewScreen({
   navigation,
   route,
 }: PresentationPreviewScreenProps): JSX.Element {
   const { selectedCredentials } = route.params;
-  const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
-
-  function share() {
-    if (rawDidRecords.length === 0) {
-      throw new Error('No DID generated. Something went wrong in wallet initialization.');
-    }
-
-    const [ rawDidRecord ] = rawDidRecords;
-
-    sharePresentation(selectedCredentials, rawDidRecord);
-  }
+  const share = useShare();
 
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
@@ -67,7 +54,7 @@ export default function PresentationPreviewScreen({
           title="Send"
           buttonStyle={mixins.buttonPrimary}
           titleStyle={mixins.buttonTitle}
-          onPress={share}
+          onPress={() => share(selectedCredentials)}
         />
       </View>
     </>
