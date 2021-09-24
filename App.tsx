@@ -8,6 +8,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@expo-google-fonts/rubik';
+import { Roboto_400Regular } from '@expo-google-fonts/roboto';
 
 import store from './app/store';
 import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
@@ -25,7 +26,12 @@ const navigatorTheme = {
 };
 
 export default function App(): JSX.Element {
-  const [fontsLoaded] = useFonts({ Rubik_400Regular, Rubik_500Medium, Rubik_700Bold  });
+  const [fontsLoaded] = useFonts({
+    Rubik_400Regular,
+    Rubik_500Medium,
+    Rubik_700Bold,
+    Roboto_400Regular,
+  });
   const {
     wallet: {
       isUnlocked,

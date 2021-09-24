@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 
@@ -10,7 +11,6 @@ import { sharePresentation } from '../../lib/present';
 import styles from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
-import { useSelector } from 'react-redux';
 
 export default function PresentationPreviewScreen({
   navigation,
