@@ -3,7 +3,7 @@ import AppLoading from 'expo-app-loading';
 
 import { useSelector } from 'react-redux';
 
-import { HomeNavigation, SetupNavigation } from '../';
+import { RootNavigation, SetupNavigation } from '../';
 import { LoginScreen } from '../../screens';
 import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
@@ -15,7 +15,7 @@ export default function AppNavigation(): JSX.Element {
   } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
 
   if (isUnlocked && isInitialized) {
-    return <HomeNavigation />;
+    return <RootNavigation />;
   } else if (!isUnlocked && isInitialized) {
     return <LoginScreen />;
   } else if (!isUnlocked && !isInitialized) {

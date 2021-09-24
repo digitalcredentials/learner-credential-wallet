@@ -1,5 +1,6 @@
 import { RouteProp, NavigatorScreenParams } from '@react-navigation/native';
 import { MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
+import type { CredentialRecordRaw } from '../../model/credential';
 
 import type {
   AddCredentialNavigationParamList,
@@ -12,6 +13,9 @@ export type HomeNavigationParamList = {
   ShareNavigation: undefined;
   AddCredentialNavigation: NavigatorScreenParams<AddCredentialNavigationParamList>;
   SettingsNavigation: NavigatorScreenParams<SettingsNavigationParamList>;
+  DebugScreen: {
+    rawCredentialRecord: CredentialRecordRaw;
+  };
 };
 
 export type CredentialNavigationProps = {
