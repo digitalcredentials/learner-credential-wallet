@@ -39,15 +39,12 @@ export default function ShareHomeScreen({
     const { credential } = item;
     const { credentialSubject, issuer } = credential;
     const title = credentialSubject.hasCredential?.name ?? '';
-    const subtitle =
-      typeof issuer !== 'string' && issuer.name !== undefined
-        ? issuer.name
-        : '';
+    const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
 
     return (
       <CredentialItem
         title={title}
-        subtitle={subtitle}
+        subtitle={issuerName}
         onSelect={() => toggle(index)}
         selected={selected.includes(index)}
         checkable

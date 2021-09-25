@@ -3,7 +3,7 @@ import { mixins } from '../../styles';
 
 export default StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
   },
   header: {
     ...mixins.headerText,
