@@ -5,7 +5,7 @@ import { DidState } from '../store/slices/did';
 import { sharePresentation } from '../lib/present';
 import { CredentialRecordRaw } from '../model/credential';
 
-export function useShare(): (credentials: CredentialRecordRaw[]) => void {
+export function useShareCredentials(): (credentials: CredentialRecordRaw[]) => void {
   const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
 
   if (rawDidRecords.length === 0) {

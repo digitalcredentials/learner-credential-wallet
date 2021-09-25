@@ -1,2 +1,2 @@
 export * from './useAnimation';
-export * from './useShare';
+export * from './useShareCredentials';

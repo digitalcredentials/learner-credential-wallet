@@ -7,14 +7,14 @@ import { useDispatch } from 'react-redux';
 import { theme, mixins } from '../../styles';
 import { deleteCredential } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal } from '../../components';
-import { useShare } from '../../hooks';
+import { useShareCredentials } from '../../hooks';
 
 import type { CredentialScreenProps } from './CredentialScreen.d';
 import styles from './CredentialScreen.styles';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const dispatch = useDispatch();
-  const share = useShare();
+  const share = useShareCredentials();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 

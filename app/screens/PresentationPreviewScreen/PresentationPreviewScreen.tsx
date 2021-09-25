@@ -7,14 +7,14 @@ import { CredentialItem, NavHeader } from '../../components';
 import styles from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
-import { useShare } from '../../hooks';
+import { useShareCredentials } from '../../hooks';
 
 export default function PresentationPreviewScreen({
   navigation,
   route,
 }: PresentationPreviewScreenProps): JSX.Element {
   const { selectedCredentials } = route.params;
-  const share = useShare();
+  const share = useShareCredentials();
 
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
