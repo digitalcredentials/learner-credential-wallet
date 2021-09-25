@@ -1,3 +1,4 @@
+export { default as DebugScreen } from './DebugScreen/DebugScreen';
 export { default as AddScreen } from './AddScreen/AddScreen';
 export { default as CredentialScreen } from './CredentialScreen/CredentialScreen';
 export { default as HomeScreen } from './HomeScreen/HomeScreen';

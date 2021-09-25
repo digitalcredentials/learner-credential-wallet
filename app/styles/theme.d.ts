@@ -24,6 +24,7 @@ export type ThemeType = {
     regular: FontFamily;
     medium: FontFamily;
     bold: FontFamily;
+    mono: FontFamily;
   };
   fontSize: {
     title: number;

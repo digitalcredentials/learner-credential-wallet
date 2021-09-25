@@ -8,6 +8,7 @@ import { CredentialCard } from '../../components';
 import { mixins } from '../../styles';
 import { deleteCredential } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal } from '../../components';
+import { navigationRef } from '../../../App';
 
 import type { CredentialScreenProps } from './CredentialScreen.d';
 import styles from './CredentialScreen.styles';
@@ -21,6 +22,12 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;
   const title = credentialSubject.hasCredential?.name ?? '';
+
+  function goToDebug() {
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('DebugScreen', { rawCredentialRecord });
+    }
+  }
 
   function HeaderRightComponent(): JSX.Element | null {
     if (noShishKabob) {
@@ -37,7 +44,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         {menuIsOpen ? (
           <View style={styles.menuContainer}>
             <MenuItem icon="share" title="Share" onPress={() => null} />
-            <MenuItem icon="bug-report" title="Debug" onPress={() => null} />
+            <MenuItem icon="bug-report" title="Debug" onPress={goToDebug} />
             <MenuItem icon="delete" title="Delete" onPress={() => {
               setMenuIsOpen(false);
               setModalIsOpen(true);
