@@ -1,7 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { QRScreen, AddScreen } from '../../screens';
+import {
+  QRScreen,
+  AddScreen,
+  ApproveCredentialsScreen,
+  ApproveCredentialScreen,
+} from '../../screens';
 import type { AddCredentialNavigationParamList } from '../';
 
 const Stack = createStackNavigator<AddCredentialNavigationParamList>();
@@ -11,6 +16,8 @@ export default function AddCredentialNavigation(): JSX.Element {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AddScreen" component={AddScreen} />
       <Stack.Screen name="QRScreen" component={QRScreen} />
+      <Stack.Screen name="ApproveCredentialsScreen" component={ApproveCredentialsScreen} />
+      <Stack.Screen name="ApproveCredentialScreen" component={ApproveCredentialScreen} />
     </Stack.Navigator>
   );
 }

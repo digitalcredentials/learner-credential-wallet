@@ -2,12 +2,15 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import { BarCodeReadEvent } from 'react-native-camera';
 
+import { CredentialRecord } from '../../model';
+import { credentialsFromQrText } from '../../lib/decode';
 import { NavHeader } from '../../components';
 import { QRScreenProps } from './QRScreen.d';
 import styles from './QRScreen.styles';
 
-export default function QRScreen({ navigation: { goBack }}: QRScreenProps): JSX.Element {
+export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   function Instructions(): JSX.Element {
     return (
       <Text style={styles.instructionText}>
@@ -16,11 +19,18 @@ export default function QRScreen({ navigation: { goBack }}: QRScreenProps): JSX.
     );
   }
 
+  async function onRead(e: BarCodeReadEvent) {
+    const credentials = await credentialsFromQrText(e.data);
+    const rawCredentialRecords = credentials.map(credential => CredentialRecord.rawFrom(credential));
+
+    navigation.navigate('ApproveCredentialsScreen', { rawCredentialRecords });
+  }
+
   return (
     <View style={styles.scannerBody}>
-      <NavHeader title="Scan QR" goBack={goBack} />
+      <NavHeader title="Scan QR" goBack={navigation.goBack} />
       <QRCodeScanner
-        onRead={msg => console.log(msg)}
+        onRead={onRead}
         topContent={<Instructions />}
         topViewStyle={styles.instructionContainer}
         bottomViewStyle={styles.emptyContainer}
