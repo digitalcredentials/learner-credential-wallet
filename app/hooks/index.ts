@@ -1,1 +1,2 @@
-export { default as useAnimation } from './useAnimation';
+export * from './useAnimation';
+export * from './useShareCredentials';

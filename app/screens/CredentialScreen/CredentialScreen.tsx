@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { theme, mixins } from '../../styles';
 import { deleteCredential } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal } from '../../components';
+import { useShareCredentials } from '../../hooks';
 import { navigationRef } from '../../../App';
 
 import type { CredentialScreenProps } from './CredentialScreen.d';
@@ -16,6 +17,7 @@ const NO_URL = 'None';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const dispatch = useDispatch();
+  const share = useShareCredentials();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -71,7 +73,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         />
         {menuIsOpen ? (
           <View style={styles.menuContainer}>
-            <MenuItem icon="share" title="Share" onPress={() => null} />
+            <MenuItem icon="share" title="Share" onPress={() => share([rawCredentialRecord])} />
             <MenuItem icon="bug-report" title="Debug" onPress={goToDebug} />
             <MenuItem icon="delete" title="Delete" onPress={() => {
               setMenuIsOpen(false);
