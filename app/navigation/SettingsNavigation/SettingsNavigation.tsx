@@ -72,6 +72,7 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
         <Text style={styles.paragraph}>Select a wallet file (.extension) from your device to restore from.</Text>
         <Button
           title="Choose a file"
+          containerStyle={styles.buttonContainer}
           buttonStyle={mixins.buttonIcon}
           titleStyle={mixins.buttonIconTitle}
           iconRight
@@ -96,6 +97,7 @@ function Backup({ navigation }: BackupProps): JSX.Element {
         <Text style={styles.paragraph}>This will export your wallet contents into a file for you to download.</Text>
         <Button
           title="Backup my wallet"
+          containerStyle={styles.buttonContainer}
           buttonStyle={mixins.buttonIcon}
           titleStyle={mixins.buttonIconTitle}
           iconRight
@@ -116,16 +118,16 @@ function About({ navigation }: AboutProps): JSX.Element {
   return (
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
-      <View style={styles.bodyContainer}>
+      <View style={styles.bodyContainerCenter}>
         <Image style={styles.image} source={walletImage} />
-        <Text style={styles.paragraph}>EDU Wallet</Text>
-        <Text style={styles.paragraph}>
+        <Text style={styles.paragraphCenter}>EDU Wallet</Text>
+        <Text style={styles.paragraphCenter}>
           This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
         </Text>
-        <Text style={styles.paragraph}>
+        <Text style={styles.paragraphCenter}>
             More information at <Text style={styles.link} onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')} >https://digitalcredentials.mit.edu</Text>.
         </Text>
-        <Text style={styles.paragraph}>
+        <Text style={styles.paragraphCenter}>
           Copyright 2021 Massachusetts Institute of Technology
         </Text>
       </View>
