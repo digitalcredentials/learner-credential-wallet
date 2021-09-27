@@ -14,6 +14,7 @@ export default function CredentialItem({
   onSelect,
   checkable = false,
   selected = false,
+  bottomElement,
 }: CredentialItemProps): JSX.Element {
   function LeftContent(): JSX.Element {
     if (checkable) {
@@ -53,6 +54,7 @@ export default function CredentialItem({
           <ListItem.Subtitle style={styles.listItemSubtitle}>
             {subtitle}
           </ListItem.Subtitle>
+          {bottomElement}
         </View>
       </ListItem.Content>
       <ListItem.Chevron />

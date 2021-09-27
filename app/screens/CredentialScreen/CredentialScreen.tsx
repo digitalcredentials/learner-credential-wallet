@@ -3,10 +3,11 @@ import { View, Text, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
+import { CredentialRecord } from '../../model';
 import { VerificationCard } from '../../components';
 import { CredentialCard } from '../../components';
 import { mixins } from '../../styles';
-import { deleteCredential } from '../../store/slices/wallet';
+import { getAllCredentials } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal } from '../../components';
 import { navigationRef } from '../../../App';
 
@@ -65,8 +66,9 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
       <ConfirmModal
         open={modalIsOpen}
         onRequestClose={() => setModalIsOpen(!modalIsOpen)}
-        onConfirm={() => {
-          dispatch(deleteCredential(rawCredentialRecord));
+        onConfirm={async () => {
+          await CredentialRecord.deleteCredential(rawCredentialRecord);
+          dispatch(getAllCredentials());
           navigation.goBack();
         }}
         title="Delete Credential"

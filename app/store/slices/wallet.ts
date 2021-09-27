@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Credential } from '../../types/credential';
 import { mintDid } from './did';
 import {
   db,
@@ -50,16 +49,6 @@ const reset = createAsyncThunk('walletState/reset', async () => {
   await db.reset();
 });
 
-const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential, { dispatch }) => {
-  await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
-  await dispatch(getAllCredentials());
-});
-
-const deleteCredential = createAsyncThunk('walletState/deleteCredential', async (rawRecord: CredentialRecordRaw, { dispatch }) => {
-  await CredentialRecord.deleteCredential(rawRecord);
-  await dispatch(getAllCredentials());
-});
-
 const walletSlice = createSlice({
   name: 'walletState',
   initialState,
@@ -107,6 +96,4 @@ export {
   reset,
   pollWalletState,
   getAllCredentials,
-  addCredential,
-  deleteCredential,
 };
