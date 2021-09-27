@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Credential } from '../../types/credential';
-import { WalletImportReport } from '../../types/wallet';
 import { mintDid } from './did';
 import { importWallet, ImportWalletParams } from '../../lib/import';
 import {
