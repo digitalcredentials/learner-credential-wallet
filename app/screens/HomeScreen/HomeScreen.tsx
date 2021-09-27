@@ -47,6 +47,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
       <Button
         title="Add Credential"
         buttonStyle={mixins.buttonIcon}
+        containerStyle={mixins.buttonIconContainer}
         titleStyle={mixins.buttonIconTitle}
         onPress={goToCredentialAdd}
         iconRight

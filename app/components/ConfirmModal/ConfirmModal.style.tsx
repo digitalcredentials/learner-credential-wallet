@@ -15,7 +15,6 @@ export default StyleSheet.create({
   modalContainer: {
     backgroundColor: theme.color.foregroundPrimary,
     padding: 16,
-    alignItems: 'center',
     borderRadius: theme.borderRadius,
   },
   modalTitle: {
@@ -23,6 +22,7 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.bold,
     fontSize: theme.fontSize.regular,
     marginVertical: 8,
+    textAlign: 'center',
   },
   buttonGroupContainer: {
     marginTop: 16,
