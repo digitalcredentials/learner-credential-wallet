@@ -48,14 +48,16 @@ export default function CredentialItem({
       onPress={onSelect}
     >
       <ListItem.Content style={styles.listItemContentContainer}>
-        <LeftContent />
-        <View style={styles.listItemTextContainer}>
-          <ListItem.Title style={styles.listItemTitle}>{title}</ListItem.Title>
-          <ListItem.Subtitle style={styles.listItemSubtitle}>
-            {subtitle}
-          </ListItem.Subtitle>
-          {bottomElement}
+        <View style={styles.listItemTopContent}>
+          <LeftContent />
+          <View style={styles.listItemTextContainer}>
+            <ListItem.Title style={styles.listItemTitle}>{title}</ListItem.Title>
+            <ListItem.Subtitle style={styles.listItemSubtitle}>
+              {subtitle}
+            </ListItem.Subtitle>
+          </View>
         </View>
+        {bottomElement}
       </ListItem.Content>
       <ListItem.Chevron />
     </ListItem>

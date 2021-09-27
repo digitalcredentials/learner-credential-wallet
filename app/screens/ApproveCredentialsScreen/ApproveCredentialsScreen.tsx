@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Text, View, FlatList } from 'react-native';
-import { Button } from 'react-native-elements';
+import { TouchableOpacity, View, FlatList } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { navigationRef } from '../../../App';
@@ -42,17 +42,22 @@ const iconFor = (status: ApprovalStatus): StatusIcon => ({
   [ApprovalStatus.Accepted]: StatusIcon.Done,
 })[status];
 
+const colorFor = (status: ApprovalStatus): string  => ({
+  [ApprovalStatus.Pending]: theme.color.success,
+  [ApprovalStatus.Errored]: theme.color.error,
+  [ApprovalStatus.Rejected]: theme.color.error,
+  [ApprovalStatus.Accepted]: theme.color.success,
+})[status];
+
 function CredentialStatus({ status }: CredentialStatusProps) {
   return (
     <View style={styles.credentialStatusContainer}>
       <MaterialIcons
+        color={colorFor(status)}
         name={iconFor(status)}
         size={theme.iconSize}
-        color={theme.color.success}
       />
-      <Text style={styles.statusText}>
-        {status}
-      </Text>
+      <Text style={styles.statusText}>{status}</Text>
     </View>
   );
 }
@@ -74,16 +79,27 @@ function ApprovalControls({ add }: ApprovalControlsProps) {
 
   if (approvalStatus === ApprovalStatus.Pending) {
     return (
-      <>
-        <Button
-          title="Decline"
+      <View style={styles.approvalContainer}>
+        <TouchableOpacity
+          style={styles.declineButton}
           onPress={() => setApprovalStatus(ApprovalStatus.Rejected)}
-        />
-        <Button title="Accept" onPress={accept} />
-      </>
+        >
+          <Text style={styles.brightActionText}>Decline</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.acceptButton}
+          onPress={accept}
+        >
+          <Text style={styles.darkActionText}>Accept</Text>
+        </TouchableOpacity>
+      </View>
     );
   } else {
-    return <CredentialStatus status={approvalStatus} />;
+    return (
+      <View style={styles.approvalContainer}>
+        <CredentialStatus status={approvalStatus} />
+      </View>
+    );
   }
 }
 
