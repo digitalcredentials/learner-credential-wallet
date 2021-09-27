@@ -20,19 +20,17 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
 
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
+    const { issuer } = credential;
     const title = credential.credentialSubject.hasCredential?.name ?? '';
-    const subtitle =
-      typeof credential.issuer !== 'string' && credential.issuer.name !== undefined
-        ? credential.issuer.name
-        : '';
+    const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
     const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
-    const image = null; // TODO: Decide where to pull image from.
+    const issuerImage = typeof issuer === 'string' ? null : issuer.image;
 
     return (
       <CredentialItem
         title={title}
-        subtitle={subtitle}
-        image={image}
+        subtitle={issuerName}
+        image={issuerImage}
         onSelect={onSelect}
       />
     );
@@ -81,7 +79,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
           data={rawCredentialRecords}
           renderItem={renderItem}
           keyExtractor={(item, index) => `${index}-${item._id}`}
-          ListFooterComponent={<AddCredentialButton />}
+          ListHeaderComponent={<AddCredentialButton />}
         />
       )}
     </>

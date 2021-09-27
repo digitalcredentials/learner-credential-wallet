@@ -25,6 +25,7 @@ const theme: ThemeType = {
     regular: FontFamily.RubikRegular,
     medium: FontFamily.RubikMedium,
     bold: FontFamily.RubikBold,
+    mono: FontFamily.RobotoRegular,
   },
   fontSize: {
     title: 36,

@@ -26,7 +26,7 @@ export default function CredentialItem({
     }
 
     if (image) {
-      return <Image source={image} style={mixins.imageIcon} />;
+      return <Image source={{ uri: image }} style={mixins.imageIcon} />;
     }
 
     return (

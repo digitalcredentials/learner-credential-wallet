@@ -4,16 +4,17 @@ import { Button } from 'react-native-elements';
 
 import { mixins } from '../../styles';
 import { CredentialItem, NavHeader } from '../../components';
-import { sharePresentation } from '../../lib/present';
 import styles from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
+import { useShareCredentials } from '../../hooks';
 
 export default function PresentationPreviewScreen({
   navigation,
   route,
 }: PresentationPreviewScreenProps): JSX.Element {
   const { selectedCredentials } = route.params;
+  const share = useShareCredentials();
 
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
@@ -53,7 +54,7 @@ export default function PresentationPreviewScreen({
           title="Send"
           buttonStyle={mixins.buttonPrimary}
           titleStyle={mixins.buttonTitle}
-          onPress={() => sharePresentation(selectedCredentials)}
+          onPress={() => share(selectedCredentials)}
         />
       </View>
     </>
