@@ -1,23 +1,26 @@
-import React from 'react';
-import { View, Image, Linking } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, Linking, ScrollView } from 'react-native';
 import { Header, Text, Button, ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import mockCredential from '../../mock/credential';
-import { lock, reset, addCredential } from '../../store/slices/wallet';
-import { NavHeader } from '../../components';
+import { lock, reset, restore, addCredential } from '../../store/slices/wallet';
+import { NavHeader, ConfirmModal } from '../../components';
 import {
   SettingsItemProps,
   SettingsProps,
   RestoreProps,
+  RestoreDetailsProps,
   BackupProps,
   AboutProps,
 } from '../';
+import { exportWallet } from '../../lib/export';
 
 const Stack = createStackNavigator();
 
@@ -64,13 +67,65 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   );
 }
 
-function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
+function Restore({ navigation }: RestoreProps): JSX.Element {
+  const dispatch = useDispatch();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [done, setDone] = useState(false);
+  const [importReport, setImportReport] = useState({});
+
+  async function _restoreWallet() {
+    await dispatch(restore({
+      onStart: () => setModalIsOpen(true),
+      onFinish: (report) => setImportReport(report),
+    }));
+
+    await new Promise((res) => setTimeout(res, 1000));
+    setDone(true);
+  }
+
+  async function _goToDetails() {
+    setModalIsOpen(false);
+    navigation.navigate('RestoreDetails', { importReport });
+  }
+
+  const reportSummary = Object.keys(importReport).join('\n');
+
   return (
     <>
-      <NavHeader goBack={goBack} title="Restore" />
+      <NavHeader goBack={navigation.goBack} title="Restore" />
+      <ConfirmModal
+        open={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        cancelButton={false}
+        confirmButton={done}
+        title={done ? 'Restore Complete' : 'Restoring From File'}
+        confirmText="Close"
+      >
+        {done ? (
+          <>
+            <Text style={styles.reportSummary}>{reportSummary}</Text>
+            <Button
+              buttonStyle={styles.buttonClear}
+              titleStyle={styles.buttonClearTitle}
+              containerStyle={styles.buttonClearContainer}
+              title="Details"
+              onPress={_goToDetails}
+            />
+          </>
+        ) : (
+          <>
+            <Text style={styles.reportSummary}>This will only take a moment.</Text>
+            <View style={styles.loadingContainer}> 
+              <AnimatedEllipsis style={styles.loadingDots} minOpacity={0.4} animationDelay={200}/>
+            </View>
+          </>
+        )}
+      </ConfirmModal>
       <View style={styles.bodyContainer}>
+        
         <Text style={styles.paragraph}>Select a wallet file (.extension) from your device to restore from.</Text>
         <Button
+          onPress={_restoreWallet}
           title="Choose a file"
           containerStyle={styles.buttonContainer}
           buttonStyle={mixins.buttonIcon}
@@ -89,6 +144,28 @@ function Restore({ navigation: { goBack } }: RestoreProps): JSX.Element {
   );
 }
 
+function RestoreDetails({ navigation, route }: RestoreDetailsProps): JSX.Element {
+  const { importReport } = route.params;
+
+  return (
+    <>
+      <NavHeader goBack={navigation.goBack} title="Restore Details" />
+      <ScrollView style={styles.bodyContainer}>
+        {Object.entries(importReport).map(([sectionTitle, items]) => (
+          <View style={styles.sectionContainer} key={sectionTitle}>
+            <Text style={styles.header}>{sectionTitle}</Text>
+            {items.map((item, i) => (
+              <Text key={`${i}-${item}`} style={styles.bulletItem}>
+                ●  {item}
+              </Text>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+    </>
+  );
+}
+
 function Backup({ navigation }: BackupProps): JSX.Element {
   return (
     <>
@@ -96,6 +173,7 @@ function Backup({ navigation }: BackupProps): JSX.Element {
       <View style={styles.bodyContainer}>
         <Text style={styles.paragraph}>This will export your wallet contents into a file for you to download.</Text>
         <Button
+          onPress={exportWallet}
           title="Backup my wallet"
           containerStyle={styles.buttonContainer}
           buttonStyle={mixins.buttonIcon}
@@ -143,6 +221,7 @@ export default function SettingsNavigation(): JSX.Element {
     >
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="Restore" component={Restore} />
+      <Stack.Screen name="RestoreDetails" component={RestoreDetails} />
       <Stack.Screen name="Backup" component={Backup} />
       <Stack.Screen name="About" component={About} />
     </Stack.Navigator>

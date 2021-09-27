@@ -61,4 +61,46 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginTop: 30,
   },
+  header: {
+    ...mixins.headerText,
+    fontSize: theme.fontSize.regular,
+  },
+  bulletItem: {
+    ...mixins.paragraphText,
+    fontSize: theme.fontSize.regular,
+    marginBottom: -4,
+  },
+  sectionContainer: {
+    marginVertical: 16,
+  },
+  buttonClear: {
+    ...mixins.button,
+    backgroundColor: theme.color.transparent,
+  },
+  buttonClearContainer: {
+    width: '100%',
+  },
+  buttonClearTitle: {
+    ...mixins.buttonTitle,
+    color: theme.color.textSecondary,
+    fontFamily: theme.fontFamily.regular,
+    textDecorationLine: 'underline',
+  },
+  reportSummary: {
+    ...mixins.paragraphText,
+    lineHeight: 24,
+    marginVertical: 8,
+    textAlign: 'center',
+  },
+  loadingDots: {
+    marginTop: -100,
+    fontSize: 130,
+    letterSpacing: -15,
+    color: theme.color.textHeader,
+  },
+  loadingContainer: {
+    marginLeft: -10,
+    marginBottom: -20,
+    alignItems: 'center',
+  },
 });
