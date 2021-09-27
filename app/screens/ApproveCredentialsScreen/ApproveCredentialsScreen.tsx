@@ -4,6 +4,7 @@ import { Text, View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import { navigationRef } from '../../../App';
 import { getAllCredentials } from '../../store/slices/wallet';
 import type { Credential } from '../../types/credential';
 import { CredentialRecord } from '../../model';
@@ -95,6 +96,23 @@ export default function ApproveCredentialsScreen({ route, navigation }: ApproveC
     dispatch(getAllCredentials());
   }
 
+  function goToHome() {
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('CredentialNavigation', { screen: 'HomeScreen' });
+    }
+  }
+
+  function Done(): JSX.Element {
+    return (
+      <Button
+        buttonStyle={styles.doneButton}
+        titleStyle={styles.doneButtonTitle}
+        onPress={goToHome}
+        title="Done"
+      />
+    );
+  }
+
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { credentialSubject, issuer } = credential;
@@ -116,7 +134,11 @@ export default function ApproveCredentialsScreen({ route, navigation }: ApproveC
 
   return (
     <View>
-      <NavHeader title="Available Credentials" goBack={() => navigation.goBack()} />
+      <NavHeader
+        title="Available Credentials"
+        goBack={() => navigation.goBack()}
+        rightComponent={<Done />}
+      />
       <FlatList
         style={styles.approveCredentialContainer}
         data={rawCredentialRecords}

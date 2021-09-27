@@ -27,4 +27,11 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.regular,
     color: theme.color.textPrimary,
   },
+  doneButton: {
+    backgroundColor: theme.color.transparent,
+    padding: 0,
+  },
+  doneButtonTitle: {
+    color: theme.color.textHeader,
+  },
 });
