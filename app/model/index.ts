@@ -7,6 +7,9 @@ import { NativeModules } from 'react-native';
 
 import { CredentialRecord } from './credential';
 import { DidRecord } from './did';
+import { parseWalletContents } from '../lib/parse';
+
+import type { UnlockedWallet, WalletImportResponse } from '../types/wallet';
 
 export * from './credential';
 export * from './did';
@@ -136,6 +139,92 @@ class DatabaseAccess {
     // The first call to unlock will create/encrypt the Realm with the pass
     await DatabaseAccess.unlock(passphrase);
     await DatabaseAccess.lock();
+  }
+
+  public static async export(): Promise<string> {
+    if (!(await this.isUnlocked())) {
+      throw new Error('Cannot export a locked wallet.');
+    }
+
+    const credentialRecords = await CredentialRecord.getAllCredentials();
+    const credentials = credentialRecords.map(({ credential }) => credential);
+
+    const didRecords = await DidRecord.getAllDidRecords();
+    const { didDocument, verificationKey, keyAgreementKey } = didRecords[0];
+
+    /** 
+     * The Unlocked Wallet spec requires all wallet content 
+     * types to be combined into a flat array. 
+     * https://w3c-ccg.github.io/universal-wallet-interop-spec/#unlocked-wallet
+     */
+    const contents = [
+      ...credentials,
+      didDocument,
+      verificationKey,
+      keyAgreementKey,
+    ];
+
+    const wallet: UnlockedWallet = {
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        'https://w3id.org/wallet/v1',
+      ],
+      id: 'http://example.gov/wallet/3732',
+      type: 'UniversalWallet2020',
+      status: 'UNLOCKED',
+      contents,
+    };
+
+    return JSON.stringify(wallet);
+  }
+
+  public static async import(rawWallet: string): Promise<WalletImportResponse> {
+    if (!(await this.isUnlocked())) {
+      throw new Error('Cannot import into a locked wallet.');
+    }
+
+    const {
+      credentials,
+      didDocument,
+      verificationKey,
+      keyAgreementKey,
+    } = parseWalletContents(rawWallet);
+
+    const response: WalletImportResponse = { 
+      success: [], 
+      duplicate: [], 
+      failed: [],
+    };
+
+    const existingCredentials = await CredentialRecord.getAllCredentials();
+    const existingCredentialIds = existingCredentials.map(({ credential }) => credential.id);
+
+    await Promise.all(credentials.map(async (credential) => {
+      const credentialName = credential.credentialSubject.hasCredential?.name ?? 'Unknown Credential';
+      if (existingCredentialIds.includes(credential.id)) {
+        response.duplicate.push(credentialName);
+        return;
+      }
+
+      try {
+        await CredentialRecord.addCredential(credential);
+        response.success.push(credentialName);
+      } catch(err) {
+        console.warn(`Unable to import credential: ${err}`);
+        response.failed.push(credentialName);
+      }
+    }));
+
+    const existingDidRecords = await DidRecord.getAllDidRecords();
+
+    // Only import a DID Document if there isn't one already.
+    if (existingDidRecords.length === 0) {
+      await DidRecord.addDidRecord(didDocument, verificationKey, keyAgreementKey);
+    } else {
+      console.warn('A DID Document already exists in this wallet.');
+    }
+
+    return response;
   }
 
   private static async encryptionKey(): Promise<Int8Array> {
