@@ -4,7 +4,6 @@ import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent } from 'react-native-camera';
 
-import { CredentialRecord } from '../../model';
 import { credentialsFromQrText } from '../../lib/decode';
 import { NavHeader } from '../../components';
 import { QRScreenProps } from './QRScreen.d';
@@ -21,9 +20,8 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
 
   async function onRead(e: BarCodeReadEvent) {
     const credentials = await credentialsFromQrText(e.data);
-    const rawCredentialRecords = credentials.map(credential => CredentialRecord.rawFrom(credential));
 
-    navigation.navigate('ApproveCredentialsScreen', { rawCredentialRecords });
+    navigation.navigate('ApproveCredentialsScreen', { credentials });
   }
 
   return (

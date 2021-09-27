@@ -1,6 +1,6 @@
-import type { CredentialRecordRaw } from '../../model/credential';
+import type { Credential } from '../../types/credential';
 export type { ApproveCredentialsScreenProps } from '../../navigation';
 
 export type RenderItemProps = {
-  item: CredentialRecordRaw;
+  item: Credential;
 }

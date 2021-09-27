@@ -7,3 +7,4 @@ export { default as NavHeader } from './NavHeader/NavHeader';
 export { default as SafeScreenView } from './SafeScreenView/SafeScreenView';
 export { default as CredentialCard } from './CredentialCard/CredentialCard';
 export { default as VerificationCard } from './VerificationCard/VerificationCard';
+export { default as ApprovalControls } from './ApprovalControls/ApprovalControls';

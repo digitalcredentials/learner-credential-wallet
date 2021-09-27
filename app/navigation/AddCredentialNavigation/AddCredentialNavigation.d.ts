@@ -1,15 +1,15 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 
-import type { CredentialRecordRaw } from '../../model/credential';
+import type { Credential } from '../../types/credential';
 
 export type AddCredentialNavigationParamList = {
   AddScreen: undefined;
   QRScreen: undefined;
   ApproveCredentialsScreen: {
-    rawCredentialRecords: CredentialRecordRaw[];
+    credentials: Credential[];
   }
   ApproveCredentialScreen: {
-    rawCredentialRecord: CredentialRecordRaw;
+    credential: Credential;
   }
 };
 
