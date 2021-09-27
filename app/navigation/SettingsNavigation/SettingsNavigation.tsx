@@ -10,7 +10,7 @@ import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import mockCredential from '../../mock/credential';
-import { lock, reset, restore, addCredential } from '../../store/slices/wallet';
+import { lock, reset, getAllCredentials, addCredential } from '../../store/slices/wallet';
 import { NavHeader, ConfirmModal } from '../../components';
 import {
   SettingsItemProps,
@@ -21,6 +21,7 @@ import {
   AboutProps,
 } from '../';
 import { exportWallet } from '../../lib/export';
+import { importWallet } from '../../lib/import';
 
 const Stack = createStackNavigator();
 
@@ -73,13 +74,14 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
   const [done, setDone] = useState(false);
   const [importReport, setImportReport] = useState({});
 
-  async function _restoreWallet() {
-    await dispatch(restore({
+  async function _importWallet() {
+    await importWallet({
       onStart: () => setModalIsOpen(true),
       onFinish: (report) => setImportReport(report),
-    }));
+    });
 
     await new Promise((res) => setTimeout(res, 1000));
+    dispatch(getAllCredentials());
     setDone(true);
   }
 
@@ -125,7 +127,7 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
         
         <Text style={styles.paragraph}>Select a wallet file (.extension) from your device to restore from.</Text>
         <Button
-          onPress={_restoreWallet}
+          onPress={_importWallet}
           title="Choose a file"
           containerStyle={styles.buttonContainer}
           buttonStyle={mixins.buttonIcon}

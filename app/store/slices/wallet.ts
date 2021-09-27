@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Credential } from '../../types/credential';
 import { mintDid } from './did';
-import { importWallet, ImportWalletParams } from '../../lib/import';
 import {
   db,
   CredentialRecord,
@@ -49,11 +48,6 @@ const initialize = createAsyncThunk('walletState/initialize', async (passphrase:
 const reset = createAsyncThunk('walletState/reset', async () => {
   await db.lock();
   await db.reset();
-});
-
-const restore = createAsyncThunk('walletState/restore', async (params: ImportWalletParams, { dispatch }) => {
-  await importWallet(params);
-  await dispatch(getAllCredentials());
 });
 
 const addCredential = createAsyncThunk('walletState/addCredential', async (credential: Credential, { dispatch }) => {
@@ -111,7 +105,6 @@ export {
   lock,
   initialize,
   reset,
-  restore,
   pollWalletState,
   getAllCredentials,
   addCredential,
