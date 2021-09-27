@@ -7,7 +7,7 @@ import { NativeModules } from 'react-native';
 
 import { CredentialRecord } from './credential';
 import { DidRecord } from './did';
-import { parseWalletContents } from '../lib/parse';
+import { parseWalletContents } from '../lib/parseWallet';
 
 import type { UnlockedWallet, WalletImportResponse } from '../types/wallet';
 
