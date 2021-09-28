@@ -56,10 +56,10 @@ export default function CredentialItem({
               {subtitle}
             </ListItem.Subtitle>
           </View>
+          <ListItem.Chevron />
         </View>
         {bottomElement}
       </ListItem.Content>
-      <ListItem.Chevron />
     </ListItem>
   );
 }
