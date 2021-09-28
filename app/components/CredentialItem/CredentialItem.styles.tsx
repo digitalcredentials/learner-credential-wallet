@@ -30,4 +30,11 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
   },
+  // TODO: Figure out how to remove left and right margin
+  checkboxContainer: {
+    margin: 0,
+  },
+  checkboxText: {
+    margin: 0,
+  },
 });

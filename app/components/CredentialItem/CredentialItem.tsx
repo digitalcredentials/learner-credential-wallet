@@ -22,6 +22,9 @@ export default function CredentialItem({
         <CheckBox
           checked={selected}
           onPress={onSelect}
+          checkedColor={theme.color.buttonPrimary}
+          containerStyle={styles.checkboxContainer}
+          textStyle={styles.checkboxText}
         />
       );
     }
