@@ -106,13 +106,7 @@ export default StyleSheet.create({
 
   /* Input mixins */
   input: {
-    height: 48,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: theme.borderRadius,
-    paddingHorizontal: 16,
-    color: theme.color.textPrimary,
-    borderColor: theme.color.textPrimary,
     fontSize: theme.fontSize.regular,
+    backgroundColor: theme.color.backgroundPrimary,
   },
 });

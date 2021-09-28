@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, View, Image } from 'react-native';
+import { Text, View, Image } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -139,8 +140,15 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           secureTextEntry
           autoCorrect={false}
           value={password}
-          placeholder="Password"
-          placeholderTextColor={theme.color.textSecondary}
+          outlineColor={theme.color.textPrimary}
+          selectionColor={theme.color.foregroundPrimary}
+          theme={{ colors: {
+            placeholder: theme.color.textPrimary,
+            text: theme.color.textPrimary,
+            primary: theme.color.brightAccent,
+          }}}
+          label="Password"
+          mode="outlined"
           onChangeText={setPassword}
           keyboardAppearance="dark"
           onBlur={_onInputBlur}
@@ -154,8 +162,15 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           secureTextEntry
           autoCorrect={false}
           value={passwordConfirm}
-          placeholder="Confirm Password"
-          placeholderTextColor={theme.color.textSecondary}
+          outlineColor={theme.color.textPrimary}
+          selectionColor={theme.color.foregroundPrimary}
+          theme={{ colors: {
+            placeholder: theme.color.textPrimary,
+            text: theme.color.textPrimary,
+            primary: theme.color.brightAccent,
+          }}}
+          label="Confirm Password"
+          mode="outlined"
           onChangeText={setPasswordConfirm}
           keyboardAppearance="dark"
           onBlur={_onInputBlur}

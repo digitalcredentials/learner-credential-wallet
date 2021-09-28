@@ -10,6 +10,7 @@ const theme: ThemeType = {
     foregroundPrimary: Color.Gray700,
     textHeader: Color.LightCyan,
     textPrimary: Color.Gray100,
+    brightAccent: Color.LightCyan,
     textSecondary: Color.Gray300,
     textPrimaryDark: Color.Black,
     iconActive: Color.White,
