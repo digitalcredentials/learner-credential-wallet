@@ -38,14 +38,14 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
     const { credentialSubject, issuer } = credential;
     const title = credentialSubject.hasCredential?.name ?? '';
     const issuerName = (typeof issuer === 'string' ? '' : issuer?.name) ?? '';
+    const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
     const onSelect = () => navigation.navigate('ApproveCredentialScreen', { pendingCredential });
-    const image = null; // TODO: Decide where to pull image from.
 
     return (
       <CredentialItem
         title={title}
         subtitle={issuerName}
-        image={image}
+        image={issuerImage}
         onSelect={onSelect}
         bottomElement={<ApprovalControls pendingCredential={pendingCredential} />}
       />
