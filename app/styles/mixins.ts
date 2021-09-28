@@ -101,7 +101,7 @@ export default StyleSheet.create({
   },
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,
-    fontSize: theme.fontSize.medium,
+    fontSize: theme.fontSize.regular,
   },
 
   /* Input mixins */
