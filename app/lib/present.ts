@@ -28,6 +28,9 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     documentLoader,
   });
 
+  if (await RNFS.exists(filePath)) {
+    await RNFS.unlink(filePath);
+  }
   await RNFS.writeFile(filePath, JSON.stringify(signedPresentation), 'utf8');
 
   Share.open({

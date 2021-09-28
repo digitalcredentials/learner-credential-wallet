@@ -166,7 +166,7 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
       <View style={mixins.buttonGroup}>
         <Button
           buttonStyle={[mixins.button, styles.buttonClear]}
-          containerStyle={mixins.buttonContainer}
+          containerStyle={styles.buttonClearContainer}
           titleStyle={[mixins.buttonTitle, styles.buttonClearTitle]}
           title="Cancel"
           onPress={() => navigation.navigate('StartStep')}

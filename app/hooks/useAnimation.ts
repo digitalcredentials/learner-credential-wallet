@@ -6,7 +6,7 @@ type UseAnimationType = Animated.CompositeAnimation & {
   readonly value: Animated.AnimatedInterpolation 
 };
 
-export default function useAnimation(
+export function useAnimation(
   range: InterpolateRange = [0, 1],
   config: Partial<Animated.TimingAnimationConfig> = {},
 ): UseAnimationType {

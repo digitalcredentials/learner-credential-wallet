@@ -62,6 +62,9 @@ export default StyleSheet.create({
   buttonClear: {
     backgroundColor: theme.color.transparent,
   },
+  buttonClearContainer: {
+    flex: 1,
+  },
   buttonClearTitle: {
     color: theme.color.textSecondary,
   },

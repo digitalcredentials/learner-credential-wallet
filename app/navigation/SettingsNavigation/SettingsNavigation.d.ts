@@ -1,4 +1,5 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
+import { WalletImportReport } from '../../types/wallet';
 
 export type SettingsItemProps = {
   readonly title: string;
@@ -9,21 +10,12 @@ export type SettingsNavigationParamList = {
   Settings: undefined;
   Backup: undefined;
   Restore: undefined;
+  RestoreDetails: { importReport: WalletImportReport };
   About: undefined;
 };
 
-export type SettingsProps = {
-  navigation: StackNavigationProp<SettingsNavigationParamList, 'Settings'>;
-}
-
-export type RestoreProps = {
-  navigation: StackNavigationProp<SettingsNavigationParamList, 'Restore'>;
-}
-
-export type BackupProps = {
-  navigation: StackNavigationProp<SettingsNavigationParamList, 'Backup'>;
-}
-
-export type AboutProps = {
-  navigation: StackNavigationProp<SettingsNavigationParamList, 'About'>;
-}
+export type SettingsProps = StackScreenProps<SettingsNavigationParamList, 'Settings'>;
+export type BackupProps = StackScreenProps<SettingsNavigationParamList, 'Backup'>;
+export type RestoreProps = StackScreenProps<SettingsNavigationParamList, 'Restore'>;
+export type RestoreDetailsProps = StackScreenProps<SettingsNavigationParamList, 'RestoreDetails'>;
+export type AboutProps = StackScreenProps<SettingsNavigationParamList, 'About'>;
