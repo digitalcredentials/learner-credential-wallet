@@ -1,25 +1,20 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { navigationRef } from '../../../App';
-import { getAllCredentials } from '../../store/slices/wallet';
-import type { Credential } from '../../types/credential';
-import { CredentialRecord } from '../../model';
+import { RootState } from '../../store';
+import { PendingCredential } from '../../store/slices/credentialFoyer';
 import { CredentialItem } from '../../components';
 import { NavHeader, ApprovalControls } from '../../components';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
 import styles from './ApproveCredentialsScreen.styles';
 
-export default function ApproveCredentialsScreen({ route, navigation }: ApproveCredentialsScreenProps): JSX.Element {
-  const dispatch = useDispatch();
-  const { credentials } = route.params;
-
-  async function add(credential: Credential): Promise<void> {
-    await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
-    dispatch(getAllCredentials());
-  }
+export default function ApproveCredentialsScreen({ navigation }: ApproveCredentialsScreenProps): JSX.Element {
+  const pendingCredentials = useSelector<RootState, PendingCredential[]>(
+    ({ credentialFoyer }) => credentialFoyer.pendingCredentials,
+  );
 
   function goToHome() {
     if (navigationRef.isReady()) {
@@ -38,11 +33,12 @@ export default function ApproveCredentialsScreen({ route, navigation }: ApproveC
     );
   }
 
-  function renderItem({ item: credential }: RenderItemProps) {
+  function renderItem({ item: pendingCredential }: RenderItemProps) {
+    const { credential } = pendingCredential;
     const { credentialSubject, issuer } = credential;
     const title = credentialSubject.hasCredential?.name ?? '';
     const issuerName = (typeof issuer === 'string' ? '' : issuer?.name) ?? '';
-    const onSelect = () => navigation.navigate('ApproveCredentialScreen', { credential });
+    const onSelect = () => navigation.navigate('ApproveCredentialScreen', { pendingCredential });
     const image = null; // TODO: Decide where to pull image from.
 
     return (
@@ -51,7 +47,7 @@ export default function ApproveCredentialsScreen({ route, navigation }: ApproveC
         subtitle={issuerName}
         image={image}
         onSelect={onSelect}
-        bottomElement={<ApprovalControls add={() => add(credential)} />}
+        bottomElement={<ApprovalControls pendingCredential={pendingCredential} />}
       />
     );
   }
@@ -65,7 +61,7 @@ export default function ApproveCredentialsScreen({ route, navigation }: ApproveC
       />
       <FlatList
         style={styles.approveCredentialContainer}
-        data={credentials}
+        data={pendingCredentials}
         renderItem={renderItem}
         keyExtractor={(_, index) => `credential-${index}`}
       />

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Text } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
+
+import {
+  ApprovalStatus,
+  PendingCredential,
+  setCredentialApproval,
+} from '../../store/slices/credentialFoyer';
+import { getAllCredentials } from '../../store/slices/wallet';
+import { CredentialRecord } from '../../model';
 import { theme, Color } from '../../styles';
 import styles from './ApprovalControls.styles';
-
-enum ApprovalStatus {
-  Pending = 'None',
-  Accepted = 'Added to Wallet',
-  Rejected = 'Credential Declined',
-  Errored = 'Credential Failed to Add',
-}
+import type { Credential } from '../../types/credential';
 
 enum StatusIcon {
   Schedule = 'schedule',
@@ -19,7 +22,7 @@ enum StatusIcon {
 }
 
 type ApprovalControlsProps = {
-  add: () => Promise<void>,
+  pendingCredential: PendingCredential;
 };
 
 type CredentialStatusProps = {
@@ -53,12 +56,25 @@ function CredentialStatus({ status }: CredentialStatusProps): JSX.Element {
   );
 }
 
-export default function ApprovalControls({ add }: ApprovalControlsProps): JSX.Element {
-  const [ approvalStatus, setApprovalStatus ] = useState(ApprovalStatus.Pending);
+export default function ApprovalControls({ pendingCredential }: ApprovalControlsProps): JSX.Element {
+  const dispatch = useDispatch();
+  const { credential } = pendingCredential;
+
+  async function add(credential: Credential): Promise<void> {
+    await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
+    dispatch(getAllCredentials());
+  }
+
+  function setApprovalStatus(status: ApprovalStatus) {
+    dispatch(setCredentialApproval({
+      ...pendingCredential,
+      status,
+    }));
+  }
 
   async function accept() {
     try {
-      await add();
+      await add(credential);
 
       setApprovalStatus(ApprovalStatus.Accepted);
     } catch (err) {
@@ -68,7 +84,7 @@ export default function ApprovalControls({ add }: ApprovalControlsProps): JSX.El
     }
   }
 
-  if (approvalStatus === ApprovalStatus.Pending) {
+  if (pendingCredential.status === ApprovalStatus.Pending) {
     return (
       <View style={styles.approvalContainer}>
         <TouchableOpacity
@@ -88,9 +104,8 @@ export default function ApprovalControls({ add }: ApprovalControlsProps): JSX.El
   } else {
     return (
       <View style={styles.approvalContainer}>
-        <CredentialStatus status={approvalStatus} />
+        <CredentialStatus status={pendingCredential.status} />
       </View>
     );
   }
 }
-

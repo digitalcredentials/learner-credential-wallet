@@ -1,15 +1,13 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 
-import type { Credential } from '../../types/credential';
+import type { PendingCredential } from '../../store/slices/credentialFoyer';
 
 export type AddCredentialNavigationParamList = {
   AddScreen: undefined;
   QRScreen: undefined;
-  ApproveCredentialsScreen: {
-    credentials: Credential[];
-  }
+  ApproveCredentialsScreen: undefined;
   ApproveCredentialScreen: {
-    credential: Credential;
+    pendingCredential: PendingCredential;
   }
 };
 

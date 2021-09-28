@@ -1,15 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent } from 'react-native-camera';
 
+import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { credentialsFromQrText } from '../../lib/decode';
 import { NavHeader } from '../../components';
 import { QRScreenProps } from './QRScreen.d';
 import styles from './QRScreen.styles';
 
 export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
+  const dispatch = useDispatch();
+
   function Instructions(): JSX.Element {
     return (
       <Text style={styles.instructionText}>
@@ -20,8 +24,9 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
 
   async function onRead(e: BarCodeReadEvent) {
     const credentials = await credentialsFromQrText(e.data);
+    dispatch(stageCredentials(credentials));
 
-    navigation.navigate('ApproveCredentialsScreen', { credentials });
+    navigation.navigate('ApproveCredentialsScreen');
   }
 
   return (
