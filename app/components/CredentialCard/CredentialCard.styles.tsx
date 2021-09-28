@@ -7,7 +7,7 @@ export default StyleSheet.create({
     color: theme.color.textPrimary,
     fontSize: theme.fontSize.header,
     lineHeight: 30,
-    marginVertical: 8,
+    marginBottom: 8,
   },
   credentialContainer: {
     backgroundColor: theme.color.backgroundSecondary,
