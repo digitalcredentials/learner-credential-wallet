@@ -52,12 +52,9 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
       <View style={styles.settingsContainer}>
         <SettingsItem title="Restore" onPress={() => navigation.navigate('Restore')} />
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
+        <SettingsItem title="Reset wallet" onPress={async () => dispatch(reset())} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={() => dispatch(lock())} />
-        <SettingsItem
-          title="Reset wallet (dev)"
-          onPress={async () => dispatch(reset())}
-        />
       </View>
     </>
   );
