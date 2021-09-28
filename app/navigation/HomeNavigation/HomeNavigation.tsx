@@ -31,7 +31,7 @@ export default function HomeNavigation(): JSX.Element {
       barStyle={styles.barStyle}
     >
       <Tab.Screen name="CredentialNavigation" component={CredentialNavigation} options={{
-        title: 'Home',
+        title: 'My Wallet',
         tabBarIcon: HomeTabIcon,
       }}/>
       <Tab.Screen name="ShareNavigation" component={ShareNavigation} options={{
