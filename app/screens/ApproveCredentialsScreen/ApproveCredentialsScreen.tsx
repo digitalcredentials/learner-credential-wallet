@@ -39,7 +39,12 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
     const title = credentialSubject.hasCredential?.name ?? '';
     const issuerName = (typeof issuer === 'string' ? '' : issuer?.name) ?? '';
     const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
-    const onSelect = () => navigation.navigate('ApproveCredentialScreen', { pendingCredential });
+    const onSelect = () => navigation.navigate(
+      'ApproveCredentialScreen',
+      {
+        pendingCredentialId: pendingCredential.id,
+      },
+    );
 
     return (
       <CredentialItem
