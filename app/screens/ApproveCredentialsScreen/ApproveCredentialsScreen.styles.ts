@@ -17,8 +17,11 @@ export default StyleSheet.create({
   doneButton: {
     backgroundColor: theme.color.transparent,
     padding: 0,
+    alignItems: 'center',
   },
   doneButtonTitle: {
+    lineHeight: 17,
     color: theme.color.textHeader,
+    fontSize: theme.fontSize.regular,
   },
 });
