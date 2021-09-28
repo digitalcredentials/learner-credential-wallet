@@ -77,9 +77,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         confirmText="Delete"
       >
         <Text style={styles.modalBodyText}>
-          Are you sure you want to remove {'\n'}
-          {title} {'\n'}
-          from your wallet?
+          Are you sure you want to remove {title} from your wallet?
         </Text>
       </ConfirmModal>
       <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)}>
