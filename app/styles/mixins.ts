@@ -59,7 +59,7 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: theme.fontSize.regular,
     color: theme.color.textSecondary,
-    lineHeight: 28,
+    lineHeight: 24,
   },
   
   /* Button mixins */
