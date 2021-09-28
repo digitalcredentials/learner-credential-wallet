@@ -9,13 +9,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: theme.color.backgroundSecondary,
     borderRadius: theme.borderRadius,
-    marginVertical: 8,
     width: '100%',
     height: 40,
   },
   statusText: {
     fontFamily: theme.fontFamily.bold,
-    fontSize: theme.fontSize.regular,
+    fontSize: 14,
     color: theme.color.textPrimary,
     paddingLeft: 8,
   },
@@ -47,10 +46,12 @@ export default StyleSheet.create({
   },
   brightActionText: {
     color: theme.color.textPrimary,
+    fontSize: 14,
     fontFamily: theme.fontFamily.medium,
   },
   darkActionText: {
     color: theme.color.textPrimaryDark,
+    fontSize: 14,
     fontFamily: theme.fontFamily.medium,
   },
 });

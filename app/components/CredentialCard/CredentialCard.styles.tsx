@@ -12,7 +12,6 @@ export default StyleSheet.create({
   credentialContainer: {
     backgroundColor: theme.color.backgroundSecondary,
     borderRadius: theme.borderRadius,
-    marginVertical: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
   },

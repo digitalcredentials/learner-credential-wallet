@@ -23,7 +23,7 @@ export default StyleSheet.create({
     color: theme.color.textPrimary,
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   listItemSubtitle: {
     color: theme.color.textSecondary,
