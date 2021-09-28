@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { View, FlatList } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Header } from 'react-native-elements';
 
+import { mixins } from '../../styles';
 import { navigationRef } from '../../../App';
 import { RootState } from '../../store';
 import { PendingCredential } from '../../store/slices/credentialFoyer';
 import { CredentialItem } from '../../components';
-import { NavHeader, ApprovalControls } from '../../components';
+import { ApprovalControls } from '../../components';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
 import styles from './ApproveCredentialsScreen.styles';
 
@@ -59,9 +60,9 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   return (
     <View>
-      <NavHeader
-        title="Available Credentials"
-        goBack={() => navigation.goBack()}
+      <Header
+        centerComponent={{ text: 'Available Credentials', style: mixins.headerTitle}}
+        containerStyle={mixins.headerContainer}
         rightComponent={<Done />}
       />
       <FlatList
