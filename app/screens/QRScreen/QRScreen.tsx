@@ -5,6 +5,7 @@ import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent } from 'react-native-camera';
 
+import { PresentationError } from '../../types/presentation';
 import { ConfirmModal } from '../../components';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { credentialsFromQrText, isVpqr } from '../../lib/decode';
@@ -41,7 +42,12 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
       .catch((err) => {
         console.warn(err);
         setErrorModalOpen(true);
-        setErrorMessage('The QR code could not be parsed or is malformed');
+
+        if (Object.values(PresentationError).includes(err)) {
+          setErrorMessage(err);
+        } else {
+          setErrorMessage('An error was encountered when parsing this QR code.');
+        }
       });
   }
 

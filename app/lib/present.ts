@@ -5,6 +5,7 @@ import vc from '@digitalcredentials/vc';
 import { Ed25519VerificationKey2020 } from '@digitalcredentials/ed25519-verification-key-2020';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 
+import type { VerifiablePresentation } from '../types/presentation';
 import type { CredentialRecordRaw } from '../model/credential';
 import type { DidRecordRaw } from '../model/did';
 
@@ -21,7 +22,7 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
 
   const presentation = vc.createPresentation({ verifiableCredential: credentials });
 
-  const signedPresentation = await vc.signPresentation({
+  const signedPresentation: VerifiablePresentation = await vc.signPresentation({
     presentation,
     suite,
     challenge,

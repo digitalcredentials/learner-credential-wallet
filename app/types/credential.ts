@@ -52,6 +52,8 @@ export type Proof = {
   verificationMethod: string;
   proofPurpose: string;
   proofValue: string;
+  challenge?: string;
+  jws?: string;
 }
 
 // https://digitalcredentials.github.io/dcc/v1/dcc-context-v1.json
@@ -63,4 +65,9 @@ export type Credential = {
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
   readonly proof?: Proof;                 // https://w3c.github.io/vc-data-model/#proofs-signatures
+}
+
+export enum CredentialError {
+  IsNotVerified = 'Credential is not verified.',
+  CouldNotBeVerified = 'Credential could not be checked for verification and may be malformed.',
 }
