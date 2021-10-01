@@ -9,9 +9,8 @@ import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
-import mockCredential from '../../mock/credential';
-import { lock, reset, getAllCredentials, addCredential } from '../../store/slices/wallet';
 import { NavHeader, ConfirmModal } from '../../components';
+import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
 import {
   SettingsItemProps,
   SettingsProps,
@@ -55,10 +54,6 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={() => dispatch(lock())} />
-        <SettingsItem
-          title="Add credential (dev)"
-          onPress={() => dispatch(addCredential(mockCredential))}
-        />
         <SettingsItem
           title="Reset wallet (dev)"
           onPress={async () => dispatch(reset())}

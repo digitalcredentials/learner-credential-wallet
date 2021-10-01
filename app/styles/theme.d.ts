@@ -10,6 +10,7 @@ export type ThemeType = {
     textHeader: Color;
     textPrimary: Color;
     textSecondary: Color;
+    textPrimaryDark: Color;
     iconActive: Color;
     iconInactive: Color;
     buttonPrimary: Color;

@@ -7,7 +7,10 @@ const credential: Credential = {
     'https://w3id.org/dcc/v1',
   ],
   id: 'https://cred.127.0.0.1.nip.io/api/issuance/12',
-  type: [ 'VerifiableCredential', 'Assertion' ],
+  type: [
+    'VerifiableCredential',
+    'Assertion',
+  ],
   issuer: {
     id: 'did:key:z6Mktpn6cXks1PBKLMgZH2VaahvCtBMF6K8eCa7HzrnuYLZv',
     name: 'Example University',
@@ -28,6 +31,13 @@ const credential: Credential = {
       competencyRequired: 'Demonstrated knowledge of key campus locations, campus services, and student organizations.',
       credentialCategory: 'badge',
     },
+  },
+  proof: {
+    type: 'Ed25519Signature2020',
+    created: '2021-09-16T03:02:08Z',
+    verificationMethod: 'did:key:z6Mktpn6cXks1PBKLMgZH2VaahvCtBMF6K8eCa7HzrnuYLZv#z6Mktpn6cXks1PBKLMgZH2VaahvCtBMF6K8eCa7HzrnuYLZv',
+    proofPurpose: 'assertionMethod',
+    proofValue: 'zxFfvBhwcFa99uLFaJgJ3VYFfomD5qQgpb6vvKR2TgRjHbB4WcCS8mLfvNdu9WrDUTt1m6xZHVc7Cjux5RkNynfc',
   },
 };
 

@@ -11,10 +11,13 @@ export default StyleSheet.create({
     borderRadius: mixins.button.borderRadius,
   },
   listItemContentContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   listItemTextContainer: {
     flex: 1,
+  },
+  listItemTopContent: {
+    flexDirection: 'row',
   },
   listItemTitle: {
     color: theme.color.textPrimary,

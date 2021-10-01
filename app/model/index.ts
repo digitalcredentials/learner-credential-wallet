@@ -207,7 +207,7 @@ class DatabaseAccess {
       }
 
       try {
-        await CredentialRecord.addCredential(credential);
+        await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
         response.success.push(credentialName);
       } catch(err) {
         console.warn(`Unable to import credential: ${err}`);

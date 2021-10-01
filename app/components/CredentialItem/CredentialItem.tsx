@@ -14,6 +14,7 @@ export default function CredentialItem({
   onSelect,
   checkable = false,
   selected = false,
+  bottomElement,
 }: CredentialItemProps): JSX.Element {
   function LeftContent(): JSX.Element {
     if (checkable) {
@@ -47,13 +48,16 @@ export default function CredentialItem({
       onPress={onSelect}
     >
       <ListItem.Content style={styles.listItemContentContainer}>
-        <LeftContent />
-        <View style={styles.listItemTextContainer}>
-          <ListItem.Title style={styles.listItemTitle}>{title}</ListItem.Title>
-          <ListItem.Subtitle style={styles.listItemSubtitle}>
-            {subtitle}
-          </ListItem.Subtitle>
+        <View style={styles.listItemTopContent}>
+          <LeftContent />
+          <View style={styles.listItemTextContainer}>
+            <ListItem.Title style={styles.listItemTitle}>{title}</ListItem.Title>
+            <ListItem.Subtitle style={styles.listItemSubtitle}>
+              {subtitle}
+            </ListItem.Subtitle>
+          </View>
         </View>
+        {bottomElement}
       </ListItem.Content>
       <ListItem.Chevron />
     </ListItem>
