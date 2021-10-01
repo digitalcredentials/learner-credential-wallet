@@ -14,7 +14,7 @@ export default StyleSheet.create({
   proofContainer: {
     backgroundColor: theme.color.backgroundSecondary,
     borderRadius: theme.borderRadius,
-    marginVertical: 8,
+    marginTop: 16,
     padding: 16,
   },
   proofText: {

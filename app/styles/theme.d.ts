@@ -9,6 +9,7 @@ export type ThemeType = {
     foregroundPrimary: Color;
     textHeader: Color;
     textPrimary: Color;
+    brightAccent: Color;
     textSecondary: Color;
     textPrimaryDark: Color;
     iconActive: Color;

@@ -22,6 +22,9 @@ export default function CredentialItem({
         <CheckBox
           checked={selected}
           onPress={onSelect}
+          checkedColor={theme.color.buttonPrimary}
+          containerStyle={styles.checkboxContainer}
+          textStyle={styles.checkboxText}
         />
       );
     }
@@ -56,10 +59,10 @@ export default function CredentialItem({
               {subtitle}
             </ListItem.Subtitle>
           </View>
+          <ListItem.Chevron />
         </View>
         {bottomElement}
       </ListItem.Content>
-      <ListItem.Chevron />
     </ListItem>
   );
 }

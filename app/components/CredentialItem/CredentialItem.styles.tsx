@@ -23,11 +23,18 @@ export default StyleSheet.create({
     color: theme.color.textPrimary,
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   listItemSubtitle: {
     color: theme.color.textSecondary,
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
+  },
+  // TODO: Figure out how to remove left and right margin
+  checkboxContainer: {
+    margin: 0,
+  },
+  checkboxText: {
+    margin: 0,
   },
 });

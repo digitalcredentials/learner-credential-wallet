@@ -12,10 +12,9 @@ export default StyleSheet.create({
     backgroundColor: theme.color.backgroundPrimary,
   },
   instructionText: {
-    ...mixins.headerTitle,
-    fontFamily: theme.fontFamily.regular,
-    fontSize: 16,
-    lineHeight: 24,
+    ...mixins.paragraphText,
+    paddingHorizontal: 16,
+    width: '100%',
     flex: 0,
   },
   cameraStyle: {

@@ -13,8 +13,8 @@ export default StyleSheet.create({
   },
   paragraph: {
     ...mixins.paragraphText,
-    marginBottom: 24,
-    marginTop: 8,
+    marginBottom: 16,
+    marginTop: 0,
   },
   shareButton: {
     ...mixins.buttonPrimary,

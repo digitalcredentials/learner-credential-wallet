@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, Image } from 'react-native';
+import { Text, Image } from 'react-native';
 import { Button } from 'react-native-elements';
+import { TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
 import { theme } from '../../styles';
@@ -16,10 +17,6 @@ export default function LoginScreen(): JSX.Element {
   const [errorText, setErrorText] = useState('');
 
   const isError = errorText !== '';
-  const passwordInputStyle = [
-    styles.passwordEntry,
-    isError ? styles.passwordError : null,
-  ];
 
   async function _unlockWallet() {
     try {
@@ -45,13 +42,20 @@ export default function LoginScreen(): JSX.Element {
         decide to share them.
       </Text>
       <TextInput
-        style={passwordInputStyle}
+        style={styles.passwordEntry}
         autoCompleteType="password"
         secureTextEntry
         autoCorrect={false}
         value={password}
-        placeholder="Password"
-        placeholderTextColor={theme.color.textSecondary}
+        outlineColor={isError ? theme.color.error : theme.color.textPrimary}
+        selectionColor={theme.color.foregroundPrimary}
+        theme={{ colors: {
+          placeholder: theme.color.textPrimary,
+          text: theme.color.textPrimary,
+          primary: theme.color.brightAccent,
+        }}}
+        label="Password"
+        mode="outlined"
         onChangeText={setPassword}
         keyboardAppearance="dark"
       />

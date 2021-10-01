@@ -59,7 +59,7 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: theme.fontSize.regular,
     color: theme.color.textSecondary,
-    lineHeight: 28,
+    lineHeight: 24,
   },
   
   /* Button mixins */
@@ -101,18 +101,12 @@ export default StyleSheet.create({
   },
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,
-    fontSize: theme.fontSize.medium,
+    fontSize: theme.fontSize.regular,
   },
 
   /* Input mixins */
   input: {
-    height: 48,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: theme.borderRadius,
-    paddingHorizontal: 16,
-    color: theme.color.textPrimary,
-    borderColor: theme.color.textPrimary,
     fontSize: theme.fontSize.regular,
+    backgroundColor: theme.color.backgroundPrimary,
   },
 });
