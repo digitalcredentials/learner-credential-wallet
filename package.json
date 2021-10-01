@@ -26,6 +26,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "@types/bson": "^4.0.5",
     "@types/text-encoding": "^0.0.36",
+    "big-integer": "^1.6.49",
     "bson": "^4.4.1",
     "credentials-context": "^2.0.0",
     "dcc-context": "digitalcredentials/dcc#rc-1.0.1",
