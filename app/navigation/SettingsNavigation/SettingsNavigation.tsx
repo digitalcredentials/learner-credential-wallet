@@ -6,11 +6,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
+import mockCredential from '../../mock/credential';
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import { NavHeader, ConfirmModal } from '../../components';
-import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
+import { lock, reset, addCredential, getAllCredentials } from '../../store/slices/wallet';
 import {
   SettingsItemProps,
   SettingsProps,
@@ -55,6 +56,10 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Reset wallet" onPress={async () => dispatch(reset())} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={() => dispatch(lock())} />
+        <SettingsItem
+          title="Add credential (dev)"
+          onPress={() => dispatch(addCredential(mockCredential))}
+        />
       </View>
     </>
   );
