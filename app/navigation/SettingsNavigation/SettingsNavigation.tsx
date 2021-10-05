@@ -11,7 +11,8 @@ import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import { NavHeader, ConfirmModal } from '../../components';
-import { lock, reset, addCredential, getAllCredentials } from '../../store/slices/wallet';
+import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
+import { CredentialRecord } from '../../model';
 import {
   SettingsItemProps,
   SettingsProps,
@@ -44,6 +45,11 @@ function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
 function Settings({ navigation }: SettingsProps): JSX.Element {
   const dispatch = useDispatch();
 
+  async function addDevCredential() {
+    await CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
+    dispatch(getAllCredentials());
+  }
+
   return (
     <>
       <Header
@@ -58,7 +64,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Sign out" onPress={() => dispatch(lock())} />
         <SettingsItem
           title="Add credential (dev)"
-          onPress={() => dispatch(addCredential(mockCredential))}
+          onPress={addDevCredential}
         />
       </View>
     </>
