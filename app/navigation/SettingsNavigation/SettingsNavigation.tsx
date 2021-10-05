@@ -6,11 +6,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
+import mockCredential from '../../mock/credential';
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import { NavHeader, ConfirmModal } from '../../components';
 import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
+import { CredentialRecord } from '../../model';
 import {
   SettingsItemProps,
   SettingsProps,
@@ -43,6 +45,11 @@ function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
 function Settings({ navigation }: SettingsProps): JSX.Element {
   const dispatch = useDispatch();
 
+  async function addDevCredential() {
+    await CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
+    dispatch(getAllCredentials());
+  }
+
   return (
     <>
       <Header
@@ -55,6 +62,10 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Reset wallet" onPress={async () => dispatch(reset())} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={() => dispatch(lock())} />
+        <SettingsItem
+          title="Add credential (dev)"
+          onPress={addDevCredential}
+        />
       </View>
     </>
   );
