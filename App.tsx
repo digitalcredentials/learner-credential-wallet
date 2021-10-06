@@ -25,6 +25,19 @@ const navigatorTheme = {
   },
 };
 
+const linking = {
+  prefixes: ['dccrequest://'],
+  config: {
+    screens: {
+      HomeNavigation: { screens: {
+        AddCredentialNavigation: { screens: {
+          AddScreen: 'request',
+        }},
+      }},
+    },
+  },
+};
+
 export default function App(): JSX.Element {
   const [fontsLoaded] = useFonts({
     Rubik_400Regular,
@@ -61,7 +74,11 @@ export default function App(): JSX.Element {
     <Provider store={store}>
       <SafeAreaProvider>
         <StatusBar style="light" />
-        <NavigationContainer theme={navigatorTheme} ref={navigationRef}>
+        <NavigationContainer
+          theme={navigatorTheme}
+          ref={navigationRef}
+          linking={linking}
+        >
           <AppNavigation />
         </NavigationContainer>
       </SafeAreaProvider>
