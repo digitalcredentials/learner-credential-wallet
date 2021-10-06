@@ -10,12 +10,14 @@ import {
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
+  needsRestart: boolean;
   rawCredentialRecords: CredentialRecordRaw[];
 }
 
 const initialState: WalletState = {
   isUnlocked: null,
   isInitialized: null,
+  needsRestart: false,
   rawCredentialRecords: [],
 };
 
@@ -74,7 +76,10 @@ const walletSlice = createSlice({
       isUnlocked: true,
     }));
 
-    builder.addCase(reset.fulfilled, () => initialState);
+    builder.addCase(reset.fulfilled, () => ({
+      ...initialState,
+      needsRestart: true,
+    }));
 
     builder.addCase(pollWalletState.fulfilled, (state, action) => ({
       ...state,
