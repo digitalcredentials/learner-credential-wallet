@@ -1,4 +1,9 @@
 PODS:
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXApplication (3.2.0):
@@ -233,6 +238,9 @@ PODS:
   - React-jsinspector (0.63.4)
   - react-native-aes-cipher (1.0.9):
     - React
+  - react-native-app-auth (6.4.0):
+    - AppAuth (= 1.4.0)
+    - React-Core
   - react-native-camera (4.2.0):
     - React-Core
     - react-native-camera/RCT (= 4.2.0)
@@ -376,6 +384,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-aes-cipher (from `../node_modules/react-native-aes-cipher`)
+  - react-native-app-auth (from `../node_modules/react-native-app-auth`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
@@ -410,6 +419,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppAuth
     - boost-for-react-native
     - GCDWebServer
 
@@ -474,6 +484,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-aes-cipher:
     :path: "../node_modules/react-native-aes-cipher"
+  react-native-app-auth:
+    :path: "../node_modules/react-native-app-auth"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
   react-native-document-picker:
@@ -538,6 +550,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
@@ -570,6 +583,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-aes-cipher: 87362294a7e70f99e19576137818121aeab74962
+  react-native-app-auth: 0970add7ceaadc90d2ccd1d9e21916d33d203701
   react-native-camera: fdfefd4139bbbb53f69e8b6fde1ee549b524eb88
   react-native-document-picker: a7950caaee8587002c9acbc7fe497a342094d93a
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
