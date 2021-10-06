@@ -28,8 +28,6 @@ const initialState: CredentialFoyerState = {
   pendingCredentials: [],
 };
 
-const not = <T>(predicate: (arg: T) => boolean) => (arg: T) => !predicate(arg);
-
 const credentialFoyer = createSlice({
   name: 'credentialFoyer',
   initialState,
@@ -50,13 +48,18 @@ const credentialFoyer = createSlice({
 
       return {
         ...state,
-        pendingCredentials: [
-          ...state.pendingCredentials.filter(not(isSubject)),
-          {
-            ...subject,
-            status: action.payload.status,
+        pendingCredentials: state.pendingCredentials.map(
+          (pendingCredential) => {
+            if (isSubject(pendingCredential)) {
+              return {
+                ...pendingCredential,
+                status: action.payload.status,
+              };
+            } else {
+              return pendingCredential;
+            }
           },
-        ],
+        ),
       };
     },
   },
