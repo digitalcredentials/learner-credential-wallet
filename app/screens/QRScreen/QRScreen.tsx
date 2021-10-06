@@ -15,7 +15,7 @@ import styles from './QRScreen.styles';
 export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
 
   function Instructions(): JSX.Element {
