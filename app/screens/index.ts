@@ -8,3 +8,4 @@ export { default as ShareHomeScreen } from './ShareHomeScreen/ShareHomeScreen';
 export { default as PresentationPreviewScreen } from './PresentationPreviewScreen/PresentationPreviewScreen';
 export { default as ApproveCredentialsScreen } from './ApproveCredentialsScreen/ApproveCredentialsScreen';
 export { default as ApproveCredentialScreen } from './ApproveCredentialScreen/ApproveCredentialScreen';
+export { default as RestartScreen } from './RestartScreen/RestartScreen';

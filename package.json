@@ -54,6 +54,7 @@
     "react-native-document-picker": "^6.0.4",
     "react-native-element": "^1.2.1",
     "react-native-elements": "^3.4.2",
+    "react-native-exit-app": "^1.1.0",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-get-random-values": "^1.7.0",
