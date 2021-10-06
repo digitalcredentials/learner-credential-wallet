@@ -44,6 +44,11 @@ function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
 
 function Settings({ navigation }: SettingsProps): JSX.Element {
   const dispatch = useDispatch();
+  const [resetModalOpen, setResetModalOpen] = useState(false);
+
+  async function resetWallet() {
+    dispatch(reset());
+  }
 
   async function addDevCredential() {
     await CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
@@ -59,7 +64,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
       <View style={styles.settingsContainer}>
         <SettingsItem title="Restore" onPress={() => navigation.navigate('Restore')} />
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
-        <SettingsItem title="Reset wallet" onPress={async () => dispatch(reset())} />
+        <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={() => dispatch(lock())} />
         <SettingsItem
@@ -67,6 +72,13 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
           onPress={addDevCredential}
         />
       </View>
+      <ConfirmModal
+        open={resetModalOpen}
+        onRequestClose={() => setResetModalOpen(!resetModalOpen)}
+        onConfirm={resetWallet}
+        confirmText="Yes"
+        title="Are you sure you would like to reset your wallet?"
+      />
     </>
   );
 }

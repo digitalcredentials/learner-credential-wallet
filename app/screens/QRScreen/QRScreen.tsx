@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent } from 'react-native-camera';
@@ -16,6 +16,7 @@ import styles from './QRScreen.styles';
 export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { width } = useWindowDimensions();
   const dispatch = useDispatch();
 
   function Instructions(): JSX.Element {
@@ -60,7 +61,10 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
         topViewStyle={styles.instructionContainer}
         bottomViewStyle={styles.emptyContainer}
         cameraStyle={styles.cameraStyle}
-        markerStyle={styles.markerStyle}
+        markerStyle={[styles.markerStyle, {
+          width: width * 0.9,
+          height: width * 0.9,
+        }]}
         showMarker
       />
       <ConfirmModal

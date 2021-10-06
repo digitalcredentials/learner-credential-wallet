@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Header, Text, Button } from 'react-native-elements';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { theme, mixins } from '../../styles';
 import styles from './AddScreen.styles';
@@ -85,21 +85,6 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
           icon={
             <MaterialIcons
               name="qr-code-scanner"
-              size={theme.iconSize}
-              color={theme.color.iconInactive}
-            />
-          }
-        />
-        <Button
-          title="Restore from a file"
-          buttonStyle={mixins.buttonIcon}
-          containerStyle={mixins.buttonIconContainer}
-          titleStyle={mixins.buttonIconTitle}
-          iconRight
-          onPress={goToImport}
-          icon={
-            <MaterialCommunityIcons
-              name="file-upload"
               size={theme.iconSize}
               color={theme.color.iconInactive}
             />
