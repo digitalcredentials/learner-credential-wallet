@@ -14,9 +14,9 @@ import store from './app/store';
 import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
 import { getAllDidRecords } from './app/store/slices/did';
 import { theme } from './app/styles';
-import { AppNavigation, HomeNavigationParamList } from './app/navigation';
+import { AppNavigation, RootNavigationParamsList } from './app/navigation';
 
-export const navigationRef = createNavigationContainerRef<HomeNavigationParamList>();
+export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 const navigatorTheme = {
   ...DefaultTheme,
   colors: {
