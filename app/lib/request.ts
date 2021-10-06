@@ -14,7 +14,7 @@ export type CredentialRequestParams = {
   challenge: string;
 }
 
-export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential | void> {
+export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential> {
   const { 
     // auth_type,
     // issuer, 

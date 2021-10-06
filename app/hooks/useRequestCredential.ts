@@ -42,9 +42,7 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
       setLoading(true);
       try {
         const credential = await requestCredential(routeParams, didRecord);
-        if (credential !== undefined) {
-          setCredential(credential);
-        }
+        setCredential(credential);
       } catch (err) {
         setError(err.message);
       } finally {
