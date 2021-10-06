@@ -29,11 +29,15 @@ const linking = {
   prefixes: ['dccrequest://'],
   config: {
     screens: {
-      HomeNavigation: { screens: {
-        AddCredentialNavigation: { screens: {
-          AddScreen: 'request',
-        }},
-      }},
+      HomeNavigation: {
+        screens: {
+          AddCredentialNavigation: {
+            screens: {
+              AddScreen: 'request',
+            },
+          },
+        },
+      },
     },
   },
 };
