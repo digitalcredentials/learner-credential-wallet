@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import { CredentialCard, VerificationCard } from '../../components';
 import { NavHeader, ApprovalControls } from '../../components';
