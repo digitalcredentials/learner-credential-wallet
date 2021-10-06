@@ -8,7 +8,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { theme, mixins } from '../../styles';
 import styles from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
-import { navigationRef } from '../../../App';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { useRequestCredential } from '../../hooks';
 import { ConfirmModal } from '../../components';
@@ -19,15 +18,6 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
   const dispatch = useDispatch();
 
   const { credential, error, loading } = useRequestCredential(route.params);
-
-  function goToImport() {
-    if (navigationRef.isReady()) {
-      navigationRef.navigate('SettingsNavigation', {
-        screen: 'Restore',
-        initial: false,
-      });
-    }
-  }
 
   useEffect(() => {
     if (loading) {
