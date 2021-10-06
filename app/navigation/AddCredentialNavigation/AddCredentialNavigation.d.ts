@@ -1,8 +1,8 @@
 import type { StackScreenProps } from '@react-navigation/stack';
-import { CredentialRequest } from '../../lib/request';
+import { CredentialRequestParams } from '../../lib/request';
 
 export type AddCredentialNavigationParamList = {
-  AddScreen: CredentialRequest | undefined;
+  AddScreen: CredentialRequestParams | undefined;
   QRScreen: undefined;
   ApproveCredentialsScreen: undefined;
   ApproveCredentialScreen: {
