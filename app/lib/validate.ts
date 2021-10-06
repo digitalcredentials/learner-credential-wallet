@@ -4,30 +4,29 @@ import vc from '@digitalcredentials/vc';
 
 import { isInRegistry } from './registry';
 import { VerifiablePresentation, PresentationError } from '../types/presentation';
-import type { Credential } from '../types/credential';
+import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from './documentLoader';
 
 const documentLoader = securityLoader().build();
 const suite = new Ed25519Signature2020();
-const verificationPurpose = new purposes.AssertionProofPurpose();
+const presentationPurpose = new purposes.AssertionProofPurpose();
 
-export async function verifyPresentation(presentation: VerifiablePresentation): Promise<boolean> {
-  const { holder } = presentation;
-
-  if (!isInRegistry(holder)) {
-    throw new Error(PresentationError.DidNotInRegistry);
-  }
-
+export async function verifyPresentation(
+  presentation: VerifiablePresentation,
+  unsignedPresentation = true,
+): Promise<boolean> {
   try {
-    const { valid } = await vc.verify({
+    const result = await vc.verify({
       presentation,
-      verificationPurpose,
+      presentationPurpose,
       suite,
       documentLoader,
+      unsignedPresentation,
     });
 
-    return valid;
+    console.log(JSON.stringify(result));
+    return result.verified;
   } catch (err) {
     console.warn(err);
 
@@ -36,14 +35,22 @@ export async function verifyPresentation(presentation: VerifiablePresentation): 
 }
 
 export async function verifyCredential(credential: Credential): Promise<boolean> {
+  const { issuer } = credential;
+
+  const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
+
+  if (!isInRegistry(issuerDid)) {
+    throw new Error(CredentialError.DidNotInRegistry);
+  }
+
   try {
-    const { valid } = await vc.verifyCredential({
+    const { verified } = await vc.verifyCredential({
       credential,
       suite,
       documentLoader,
     });
 
-    return valid;
+    return verified;
   } catch (err) {
     console.warn(err);
 

@@ -1,8 +1,8 @@
-import type { Credential, Proof } from './credential';
+import type { Credential, Proof, Issuer } from './credential';
 
 export type VerifiablePresentation = {
   readonly '@context': string[];
-  readonly holder: string;
+  readonly issuer: Issuer;
   readonly type: string;
   readonly verifiableCredential: Credential | Credential[];
   readonly proof: Proof;
@@ -11,5 +11,4 @@ export type VerifiablePresentation = {
 export enum PresentationError {
   IsNotVerified = 'Presentation is not verified.',
   CouldNotBeVerified = 'Presentation encoded could not be checked for verification and may be malformed.',
-  DidNotInRegistry = 'Could not find issuer in registry with given DID.',
 }

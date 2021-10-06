@@ -70,4 +70,5 @@ export type Credential = {
 export enum CredentialError {
   IsNotVerified = 'Credential is not verified.',
   CouldNotBeVerified = 'Credential could not be checked for verification and may be malformed.',
+  DidNotInRegistry = 'Could not find issuer in registry with given DID.',
 }

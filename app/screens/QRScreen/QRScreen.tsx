@@ -43,8 +43,8 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
         console.warn(err);
         setErrorModalOpen(true);
 
-        if (Object.values(PresentationError).includes(err)) {
-          setErrorMessage(err);
+        if (Object.values(PresentationError).includes(err.message)) {
+          setErrorMessage(err.message);
         } else {
           setErrorMessage('An error was encountered when parsing this QR code.');
         }
