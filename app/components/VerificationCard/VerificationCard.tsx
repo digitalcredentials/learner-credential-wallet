@@ -2,14 +2,22 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
+import type { Credential } from '../../types/credential';
+import { useVerifyCredential } from '../../hooks';
 import styles from './VerificationCard.styles';
 import { theme } from '../../styles';
 
 type VerificationCardProps = {
-  verified: boolean;
+  credential: Credential;
 }
 
-export default function VerificationCard({ verified }: VerificationCardProps): JSX.Element {
+export default function VerificationCard({ credential }: VerificationCardProps): JSX.Element {
+  const { loading, verified } = useVerifyCredential(credential);
+
+  if (loading) {
+    return <Text>Verifying...</Text>;
+  }
+
   if (verified) {
     return (
       <View style={[styles.flexRow, styles.proofContainer]}>

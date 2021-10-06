@@ -84,7 +84,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>
           <View style={styles.container}>
             <CredentialCard rawCredentialRecord={rawCredentialRecord} />
-            <VerificationCard verified />
+            <VerificationCard credential={credential} />
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>

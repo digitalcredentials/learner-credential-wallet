@@ -6,23 +6,12 @@ import { NavHeader, ApprovalControls } from '../../components';
 import type { ApproveCredentialScreenProps } from './ApproveCredentialScreen.d';
 import { CredentialRecord } from '../../model';
 import styles from './ApproveCredentialScreen.styles';
-import { usePendingCredential, useVerifyCredential } from '../../hooks';
+import { usePendingCredential } from '../../hooks';
 
 export default function ApproveCredentialScreen({ navigation, route }: ApproveCredentialScreenProps): JSX.Element {
   const { pendingCredentialId } = route.params;
   const pendingCredential = usePendingCredential(pendingCredentialId);
   const { credential } = pendingCredential;
-  const { loading, verified } = useVerifyCredential(credential);
-
-  console.log({ loading, verified });
-
-  function Verification(): JSX.Element {
-    if (loading || verified === null) {
-      return <Text>Verifying...</Text>;
-    }
-
-    return <VerificationCard verified={verified} />;
-  }
 
   return (
     <>
@@ -30,7 +19,7 @@ export default function ApproveCredentialScreen({ navigation, route }: ApproveCr
       <ScrollView>
         <View style={styles.container}>
           <CredentialCard rawCredentialRecord={CredentialRecord.rawFrom(credential)} />
-          <Verification />
+          <VerificationCard credential={credential} />
           <ApprovalControls pendingCredential={pendingCredential} />
         </View>
       </ScrollView>
