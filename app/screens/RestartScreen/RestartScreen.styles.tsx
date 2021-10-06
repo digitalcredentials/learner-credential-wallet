@@ -24,4 +24,18 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom: 48,
   },
+  buttonPrimary: {
+    backgroundColor: theme.color.buttonPrimary,
+    padding: 16,
+    borderRadius: theme.borderRadius,
+  },
+  buttonPrimaryTitle: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: theme.fontSize.regular,
+    color: theme.color.backgroundSecondary,
+  },
+  buttonPrimaryContainer: {
+    width: '100%',
+    marginTop: 20,
+  },
 });
