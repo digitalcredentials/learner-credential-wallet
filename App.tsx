@@ -14,14 +14,31 @@ import store from './app/store';
 import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
 import { getAllDidRecords } from './app/store/slices/did';
 import { theme } from './app/styles';
-import { AppNavigation, HomeNavigationParamList } from './app/navigation';
+import { AppNavigation, RootNavigationParamsList } from './app/navigation';
 
-export const navigationRef = createNavigationContainerRef<HomeNavigationParamList>();
+export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 const navigatorTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
     background: theme.color.backgroundPrimary,
+  },
+};
+
+const linking = {
+  prefixes: ['dccrequest://'],
+  config: {
+    screens: {
+      HomeNavigation: {
+        screens: {
+          AddCredentialNavigation: {
+            screens: {
+              AddScreen: 'request',
+            },
+          },
+        },
+      },
+    },
   },
 };
 
@@ -61,7 +78,11 @@ export default function App(): JSX.Element {
     <Provider store={store}>
       <SafeAreaProvider>
         <StatusBar style="light" />
-        <NavigationContainer theme={navigatorTheme} ref={navigationRef}>
+        <NavigationContainer
+          theme={navigatorTheme}
+          ref={navigationRef}
+          linking={linking}
+        >
           <AppNavigation />
         </NavigationContainer>
       </SafeAreaProvider>

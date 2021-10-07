@@ -138,6 +138,9 @@ android {
         missingDimensionStrategy 'react-native-camera', 'general'
         versionCode 1
         versionName "1.0.0"
+        manifestPlaceholders = [
+          appAuthRedirectScheme: 'com.googleusercontent.apps.64590692238-if1jf1fco72srsgjc1ged8tm8106fcpc'
+        ]
     }
     splits {
         abi {

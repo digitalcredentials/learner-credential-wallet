@@ -1,8 +1,10 @@
+import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { CredentialRecordRaw } from '../../model/credential';
+import type { HomeNavigationParamList } from '../';
 
 export type RootNavigationParamsList = {
-  HomeNavigation: undefined;
+  HomeNavigation: NavigatorScreenParams<HomeNavigationParamList>;
   DebugScreen: {
     rawCredentialRecord: CredentialRecordRaw;
   };

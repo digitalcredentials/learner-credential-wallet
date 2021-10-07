@@ -19,7 +19,12 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   function goToAdd() {
     if (navigationRef.isReady()) {
-      navigationRef.navigate('AddCredentialNavigation', { screen: 'AddScreen' });
+      navigationRef.navigate('HomeNavigation', { 
+        screen: 'AddCredentialNavigation', 
+        params: { 
+          screen: 'AddScreen', 
+        },
+      });
     }
   }
 
