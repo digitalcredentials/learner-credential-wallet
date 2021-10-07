@@ -217,12 +217,12 @@ class DatabaseAccess {
 
     const existingDidRecords = await DidRecord.getAllDidRecords();
 
-    // Only import a DID Document if there isn't one already.
-    if (existingDidRecords.length === 0) {
-      await DidRecord.addDidRecord(didDocument, verificationKey, keyAgreementKey);
-    } else {
-      console.warn('A DID Document already exists in this wallet.');
+    // Replace the DID Document if one already exisits.
+    if (existingDidRecords.length !== 0) {
+      const [didRecord] = await DidRecord.getAllDidRecords();
+      await DidRecord.deleteDidRecord(didRecord);
     }
+    await DidRecord.addDidRecord(didDocument, verificationKey, keyAgreementKey);
 
     return response;
   }
