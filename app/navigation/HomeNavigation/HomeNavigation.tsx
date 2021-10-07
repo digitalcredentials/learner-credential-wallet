@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { theme } from '../../styles';
@@ -14,7 +14,7 @@ import {
   TabIconProps,
 } from '../../navigation';
 
-const Tab = createMaterialBottomTabNavigator<HomeNavigationParamList>();
+const Tab = createBottomTabNavigator<HomeNavigationParamList>();
 
 const HomeTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="home" color={color} size={theme.iconSize} />;
 const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" color={color} size={theme.iconSize} />;
@@ -24,11 +24,14 @@ const SettingsTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="settin
 export default function HomeNavigation(): JSX.Element {
   return (
     <Tab.Navigator
-      activeColor={theme.color.iconActive}
-      inactiveColor={theme.color.iconInactive}
-      labeled={false}
-      shifting={true}
-      barStyle={styles.barStyle}
+      screenOptions={{ 
+        headerShown: false, 
+        tabBarShowLabel: false, 
+        unmountOnBlur: true, 
+        tabBarStyle: styles.barStyle,
+        tabBarActiveTintColor: theme.color.iconActive,
+        tabBarInactiveTintColor: theme.color.iconInactive,
+      }}
     >
       <Tab.Screen name="CredentialNavigation" component={CredentialNavigation} options={{
         title: 'My Wallet',
