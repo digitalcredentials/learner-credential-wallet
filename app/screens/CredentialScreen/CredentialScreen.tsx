@@ -26,10 +26,21 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const { credentialSubject } = credential;
   const title = credentialSubject.hasCredential?.name ?? '';
 
-  function goToDebug() {
+  function onPressShare() {
+    setMenuIsOpen(false);
+    share([rawCredentialRecord]);
+  }
+
+  function onPressDebug() {
+    setMenuIsOpen(false);
     if (navigationRef.isReady()) {
       navigationRef.navigate('DebugScreen', { rawCredentialRecord });
     }
+  }
+
+  function onPressDelete() {
+    setMenuIsOpen(false);
+    setModalIsOpen(true);
   }
 
   function HeaderRightComponent(): JSX.Element | null {
@@ -38,23 +49,11 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
     }
 
     return (
-      <>
-        <MaterialIcons
-          name="more-vert"
-          style={mixins.headerIcon}
-          onPress={() => setMenuIsOpen(!menuIsOpen)}
-        />
-        {menuIsOpen ? (
-          <View style={styles.menuContainer}>
-            <MenuItem icon="share" title="Share" onPress={() => share([rawCredentialRecord])} />
-            <MenuItem icon="bug-report" title="Debug" onPress={goToDebug} />
-            <MenuItem icon="delete" title="Delete" onPress={() => {
-              setMenuIsOpen(false);
-              setModalIsOpen(true);
-            }}/>
-          </View>
-        ) : null}
-      </>
+      <MaterialIcons
+        name="more-vert"
+        style={mixins.headerIcon}
+        onPress={() => setMenuIsOpen(!menuIsOpen)}
+      />
     );
   }
 
@@ -80,14 +79,23 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
           Are you sure you want to remove {title} from your wallet?
         </Text>
       </ConfirmModal>
-      <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)}>
-        <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>
-          <View style={styles.container}>
-            <CredentialCard rawCredentialRecord={rawCredentialRecord} />
-            <VerificationCard credential={credential} />
+      <View style={styles.outerContainer}>
+        {menuIsOpen ? (
+          <View style={styles.menuContainer}>
+            <MenuItem icon="share" title="Share" onPress={onPressShare} />
+            <MenuItem icon="bug-report" title="Debug" onPress={onPressDebug} />
+            <MenuItem icon="delete" title="Delete" onPress={onPressDelete} />
           </View>
-        </TouchableWithoutFeedback>
-      </ScrollView>
+        ) : null}
+        <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)} style={styles.scrollContainer}>
+          <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>
+            <View style={styles.container}>
+              <CredentialCard rawCredentialRecord={rawCredentialRecord} />
+              <VerificationCard credential={credential} />
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      </View>
     </>
   );
 }
