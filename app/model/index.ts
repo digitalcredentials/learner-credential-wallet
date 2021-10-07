@@ -219,7 +219,7 @@ class DatabaseAccess {
 
     // Replace the DID Document if one already exisits.
     if (existingDidRecords.length !== 0) {
-      const [didRecord] = await DidRecord.getAllDidRecords();
+      const [didRecord] = existingDidRecords;
       await DidRecord.deleteDidRecord(didRecord);
     }
     await DidRecord.addDidRecord(didDocument, verificationKey, keyAgreementKey);
