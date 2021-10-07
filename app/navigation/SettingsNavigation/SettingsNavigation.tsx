@@ -140,7 +140,7 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
       </ConfirmModal>
       <View style={styles.bodyContainer}>
         
-        <Text style={styles.paragraph}>Select a wallet file (.extension) from your device to restore from.</Text>
+        <Text style={styles.paragraph}>Select a wallet file (.json) from your device to restore from.</Text>
         <Button
           onPress={_importWallet}
           title="Choose a file"

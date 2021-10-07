@@ -40,7 +40,8 @@ export async function createVerifiablePresentation(
 }
 
 export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord: DidRecordRaw): Promise<void> {
-  const filePath = `${RNFS.DocumentDirectoryPath}/presentation.json`;
+  const plurality = rawCredentialRecords.length > 1 ? 's' : '';
+  const filePath = `${RNFS.DocumentDirectoryPath}/Shared Credential${plurality}.json`;
   const credentials = rawCredentialRecords.map(({ credential }) => credential);
 
   const verifiablePresentation = await createVerifiablePresentation(credentials, didRecord);
@@ -51,9 +52,9 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
   await RNFS.writeFile(filePath, JSON.stringify(verifiablePresentation), 'utf8');
 
   Share.open({
-    title: 'Presentation',
+    title: `Share Credential${plurality}`,
     url: `file://${filePath}`,
     type: 'text/plain',
-    subject: 'Presentation',
+    subject: `Share Credential${plurality}`,
   });
 }
