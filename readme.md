@@ -21,13 +21,13 @@ Prerequisite peer dependencies:
 * [XCode](https://developer.apple.com/xcode/)
 * [Android Studio](https://developer.android.com/studio)
 
-Optionally, if you use the `asdf` version manager run `asdf install` to install the correct version of Node. Clone down this repository, run `yarn` to install the React Native dependencies and also `npx pod-install` to install iOS Cocoapods. You can start the project with `yarn ios` or `yarn android`.
+Optionally, if you use the `asdf` version manager run `asdf install` to install the correct version of Node. Clone down this repository, run `npm` to install the React Native dependencies and also `npx pod-install` to install iOS Cocoapods. You can start the project with `npm run ios` or `npm run android`.
 
 This project was started with Expo, but had to be ejected because some libraries did not support it. Do not develop using Expo, even if it might still launch. That being said, we are still using [unimodules](https://github.com/unimodules/react-native-unimodules), so feel free to install and use packages from the Expo community.
 
 ## Environment
 
-This project uses TypeScript and React Native. It would be best to use an editor that can hook into the TypeScript language server (VSCode does this with Intellisense, Vim does it with CoC). We also use eslint to catch common mistakes and formatting errors. Most editors should support dynamic linting support while editing. If your editor does not, you can manually lint by running `yarn lint` in the project root.
+This project uses TypeScript and React Native. It would be best to use an editor that can hook into the TypeScript language server (VSCode does this with Intellisense, Vim does it with CoC). We also use eslint to catch common mistakes and formatting errors. Most editors should support dynamic linting support while editing. If your editor does not, you can manually lint by running `npm run lint` in the project root.
 
 ## Project Structure
 
@@ -35,12 +35,16 @@ This project uses TypeScript and React Native. It would be best to use an editor
 ├── app
 │   ├── assets ← Image assets 
 │   ├── components ← React components
+│   ├── hooks ← This is where custom hooks are defined (usually wraps lib methods)
+│   ├── lib ← Location for utility methods
+│   ├── mock ← Location for mock data, usually used for testing
 │   ├── model ← Database access objects and connections
 │   ├── navigation ← React Navigation structure
 │   ├── screens ← Individual screen views
 │   ├── store ← Redux and Redux Toolkit definitions
 │   │   └── slices ← Redux Toolkit slices (add new Redux state here)
-│   └── styles ← All app style definitions
+│   ├── styles ← All app style definitions
+│   └── types ← General place for defining types (usually DCC types for Credential, Presentation, etc...)
 ├── android ← Auto-generated android build folder, can still be manually edited if needed
 └── ios ← Same as android, except it also uses Cocoapods for dependency management
 ```
