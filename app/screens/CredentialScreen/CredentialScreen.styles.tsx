@@ -3,12 +3,13 @@ import { theme, mixins } from '../../styles';
 
 export default StyleSheet.create({
   menuContainer: {
-    top: 42,
+    top: 0,
     right: -10,
     width: 140,
     borderRadius: 3,
     position: 'absolute',
     overflow: 'hidden',
+    zIndex: 1,
   },
   container: {
     padding: 16,
@@ -31,5 +32,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     lineHeight: 24,
     marginVertical: 8,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  outerContainer: {
+    flex: 1,
   },
 });

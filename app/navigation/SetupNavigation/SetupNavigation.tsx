@@ -119,6 +119,12 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
     }
   }
 
+  function _goToNextStep() {
+    if (isPasswordValid) {
+      navigation.navigate('CreateStep', { password });
+    }
+  }
+
   return (
     <SafeScreenView style={styles.container}>
       <View style={styles.stepContainer}>
@@ -174,6 +180,7 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           onChangeText={setPasswordConfirm}
           keyboardAppearance="dark"
           onBlur={_onInputBlur}
+          onSubmitEditing={_goToNextStep}
         />
         <View style={styles.inputSeparator} />
         <ErrorDialog message={errorText} />
@@ -192,7 +199,7 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Next"
-          onPress={() => navigation.navigate('CreateStep', { password })}
+          onPress={_goToNextStep}
           disabled={!isPasswordValid}
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
