@@ -16,6 +16,7 @@ export default StyleSheet.create({
   title: {
     fontFamily: theme.fontFamily.bold,
     fontSize: theme.fontSize.title,
+    textAlign: 'center',
     color: theme.color.textPrimary,
     padding: 16,
   },
