@@ -5,7 +5,6 @@ import { requestCredential, CredentialRequestParams } from '../lib/request';
 import { RootState } from '../store';
 import { DidState } from '../store/slices/did';
 import { Credential } from '../types/credential';
-import { DidRecordRaw } from '../model';
 
 export type RequestPayload = {
   credential?: Credential;
@@ -20,10 +19,6 @@ function isCredentialRequestParams(params?: Params): params is CredentialRequest
   return issuer !== undefined && vc_request_url !== undefined && challenge !== undefined;
 }
 
-function isDidRecord(didRecord?: DidRecordRaw): didRecord is DidRecordRaw {
-  return didRecord !== undefined;
-}
-
 export function useRequestCredential(routeParams?: Params): RequestPayload {
   const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
   const [ didRecord ] = rawDidRecords;
@@ -33,12 +28,12 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
   const [error, setError] = useState('');
 
   /**
-   * The Database connection isn't immediately ready on app load so we 
-   * should verify the didRecord along with the routeParams when
-   * handling a deep link.
+   * The app takes a seconded to update the did store when the app is launched
+   * with a deep link request, so we have to wait until the didRecord is
+   * present before handling a deep link.
    */
   async function handleDeepLink() {
-    if (isDidRecord(didRecord) && isCredentialRequestParams(routeParams)) {
+    if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
       setLoading(true);
       try {
         const credential = await requestCredential(routeParams, didRecord);
