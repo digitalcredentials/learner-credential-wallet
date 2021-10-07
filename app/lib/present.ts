@@ -14,6 +14,11 @@ import { securityLoader } from './documentLoader';
 
 const documentLoader = securityLoader().build();
 
+/**
+ * This method wraps the create & sign presentation flow and and allows a 
+ * challenge to be specified. If the challenge paramater is not included, 
+ * a UUID will be generated and used in it's place.
+ */
 export async function createVerifiablePresentation(
   credentials: Credential[] = [],
   didRecord: DidRecordRaw,
