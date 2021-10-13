@@ -22,6 +22,8 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     challenge,
   } = credentialRequestParams;
 
+  console.log('Credential request params', credentialRequestParams);
+
   /**
    * Right now we auth against a mock Google service to simulate the credential
    * request flow, but for real credential requests, we'll need to generate the 
@@ -34,7 +36,10 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     scopes: ['openid', 'profile'],
   };
 
-  const { accessToken } = await authorize(config);
+  const { accessToken } = await authorize(config).catch((err) => {
+    console.error(err);
+    throw Error('Unable to receive credential');
+  });
 
   const requestBody = await createVerifiablePresentation([], didRecord, challenge);
   const request = {
@@ -49,7 +54,8 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   console.log('Credential request url:', vc_request_url);
   console.log('Credential request:', request);
 
-  throw Error('Credential request was formed, but the credential request flow isn\'t fully implemented.');
+  // TODO: Remove this error and finish second half of request flow
+  throw Error('DEV: Credential request was formed, but the rest of the flow isn\'t implemented.');
 
   /**
    * To finish the credential request flow, the wallet will post the request,
@@ -62,7 +68,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   // const verified = await verifyCredential(credential);
 
   // if (!verfied) {
-  //   throw Error('Credential could not be verified');
+  //   throw Error('Credential was received, but could not be verified');
   // }
 
   // return credential;
