@@ -12,6 +12,7 @@ import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import { NavHeader, ConfirmModal } from '../../components';
 import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
+import { getAllDidRecords } from '../../store/slices/did';
 import { CredentialRecord } from '../../model';
 import {
   SettingsItemProps,
@@ -95,8 +96,10 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
       onFinish: (report) => setImportReport(report),
     });
 
-    await new Promise((res) => setTimeout(res, 1000));
     dispatch(getAllCredentials());
+    dispatch(getAllDidRecords());
+
+    await new Promise((res) => setTimeout(res, 1000));
     setDone(true);
   }
 
