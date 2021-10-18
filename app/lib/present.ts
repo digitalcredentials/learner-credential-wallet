@@ -4,6 +4,7 @@ import uuid from 'react-native-uuid';
 import vc from '@digitalcredentials/vc';
 import { Ed25519VerificationKey2020 } from '@digitalcredentials/ed25519-verification-key-2020';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
+import { Platform } from 'react-native';
 
 import type { VerifiablePresentation } from '../types/presentation';
 import type { CredentialRecordRaw } from '../model/credential';
@@ -49,12 +50,25 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
   if (await RNFS.exists(filePath)) {
     await RNFS.unlink(filePath);
   }
-  await RNFS.writeFile(filePath, JSON.stringify(verifiablePresentation), 'utf8');
 
+  const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
+  await RNFS.writeFile(filePath, verifiablePresentationString, 'utf8');
+
+  /** 
+   * On Android, the clipboard share activity only supports strings (copying
+   * the file URL if `message` is not provided). To support clipboard 
+   * functionality here, the `message` parameter must be supplied with the 
+   * stringified JSON of the file.
+   * 
+   * On iOS, the clipboard supports file sharing so the `message` parameter
+   * should be omitted. Including it would result in sharing both the file and
+   * the JSON string.
+   */
   Share.open({
     title: `Share Credential${plurality}`,
     url: `file://${filePath}`,
     type: 'text/plain',
     subject: `Share Credential${plurality}`,
+    message: Platform.OS === 'ios' ? undefined : verifiablePresentationString,
   });
 }
