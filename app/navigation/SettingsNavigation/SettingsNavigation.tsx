@@ -93,14 +93,14 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
   async function _importWallet() {
     await importWallet({
       onStart: () => setModalIsOpen(true),
-      onFinish: (report) => setImportReport(report),
+      onFinish: (report) => {
+        setImportReport(report);
+        setDone(true);
+      },
     });
 
     dispatch(getAllCredentials());
     dispatch(getAllDidRecords());
-
-    await new Promise((res) => setTimeout(res, 1000));
-    setDone(true);
   }
 
   async function _goToDetails() {
