@@ -5,8 +5,8 @@ import { Platform } from 'react-native';
 import { db } from '../model';
 
 export async function exportWallet(): Promise<void> {
-  const filePath = `${RNFS.DocumentDirectoryPath}/exported-wallet.json`;
-  const walletFile = await db.export();
+  const fileName = 'Wallet Backup';
+  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
   const wallet = await db.export();
 
   /**
@@ -21,10 +21,10 @@ export async function exportWallet(): Promise<void> {
   await RNFS.writeFile(filePath, walletString, 'utf8');
 
   Share.open({
-    title: 'Wallet',
+    title: fileName,
     url: `file://${filePath}`,
     type: 'text/plain',
-    subject: 'Wallet',
+    subject: fileName,
     message: Platform.OS === 'ios' ? undefined : walletString,
   });
 }
