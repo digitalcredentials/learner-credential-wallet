@@ -141,7 +141,7 @@ class DatabaseAccess {
     await DatabaseAccess.lock();
   }
 
-  public static async export(): Promise<string> {
+  public static async export(): Promise<UnlockedWallet> {
     if (!(await this.isUnlocked())) {
       throw new Error('Cannot export a locked wallet.');
     }
@@ -175,7 +175,7 @@ class DatabaseAccess {
       contents,
     };
 
-    return JSON.stringify(wallet);
+    return wallet;
   }
 
   public static async import(rawWallet: string): Promise<WalletImportResponse> {
