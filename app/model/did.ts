@@ -92,7 +92,7 @@ export class DidRecord implements DidRecordRaw {
   ): Promise<void> { 
     await db.withInstance((instance) => {
       instance.write(() => {
-        instance.create(DidRecord.name, DidRecord.rawFrom(
+        instance.create(DidRecord.schema.name, DidRecord.rawFrom(
           didDocument,
           verificationKey,
           keyAgreementKey,
@@ -103,7 +103,7 @@ export class DidRecord implements DidRecordRaw {
 
   static getAllDidRecords(): Promise<DidRecordRaw[]> {
     return db.withInstance((instance) => {
-      const results = instance.objects<DidRecord>(DidRecord.name);
+      const results = instance.objects<DidRecord>(DidRecord.schema.name);
 
       // Results is not an array, but supports map only if it has length... :/
       if (results.length) {
@@ -117,7 +117,7 @@ export class DidRecord implements DidRecordRaw {
   static async deleteDidRecord(rawRecord: DidRecordRaw): Promise<void> {
     await db.withInstance((instance) => {
       const objectId = new ObjectID(rawRecord._id);
-      const didRecord = instance.objectForPrimaryKey(DidRecord.name, objectId);
+      const didRecord = instance.objectForPrimaryKey(DidRecord.schema.name, objectId);
 
       instance.write(() => {
         instance.delete(didRecord);

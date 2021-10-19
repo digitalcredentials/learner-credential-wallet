@@ -61,14 +61,14 @@ export class CredentialRecord implements CredentialRecordRaw {
   static async addCredential(credential: CredentialRecordRaw): Promise<void> { 
     await db.withInstance((instance) => {
       instance.write(() => {
-        instance.create(CredentialRecord.name, credential);
+        instance.create(CredentialRecord.schema.name, credential);
       });
     });
   }
 
   static getAllCredentials(): Promise<CredentialRecordRaw[]> {
     return db.withInstance((instance) => {
-      const results = instance.objects<CredentialRecord>(CredentialRecord.name);
+      const results = instance.objects<CredentialRecord>(CredentialRecord.schema.name);
 
       // Results is not an array, but supports map only if it has length... :/
       if (results.length) {
@@ -82,7 +82,7 @@ export class CredentialRecord implements CredentialRecordRaw {
   static async deleteCredential(rawRecord: CredentialRecordRaw): Promise<void> {
     await db.withInstance((instance) => {
       const objectId = new ObjectID(rawRecord._id);
-      const credentialRecord = instance.objectForPrimaryKey(CredentialRecord.name, objectId);
+      const credentialRecord = instance.objectForPrimaryKey(CredentialRecord.schema.name, objectId);
 
       instance.write(() => {
         instance.delete(credentialRecord);
