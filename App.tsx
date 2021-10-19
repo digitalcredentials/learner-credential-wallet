@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
@@ -11,8 +11,6 @@ import { useFonts, Rubik_400Regular, Rubik_500Medium, Rubik_700Bold } from '@exp
 import { Roboto_400Regular } from '@expo-google-fonts/roboto';
 
 import store from './app/store';
-import { pollWalletState, getAllCredentials } from './app/store/slices/wallet';
-import { getAllDidRecords } from './app/store/slices/did';
 import { theme } from './app/styles';
 import { AppNavigation, RootNavigationParamsList } from './app/navigation';
 
@@ -49,28 +47,8 @@ export default function App(): JSX.Element {
     Rubik_700Bold,
     Roboto_400Regular,
   });
-  const {
-    wallet: {
-      isUnlocked,
-      isInitialized,
-    },
-  } = store.getState();
-  const walletStateInitialized = isUnlocked !== null && isInitialized !== null;
 
-  useEffect(() => {
-    if (!walletStateInitialized) {
-      store.dispatch(pollWalletState());
-    }
-  }, [walletStateInitialized]);
-
-  useEffect(() => {
-    if (walletStateInitialized && isUnlocked) {
-      store.dispatch(getAllCredentials());
-      store.dispatch(getAllDidRecords());
-    }
-  }, [walletStateInitialized, isUnlocked]);
-
-  if (!fontsLoaded || !walletStateInitialized) {
+  if (!fontsLoaded) {
     return <AppLoading />;
   }
 
