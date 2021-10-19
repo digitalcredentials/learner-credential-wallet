@@ -12,6 +12,7 @@ import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import { NavHeader, ConfirmModal } from '../../components';
 import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
+import { getAllDidRecords } from '../../store/slices/did';
 import { CredentialRecord } from '../../model';
 import {
   SettingsItemProps,
@@ -92,12 +93,14 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
   async function _importWallet() {
     await importWallet({
       onStart: () => setModalIsOpen(true),
-      onFinish: (report) => setImportReport(report),
+      onFinish: (report) => {
+        setImportReport(report);
+        setDone(true);
+      },
     });
 
-    await new Promise((res) => setTimeout(res, 1000));
     dispatch(getAllCredentials());
-    setDone(true);
+    dispatch(getAllDidRecords());
   }
 
   async function _goToDetails() {
