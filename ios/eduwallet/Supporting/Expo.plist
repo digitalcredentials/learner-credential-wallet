@@ -4,10 +4,12 @@
   <dict>
     <key>EXUpdatesSDKVersion</key>
     <string>42.0.0</string>
+    <key>EXUpdatesURL</key>
+    <string>https://exp.host/@my-expo-username/my-app</string>
     <key>EXUpdatesEnabled</key>
-    <true/>
+    <false/>
     <key>EXUpdatesCheckOnLaunch</key>
-    <string>ALWAYS</string>
+    <string>NEVER</string>
     <key>EXUpdatesLaunchWaitMs</key>
     <integer>0</integer>
   </dict>
