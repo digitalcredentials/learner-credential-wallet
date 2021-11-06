@@ -8,7 +8,7 @@ import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
 import { CredentialItem } from '../../components';
 import { theme, mixins } from '../../styles';
-import { navigationRef } from '../../../App';
+import { navigationRef } from '../../navigation';
 
 import styles from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';

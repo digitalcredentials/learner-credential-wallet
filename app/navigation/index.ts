@@ -15,6 +15,8 @@ export * from './AddCredentialNavigation/AddCredentialNavigation.d';
 export * from './CredentialNavigation/CredentialNavigation.d';
 export * from './ShareNavigation/ShareNavigation.d';
 
+export * from './AppNavigation/AppNavigation';
+
 /**
  * If screens are re-used, we need to make union types for their
  * props

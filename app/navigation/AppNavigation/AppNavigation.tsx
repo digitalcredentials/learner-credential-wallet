@@ -1,46 +1,82 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import AppLoading from 'expo-app-loading';
+import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createNavigationContainerRef } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { useSelector, useDispatch } from 'react-redux';
-
-import { RootNavigation, SetupNavigation } from '../';
+import { RootNavigation, SetupNavigation, RootNavigationParamsList } from '../';
 import { RestartScreen, LoginScreen } from '../../screens';
-import { WalletState, pollWalletState, getAllCredentials } from '../../store/slices/wallet';
-import { getAllDidRecords } from '../../store/slices/did';
+import { useAppLoading } from '../../hooks';
 import { RootState } from '../../store';
+import { WalletState } from '../../store/slices/wallet';
+import { theme } from '../../styles';
+
+export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
+
+const navigatorTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: theme.color.backgroundPrimary,
+  },
+};
+
+const linking = {
+  prefixes: ['dccrequest://'],
+  config: {
+    screens: {
+      HomeNavigation: {
+        screens: {
+          AddCredentialNavigation: {
+            screens: {
+              AddScreen: 'request',
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
 
 export default function AppNavigation(): JSX.Element {
-  const dispatch = useDispatch();
-  const {
-    isUnlocked,
-    isInitialized,
+  const loading = useAppLoading();
+  const { 
+    isUnlocked, 
+    isInitialized, 
     needsRestart,
   } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
 
-  const walletStateInitialized = isUnlocked !== null && isInitialized !== null;
-
-  useEffect(() => {
-    if (!walletStateInitialized) {
-      dispatch(pollWalletState());
-
-      if (isUnlocked) {
-        dispatch(getAllCredentials());
-        dispatch(getAllDidRecords());
-      }
+  function renderScreen(): JSX.Element | null {
+    if (needsRestart) {
+      return <RestartScreen />;
+    } else if (isUnlocked && isInitialized) {
+      return <RootNavigation />;
+    } else if (!isUnlocked && isInitialized) {
+      return <LoginScreen />;
+    } else if (!isUnlocked && !isInitialized) {
+      return <SetupNavigation />;
+    } else {
+      return null;
     }
-  }, [walletStateInitialized, isUnlocked]);
-
-  if (!walletStateInitialized) {
-    return <AppLoading />;
-  } else if (needsRestart) {
-    return <RestartScreen />;
-  } else if (isUnlocked && isInitialized) {
-    return <RootNavigation />;
-  } else if (!isUnlocked && isInitialized) {
-    return <LoginScreen />;
-  } else if (!isUnlocked && !isInitialized) {
-    return <SetupNavigation />;
-  } else {
-    return <AppLoading />;
   }
+
+  if (loading) {
+    return <AppLoading />;
+  }  
+
+  return (
+    <SafeAreaProvider>
+      <StatusBar style="light" />
+      <NavigationContainer
+        theme={navigatorTheme}
+        ref={navigationRef}
+        linking={linking}
+      >
+        {renderScreen()}
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
 }

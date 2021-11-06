@@ -10,7 +10,7 @@ import { mixins } from '../../styles';
 import { getAllCredentials } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal } from '../../components';
 import { useShareCredentials } from '../../hooks';
-import { navigationRef } from '../../../App';
+import { navigationRef } from '../../navigation';
 
 import type { CredentialScreenProps } from './CredentialScreen.d';
 import styles from './CredentialScreen.styles';
