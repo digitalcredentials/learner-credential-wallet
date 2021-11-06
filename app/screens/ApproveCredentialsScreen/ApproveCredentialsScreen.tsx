@@ -4,7 +4,7 @@ import { View, FlatList } from 'react-native';
 import { Button, Header } from 'react-native-elements';
 
 import { mixins } from '../../styles';
-import { navigationRef } from '../../../App';
+import { navigationRef } from '../../navigation';
 import { RootState } from '../../store';
 import { PendingCredential } from '../../store/slices/credentialFoyer';
 import { CredentialItem } from '../../components';
