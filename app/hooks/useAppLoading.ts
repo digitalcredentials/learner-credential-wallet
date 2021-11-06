@@ -51,7 +51,6 @@ export function useAppLoading(): boolean {
        * status to locked.
        */
       if (isUnlocked && !isInitialized) {
-        console.log('fixing');
         dispatch(lock());
       } else if (isUnlocked) {
         dispatch(getAllCredentials());
