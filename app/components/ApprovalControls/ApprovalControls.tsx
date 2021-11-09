@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import {
   ApprovalStatus,
+  ApprovalMessage,
   PendingCredential,
   setCredentialApproval,
 } from '../../store/slices/credentialFoyer';
@@ -27,6 +28,7 @@ type ApprovalControlsProps = {
 
 type CredentialStatusProps = {
   status: ApprovalStatus;
+  message: ApprovalMessage;
 };
 
 const iconFor = (status: ApprovalStatus): StatusIcon => ({
@@ -43,22 +45,17 @@ const colorFor = (status: ApprovalStatus): Color  => ({
   [ApprovalStatus.Accepted]: theme.color.success,
 })[status];
 
-function CredentialStatus({ status }: CredentialStatusProps): JSX.Element {
-  return (
-    <View style={styles.credentialStatusContainer}>
-      <MaterialIcons
-        color={colorFor(status)}
-        name={iconFor(status)}
-        size={theme.iconSize}
-      />
-      <Text style={styles.statusText}>{status}</Text>
-    </View>
-  );
-}
+const defaultMessageFor = (status: ApprovalStatus): ApprovalMessage => ({
+  [ApprovalStatus.Pending]: ApprovalMessage.Pending,
+  [ApprovalStatus.Accepted]: ApprovalMessage.Accepted,
+  [ApprovalStatus.Rejected]: ApprovalMessage.Rejected,
+  [ApprovalStatus.Errored]: ApprovalMessage.Errored,
+})[status];
 
 export default function ApprovalControls({ pendingCredential }: ApprovalControlsProps): JSX.Element {
   const dispatch = useDispatch();
-  const { credential } = pendingCredential;
+  const { credential, status, messageOveride } = pendingCredential;
+  const message = messageOveride || defaultMessageFor(status);
 
   async function add(credential: Credential): Promise<void> {
     await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
@@ -84,7 +81,7 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
     }
   }
 
-  if (pendingCredential.status === ApprovalStatus.Pending) {
+  if (status === ApprovalStatus.Pending) {
     return (
       <View style={styles.approvalContainer}>
         <TouchableOpacity
@@ -104,7 +101,14 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
   } else {
     return (
       <View style={styles.approvalContainer}>
-        <CredentialStatus status={pendingCredential.status} />
+        <View style={styles.credentialStatusContainer}>
+          <MaterialIcons
+            color={colorFor(status)}
+            name={iconFor(status)}
+            size={theme.iconSize}
+          />
+          <Text style={styles.statusText}>{message}</Text>
+        </View>
       </View>
     );
   }
