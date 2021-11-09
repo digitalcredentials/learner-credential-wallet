@@ -26,11 +26,6 @@ type ApprovalControlsProps = {
   pendingCredential: PendingCredential;
 };
 
-type CredentialStatusProps = {
-  status: ApprovalStatus;
-  message: ApprovalMessage;
-};
-
 const iconFor = (status: ApprovalStatus): StatusIcon => ({
   [ApprovalStatus.Pending]: StatusIcon.Schedule,
   [ApprovalStatus.Errored]: StatusIcon.Close,
