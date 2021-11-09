@@ -11,7 +11,7 @@ export function usePendingCredential(pendingCredentialId: string): PendingCreden
 
   const pendingCredential = useMemo(() => (
     pendingCredentials.find(({ id }) => id === pendingCredentialId)
-  ), [pendingCredentialId]);
+  ), [pendingCredentials, pendingCredentialId]);
 
   if (pendingCredential === undefined) {
     throw new Error(`Pending credential with id ${pendingCredentialId} does not exist.`);
