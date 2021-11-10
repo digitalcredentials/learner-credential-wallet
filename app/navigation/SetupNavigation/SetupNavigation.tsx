@@ -47,7 +47,7 @@ function StartStep({ navigation }: StartStepProps) {
   return (
     <SafeScreenView style={[styles.container, styles.containerMiddle]}>
       <Image style={styles.image} source={walletImage} />
-      <Text style={styles.title}>EDU Wallet</Text>
+      <Text style={styles.title}>eduWallet</Text>
       <Text style={styles.paragraph}>
         A place to store all your credentials. They stay on your device until
         you decide to share them.
