@@ -1,4 +1,7 @@
 {
+  "private": true,
+  "name": "learner-credential-wallet",
+  "version": "1.0.0",
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
@@ -95,9 +98,6 @@
     "eslint-plugin-react-native": "^3.11.0",
     "typescript": "~4.0.0"
   },
-  "private": true,
-  "name": "expo-edu-wallet",
-  "version": "1.0.0",
   "react-native": {
     "crypto": "react-native-crypto",
     "_stream_transform": "readable-stream/transform",
