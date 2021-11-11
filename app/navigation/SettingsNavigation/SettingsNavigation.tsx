@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
+import appConfig from '../../../app.json';
 import mockCredential from '../../mock/credential';
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
@@ -218,7 +219,7 @@ function About({ navigation }: AboutProps): JSX.Element {
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <View style={styles.bodyContainerCenter}>
         <Image style={styles.image} source={walletImage} />
-        <Text style={styles.paragraphCenter}>EDU Wallet</Text>
+        <Text style={styles.paragraphCenter}>{appConfig.displayName}</Text>
         <Text style={styles.paragraphCenter}>
           This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
         </Text>

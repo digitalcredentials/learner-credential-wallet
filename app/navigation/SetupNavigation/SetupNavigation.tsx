@@ -6,6 +6,7 @@ import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
 
+import appConfig from '../../../app.json';
 import { theme, mixins } from '../../styles';
 import { initialize } from '../../store/slices/wallet';
 import { LoadingIndicator, SafeScreenView, ErrorDialog } from '../../components';
@@ -47,7 +48,7 @@ function StartStep({ navigation }: StartStepProps) {
   return (
     <SafeScreenView style={[styles.container, styles.containerMiddle]}>
       <Image style={styles.image} source={walletImage} />
-      <Text style={styles.title}>eduWallet</Text>
+      <Text style={styles.title}>{appConfig.displayName}</Text>
       <Text style={styles.paragraph}>
         A place to store all your credentials. They stay on your device until
         you decide to share them.

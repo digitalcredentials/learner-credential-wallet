@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 
+import appConfig from '../../../app.json';
 import { theme } from '../../styles';
 import { unlock } from '../../store/slices/wallet';
 import { SafeScreenView, ErrorDialog } from '../../components';
@@ -36,7 +37,7 @@ export default function LoginScreen(): JSX.Element {
   return (
     <SafeScreenView style={styles.container}>
       <Image style={styles.image} source={walletImage} />
-      <Text style={styles.title}>EDU Wallet</Text>
+      <Text style={styles.title}>{appConfig.displayName}</Text>
       <Text style={styles.paragraph}>
         A place to store all your credentials. They stay on your device until you
         decide to share them.
