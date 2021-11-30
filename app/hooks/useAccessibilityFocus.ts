@@ -8,7 +8,7 @@ export function useAccessibilityFocus<T>(): [Ref<T>, () => void] {
 
   useEffect(() => {
     if (doFocus && ref.current !== null && reactTag !== null) {
-      AccessibilityInfo.setAccessibilityFocus(reactTag);
+      setTimeout(() => AccessibilityInfo.setAccessibilityFocus(reactTag), 1);
       setDoFocus(false);
     }
 
