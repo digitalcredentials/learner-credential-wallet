@@ -1,8 +1,9 @@
-import React from 'react';
-import { Modal, Text, View, TouchableWithoutFeedback } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Modal, Text, View, TouchableWithoutFeedback, AccessibilityInfo } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { mixins } from '../../styles';
+import { useAccessibilityFocus } from '../../hooks';
 
 import styles from './ConfirmModal.style';
 
@@ -16,6 +17,7 @@ export type ConfirmModalProps = React.PropsWithChildren<{
   confirmButton?: boolean;
   cancelButton?: boolean;
   cancelOnBackgroundPress?: boolean;
+  accessibilityFocusContent?: boolean;
 
   title?: string;
   confirmText?: string;
@@ -31,19 +33,38 @@ export default function ConfirmModal({
   confirmButton = true,
   cancelButton = true,
   cancelOnBackgroundPress = false,
+  accessibilityFocusContent = false,
   confirmText = 'Confirm',
   cancelText = 'Cancel',
   children,
 }: ConfirmModalProps): JSX.Element {
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [titleRef, focusTitle] = useAccessibilityFocus<Text>();
+  const [contentRef, focusContent] = useAccessibilityFocus<View>();
+
+  useEffect(() => {
+    if (!isFirstRender) {
+      AccessibilityInfo.announceForAccessibility(`Modal ${open ? 'open' : 'closed'}`);
+    } else {
+      setIsFirstRender(false);
+    }
+  }, [open]);
+
+  function onContentLayout() {
+    accessibilityFocusContent ? focusContent() : focusTitle();
+  }
+
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={open}
       onRequestClose={onRequestClose}
+      accessibilityViewIsModal={true}
+      accessible={false}
     >
       <View style={styles.modalOuterContainer}>
-        <TouchableWithoutFeedback onPress={() => {
+        <TouchableWithoutFeedback accessible={false} importantForAccessibility="no" onPress={() => {
           if (cancelOnBackgroundPress) {
             onRequestClose();
             onCancel();
@@ -52,8 +73,12 @@ export default function ConfirmModal({
           <View style={styles.modalBackground} />
         </TouchableWithoutFeedback>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>{title}</Text>
-          <View>
+          <Text 
+            style={styles.modalTitle}
+            ref={titleRef}
+            accessibilityRole="header"
+          >{title}</Text>
+          <View ref={contentRef} onLayout={onContentLayout}>
             {children}
           </View>
           <View style={[mixins.buttonGroup, styles.buttonGroupContainer]}>
