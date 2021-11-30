@@ -35,6 +35,7 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
     return (
       <Text
         style={styles.link}
+        accessibilityRole="link"
         onPress={() => Linking.openURL(issuerUrl)}
       >
         {issuerUrl}
@@ -45,11 +46,17 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
   return (
     <View style={styles.credentialContainer}>
       <View style={styles.dataContainer}>
-        <Text style={styles.header}>{title}</Text>
+        <Text style={styles.header} accessibilityRole="header">{title}</Text>
         <Text style={styles.dataLabel}>Issuer</Text>
         <View style={styles.flexRow}>
           {issuerImage ? (
-            <Image source={{ uri: issuerImage }} style={styles.dataImage} />
+            <Image
+              source={{ uri: issuerImage }}
+              style={styles.dataImage}
+              accessible={true}
+              accessibilityLabel={issuerName}
+              accessibilityRole="image"
+            />
           ) : (
             <View style={styles.dataImage}>
               <MaterialCommunityIcons
