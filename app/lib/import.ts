@@ -16,7 +16,8 @@ export async function importWallet({
   const { uri } = await DocumentPicker.pickSingle({
     type: DocumentPicker.types.allFiles,
   });
-  const file = await RNFS.readFile(uri);
+
+  const file = await RNFS.readFile(uri.replace('%20', ' '));
 
   onStart();
   const response = await db.import(file);
