@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Text } from 'react-native-elements';
@@ -15,6 +15,7 @@ import { CredentialRecord } from '../../model';
 import { theme, Color } from '../../styles';
 import styles from './ApprovalControls.styles';
 import type { Credential } from '../../types/credential';
+import { useAccessibilityFocus } from '../../hooks';
 
 enum StatusIcon {
   Schedule = 'schedule',
@@ -51,6 +52,7 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
   const dispatch = useDispatch();
   const { credential, status, messageOveride } = pendingCredential;
   const message = messageOveride || defaultMessageFor(status);
+  const [statusRef, focusStatus] = useAccessibilityFocus<View>();
 
   async function add(credential: Credential): Promise<void> {
     await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
@@ -64,6 +66,13 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
     }));
   }
 
+  function reject() {
+    setApprovalStatus(ApprovalStatus.Rejected);
+    focusStatus();
+  }
+
+  useEffect(focusStatus, []);
+
   async function accept() {
     try {
       await add(credential);
@@ -74,6 +83,7 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
 
       setApprovalStatus(ApprovalStatus.Errored);
     }
+    focusStatus();
   }
 
   if (status === ApprovalStatus.Pending) {
@@ -81,13 +91,15 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
       <View style={styles.approvalContainer}>
         <TouchableOpacity
           style={styles.declineButton}
-          onPress={() => setApprovalStatus(ApprovalStatus.Rejected)}
+          onPress={reject}
+          accessibilityRole="button"
         >
           <Text style={styles.brightActionText}>Decline</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.acceptButton}
           onPress={accept}
+          accessibilityRole="button"
         >
           <Text style={styles.darkActionText}>Accept</Text>
         </TouchableOpacity>
@@ -96,7 +108,7 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
   } else {
     return (
       <View style={styles.approvalContainer}>
-        <View style={styles.credentialStatusContainer}>
+        <View style={styles.credentialStatusContainer} ref={statusRef}>
           <MaterialIcons
             color={colorFor(status)}
             name={iconFor(status)}
