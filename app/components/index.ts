@@ -9,3 +9,4 @@ export { default as CredentialCard } from './CredentialCard/CredentialCard';
 export { default as VerificationCard } from './VerificationCard/VerificationCard';
 export { default as ApprovalControls } from './ApprovalControls/ApprovalControls';
 export { default as AccessibleView } from './AccessibleView/AccessibleView';
+export { default as PasswordInput } from './PasswordInput/PasswordInput';
