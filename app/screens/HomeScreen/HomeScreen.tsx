@@ -32,6 +32,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         subtitle={issuerName}
         image={issuerImage}
         onSelect={onSelect}
+        chevron
       />
     );
   }

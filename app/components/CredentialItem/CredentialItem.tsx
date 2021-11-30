@@ -14,6 +14,7 @@ export default function CredentialItem({
   onSelect,
   checkable = false,
   selected = false,
+  chevron = false,
   bottomElement,
 }: CredentialItemProps): JSX.Element {
   function LeftContent(): JSX.Element {
@@ -49,8 +50,13 @@ export default function CredentialItem({
       containerStyle={styles.listItemContainer}
       style={styles.listItemOuterContainer}
       onPress={onSelect}
+      accessibilityLabel={`${title} Credential, from ${subtitle}`}
+      accessibilityRole={checkable ? 'checkbox' : 'button'}
+      accessibilityState={{ checked: checkable ? selected : undefined }}
     >
-      <ListItem.Content style={styles.listItemContentContainer}>
+      <ListItem.Content style={styles.listItemContentContainer}
+        importantForAccessibility="no-hide-descendants"
+      >
         <View style={styles.listItemTopContent}>
           <LeftContent />
           <View style={styles.listItemTextContainer}>
@@ -59,7 +65,7 @@ export default function CredentialItem({
               {subtitle}
             </ListItem.Subtitle>
           </View>
-          <ListItem.Chevron />
+          {chevron && <ListItem.Chevron />}
         </View>
         {bottomElement}
       </ListItem.Content>
