@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,6 +22,8 @@ const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" co
 const AddTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="add-circle" color={color} size={theme.iconSize} />;
 const SettingsTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="settings" color={color} size={theme.iconSize} />;
 
+const labelSuffix = Platform.OS === 'ios' ? ', tab' : '';
+
 export default function HomeNavigation(): JSX.Element {
   return (
     <Tab.Navigator
@@ -36,18 +39,22 @@ export default function HomeNavigation(): JSX.Element {
       <Tab.Screen name="CredentialNavigation" component={CredentialNavigation} options={{
         title: 'My Wallet',
         tabBarIcon: HomeTabIcon,
+        tabBarAccessibilityLabel: `My Wallet, (1 of 4)${labelSuffix}`,
       }}/>
       <Tab.Screen name="ShareNavigation" component={ShareNavigation} options={{
         title: 'Share',
         tabBarIcon: ShareTabIcon,
+        tabBarAccessibilityLabel: `Share, (2 of 4)${labelSuffix}`,
       }}/>
       <Tab.Screen name="AddCredentialNavigation" component={AddCredentialNavigation} options={{
         title: 'Add',
         tabBarIcon: AddTabIcon,
+        tabBarAccessibilityLabel: `Add, (3 of 4)${labelSuffix}`,
       }}/>
       <Tab.Screen name="SettingsNavigation" component={SettingsNavigation} options={{
         title: 'Settings',
         tabBarIcon: SettingsTabIcon,
+        tabBarAccessibilityLabel: `Settings, (4 of 4)${labelSuffix}`,
       }}/>
     </Tab.Navigator>
   );
