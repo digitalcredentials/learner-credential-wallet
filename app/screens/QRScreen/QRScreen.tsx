@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { AccessibilityInfo, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { View, useWindowDimensions } from 'react-native';
-import { Text } from 'react-native-elements';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { BarCodeReadEvent } from 'react-native-camera';
+import { BarCodeReadEvent, RNCameraProps } from 'react-native-camera';
 
 import { PresentationError } from '../../types/presentation';
 import { ConfirmModal } from '../../components';
@@ -18,6 +18,7 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   const [errorMessage, setErrorMessage] = useState('');
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
+  const scannerRef = useRef<QRCodeScanner>(null);
 
   function Instructions(): JSX.Element {
     return (
@@ -30,13 +31,14 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   async function onRead({ data: text }: BarCodeReadEvent) {
     if (!isVpqr(text)) {
       setErrorModalOpen(true);
-      setErrorMessage('The QR code was read, but no credentials were found');
+      setErrorMessage('The QR code was read, but no credentials were found.');
 
       return;
     }
 
     await credentialsFromQrText(text)
       .then((credentials) => {
+        AccessibilityInfo.announceForAccessibility('QR Code Scanned');
         dispatch(stageCredentials(credentials));
         navigation.navigate('ApproveCredentialsScreen');
       })
@@ -52,10 +54,16 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
       });
   }
 
+  function onRequestModalClose() {
+    setErrorModalOpen(!errorModalOpen);
+    setTimeout(() => scannerRef.current?.reactivate(), 1000);
+  }
+
   return (
     <View style={styles.scannerBody}>
       <NavHeader title="Scan QR" goBack={navigation.goBack} />
       <QRCodeScanner
+        ref={scannerRef}
         onRead={onRead}
         topContent={<Instructions />}
         topViewStyle={styles.instructionContainer}
@@ -65,14 +73,18 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
           width: width * 0.9,
           height: width * 0.9,
         }]}
+        cameraProps={{
+          accessibilityLabel: 'QR Code Scanner, Camera Active',
+          accessible: true,
+        } as RNCameraProps}
         showMarker
       />
       <ConfirmModal
         open={errorModalOpen}
-        onRequestClose={() => setErrorModalOpen(!errorModalOpen)}
-        onConfirm={() => navigation.goBack()}
+        onRequestClose={onRequestModalClose}
         confirmText="Okay"
         cancelButton={false}
+        cancelOnBackgroundPress
         title={errorMessage}
       />
     </View>
