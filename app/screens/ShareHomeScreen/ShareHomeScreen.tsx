@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
-import { Header, Text, Button } from 'react-native-elements';
+import { Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../store';
 import { WalletState } from '../../store/slices/wallet';
-import { CredentialItem } from '../../components';
+import { CredentialItem, NavHeader } from '../../components';
 import { mixins } from '../../styles';
 import styles from './ShareHomeScreen.styles';
 import type { RenderItemProps } from './ShareHomeScreen.d';
@@ -77,10 +77,7 @@ export default function ShareHomeScreen({
 
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Share', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-      />
+      <NavHeader title="Share" />
       <View style={styles.container}>
         <Text style={styles.paragraph}>
           Start by selecting which credential(s) you want to share.
