@@ -25,14 +25,15 @@ export default function PresentationPreviewScreen({
         ? issuer.name
         : '';
     const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
-    const image = null; // TODO: Decide where to pull image from.
+    const issuerImage = typeof issuer === 'string' ? null : issuer.image;
 
     return (
       <CredentialItem
         title={title}
         subtitle={subtitle}
-        image={image}
+        image={issuerImage}
         onSelect={onSelect}
+        chevron
       />
     );
   }

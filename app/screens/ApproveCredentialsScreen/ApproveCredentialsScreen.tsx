@@ -58,6 +58,7 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
         image={issuerImage}
         onSelect={onSelect}
         bottomElement={<ApprovalControls pendingCredential={pendingCredential} />}
+        chevron
       />
     );
   }

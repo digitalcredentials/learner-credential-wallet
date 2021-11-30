@@ -5,5 +5,6 @@ export type CredentialItemProps = {
   image?: ImageSourcePropType;
   checkable?: boolean;
   selected?: boolean;
+  chevron?: boolean;
   bottomElement?: React.ReactNode;
 }
