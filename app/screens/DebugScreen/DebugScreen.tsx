@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Text, View, ScrollView } from 'react-native';
-import { Header, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
-import { mixins } from '../../styles';
 import { RootState } from '../../store';
 import { DidState } from '../../store/slices/did';
+import { NavHeader } from '../../components';
 
 import styles from './DebugScreen.styles';
 import { DebugScreenProps } from '../../navigation';
@@ -32,11 +32,7 @@ export default function DebugScreen({ navigation, route }: DebugScreenProps): JS
 
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Debug', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-        rightComponent={<Exit />}
-      />
+      <NavHeader title="Debug" rightComponent={<Exit />} />
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.paragraph}>Credential:</Text>

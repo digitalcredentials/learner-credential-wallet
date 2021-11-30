@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { Header, Text, Button } from 'react-native-elements';
+import { Text, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,7 +10,7 @@ import styles from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { useRequestCredential } from '../../hooks';
-import { ConfirmModal } from '../../components';
+import { ConfirmModal, NavHeader } from '../../components';
 
 
 export default function AddScreen({ navigation, route }: AddScreenProps): JSX.Element {
@@ -39,10 +39,7 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
 
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Add Credential', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-      />
+      <NavHeader title="Add Credential" />
       <ConfirmModal
         open={requestModalIsOpen}
         onRequestClose={() => setRequestModalIsOpen(false)}

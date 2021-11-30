@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { Header, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
 import { WalletState } from '../../store/slices/wallet';
 import { RootState } from '../../store';
-import { CredentialItem } from '../../components';
+import { CredentialItem, NavHeader } from '../../components';
 import { theme, mixins } from '../../styles';
 import { navigationRef } from '../../navigation';
 
@@ -69,10 +69,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
 
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Home', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-      />
+      <NavHeader title="Home" />
       {rawCredentialRecords.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.header}>Looks like your wallet is empty.</Text>
