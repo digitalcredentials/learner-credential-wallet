@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Image, Linking, ScrollView } from 'react-native';
-import { Header, Text, Button, ListItem } from 'react-native-elements';
+import { View, Image, Linking, ScrollView, AccessibilityInfo } from 'react-native';
+import { Text, Button, ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -57,18 +57,20 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     dispatch(getAllCredentials());
   }
 
+  function lockWallet() {
+    AccessibilityInfo.announceForAccessibility('Locked Wallet');
+    dispatch(lock());
+  }
+
   return (
     <>
-      <Header
-        centerComponent={{ text: 'Settings', style: mixins.headerTitle}}
-        containerStyle={mixins.headerContainer}
-      />
+      <NavHeader title="Settings" />
       <View style={styles.settingsContainer}>
         <SettingsItem title="Restore" onPress={() => navigation.navigate('Restore')} />
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
-        <SettingsItem title="Sign out" onPress={() => dispatch(lock())} />
+        <SettingsItem title="Sign out" onPress={lockWallet} />
         <SettingsItem
           title="Add credential (dev)"
           onPress={addDevCredential}
@@ -218,13 +220,24 @@ function About({ navigation }: AboutProps): JSX.Element {
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <View style={styles.bodyContainerCenter}>
-        <Image style={styles.image} source={walletImage} />
+        <Image 
+          style={styles.image}
+          source={walletImage} 
+          accessible 
+          accessibilityLabel={`${appConfig.displayName} Logo`} 
+        />
         <Text style={styles.paragraphCenter}>{appConfig.displayName}</Text>
         <Text style={styles.paragraphCenter}>
           This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
         </Text>
-        <Text style={styles.paragraphCenter}>
-            More information at <Text style={styles.link} onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')} >https://digitalcredentials.mit.edu</Text>.
+        <Text style={styles.paragraphCenter} accessibilityRole="link" >
+          More information at&nbsp; 
+          <Text 
+            style={styles.link} 
+            onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')} 
+          >
+            https://digitalcredentials.mit.edu
+          </Text>.
         </Text>
         <Text style={styles.paragraphCenter}>
           Copyright 2021 Massachusetts Institute of Technology
