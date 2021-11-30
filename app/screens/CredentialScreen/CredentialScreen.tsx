@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, ScrollView, TouchableWithoutFeedback, AccessibilityInfo } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
 import { CredentialRecord } from '../../model';
-import { VerificationCard } from '../../components';
-import { CredentialCard } from '../../components';
 import { mixins } from '../../styles';
 import { getAllCredentials } from '../../store/slices/wallet';
-import { MenuItem, NavHeader, ConfirmModal } from '../../components';
+import { MenuItem, NavHeader, ConfirmModal, AccessibleView, VerificationCard, CredentialCard } from '../../components';
 import { useShareCredentials } from '../../hooks';
 import { navigationRef } from '../../navigation';
 
@@ -43,17 +41,30 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
     setModalIsOpen(true);
   }
 
+  async function onConfirmDelete() {
+    await CredentialRecord.deleteCredential(rawCredentialRecord);
+    dispatch(getAllCredentials());
+    AccessibilityInfo.announceForAccessibility('Credential Deleted');
+    navigation.goBack();
+  }
+
   function HeaderRightComponent(): JSX.Element | null {
     if (noShishKabob) {
       return null;
     }
 
     return (
-      <MaterialIcons
-        name="more-vert"
-        style={mixins.headerIcon}
+      <AccessibleView 
+        label="More options"
+        accessibilityRole="button"
+        accessibilityState={{ expanded: menuIsOpen }}
         onPress={() => setMenuIsOpen(!menuIsOpen)}
-      />
+      >
+        <MaterialIcons
+          name="more-vert"
+          style={mixins.headerIcon}
+        />
+      </AccessibleView>
     );
   }
 
@@ -67,13 +78,10 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
       <ConfirmModal
         open={modalIsOpen}
         onRequestClose={() => setModalIsOpen(!modalIsOpen)}
-        onConfirm={async () => {
-          await CredentialRecord.deleteCredential(rawCredentialRecord);
-          dispatch(getAllCredentials());
-          navigation.goBack();
-        }}
+        onConfirm={onConfirmDelete}
         title="Delete Credential"
         confirmText="Delete"
+        accessibilityFocusContent
       >
         <Text style={styles.modalBodyText}>
           Are you sure you want to remove {title} from your wallet?
@@ -81,14 +89,23 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
       </ConfirmModal>
       <View style={styles.outerContainer}>
         {menuIsOpen ? (
-          <View style={styles.menuContainer}>
+          <View style={styles.menuContainer} accessibilityViewIsModal={true}>
             <MenuItem icon="share" title="Share" onPress={onPressShare} />
             <MenuItem icon="bug-report" title="Debug" onPress={onPressDebug} />
             <MenuItem icon="delete" title="Delete" onPress={onPressDelete} />
           </View>
         ) : null}
-        <ScrollView onScrollEndDrag={() => setMenuIsOpen(false)} style={styles.scrollContainer}>
-          <TouchableWithoutFeedback onPress={() => setMenuIsOpen(false)}>
+        <ScrollView 
+          onScrollEndDrag={() => setMenuIsOpen(false)}
+          style={styles.scrollContainer}
+          accessible={false}
+          importantForAccessibility={menuIsOpen ? 'no-hide-descendants' : 'no'}
+        >
+          <TouchableWithoutFeedback
+            onPress={() => setMenuIsOpen(false)}
+            accessible={false}
+            importantForAccessibility="no"
+          >
             <View style={styles.container}>
               <CredentialCard rawCredentialRecord={rawCredentialRecord} />
               <VerificationCard credential={credential} />
