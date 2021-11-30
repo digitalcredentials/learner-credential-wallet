@@ -7,6 +7,7 @@ import { theme } from '../../styles';
 import { useAnimation } from '../../hooks';
 import styles from './LoadingIndicator.styles';
 import type { LoadingIndicatorProps } from './LoadingIndicator.d';
+import AccessibleView from '../AccessibleView/AccessibleView';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -35,7 +36,7 @@ export default function ({ loading }: LoadingIndicatorProps): JSX.Element {
   }, [loading]);
 
   return (
-    <View>
+    <AccessibleView label={`LoadingIndicator, ${loading ? 'Loading' : 'Complete'}`}>
       <Animated.View style={{ transform: [{ rotate: rotate.value }] }}>
         <AnimatedCircularProgress
           size={100}
@@ -60,6 +61,6 @@ export default function ({ loading }: LoadingIndicatorProps): JSX.Element {
           />
         </Svg>
       </View>
-    </View>
+    </AccessibleView>
   );
 }

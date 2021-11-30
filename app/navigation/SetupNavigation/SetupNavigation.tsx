@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { Text, View, Image, AccessibilityInfo } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,8 +8,9 @@ import { useDispatch } from 'react-redux';
 import appConfig from '../../../app.json';
 import { theme, mixins } from '../../styles';
 import { initialize } from '../../store/slices/wallet';
-import { LoadingIndicator, SafeScreenView, ErrorDialog } from '../../components';
+import { LoadingIndicator, SafeScreenView, ErrorDialog, AccessibleView, PasswordInput } from '../../components';
 import walletImage from '../../assets/wallet.png';
+import { useAccessibilityFocus } from '../../hooks';
 
 import styles from './SetupNavigation.styles';
 import type {
@@ -34,10 +34,10 @@ export default function SetupNavigation(): JSX.Element {
       screenOptions={{ headerShown: false, gestureEnabled: false }}
     >
       <Stack.Screen name="StartStep" component={StartStep} />
-      <Stack.Screen name="CreateStep" component={CreateStep} />
+      <Stack.Screen name="PasswordStep" component={PasswordStep} />
       <Stack.Screen
-        name="PasswordStep"
-        component={PasswordStep}
+        name="CreateStep"
+        component={CreateStep}
         options={{ cardStyleInterpolator: forFade }}
       />
     </Stack.Navigator>
@@ -47,8 +47,18 @@ export default function SetupNavigation(): JSX.Element {
 function StartStep({ navigation }: StartStepProps) {
   return (
     <SafeScreenView style={[styles.container, styles.containerMiddle]}>
-      <Image style={styles.image} source={walletImage} />
-      <Text style={styles.title}>{appConfig.displayName}</Text>
+      <Image
+        style={styles.image}
+        source={walletImage}
+        accessible
+        accessibilityLabel={`${appConfig.displayName} Logo`}
+      />
+      <Text 
+        style={styles.title}
+        accessibilityRole="header"
+      >
+        {appConfig.displayName}
+      </Text>
       <Text style={styles.paragraph}>
         A place to store all your credentials. They stay on your device until
         you decide to share them.
@@ -66,40 +76,7 @@ function StartStep({ navigation }: StartStepProps) {
   );
 }
 
-function CreateStep({ route }: CreateStepProps) {
-  const { password } = route.params;
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setLoading(false);
-
-      setTimeout(() => {
-        dispatch(initialize(password));
-      }, 500);
-    }, 2000);
-
-    return () => clearTimeout(t);
-  }, []);
-
-  return (
-    <SafeScreenView style={styles.container}>
-      <View style={styles.stepContainer}>
-        <Text style={styles.stepText}>1</Text>
-        <View style={styles.stepDivider} />
-        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
-      </View>
-      <Text style={styles.header}>Creating Wallet</Text>
-      <Text style={styles.paragraphRegular}>This will only take a moment.</Text>
-      <View style={styles.loadingContainer}>
-        <LoadingIndicator loading={loading} />
-      </View>
-    </SafeScreenView>
-  );
-}
-
-function PasswordStep ({ navigation }: PasswordStepProps) {
+function PasswordStep({ navigation }: PasswordStepProps) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -114,8 +91,10 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
 
   function _onInputBlur() {
     if (password && passwordConfirm) {
-      if (password.length < 10) setErrorText('Password must contain at least 10 characters');
-      else if (password !== passwordConfirm) setErrorText('Passwords must match');
+      if (password.length < 10)
+        setErrorText('Password must contain at least 10 characters');
+      else if (password !== passwordConfirm)
+        setErrorText('Passwords must match');
       else setErrorText('');
     }
   }
@@ -128,58 +107,33 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
 
   return (
     <SafeScreenView style={styles.container}>
-      <View style={styles.stepContainer}>
+      <AccessibleView style={styles.stepContainer} label="Step 1 of 2">
         <Text style={[styles.stepText, styles.stepTextActive]}>Step 1</Text>
         <View style={styles.stepDivider} />
         <Text style={styles.stepText}>2</Text>
-      </View>
-      <Text style={styles.header}>Password</Text>
+      </AccessibleView>
+      <Text 
+        style={styles.header}
+        accessibilityRole="header"
+      >
+        Password
+      </Text>
       <Text style={styles.paragraphRegular}>
         Setup a password to secure your wallet. You will not be able to recover
         a lost password.
       </Text>
       <View style={styles.inputGroup}>
-        <TextInput
-          style={mixins.input}
-          autoCompleteType="off"
-          textContentType="newPassword"
-          passwordRules="minlength: 10;"
-          secureTextEntry
-          autoCorrect={false}
-          value={password}
-          outlineColor={theme.color.textPrimary}
-          selectionColor={theme.color.foregroundPrimary}
-          theme={{ colors: {
-            placeholder: theme.color.textPrimary,
-            text: theme.color.textPrimary,
-            primary: theme.color.brightAccent,
-          }}}
+        <PasswordInput
           label="Password"
-          mode="outlined"
+          value={password}
           onChangeText={setPassword}
-          keyboardAppearance="dark"
           onBlur={_onInputBlur}
         />
         <View style={styles.inputSeparator} />
-        <TextInput
-          style={mixins.input}
-          autoCompleteType="off"
-          textContentType="newPassword"
-          passwordRules="minlength: 10;"
-          secureTextEntry
-          autoCorrect={false}
-          value={passwordConfirm}
-          outlineColor={theme.color.textPrimary}
-          selectionColor={theme.color.foregroundPrimary}
-          theme={{ colors: {
-            placeholder: theme.color.textPrimary,
-            text: theme.color.textPrimary,
-            primary: theme.color.brightAccent,
-          }}}
+        <PasswordInput
           label="Confirm Password"
-          mode="outlined"
+          value={passwordConfirm}
           onChangeText={setPasswordConfirm}
-          keyboardAppearance="dark"
           onBlur={_onInputBlur}
           onSubmitEditing={_goToNextStep}
         />
@@ -213,6 +167,56 @@ function PasswordStep ({ navigation }: PasswordStepProps) {
               size={theme.iconSize}
             />
           }
+        />
+      </View>
+    </SafeScreenView>
+  );
+}
+
+function CreateStep({ route }: CreateStepProps) {
+  const { password } = route.params;
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const [titleRef, focusTitle] = useAccessibilityFocus<Text>();
+
+  function _initializeWallet() {
+    dispatch(initialize(password));
+  }
+
+  useEffect(() => {
+    focusTitle();
+    const t = setTimeout(() => {
+      setLoading(false);
+      AccessibilityInfo.announceForAccessibility('Finished creating wallet');
+    }, 2000);
+
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <SafeScreenView style={styles.container}>
+      <AccessibleView style={styles.stepContainer} label="Step 2 of 2">
+        <Text style={styles.stepText}>1</Text>
+        <View style={styles.stepDivider} />
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
+      </AccessibleView>
+      <Text style={styles.header} ref={titleRef} accessibilityRole="header">
+        Creating Wallet
+      </Text>
+      <Text style={styles.paragraphRegular}>This will only take a moment.</Text>
+      <View style={styles.loadingContainer}>
+        <LoadingIndicator loading={loading} />
+      </View>
+      <View style={mixins.buttonGroup}>
+        <Button
+          buttonStyle={[mixins.button, mixins.buttonPrimary]}
+          containerStyle={mixins.buttonContainer}
+          titleStyle={mixins.buttonTitle}
+          title="Take Me To My Wallet"
+          onPress={_initializeWallet}
+          disabled={loading}
+          disabledStyle={styles.buttonDisabled}
+          disabledTitleStyle={mixins.buttonTitle}
         />
       </View>
     </SafeScreenView>
