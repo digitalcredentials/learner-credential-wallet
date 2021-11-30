@@ -25,6 +25,7 @@ export default function VerificationCard({ credential }: VerificationCardProps):
           name="check-circle"
           size={theme.iconSize}
           color={theme.color.success}
+          accessibilityLabel="Verified, Icon"
         />
         <Text style={[styles.dataValue, styles.proofText]}>
           Credential Verified
@@ -39,6 +40,7 @@ export default function VerificationCard({ credential }: VerificationCardProps):
         name="close-circle"
         size={theme.iconSize}
         color={theme.color.error}
+        accessibilityLabel="Invalid, Icon"
       />
       <Text style={[styles.dataValue, styles.proofText]}>
         Invalid Credential
