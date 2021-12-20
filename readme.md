@@ -79,4 +79,5 @@ To be added shortly.
 
 [MIT License](https://github.com/digitalcredentials/learner-credential-wallet/blob/main/LICENSE) Copyright (c) 2021 Massachusetts Institute of Technology
 
+All files located in external directories are externally maintained libraries used by this software which have their own licenses; we recommend you read them, as their terms may differ from the terms above.
 
