@@ -67,6 +67,23 @@ This project uses TypeScript and React Native. It would be best to use an editor
 ├── android ← Auto-generated android build folder, can still be manually edited if needed
 └── ios ← Same as android, except it also uses Cocoapods for dependency management
 ```
+
+## Privacy Policy 
+This Privacy Policy explains how eduWallet collects, uses, and processes personal information about our learners.
+
+### What Personal Information We Collect
+We do not collect any personal information.
+
+### Additional Information
+We may change this Privacy Policy from time to time. If we make any significant changes in the way we treat your personal information we will make this clear on our website or by contacting you directly.
+
+The controller for your personal information is the eduWallet project at MIT. We can be contacted at eduwallet-support@mit.edu.
+
+## Terms of Service
+
+### Disclaimers of Warranty / Limitations of Liability
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 ## Acknowledgements
 Initial development was supported by the U.S. Department of Education (Contract Number: 91990020C0105). The opinions expressed herein do not necessarily represent the positions or policies of the U.S. Department of Education, and no official endorsement by the U.S. Department of Education should be inferred.​
 
