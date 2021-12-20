@@ -2,11 +2,11 @@ import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020
 import { purposes } from '@digitalcredentials/jsonld-signatures';
 import vc from '@digitalcredentials/vc';
 
-import { isInRegistry } from './registry';
 import { VerifiablePresentation, PresentationError } from '../types/presentation';
 import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from './documentLoader';
+import { registries } from './registry';
 
 const documentLoader = securityLoader().build();
 const suite = new Ed25519Signature2020();
@@ -39,18 +39,19 @@ export async function verifyCredential(credential: Credential): Promise<boolean>
 
   const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
 
-  if (!isInRegistry(issuerDid)) {
+  if (!registries.issuerDid.isInRegistry(issuerDid)) {
     throw new Error(CredentialError.DidNotInRegistry);
   }
 
   try {
-    const { verified } = await vc.verifyCredential({
+    const result = await vc.verifyCredential({
       credential,
       suite,
       documentLoader,
     });
 
-    return verified;
+    console.log(JSON.stringify(result));
+    return result.verified;
   } catch (err) {
     console.warn(err);
 
