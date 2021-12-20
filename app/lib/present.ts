@@ -28,7 +28,8 @@ export async function createVerifiablePresentation(
   const verificationKeyPair = await Ed25519VerificationKey2020.from(didRecord.verificationKey);
   const suite = new Ed25519Signature2020({ key: verificationKeyPair });
 
-  const presentation = vc.createPresentation({ verifiableCredential: credentials });
+  const holder = didRecord.didDocument.id;
+  const presentation = vc.createPresentation({ verifiableCredential: credentials, holder });
 
   const verifiablePresentation: VerifiablePresentation = await vc.signPresentation({
     presentation,
