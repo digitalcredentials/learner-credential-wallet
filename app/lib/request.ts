@@ -2,10 +2,10 @@ import { authorize } from 'react-native-app-auth';
 
 import { Credential } from '../types/credential';
 import { DidRecordRaw } from '../model';
-// import { CredentialRecord, DidRecordRaw } from '../model';
 
 import { createVerifiablePresentation } from './present';
-// import { verifyCredential } from './validate';
+import { verifyCredential } from './validate';
+import { registries } from './registry';
 
 export type CredentialRequestParams = {
   auth_type?: string;
@@ -17,24 +17,23 @@ export type CredentialRequestParams = {
 export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential> {
   const { 
     // auth_type,
-    // issuer, 
+    issuer, 
     vc_request_url, 
     challenge,
   } = credentialRequestParams;
 
   console.log('Credential request params', credentialRequestParams);
 
+  if (!registries.issuerAuth.isInRegistry(issuer)) {
+    throw new Error(`Unknown issuer: "${issuer}"`);
+  }
+
+  const config = registries.issuerAuth.entryFor(issuer);
+
   /**
-   * Right now we auth against a mock Google service to simulate the credential
-   * request flow, but for real credential requests, we'll need to generate the 
-   * config from the `issuer` property in the `credentialRequest` param.
+   * There needs to be a delay before authenticating or the app errors out.
    */
-  const config = {
-    issuer: 'https://accounts.google.com',
-    clientId: '64590692238-if1jf1fco72srsgjc1ged8tm8106fcpc.apps.googleusercontent.com',
-    redirectUrl: 'com.googleusercontent.apps.64590692238-if1jf1fco72srsgjc1ged8tm8106fcpc:/oauth2redirect/google',
-    scopes: ['openid', 'profile'],
-  };
+  await new Promise((res) => setTimeout(res, 1000));
 
   const { accessToken } = await authorize(config).catch((err) => {
     console.error(err);
@@ -48,28 +47,18 @@ export async function requestCredential(credentialRequestParams: CredentialReque
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
-    body: requestBody,
+    body: JSON.stringify(requestBody),
   };
 
-  console.log('Credential request url:', vc_request_url);
-  console.log('Credential request:', request);
+  const response = await fetch(vc_request_url, request);
+  const responseJson  = await response.json();
+  const credential = responseJson as Credential;
 
-  // TODO: Remove this error and finish second half of request flow
-  throw Error('DEV: Credential request was formed, but the rest of the flow isn\'t implemented.');
+  const verified = await verifyCredential(credential);
 
-  /**
-   * To finish the credential request flow, the wallet will post the request,
-   * parse the response as a credential, and verify the credential.
-   */
+  if (!verified) {
+    console.warn('Credential was received, but could not be verified');
+  }
 
-  // const response = await fetch(vc_request_url, request);
-
-  // const credential = await CredentialRecord.rawFrom(response);
-  // const verified = await verifyCredential(credential);
-
-  // if (!verfied) {
-  //   throw Error('Credential was received, but could not be verified');
-  // }
-
-  // return credential;
+  return credential;
 }
