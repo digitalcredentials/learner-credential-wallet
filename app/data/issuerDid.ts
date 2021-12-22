@@ -6,11 +6,17 @@ export type IssuerDidEntry = {
   url: string;
 }
 
-// TODO: Import this from the DCC module once it is published
+/**
+ * This registry has been copied from the DCC Github Repo located at:
+ * https://github.com/digitalcredentials/issuer-registry/blob/main/registry.json
+ * 
+ * Once the DCC issuer-registry module has been published, this should be 
+ * imported directly.
+ */
 export const issuerDidRegistry: RegistryRecordRaw<IssuerDidEntry> = {
   meta: {
     created: '2020-12-02T02:32:16+0000',
-    updated: '2021-12-15T18:41:36+0000',
+    updated: '2021-12-05T23:55:00+0000',
   },
   registry: {
     'did:key:z6Mktpn6cXks1PBKLMgZH2VaahvCtBMF6K8eCa7HzrnuYLZv': {
@@ -18,18 +24,28 @@ export const issuerDidRegistry: RegistryRecordRaw<IssuerDidEntry> = {
       location: 'Cambridge, MA, USA',
       url: 'https://openlearning.mit.edu',
     },
+    'did:key:z6MkhVTX9BF3NGYX6cc7jWpbNnR7cAjH8LUffabZP8Qu4ysC': {
+      name: 'DCC Playground',
+      location: 'Cambridge, MA, USA',
+      url: 'https://digitalcredentials.github.io/playground',
+    },
     'did:web:digitalcredentials.odl.mit.edu': {
       name: 'MIT xPRO',
       location: 'Cambridge, MA, USA',
       url: 'https://xpro.mit.edu',
     },
     'did:web:digitalcredentials-rc.odl.mit.edu': {
-      name: 'MIT xPRO (RC)',
+      name: 'MIT xPRO RC',
       location: 'Cambridge, MA, USA',
       url: 'https://rc.xpro.mit.edu',
     },
-    'did:web:digitalcredentials-rc.mit.edu': {
-      name: 'MIT xPRO (RC)',
+    'did:key:z6Mkn6E3RLksUuArW6aPXWY6n9Wr5yhjTLEk7vUP448rmj7E': {
+      name: 'MIT xPRO',
+      location: 'Cambridge, MA, USA',
+      url: 'https://xpro.mit.edu',
+    },
+    'did:key:z6MkiUrQooGc3QBsYoDvwGtEdHTaCsaD4zdAyZJsiKr8Lkss': {
+      name: 'MIT xPRO RC',
       location: 'Cambridge, MA, USA',
       url: 'https://rc.xpro.mit.edu',
     },
@@ -37,6 +53,11 @@ export const issuerDidRegistry: RegistryRecordRaw<IssuerDidEntry> = {
       name: 'Georgia Tech Center for 21st Century Universities',
       location: 'Atlanta, GA, USA',
       url: 'https://c21u.gatech.edu',
+    },
+    'did:web:credentials.mcmaster.ca': {
+      name: 'McMaster University Digital Credentialing Pilot',
+      location: 'Hamilton, ON, Canada',
+      url: 'https://credentials.mcmaster.ca',
     },
   },
 };

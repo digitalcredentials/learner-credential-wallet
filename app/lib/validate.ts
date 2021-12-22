@@ -40,18 +40,22 @@ export async function verifyCredential(credential: Credential): Promise<boolean>
   const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
 
   if (!registries.issuerDid.isInRegistry(issuerDid)) {
+    console.warn(`'${issuerDid}' is not in issuerDid registry`);
     throw new Error(CredentialError.DidNotInRegistry);
   }
 
   try {
-    const result = await vc.verifyCredential({
+    const { verified, results } = await vc.verifyCredential({
       credential,
       suite,
       documentLoader,
     });
 
-    console.log(JSON.stringify(result));
-    return result.verified;
+    if (!verified) {
+      console.warn(results);
+    }
+
+    return verified;
   } catch (err) {
     console.warn(err);
 
