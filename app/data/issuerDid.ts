@@ -1,4 +1,4 @@
-import type { RegistryRaw } from '../lib/registry';
+import type { RegistryRecordRaw } from '../lib/registry';
 
 export type IssuerDidEntry = {
   name: string;
@@ -7,12 +7,12 @@ export type IssuerDidEntry = {
 }
 
 // TODO: Import this from the DCC module once it is published
-export const issuerDidRegistry: RegistryRaw<IssuerDidEntry> = {
+export const issuerDidRegistry: RegistryRecordRaw<IssuerDidEntry> = {
   meta: {
     created: '2020-12-02T02:32:16+0000',
     updated: '2021-12-15T18:41:36+0000',
   },
-  entries: {
+  registry: {
     'did:key:z6Mktpn6cXks1PBKLMgZH2VaahvCtBMF6K8eCa7HzrnuYLZv': {
       name: 'Example University 1 (DCC test-only issuer)',
       location: 'Cambridge, MA, USA',

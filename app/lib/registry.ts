@@ -6,22 +6,22 @@ type RegistryMetadata = {
   updated: string;
 }
 
-export type RegistryRaw<Entry> = {
+export type RegistryRecordRaw<Entry> = {
   readonly meta: RegistryMetadata;
-  readonly entries: Record<string, Entry>;
+  readonly registry: Record<string, Entry>;
 }
 
-class Registry<Entry> implements RegistryRaw<Entry> {
+class RegistryRecord<Entry> implements RegistryRecordRaw<Entry> {
   readonly meta;
-  readonly entries;
+  readonly registry;
 
-  constructor(registry: RegistryRaw<Entry>) {
-    this.meta = registry.meta;
-    this.entries = registry.entries;
+  constructor(registryRecord: RegistryRecordRaw<Entry>) {
+    this.meta = registryRecord.meta;
+    this.registry = registryRecord.registry;
   }
 
   public isInRegistry(key: string): boolean {
-    return key in this.entries;
+    return key in this.registry;
   }
 
   public entryFor(key: string): Entry {
@@ -29,12 +29,12 @@ class Registry<Entry> implements RegistryRaw<Entry> {
       throw new Error(`${key} not found in registry.`);
     }
 
-    return this.entries[key];
+    return this.registry[key];
   }
 
 }
 
 export const registries = {
-  issuerDid: new Registry<IssuerDidEntry>(issuerDidRegistry),
-  issuerAuth: new Registry<IssuerAuthEntry>(issuerAuthRegistry),
+  issuerDid: new RegistryRecord<IssuerDidEntry>(issuerDidRegistry),
+  issuerAuth: new RegistryRecord<IssuerAuthEntry>(issuerAuthRegistry),
 };
