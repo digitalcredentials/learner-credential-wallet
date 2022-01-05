@@ -1,0 +1,18 @@
+diff --git a/node_modules/expo-updates/scripts/create-manifest-android.gradle b/node_modules/expo-updates/scripts/create-manifest-android.gradle
+index 4a364e1..c2e40f0 100644
+--- a/node_modules/expo-updates/scripts/create-manifest-android.gradle
++++ b/node_modules/expo-updates/scripts/create-manifest-android.gradle
+@@ -11,6 +11,13 @@ void runBefore(String dependentTaskName, Task task) {
+ }
+ 
+ def expoUpdatesDir = ["node", "-e", "console.log(require('path').dirname(require.resolve('expo-updates/package.json')));"].execute([], projectDir).text.trim()
++if (!expoUpdatesDir) {
++  if (new File("${projectDir}/../../node_modules/expo-updates").exists()) {
++    expoUpdatesDir = "${projectDir}/../../node_modules/expo-updates"
++  } else {
++    throw new Exception("Couldn't determine expo-updates location.");
++  }
++}
+ 
+ def config = project.hasProperty("react") ? project.react : [];
+ def nodeExecutableAndArgs = config.nodeExecutableAndArgs ?: ["node"]
