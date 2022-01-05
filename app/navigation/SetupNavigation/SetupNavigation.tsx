@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Image, AccessibilityInfo } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, View, Image, AccessibilityInfo, TextInput } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -80,8 +80,11 @@ function PasswordStep({ navigation }: PasswordStepProps) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorText, setErrorText] = useState('');
+  const passwordRef = useRef<TextInput>(null);
 
   const isPasswordValid = password.length >= 10 && password === passwordConfirm;
+
+  useEffect(() => passwordRef.current?.focus(), []);
 
   useEffect(() => {
     if (isPasswordValid) {
@@ -128,6 +131,7 @@ function PasswordStep({ navigation }: PasswordStepProps) {
           value={password}
           onChangeText={setPassword}
           onBlur={_onInputBlur}
+          inputRef={passwordRef}
         />
         <View style={styles.inputSeparator} />
         <PasswordInput
