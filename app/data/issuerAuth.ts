@@ -41,7 +41,7 @@ export const issuerAuthRegistry: RegistryRaw<IssuerAuthEntry> = {
     'https://login.microsoftonline.com/7e153a68-2c14-45b5-aabd-890731981795': {
       issuer: 'https://login.microsoftonline.com/7e153a68-2c14-45b5-aabd-890731981795',
       clientId: '68d1183f-7a92-40a3-8be1-d0a5d46d9087',
-      scopes: ['https://mac-cred-api-latest.apps.ocpprd01.mcmaster.ca/collect'],
+      scopes: ['https://mcmasteresol.onmicrosoft.com/verifiable_credentials/Credentials.Issue'],
       redirectUrl: 'dccrequest://oauth',
     },
   },
