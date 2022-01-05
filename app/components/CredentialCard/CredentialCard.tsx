@@ -8,6 +8,7 @@ import { theme } from '../../styles';
 import styles from './CredentialCard.styles';
 
 const NO_URL = 'None';
+const DATE_FORMAT = 'MMM D, YYYY';
 
 type CredentialCardProps = {
   rawCredentialRecord: CredentialRecordRaw;
@@ -18,11 +19,11 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
   const { credentialSubject, issuer, issuanceDate } = credential;
   const title = credentialSubject.hasCredential?.name ?? '';
   const description = credentialSubject.hasCredential?.description ?? '';
-  const formattedIssuanceDate = moment(issuanceDate).format('MMM D, YYYY');
+  const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
   const subjectName = credentialSubject.name;
   const numberOfCredits = credentialSubject.hasCredential?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
-  const startDate = credentialSubject.hasCredential?.awardedOnCompletionOf?.startDate ?? '';
-  const endDate = credentialSubject.hasCredential?.awardedOnCompletionOf?.endDate ?? '';
+  const startDate = moment(credentialSubject.hasCredential?.awardedOnCompletionOf?.startDate).format(DATE_FORMAT) ?? '';
+  const endDate = moment(credentialSubject.hasCredential?.awardedOnCompletionOf?.endDate).format(DATE_FORMAT) ?? '';
   const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
   const issuerUrl = (typeof issuer === 'string' ? null : issuer?.url) ?? NO_URL;
   const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
