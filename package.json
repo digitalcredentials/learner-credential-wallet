@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint --max-warnings 0 ./app ./App.tsx && tsc --noEmit",
-    "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && patch-package"
+    "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && npx patch-package"
   },
   "dependencies": {
     "@digitalbazaar/did-io": "digitalbazaar/did-io#noesm",

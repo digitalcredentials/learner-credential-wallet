@@ -1,0 +1,17 @@
+diff --git a/node_modules/expo-constants/scripts/get-app-config-android.gradle b/node_modules/expo-constants/scripts/get-app-config-android.gradle
+--- a/node_modules/expo-constants/scripts/get-app-config-android.gradle
++++ b/node_modules/expo-constants/scripts/get-app-config-android.gradle
+@@ -11,6 +11,13 @@
+ }
+ 
+ def expoConstantsDir = ["node", "-e", "console.log(require('path').dirname(require.resolve('expo-constants/package.json')));"].execute([], projectDir).text.trim()
++if (!expoConstantsDir) {
++  if (new File("${projectDir}/../../node_modules/expo-constants").exists()) {
++    expoConstantsDir = "${projectDir}/../../node_modules/expo-constants"
++  } else {
++    throw new Exception("Couldn't determine expo-constants location.");
++  }
++}
+ 
+ def config = project.hasProperty("react") ? project.react : [];
+ def nodeExecutableAndArgs = config.nodeExecutableAndArgs ?: ["node"]
