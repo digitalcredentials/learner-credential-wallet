@@ -1,4 +1,5 @@
 import React from 'react';
+import { Linking } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -12,6 +13,7 @@ import { useAppLoading } from '../../hooks';
 import { RootState } from '../../store';
 import { WalletState } from '../../store/slices/wallet';
 import { theme } from '../../styles';
+import { encodeQueryParams } from '../../lib/encode';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 
@@ -22,6 +24,10 @@ const navigatorTheme = {
     background: theme.color.backgroundPrimary,
   },
 };
+
+function transformDeepLink(url: string): string {
+  return encodeQueryParams(url);
+}
 
 const linking = {
   prefixes: ['dccrequest://'],
@@ -37,6 +43,18 @@ const linking = {
         },
       },
     },
+  },
+  subscribe: (listener: (url: string) => void) => {
+    const onReceiveURL = ({ url }: { url: string }) => listener(transformDeepLink(url));
+
+    Linking.addEventListener('url', onReceiveURL);
+    return () => Linking.removeEventListener('url', onReceiveURL);
+  },
+  getInitialURL: async () => {
+    const url = await Linking.getInitialURL();
+    if (url === null) return;
+
+    return transformDeepLink(url);
   },
 };
 
