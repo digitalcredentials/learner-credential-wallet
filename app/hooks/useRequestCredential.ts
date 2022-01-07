@@ -15,8 +15,8 @@ export type RequestPayload = {
 type Params = Record<string, unknown>
 
 function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
-  const { issuer, vc_request_url, challenge } = (params || {} as CredentialRequestParams);
-  return issuer !== undefined && vc_request_url !== undefined && challenge !== undefined;
+  const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
+  return issuer !== undefined && vc_request_url !== undefined;
 }
 
 export function useRequestCredential(routeParams?: Params): RequestPayload {

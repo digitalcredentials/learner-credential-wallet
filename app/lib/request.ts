@@ -11,7 +11,7 @@ export type CredentialRequestParams = {
   auth_type?: string;
   issuer: string;
   vc_request_url: string;
-  challenge: string;
+  challenge?: string;
 }
 
 export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential> {
