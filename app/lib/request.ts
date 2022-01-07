@@ -37,7 +37,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
 
   const { accessToken } = await authorize(config).catch((err) => {
     console.error(err);
-    throw Error('Unable to receive credential');
+    throw Error('Unable to receive credential:\nAuthorization failed');
   });
 
   const requestBody = await createVerifiablePresentation([], didRecord, challenge);
@@ -51,6 +51,12 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   };
 
   const response = await fetch(vc_request_url, request);
+
+  if (!response.ok) {
+    console.error(`Issuer response (failed): ${JSON.stringify(response, null, 2)}`);
+    throw Error('Unable to receive credential:\nThe issuer failed to return a valid response');
+  }
+
   const responseJson  = await response.json();
   const credential = responseJson as Credential;
 
