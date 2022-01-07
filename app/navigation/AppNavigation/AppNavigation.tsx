@@ -1,6 +1,6 @@
-import React from 'react';
-import { Linking } from 'react-native';
-import AppLoading from 'expo-app-loading';
+import React, { useEffect } from 'react';
+import { Linking, View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
@@ -59,7 +59,7 @@ const linking = {
 };
 
 
-export default function AppNavigation(): JSX.Element {
+export default function AppNavigation(): JSX.Element | null {
   const loading = useAppLoading();
   const { 
     isUnlocked, 
@@ -81,12 +81,17 @@ export default function AppNavigation(): JSX.Element {
     }
   }
 
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();  
+  }, []);
+   
   if (loading) {
-    return <AppLoading />;
-  }  
+    return null;
+  }
 
   return (
     <SafeAreaProvider>
+      <View onLayout={SplashScreen.hideAsync} />
       <StatusBar style="light" />
       <NavigationContainer
         theme={navigatorTheme}
