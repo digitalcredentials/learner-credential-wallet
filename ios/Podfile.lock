@@ -255,6 +255,8 @@ PODS:
     - React-Core
   - react-native-randombytes (3.6.1):
     - React-Core
+  - react-native-receive-sharing-intent (2.0.0):
+    - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
   - react-native-viewpager (5.0.12):
@@ -391,6 +393,7 @@ DEPENDENCIES:
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
+  - react-native-receive-sharing-intent (from `../node_modules/react-native-receive-sharing-intent`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-viewpager (from `../node_modules/react-native-pager-view`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -497,6 +500,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
+  react-native-receive-sharing-intent:
+    :path: "../node_modules/react-native-receive-sharing-intent"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-viewpager:
@@ -593,6 +598,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: a7950caaee8587002c9acbc7fe497a342094d93a
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
+  react-native-receive-sharing-intent: 1ff8ad82b6551550ce99ce8ba5a97cc8b90148ad
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-viewpager: 98a850d1c7ac6263122d82618a77062a5f427073
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
@@ -622,6 +628,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: 8c597e554eeb8e5e6c768ed6406f670ce4bf01bf
+PODFILE CHECKSUM: 00341bd8c8cd873e66282690fd92c46da35fe1b1
 
 COCOAPODS: 1.11.0

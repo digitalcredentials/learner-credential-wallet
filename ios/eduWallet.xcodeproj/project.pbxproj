@@ -13,9 +13,36 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		50A7A2AD1B971AF1CA465CD1 /* libPods-eduWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9C8DAF5C804AD9E48CDAC5 /* libPods-eduWallet.a */; };
+		6C834FAB2788BC65005188A9 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C834FAA2788BC65005188A9 /* ShareViewController.swift */; };
+		6C834FAE2788BC65005188A9 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C834FAC2788BC65005188A9 /* MainInterface.storyboard */; };
+		6C834FB22788BC65005188A9 /* eduWalletShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C834FA82788BC65005188A9 /* eduWalletShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		89D1493A82CF4C04B77D9D93 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D50872C6C9341D7A577C8F0 /* noop-file.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6C834FB02788BC65005188A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C834FA72788BC65005188A9;
+			remoteInfo = eduWalletShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6C834FB32788BC65005188A9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6C834FB22788BC65005188A9 /* eduWalletShare.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -28,6 +55,10 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = eduwallet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = eduwallet/main.m; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-eduwallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eduwallet.debug.xcconfig"; path = "Target Support Files/Pods-eduwallet/Pods-eduwallet.debug.xcconfig"; sourceTree = "<group>"; };
+		6C834FA82788BC65005188A9 /* eduWalletShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = eduWalletShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C834FAA2788BC65005188A9 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		6C834FAD2788BC65005188A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		6C834FAF2788BC65005188A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D50872C6C9341D7A577C8F0 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "eduwallet/noop-file.swift"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-eduwallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eduwallet.release.xcconfig"; path = "Target Support Files/Pods-eduwallet/Pods-eduwallet.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = eduwallet/SplashScreen.storyboard; sourceTree = "<group>"; };
@@ -45,6 +76,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				50A7A2AD1B971AF1CA465CD1 /* libPods-eduWallet.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C834FA52788BC65005188A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +117,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6C834FA92788BC65005188A9 /* eduWalletShare */ = {
+			isa = PBXGroup;
+			children = (
+				6C834FAA2788BC65005188A9 /* ShareViewController.swift */,
+				6C834FAC2788BC65005188A9 /* MainInterface.storyboard */,
+				6C834FAF2788BC65005188A9 /* Info.plist */,
+			);
+			path = eduWalletShare;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +139,7 @@
 			children = (
 				13B07FAE1A68108700A75B9A /* eduwallet */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				6C834FA92788BC65005188A9 /* eduWalletShare */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
@@ -104,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* eduWallet.app */,
+				6C834FA82788BC65005188A9 /* eduWalletShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,15 +192,34 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
+				6C834FB32788BC65005188A9 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6C834FB12788BC65005188A9 /* PBXTargetDependency */,
 			);
 			name = eduWallet;
 			productName = eduWallet;
 			productReference = 13B07F961A680F5B00A75B9A /* eduWallet.app */;
 			productType = "com.apple.product-type.application";
+		};
+		6C834FA72788BC65005188A9 /* eduWalletShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C834FB62788BC65005188A9 /* Build configuration list for PBXNativeTarget "eduWalletShare" */;
+			buildPhases = (
+				6C834FA42788BC65005188A9 /* Sources */,
+				6C834FA52788BC65005188A9 /* Frameworks */,
+				6C834FA62788BC65005188A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = eduWalletShare;
+			productName = eduWalletShare;
+			productReference = 6C834FA82788BC65005188A9 /* eduWalletShare.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -158,11 +227,17 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = A35W4MM59Y;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Automatic;
+					};
+					6C834FA72788BC65005188A9 = {
+						CreatedOnToolsVersion = 13.2.1;
+						DevelopmentTeam = A35W4MM59Y;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -181,6 +256,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* eduWallet */,
+				6C834FA72788BC65005188A9 /* eduWalletShare */,
 			);
 		};
 /* End PBXProject section */
@@ -194,6 +270,14 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C834FA62788BC65005188A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C834FAE2788BC65005188A9 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,7 +402,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6C834FA42788BC65005188A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C834FAB2788BC65005188A9 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6C834FB12788BC65005188A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C834FA72788BC65005188A9 /* eduWalletShare */;
+			targetProxy = 6C834FB02788BC65005188A9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
@@ -330,6 +430,14 @@
 			path = eduwallet;
 			sourceTree = "<group>";
 		};
+		6C834FAC2788BC65005188A9 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C834FAD2788BC65005188A9 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -337,6 +445,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1160008BCB4D21E7F28009C4 /* Pods-eduWallet.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = eduwallet/wallet.entitlements;
@@ -373,6 +482,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CF127EDA447609295129B787 /* Pods-eduWallet.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = eduwallet/wallet.entitlements;
@@ -396,6 +506,91 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		6C834FB42788BC65005188A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 9;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = eduWalletShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = eduWalletShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_MAP_FILE_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_SWIFT_FLAGS = "";
+				PODS_BUILD_DIR = "";
+				PODS_CONFIGURATION_BUILD_DIR = "";
+				PODS_PODFILE_DIR_PATH = "";
+				PODS_ROOT = "";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.mit.eduwallet.eduWalletShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Debug;
+		};
+		6C834FB52788BC65005188A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 9;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = eduWalletShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = eduWalletShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_MAP_FILE_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.mit.eduwallet.eduWalletShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -449,7 +644,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -501,7 +696,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -520,6 +715,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C834FB62788BC65005188A9 /* Build configuration list for PBXNativeTarget "eduWalletShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C834FB42788BC65005188A9 /* Debug */,
+				6C834FB52788BC65005188A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

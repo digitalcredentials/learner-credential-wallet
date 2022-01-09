@@ -7,6 +7,8 @@ import { RootState } from '../store';
 import { DidState } from '../store/slices/did';
 import { Credential } from '../types/credential';
 
+import ReceiveSharingIntent from 'react-native-receive-sharing-intent';
+
 export type RequestPayload = {
   credential?: Credential;
   loading: boolean;
@@ -14,6 +16,24 @@ export type RequestPayload = {
 }
 
 type Params = Record<string, unknown>
+
+async function getSharedFiles(): Promise<any> {
+  return new Promise((resolve, reject) => {
+    ReceiveSharingIntent.getReceivedFiles(
+      (files: any) => {
+        console.log('Received files:', files);
+        resolve(files);
+      },
+      (error: any) => {
+        console.log(error);
+        reject(error);
+      },
+      'dccrequest',
+    );
+  });
+}
+
+
 
 function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
   const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
@@ -35,6 +55,8 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
    * hidden.
    */
   async function handleDeepLink() {
+    console.log('Handling deep link...');
+    getSharedFiles();
     if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
       await SplashScreen.hideAsync();
       setLoading(true);
@@ -50,7 +72,7 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
     }
   }
 
-  
+
   useEffect(() => {
     handleDeepLink();
   }, [routeParams, didRecord]);
