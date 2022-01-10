@@ -50,13 +50,18 @@ const linking = {
     },
   },
   subscribe: (listener: (url: string) => void) => {
-    const onReceiveURL = ({ url }: { url: string }) => listener(transformDeepLink(url));
+    const onReceiveURL = ({ url }: { url: string }) => {
+      console.log('Received URL:', url);
+      return listener(transformDeepLink(url));
+    };
 
     Linking.addEventListener('url', onReceiveURL);
     return () => Linking.removeEventListener('url', onReceiveURL);
   },
   getInitialURL: async () => {
     const url = await Linking.getInitialURL();
+    console.log('getInitialURL:', url);
+
     if (url === null) return;
 
     return transformDeepLink(url);

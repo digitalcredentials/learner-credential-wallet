@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
+// import * as RNFS from 'react-native-fs';
+
+import { credentialsFromQrText } from '../lib/decode';
 
 import { requestCredential, CredentialRequestParams } from '../lib/request';
 import { RootState } from '../store';
@@ -21,19 +24,16 @@ async function getSharedFiles(): Promise<any> {
   return new Promise((resolve, reject) => {
     ReceiveSharingIntent.getReceivedFiles(
       (files: any) => {
-        console.log('Received files:', files);
         resolve(files);
       },
       (error: any) => {
         console.log(error);
         reject(error);
       },
-      'dccrequest',
+      'edu.mit.eduwallet',
     );
   });
 }
-
-
 
 function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
   const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
@@ -56,13 +56,50 @@ export function useRequestCredentials(routeParams?: Params): RequestPayload {
    */
   async function handleDeepLink() {
     console.log('handleDeepLink', routeParams);
-    getSharedFiles();
+    let files;
+    try {
+      console.log('Attempting to get shared files...');
+      files = await getSharedFiles();
+      console.log('files:', files);
+    } catch (e) {
+      console.log(e);
+      console.error('Error getting shared files:', e);
+    }
+
+    let credentials: Credential[];
+
+    if(files) {
+      console.log('Received files:', files);
+      const [file] = files;
+
+      if(!file.text || file.text === 'Add credential') {
+        return;
+      }
+
+      // console.log('url:', url);
+      const encoded = 'VP1-' + file.text.split('VP1-')[1];
+
+      console.log('extracted:', encoded);
+
+      await SplashScreen.hideAsync();
+      setLoading(true);
+
+      (credentials = await credentialsFromQrText(encoded));
+
+      // const fileContents = await RNFS.readFile(file.filePath, 'ascii');
+      // console.log(fileContents);
+      // const credential = fileContents;
+      setCredentials(credentials);
+      setLoading(false);
+      return;
+    }
+
     if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
       await SplashScreen.hideAsync();
       setLoading(true);
 
       try {
-        const credentials = await requestCredential(routeParams, didRecord);
+        credentials = await requestCredential(routeParams, didRecord);
         setCredentials(credentials);
       } catch (err) {
         setError((err as Error).message);
@@ -72,10 +109,9 @@ export function useRequestCredentials(routeParams?: Params): RequestPayload {
     }
   }
 
-
   useEffect(() => {
     handleDeepLink();
-  }, [routeParams, didRecord]);
+  }, [routeParams, didRecord, credential]);
 
   return { credentials, loading, error };
 }

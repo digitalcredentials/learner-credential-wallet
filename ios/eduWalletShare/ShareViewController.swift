@@ -39,10 +39,12 @@ class ShareViewController: SLComposeServiceViewController {
            if attachment.hasItemConformingToTypeIdentifier(imageContentType) {
              handleImages(content: content, attachment: attachment, index: index)
            } else if attachment.hasItemConformingToTypeIdentifier(textContentType) {
+             print("handling text")
              handleText(content: content, attachment: attachment, index: index)
            } else if attachment.hasItemConformingToTypeIdentifier(fileURLType) {
              handleFiles(content: content, attachment: attachment, index: index)
            } else if attachment.hasItemConformingToTypeIdentifier(urlContentType) {
+             print("handling url")
              handleUrl(content: content, attachment: attachment, index: index)
            } else if attachment.hasItemConformingToTypeIdentifier(videoContentType) {
              handleVideos(content: content, attachment: attachment, index: index)
