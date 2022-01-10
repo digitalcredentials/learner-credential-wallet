@@ -37,7 +37,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
 
   const { accessToken } = await authorize(config).catch((err) => {
     console.error(err);
-    throw Error('Unable to receive credential:\nAuthorization failed');
+    throw Error('Unable to receive credential: Authorization with the issuer failed');
   });
 
   const requestBody = await createVerifiablePresentation([], didRecord, challenge);
