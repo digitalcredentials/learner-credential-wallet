@@ -54,7 +54,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
 
   if (!response.ok) {
     console.error(`Issuer response (failed): ${JSON.stringify(response, null, 2)}`);
-    throw Error('Unable to receive credential:\nThe issuer failed to return a valid response');
+    throw Error('Unable to receive credential: The issuer failed to return a valid response');
   }
 
   const responseJson  = await response.json();
