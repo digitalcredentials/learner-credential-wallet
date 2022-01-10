@@ -12,7 +12,7 @@
     "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && npx patch-package"
   },
   "dependencies": {
-    "@digitalbazaar/did-io": "digitalbazaar/did-io#noesm",
+    "@digitalcredentials/did-io": "^1.0.2",
     "@digitalcredentials/did-method-key": "^2.0.1",
     "@digitalcredentials/ed25519-signature-2020": "^3.0.1",
     "@digitalcredentials/ed25519-verification-key-2020": "^3.1.1",

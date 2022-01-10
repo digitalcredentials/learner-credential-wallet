@@ -1,5 +1,5 @@
 import * as didKey from '@digitalcredentials/did-method-key';
-import { CachedResolver } from '@digitalbazaar/did-io';
+import { CachedResolver } from '@digitalcredentials/did-io';
 import dccCtx from 'dcc-context';
 import didContext from 'did-context';
 import ed25519 from 'ed25519-signature-2020-context';
