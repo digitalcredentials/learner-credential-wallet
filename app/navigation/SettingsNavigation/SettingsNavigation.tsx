@@ -138,14 +138,14 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
         ) : (
           <>
             <Text style={styles.reportSummary}>This will only take a moment.</Text>
-            <View style={styles.loadingContainer}> 
+            <View style={styles.loadingContainer}>
               <AnimatedEllipsis style={styles.loadingDots} minOpacity={0.4} animationDelay={200}/>
             </View>
           </>
         )}
       </ConfirmModal>
       <View style={styles.bodyContainer}>
-        
+
         <Text style={styles.paragraph}>Select a wallet file (.json) from your device to restore from.</Text>
         <Button
           onPress={_importWallet}
@@ -220,23 +220,23 @@ function About({ navigation }: AboutProps): JSX.Element {
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <View style={styles.bodyContainerCenter}>
-        <Image 
+        <Image
           style={styles.image}
-          source={walletImage} 
-          accessible 
-          accessibilityLabel={`${appConfig.displayName} Logo`} 
+          source={walletImage}
+          accessible
+          accessibilityLabel={`${appConfig.displayName} Logo`}
         />
         <Text style={styles.paragraphCenter}>{appConfig.displayName}</Text>
         <Text style={styles.paragraphCenter}>
           This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
         </Text>
         <Text style={styles.paragraphCenter} accessibilityRole="link" >
-          More information at&nbsp; 
-          <Text 
-            style={styles.link} 
-            onPress={() => Linking.openURL('https://eduwallet.app')} 
+          More information at&nbsp;
+          <Text
+            style={styles.link}
+            onPress={() => Linking.openURL('https://eduwallet.app')}
           >
-            https://digitalcredentials.mit.edu
+            https://eduwallet.app
           </Text>.
         </Text>
         <Text style={styles.paragraphCenter}>
