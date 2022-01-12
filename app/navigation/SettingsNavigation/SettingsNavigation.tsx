@@ -218,6 +218,7 @@ function Backup({ navigation }: BackupProps): JSX.Element {
 
 function About({ navigation }: AboutProps): JSX.Element {
   const version = DeviceInfo.getVersion();
+  const buildNumber = DeviceInfo.getBuildNumber();
   return (
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
@@ -245,7 +246,7 @@ function About({ navigation }: AboutProps): JSX.Element {
           Copyright 2021 Massachusetts Institute of Technology
         </Text>
         <Text style={styles.paragraphCenter}>
-          v{version}
+          v{version} Build {buildNumber}
         </Text>
       </View>
     </>
