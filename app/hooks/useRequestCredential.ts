@@ -21,14 +21,13 @@ async function getSharedFiles(): Promise<any> {
   return new Promise((resolve, reject) => {
     ReceiveSharingIntent.getReceivedFiles(
       (files: any) => {
-        console.log('Received files:', files);
         resolve(files);
       },
       (error: any) => {
         console.log(error);
         reject(error);
       },
-      'dccrequest',
+      'edu.wallet',
     );
   });
 }
@@ -51,12 +50,15 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
   /**
    * The app takes a few miliseconds to update the DID store when the app is launched
    * with a deep link request, so we should wait until the didRecord is
-   * present before handling a deep link and ensure that the splash screen is 
+   * present before handling a deep link and ensure that the splash screen is
    * hidden.
    */
   async function handleDeepLink() {
     console.log('Handling deep link...');
-    getSharedFiles();
+    const files = await getSharedFiles();
+
+    console.log('Received files:', files);
+
     if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
       await SplashScreen.hideAsync();
       setLoading(true);

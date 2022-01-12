@@ -30,7 +30,7 @@ function transformDeepLink(url: string): string {
 }
 
 const linking = {
-  prefixes: ['dccrequest://'],
+  prefixes: ['dccrequest://', 'edu.wallet'],
   config: {
     screens: {
       HomeNavigation: {
