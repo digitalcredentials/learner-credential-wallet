@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import * as SplashScreen from 'expo-splash-screen';
 
 import { requestCredential, CredentialRequestParams } from '../lib/request';
 import { RootState } from '../store';
@@ -15,8 +16,8 @@ export type RequestPayload = {
 type Params = Record<string, unknown>
 
 function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
-  const { issuer, vc_request_url, challenge } = (params || {} as CredentialRequestParams);
-  return issuer !== undefined && vc_request_url !== undefined && challenge !== undefined;
+  const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
+  return issuer !== undefined && vc_request_url !== undefined;
 }
 
 export function useRequestCredential(routeParams?: Params): RequestPayload {
@@ -28,13 +29,16 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
   const [error, setError] = useState('');
 
   /**
-   * The app takes a seconded to update the did store when the app is launched
-   * with a deep link request, so we have to wait until the didRecord is
-   * present before handling a deep link.
+   * The app takes a few miliseconds to update the DID store when the app is launched
+   * with a deep link request, so we should wait until the didRecord is
+   * present before handling a deep link and ensure that the splash screen is 
+   * hidden.
    */
   async function handleDeepLink() {
     if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
+      await SplashScreen.hideAsync();
       setLoading(true);
+
       try {
         const credential = await requestCredential(routeParams, didRecord);
         setCredential(credential);

@@ -1,5 +1,6 @@
-import React from 'react';
-import AppLoading from 'expo-app-loading';
+import React, { useEffect } from 'react';
+import { Linking, View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
@@ -12,6 +13,7 @@ import { useAppLoading } from '../../hooks';
 import { RootState } from '../../store';
 import { WalletState } from '../../store/slices/wallet';
 import { theme } from '../../styles';
+import { encodeQueryParams } from '../../lib/encode';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 
@@ -22,6 +24,10 @@ const navigatorTheme = {
     background: theme.color.backgroundPrimary,
   },
 };
+
+function transformDeepLink(url: string): string {
+  return encodeQueryParams(url);
+}
 
 const linking = {
   prefixes: ['dccrequest://'],
@@ -38,10 +44,22 @@ const linking = {
       },
     },
   },
+  subscribe: (listener: (url: string) => void) => {
+    const onReceiveURL = ({ url }: { url: string }) => listener(transformDeepLink(url));
+
+    Linking.addEventListener('url', onReceiveURL);
+    return () => Linking.removeEventListener('url', onReceiveURL);
+  },
+  getInitialURL: async () => {
+    const url = await Linking.getInitialURL();
+    if (url === null) return;
+
+    return transformDeepLink(url);
+  },
 };
 
 
-export default function AppNavigation(): JSX.Element {
+export default function AppNavigation(): JSX.Element | null {
   const loading = useAppLoading();
   const { 
     isUnlocked, 
@@ -63,12 +81,17 @@ export default function AppNavigation(): JSX.Element {
     }
   }
 
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();  
+  }, []);
+   
   if (loading) {
-    return <AppLoading />;
-  }  
+    return null;
+  }
 
   return (
     <SafeAreaProvider>
+      <View onLayout={SplashScreen.hideAsync} />
       <StatusBar style="light" />
       <NavigationContainer
         theme={navigatorTheme}

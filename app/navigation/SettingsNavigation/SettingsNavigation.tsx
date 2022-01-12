@@ -236,9 +236,9 @@ function About({ navigation }: AboutProps): JSX.Element {
           More information at&nbsp;
           <Text
             style={styles.link}
-            onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')}
+            onPress={() => Linking.openURL('https://eduwallet.app')}
           >
-            https://digitalcredentials.mit.edu
+            https://eduwallet.app
           </Text>.
         </Text>
         <Text style={styles.paragraphCenter}>
