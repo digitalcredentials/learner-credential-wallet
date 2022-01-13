@@ -70,6 +70,11 @@ This project uses TypeScript and React Native. It would be best to use an editor
 └── ios ← Same as android, except it also uses Cocoapods for dependency management
 ```
 
+## Accessibility
+We have conducted a Voluntary Product Accessibility Test, please review the [eduWallet Accessibility Conformance Report, November 2021](https://github.com/digitalcredentials/learner-credential-wallet/blob/65497b574c5fb3f36ed1b59201b353f01842dcfc/docs/MIT%20eduWallet%20VPAT2.4Rev508%20Nov2021-final.pdf)
+
+For more information on accessibility please visit the [MIT Accessibilty](https://accessibility.mit.edu) page.
+
 ## Privacy Policy 
 This Privacy Policy explains how eduWallet collects, uses, and processes personal information about our learners.
 
