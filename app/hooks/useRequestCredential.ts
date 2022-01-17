@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
+// import * as RNFS from 'react-native-fs';
+
+import { credentialsFromQrText } from '../lib/decode';
 
 import { requestCredential, CredentialRequestParams } from '../lib/request';
 import { RootState } from '../store';
@@ -32,8 +35,6 @@ async function getSharedFiles(): Promise<any> {
   });
 }
 
-
-
 function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
   const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
   return issuer !== undefined && vc_request_url !== undefined;
@@ -43,7 +44,7 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
   const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
   const [ didRecord ] = rawDidRecords;
 
-  const [credential, setCredential] = useState<Credential | undefined>();
+  const [credential, setCredential] = useState<Credential | string | undefined>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -55,16 +56,44 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
    */
   async function handleDeepLink() {
     console.log('Handling deep link...');
-    const files = await getSharedFiles();
+    let files;
+    try {
+      files = await getSharedFiles();
+    } catch (e) {
+      console.error('Error getting shared files:', e);
+    }
 
-    console.log('Received files:', files);
+    let credential: Credential;
+
+    if(files) {
+      console.log('Received files:', files);
+      const [file] = files;
+
+      const url = new URL(file.weblink);
+      console.log('url:', url);
+      const encoded = 'VP1-' + file.weblink.split('VP1-')[1];
+
+      console.log('extracted:', encoded);
+
+      await SplashScreen.hideAsync();
+      setLoading(true);
+
+      ([credential] = await credentialsFromQrText(encoded));
+
+      // const fileContents = await RNFS.readFile(file.filePath, 'ascii');
+      // console.log(fileContents);
+      // const credential = fileContents;
+      setCredential(credential);
+      setLoading(false);
+      return;
+    }
 
     if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
       await SplashScreen.hideAsync();
       setLoading(true);
 
       try {
-        const credential = await requestCredential(routeParams, didRecord);
+        credential = await requestCredential(routeParams, didRecord);
         setCredential(credential);
       } catch (err) {
         setError(err.message);

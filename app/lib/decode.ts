@@ -1,4 +1,4 @@
-import { fromQrCode } from '@digitalcredentials/vpqr';
+import { fromQrCode, toQrCode } from '@digitalcredentials/vpqr';
 
 import { securityLoader } from './documentLoader';
 //import { verifyPresentation } from '../lib/validate';
@@ -12,7 +12,7 @@ const vpqrPattern = /^VP1-[A-Z|0-9]+/;
 export async function credentialsFromQrText(text: string): Promise<Credential[]> {
   const { vp }: { vp: VerifiablePresentation } = await fromQrCode({ text, documentLoader });
 
-  // TODO: We need to separate verificaiton of the presentation from the credentials inside.
+  // TODO: We need to separate verification of the presentation from the credentials inside.
   // https://www.pivotaltracker.com/story/show/179830339
   //const isVerified = await verifyPresentation(vp);
 
@@ -27,4 +27,9 @@ export async function credentialsFromQrText(text: string): Promise<Credential[]>
 
 export function isVpqr(text: string): boolean {
   return vpqrPattern.test(text);
+}
+
+export async function toQr(vp: VerifiablePresentation): Promise<string> {
+  const result = await toQrCode({ vp, documentLoader });
+  return result.payload;
 }
