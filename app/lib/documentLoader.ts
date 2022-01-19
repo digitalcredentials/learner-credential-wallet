@@ -1,11 +1,22 @@
 import * as didKey from '@digitalcredentials/did-method-key';
-import { CachedResolver } from '@digitalbazaar/did-io';
+import { Ed25519VerificationKey2020 }
+  from '@digitalcredentials/ed25519-verification-key-2020';
+import { X25519KeyAgreementKey2020 }
+  from '@digitalcredentials/x25519-key-agreement-key-2020';
+import { CachedResolver } from '@digitalcredentials/did-io';
 import dccCtx from 'dcc-context';
 import didContext from 'did-context';
 import ed25519 from 'ed25519-signature-2020-context';
 import x25519 from 'x25519-key-agreement-2020-context';
 import cred from 'credentials-context';
 import { JsonLdDocumentLoader } from 'jsonld-document-loader';
+import { CryptoLD } from 'crypto-ld';
+import * as didWeb from '@interop/did-web-resolver';
+
+const cryptoLd = new CryptoLD();
+cryptoLd.use(Ed25519VerificationKey2020);
+cryptoLd.use(X25519KeyAgreementKey2020);
+const didWebDriver = didWeb.driver({ cryptoLd });
 
 const {
   contexts: credentialsContext,
@@ -16,6 +27,7 @@ const {
 const didKeyDriver = didKey.driver();
 const resolver = new CachedResolver();
 resolver.use(didKeyDriver);
+resolver.use(didWebDriver);
 
 /**
  * Because none of the credential libraries are typed, we need to use implicit
