@@ -71,7 +71,7 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
         </View>
       </View>
       <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Issuer URL</Text>
+        <Text style={styles.dataLabel}>Issuer Website</Text>
         <IssuerLink />
       </View>
       <View style={styles.dataContainer}>
