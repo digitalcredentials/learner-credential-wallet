@@ -9,3 +9,4 @@ export { default as PresentationPreviewScreen } from './PresentationPreviewScree
 export { default as ApproveCredentialsScreen } from './ApproveCredentialsScreen/ApproveCredentialsScreen';
 export { default as ApproveCredentialScreen } from './ApproveCredentialScreen/ApproveCredentialScreen';
 export { default as RestartScreen } from './RestartScreen/RestartScreen';
+export { default as VerificationStatusScreen } from './VerificationStatusScreen/VerificationStatusScreen';
