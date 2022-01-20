@@ -108,7 +108,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
           >
             <View style={styles.container}>
               <CredentialCard rawCredentialRecord={rawCredentialRecord} />
-              <VerificationCard credential={credential} />
+              <VerificationCard credential={credential} isButton />
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>
