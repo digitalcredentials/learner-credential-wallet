@@ -16,6 +16,7 @@ export default StyleSheet.create({
     borderRadius: theme.borderRadius,
     marginTop: 16,
     padding: 16,
+    justifyContent: 'space-between',
   },
   proofText: {
     marginHorizontal: 14,

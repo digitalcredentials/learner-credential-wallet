@@ -10,10 +10,14 @@ export type VerifyPayload = {
 }
 
 // Adapted from https://usehooks.com/useAsync/
-export function useVerifyCredential(credential: Credential): VerifyPayload {
+export function useVerifyCredential(credential?: Credential): VerifyPayload | null {
   const [loading, setLoading] = useState(true);
   const [verified, setVerified] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  if (credential === undefined) {
+    return null;
+  }
 
   const verify = useCallback(async () => {
     try {
