@@ -11,7 +11,7 @@ import AccessibleView from '../AccessibleView/AccessibleView';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export default function ({ loading }: LoadingIndicatorProps): JSX.Element {
+export default function LoadingIndicator({ loading }: LoadingIndicatorProps): JSX.Element {
   const [percent, setPercent] = useState(25);
 
   const rotate = useAnimation(['0deg', '360deg'], { duration: 1000 });
