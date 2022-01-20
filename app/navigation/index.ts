@@ -1,3 +1,4 @@
+// Navigation Components
 export { default as RootNavigation } from './RootNavigation/RootNavigation';
 export { default as AddCredentialNavigation } from './AddCredentialNavigation/AddCredentialNavigation';
 export { default as AppNavigation } from './AppNavigation/AppNavigation';
@@ -7,6 +8,7 @@ export { default as SettingsNavigation } from './SettingsNavigation/SettingsNavi
 export { default as SetupNavigation } from './SetupNavigation/SetupNavigation';
 export { default as ShareNavigation } from './ShareNavigation/ShareNavigation';
 
+// Type Definitions
 export * from './RootNavigation/RootNavigation.d';
 export * from './HomeNavigation/HomeNavigation.d';
 export * from './SettingsNavigation/SettingsNavigation.d';
@@ -15,7 +17,7 @@ export * from './AddCredentialNavigation/AddCredentialNavigation.d';
 export * from './CredentialNavigation/CredentialNavigation.d';
 export * from './ShareNavigation/ShareNavigation.d';
 
-export * from './AppNavigation/AppNavigation';
+export { navigationRef } from './AppNavigation/AppNavigation';
 
 /**
  * If screens are re-used, we need to make union types for their
