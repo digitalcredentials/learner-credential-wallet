@@ -30,7 +30,7 @@ export default function VerificationStatusCard({ verifyPayload }: VerificationSt
       <View style={styles.container}>
         <Text style={styles.headerText}>This means that the credential:</Text>
         <StatusItem text="is in a recognized format" />
-        <StatusItem text="the digital signature does validate (aka has not been tampered with)" />
+        <StatusItem text="the digital signature validates" />
         <StatusItem text="has been issued by a registered institution" />
         <StatusItem text="the issuing institution could be reached to verify the credential" />
         <StatusItem text="has not expired" />
@@ -43,7 +43,7 @@ export default function VerificationStatusCard({ verifyPayload }: VerificationSt
     <View style={styles.container}>
       <Text style={styles.headerText}>This could mean that the credential:</Text>
       <StatusItem text="is in an unrecognized format" />
-      <StatusItem text="the digital signature does not validate (aka has been tampered with)" />
+      <StatusItem text="the digital signature does not validate" />
       <StatusItem text="has not been issued by a registered institution" />
       <StatusItem text="the issuing institution could not be reached to verify the credential" />
       <StatusItem text="has expired" />
