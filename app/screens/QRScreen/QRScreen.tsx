@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { View, useWindowDimensions } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent, RNCameraProps } from 'react-native-camera';
+import qs from 'query-string';
 
 import { PresentationError } from '../../types/presentation';
 import { ConfirmModal } from '../../components';
@@ -11,6 +12,7 @@ import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { credentialsFromQrText, isVpqr } from '../../lib/decode';
 import { NavHeader } from '../../components';
 import { QRScreenProps } from './QRScreen.d';
+import { CredentialRequestParams } from '../../lib/request';
 import styles from './QRScreen.styles';
 
 export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
@@ -29,10 +31,18 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   }
 
   async function onRead({ data: text }: BarCodeReadEvent) {
-    if (!isVpqr(text)) {
+    console.log('Read text from qrcode', text);
+    if (!isVpqr(text) && !text.startsWith('dccrequest:request?') ) {
       setErrorModalOpen(true);
       setErrorMessage('The QR code was read, but no credentials were found.');
+ 
+      return;
+    }
 
+    if (text.startsWith('dccrequest:request?')) {
+      console.log('received deeplink via QR code', text);
+      const params: CredentialRequestParams = qs.parse(text.split('?')[1]);
+      navigation.navigate('AddScreen', params);
       return;
     }
 
