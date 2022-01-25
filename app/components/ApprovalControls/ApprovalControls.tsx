@@ -107,7 +107,7 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
     );
   } else {
     return (
-      <View style={styles.approvalContainer}>
+      <View style={styles.approvalContainer} accessible>
         <View style={styles.credentialStatusContainer} ref={statusRef}>
           <MaterialIcons
             color={colorFor(status)}
