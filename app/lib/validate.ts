@@ -50,7 +50,6 @@ export async function verifyCredential(credential: Credential): Promise<boolean>
       documentLoader,
     });
 
-    console.log(JSON.stringify(result));
     return result.verified;
   } catch (err) {
     console.warn(err);
