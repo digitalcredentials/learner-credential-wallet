@@ -4,7 +4,7 @@ import { Ed25519VerificationKey2020 }
 import { X25519KeyAgreementKey2020 }
   from '@digitalcredentials/x25519-key-agreement-key-2020';
 import { CachedResolver } from '@digitalcredentials/did-io';
-import dccCtx from 'dcc-context';
+import dccCtx from '@digitalcredentials/dcc-context';
 import didContext from 'did-context';
 import ed25519 from 'ed25519-signature-2020-context';
 import x25519 from 'x25519-key-agreement-2020-context';
