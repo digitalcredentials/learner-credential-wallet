@@ -32,7 +32,7 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
 
   async function onRead({ data: text }: BarCodeReadEvent) {
     console.log('Read text from qrcode', text);
-    if (!isVpqr(text) && !text.startsWith('dccrequest:request?') ) {
+    if (!isVpqr(text) && !text.startsWith('dccrequest://request?') ) {
       setErrorModalOpen(true);
       setErrorMessage('The QR code was read, but no credentials were found.');
  
