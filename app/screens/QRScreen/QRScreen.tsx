@@ -41,7 +41,29 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
 
     if (text.startsWith('dccrequest://request?')) {
       console.log('received deeplink via QR code', text);
-      const params: CredentialRequestParams = qs.parse(text.split('?')[1]);
+      const queryParams = qs.parse(text.split('?')[1]);
+      if (
+        !queryParams.vc_request_url
+        || !queryParams.issuer
+        || Array.isArray(queryParams.issuer)
+        || Array.isArray(queryParams.vc_request_url)
+        || Array.isArray(queryParams.auth_type)
+        || Array.isArray(queryParams.challenge)
+      ){
+        setErrorModalOpen(true);
+        setErrorMessage('The QR code contained an invalid deep link.');
+        return;
+      }
+      const params: CredentialRequestParams = {
+        issuer: queryParams.issuer,
+        vc_request_url: queryParams.vc_request_url,
+      };
+      if (queryParams.challenge){
+        params.challenge = queryParams.challenge;
+      }
+      if (queryParams.auth_type){
+        params.auth_type = queryParams.auth_type;
+      }
       navigation.navigate('AddScreen', params);
       return;
     }
