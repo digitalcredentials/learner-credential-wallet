@@ -39,7 +39,7 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
       return;
     }
 
-    if (text.startsWith('dccrequest:request?')) {
+    if (text.startsWith('dccrequest://request?')) {
       console.log('received deeplink via QR code', text);
       const params: CredentialRequestParams = qs.parse(text.split('?')[1]);
       navigation.navigate('AddScreen', params);
