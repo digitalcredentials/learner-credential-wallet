@@ -1,12 +1,11 @@
 #import <Foundation/Foundation.h>
-#import <EXUpdates/EXUpdatesAppController.h>
 #import <React/RCTBridgeDelegate.h>
 #import <UIKit/UIKit.h>
 #import "RNAppAuthAuthorizationFlowManager.h"
 
-#import <UMCore/UMAppDelegateWrapper.h>
+#import <Expo/Expo.h>
 
-@interface AppDelegate : UMAppDelegateWrapper <RCTBridgeDelegate, EXUpdatesAppControllerDelegate, RNAppAuthAuthorizationFlowManager>
+@interface AppDelegate : EXAppDelegateWrapper <RCTBridgeDelegate>
 
 @property(nonatomic, weak)id<RNAppAuthAuthorizationFlowManagerDelegate>authorizationFlowManagerDelegate;
 
