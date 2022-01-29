@@ -6,47 +6,6 @@ PODS:
   - AppAuth/ExternalUserAgent (1.4.0)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
-  - EXApplication (3.2.0):
-    - UMCore
-  - EXConstants (11.0.2):
-    - ExpoModulesCore
-    - UMCore
-  - EXErrorRecovery (2.2.0):
-    - UMCore
-  - EXFileSystem (11.1.3):
-    - ExpoModulesCore
-    - UMCore
-  - EXFont (9.2.1):
-    - ExpoModulesCore
-    - UMCore
-  - EXImageLoader (2.2.0):
-    - ExpoModulesCore
-    - React-Core
-    - UMCore
-  - EXKeepAwake (9.2.0):
-    - UMCore
-  - ExpoModulesCore (0.2.0):
-    - ExpoModulesCore/Core (= 0.2.0)
-    - ExpoModulesCore/Interfaces (= 0.2.0)
-    - UMCore
-  - ExpoModulesCore/Core (0.2.0):
-    - UMCore
-  - ExpoModulesCore/Interfaces (0.2.0):
-    - ExpoModulesCore/Core
-    - UMCore
-  - EXSecureStore (10.2.0):
-    - UMCore
-  - EXSplashScreen (0.14.1):
-    - ExpoModulesCore
-    - React-Core
-  - EXStructuredHeaders (1.1.1):
-    - UMCore
-  - EXUpdates (0.8.5):
-    - EXStructuredHeaders
-    - EXUpdatesInterface
-    - React-Core
-    - UMCore
-  - EXUpdatesInterface (0.2.2)
   - FBLazyVector (0.63.4)
   - FBReactNativeSpec (0.63.4):
     - Folly (= 2020.01.13.00)
@@ -343,31 +302,10 @@ PODS:
     - React
   - RNVectorIcons (8.1.0):
     - React-Core
-  - UMAppLoader (2.2.0)
-  - UMCore (7.1.2)
-  - UMReactNativeAdapter (6.3.9):
-    - ExpoModulesCore
-    - React-Core
-    - UMCore
-  - UMTaskManagerInterface (6.2.0):
-    - UMCore
   - Yoga (1.14.0)
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
-  - EXApplication (from `../node_modules/expo-application/ios`)
-  - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
-  - EXFileSystem (from `../node_modules/expo-file-system/ios`)
-  - EXFont (from `../node_modules/expo-font/ios`)
-  - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
-  - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
-  - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
-  - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
-  - EXSplashScreen (from `../node_modules/expo-app-loading/node_modules/expo-splash-screen/ios`)
-  - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
-  - EXUpdates (from `../node_modules/expo-updates/ios`)
-  - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
@@ -414,10 +352,6 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
-  - "UMCore (from `../node_modules/@unimodules/core/ios`)"
-  - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
-  - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -429,32 +363,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
-  EXApplication:
-    :path: "../node_modules/expo-application/ios"
-  EXConstants:
-    :path: "../node_modules/expo-constants/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
-  EXFileSystem:
-    :path: "../node_modules/expo-file-system/ios"
-  EXFont:
-    :path: "../node_modules/expo-font/ios"
-  EXImageLoader:
-    :path: "../node_modules/expo-image-loader/ios"
-  EXKeepAwake:
-    :path: "../node_modules/expo-keep-awake/ios"
-  ExpoModulesCore:
-    :path: "../node_modules/expo-modules-core/ios"
-  EXSecureStore:
-    :path: "../node_modules/expo-secure-store/ios"
-  EXSplashScreen:
-    :path: "../node_modules/expo-app-loading/node_modules/expo-splash-screen/ios"
-  EXStructuredHeaders:
-    :path: "../node_modules/expo-structured-headers/ios"
-  EXUpdates:
-    :path: "../node_modules/expo-updates/ios"
-  EXUpdatesInterface:
-    :path: "../node_modules/expo-updates-interface/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -543,14 +451,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
-  UMAppLoader:
-    :path: "../node_modules/unimodules-app-loader/ios"
-  UMCore:
-    :path: "../node_modules/@unimodules/core/ios"
-  UMReactNativeAdapter:
-    :path: "../node_modules/@unimodules/react-native-adapter/ios"
-  UMTaskManagerInterface:
-    :path: "../node_modules/unimodules-task-manager-interface/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -558,19 +458,6 @@ SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
-  EXConstants: 4cb52b6d8f636c767104a44bf7db3873e9c01a6f
-  EXErrorRecovery: 404d827bc7d42f306c062d58a60b06afc4d082b3
-  EXFileSystem: 0a04aba8da751b9ac954065911bcf166503f8267
-  EXFont: 9846ba1bb6f5f5aed44e20eea3ac70693323832d
-  EXImageLoader: d3531a3fe530b22925c19977cb53bb43e3821fe6
-  EXKeepAwake: f4105ef469be7b283f66ce2d7234bb71ac80cd26
-  ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
-  EXSecureStore: 1aa80d49a3a101418bbd2675e2a0d32dceea10c2
-  EXSplashScreen: 7872675b95bb07c25f922b3d3dfae70c76fb5a00
-  EXStructuredHeaders: e52b880264d15b8ad07d36670226c29476af6334
-  EXUpdates: 013d26649cb6ab4f8d8d80c35d3d4be150b47e7c
-  EXUpdatesInterface: b68e78b912a03fff7901a5f46ec200c45e3506a5
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
@@ -616,12 +503,8 @@ SPEC CHECKSUMS:
   RNShare: 3185c074441b7e8897014d95ba982434a0a024a1
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
-  UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
-  UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
-  UMReactNativeAdapter: d03cefd0e4e4179ab8c490408589f1c8a6c8b785
-  UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: 8c597e554eeb8e5e6c768ed6406f670ce4bf01bf
+PODFILE CHECKSUM: 738713f4dbc0d5504c24a2176915bd404fb4634f
 
 COCOAPODS: 1.11.2
