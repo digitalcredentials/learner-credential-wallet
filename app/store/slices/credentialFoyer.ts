@@ -46,10 +46,10 @@ const initialState: CredentialFoyerState = {
 
 const stageCredentials = createAsyncThunk('credentialFoyer/stageCredentials', async (credentials: Credential[]) => {
   const existingCredentials = await CredentialRecord.getAllCredentials();
-  const existingCredentialIds = existingCredentials.map(({ credential }) => credential.id);
+  const existingCredentialProofValues = existingCredentials.map(({ credential }) => credential.proof?.proofValue);
   
   const pendingCredentials = credentials.map((credential) => {
-    if (existingCredentialIds.includes(credential.id)) {
+    if (existingCredentialProofValues.includes(credential.proof?.proofValue)) {
       return new PendingCredential(
         credential, 
         ApprovalStatus.Accepted, 
