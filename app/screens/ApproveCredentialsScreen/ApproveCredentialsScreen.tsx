@@ -16,13 +16,13 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
     ({ credentialFoyer }) => credentialFoyer.pendingCredentials,
   );
 
-  function goToAdd() {
+  function goToHome() {
     if (navigationRef.isReady()) {
       navigationRef.navigate('HomeNavigation', { 
-        screen: 'AddCredentialNavigation', 
-        params: { 
-          screen: 'AddScreen', 
-        },
+        screen: 'CredentialNavigation',
+        params: {
+          screen: 'HomeScreen',
+        }, 
       });
     }
   }
@@ -32,7 +32,7 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
       <Button
         buttonStyle={styles.doneButton}
         titleStyle={styles.doneButtonTitle}
-        onPress={goToAdd}
+        onPress={goToHome}
         title="Done"
       />
     );
