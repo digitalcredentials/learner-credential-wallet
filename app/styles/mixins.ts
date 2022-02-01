@@ -109,4 +109,9 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.regular,
     backgroundColor: theme.color.backgroundPrimary,
   },
+
+  /* Credential list mixins */
+  credentialListContainer: {
+    padding: 16,
+  },
 });

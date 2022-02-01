@@ -30,9 +30,20 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
   },
-  // TODO: Figure out how to remove left and right margin
-  checkboxContainer: {
-    margin: 0,
+  checkboxContainer: {    
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    paddingLeft: 5,
+
+    ...mixins.imageIcon,
+    
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   checkboxText: {
     margin: 0,
