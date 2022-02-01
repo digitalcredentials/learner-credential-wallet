@@ -83,6 +83,7 @@ export default function ShareHomeScreen({
           Start by selecting which credential(s) you want to share.
         </Text>
         <FlatList
+          indicatorStyle="white"
           style={styles.credentialList}
           data={rawCredentialRecords}
           renderItem={renderItem}

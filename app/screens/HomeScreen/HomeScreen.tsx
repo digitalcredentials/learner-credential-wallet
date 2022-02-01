@@ -78,7 +78,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         </View>
       ) : (
         <FlatList
-          style={styles.container}
+          contentContainerStyle={mixins.credentialListContainer}
           data={rawCredentialRecords}
           renderItem={renderItem}
           keyExtractor={(item, index) => `${index}-${item._id}`}
