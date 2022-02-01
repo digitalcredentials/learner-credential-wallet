@@ -24,9 +24,16 @@ public class MainActivity extends ReactActivity {
         sendBroadcast(intent);
     }
 
+    // on your MainActivity Class body
+    @Override
+    public void onNewIntent(Intent intent) {
+      super.onNewIntent(intent);
+      setIntent(intent);
+    }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    // Set the theme to AppTheme BEFORE onCreate to support 
+    // Set the theme to AppTheme BEFORE onCreate to support
     // coloring the background, status bar, and navigation bar.
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);

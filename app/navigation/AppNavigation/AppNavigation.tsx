@@ -30,7 +30,7 @@ function transformDeepLink(url: string): string {
 }
 
 const linking = {
-  prefixes: ['dccrequest://'],
+  prefixes: ['dccrequest://', 'edu.wallet'],
   config: {
     screens: {
       HomeNavigation: {
@@ -45,13 +45,18 @@ const linking = {
     },
   },
   subscribe: (listener: (url: string) => void) => {
-    const onReceiveURL = ({ url }: { url: string }) => listener(transformDeepLink(url));
+    const onReceiveURL = ({ url }: { url: string }) => {
+      console.log('Received URL:', url);
+      return listener(transformDeepLink(url));
+    };
 
     Linking.addEventListener('url', onReceiveURL);
     return () => Linking.removeEventListener('url', onReceiveURL);
   },
   getInitialURL: async () => {
     const url = await Linking.getInitialURL();
+    console.log('getInitialURL:', url);
+
     if (url === null) return;
 
     return transformDeepLink(url);
@@ -61,9 +66,9 @@ const linking = {
 
 export default function AppNavigation(): JSX.Element | null {
   const loading = useAppLoading();
-  const { 
-    isUnlocked, 
-    isInitialized, 
+  const {
+    isUnlocked,
+    isInitialized,
     needsRestart,
   } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
 
@@ -82,9 +87,9 @@ export default function AppNavigation(): JSX.Element | null {
   }
 
   useEffect(() => {
-    SplashScreen.preventAutoHideAsync();  
+    SplashScreen.preventAutoHideAsync();
   }, []);
-   
+
   if (loading) {
     return null;
   }

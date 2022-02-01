@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
+// import * as RNFS from 'react-native-fs';
+
+import { credentialsFromQrText } from '../lib/decode';
 
 import { requestCredential, CredentialRequestParams } from '../lib/request';
 import { RootState } from '../store';
 import { DidState } from '../store/slices/did';
 import { Credential } from '../types/credential';
+
+import ReceiveSharingIntent from 'react-native-receive-sharing-intent';
 
 export type RequestPayload = {
   credential?: Credential;
@@ -14,6 +19,21 @@ export type RequestPayload = {
 }
 
 type Params = Record<string, unknown>
+
+async function getSharedFiles(): Promise<any> {
+  return new Promise((resolve, reject) => {
+    ReceiveSharingIntent.getReceivedFiles(
+      (files: any) => {
+        resolve(files);
+      },
+      (error: any) => {
+        console.log(error);
+        reject(error);
+      },
+      'edu.wallet',
+    );
+  });
+}
 
 function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
   const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
@@ -24,23 +44,56 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
   const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
   const [ didRecord ] = rawDidRecords;
 
-  const [credential, setCredential] = useState<Credential | undefined>();
+  const [credential, setCredential] = useState<Credential | string | undefined>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   /**
    * The app takes a few miliseconds to update the DID store when the app is launched
    * with a deep link request, so we should wait until the didRecord is
-   * present before handling a deep link and ensure that the splash screen is 
+   * present before handling a deep link and ensure that the splash screen is
    * hidden.
    */
   async function handleDeepLink() {
+    console.log('Handling deep link...');
+    let files;
+    try {
+      files = await getSharedFiles();
+    } catch (e) {
+      console.error('Error getting shared files:', e);
+    }
+
+    let credential: Credential;
+
+    if(files) {
+      console.log('Received files:', files);
+      const [file] = files;
+
+      const url = new URL(file.weblink);
+      console.log('url:', url);
+      const encoded = 'VP1-' + file.weblink.split('VP1-')[1];
+
+      console.log('extracted:', encoded);
+
+      await SplashScreen.hideAsync();
+      setLoading(true);
+
+      ([credential] = await credentialsFromQrText(encoded));
+
+      // const fileContents = await RNFS.readFile(file.filePath, 'ascii');
+      // console.log(fileContents);
+      // const credential = fileContents;
+      setCredential(credential);
+      setLoading(false);
+      return;
+    }
+
     if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
       await SplashScreen.hideAsync();
       setLoading(true);
 
       try {
-        const credential = await requestCredential(routeParams, didRecord);
+        credential = await requestCredential(routeParams, didRecord);
         setCredential(credential);
       } catch (err) {
         setError(err.message);
@@ -50,7 +103,7 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
     }
   }
 
-  
+
   useEffect(() => {
     handleDeepLink();
   }, [routeParams, didRecord]);
