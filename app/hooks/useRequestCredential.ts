@@ -30,7 +30,7 @@ async function getSharedFiles(): Promise<any> {
         console.log(error);
         reject(error);
       },
-      'edu.wallet',
+      'edu.mit.eduwallet',
     );
   });
 }
@@ -40,7 +40,7 @@ function isCredentialRequestParams(params?: Params): params is CredentialRequest
   return issuer !== undefined && vc_request_url !== undefined;
 }
 
-export function useRequestCredential(routeParams?: Params): RequestPayload {
+export function useRequestCredential(routeParams?: Params): { credential: Credential | string | undefined; loading: boolean; error: string } {
   const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
   const [ didRecord ] = rawDidRecords;
 
@@ -58,8 +58,11 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
     console.log('Handling deep link...');
     let files;
     try {
+      console.log('Attempting to get shared files...');
       files = await getSharedFiles();
+      console.log('files:', files);
     } catch (e) {
+      console.log(e);
       console.error('Error getting shared files:', e);
     }
 
@@ -69,20 +72,23 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
       console.log('Received files:', files);
       const [file] = files;
 
-      const url = new URL(file.weblink);
-      console.log('url:', url);
-      const encoded = 'VP1-' + file.weblink.split('VP1-')[1];
+      // console.log('url:', url);
+      const encoded = 'VP1-' + file.text.split('VP1-')[1];
 
       console.log('extracted:', encoded);
 
       await SplashScreen.hideAsync();
       setLoading(true);
 
-      ([credential] = await credentialsFromQrText(encoded));
+      // let credential: Credential;
+      const [credential] = await credentialsFromQrText(encoded);
+
+      console.log('credential:', credential);
 
       // const fileContents = await RNFS.readFile(file.filePath, 'ascii');
       // console.log(fileContents);
       // const credential = fileContents;
+
       setCredential(credential);
       setLoading(false);
       return;
@@ -103,10 +109,9 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
     }
   }
 
-
   useEffect(() => {
     handleDeepLink();
-  }, [routeParams, didRecord]);
+  }, [routeParams, didRecord, credential]);
 
   return { credential, loading, error };
 }
