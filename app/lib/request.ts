@@ -60,10 +60,13 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   const responseJson  = await response.json();
   const credential = responseJson as Credential;
 
-  const verified = await verifyCredential(credential);
-
-  if (!verified) {
-    console.warn('Credential was received, but could not be verified');
+  try {
+    const verified = await verifyCredential(credential);
+    if (!verified) {
+      throw new Error('Credential was received, but could not be verified');
+    }
+  } catch (err) {
+    console.warn(err);
   }
 
   return credential;
