@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
+import DeviceInfo from 'react-native-device-info';
 
 import appConfig from '../../../app.json';
 import mockCredential from '../../mock/credential';
@@ -216,6 +217,8 @@ function Backup({ navigation }: BackupProps): JSX.Element {
 }
 
 function About({ navigation }: AboutProps): JSX.Element {
+  const version = DeviceInfo.getVersion();
+  const buildNumber = DeviceInfo.getBuildNumber();
   return (
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
@@ -241,6 +244,9 @@ function About({ navigation }: AboutProps): JSX.Element {
         </Text>
         <Text style={styles.paragraphCenter}>
           Copyright 2021 Massachusetts Institute of Technology
+        </Text>
+        <Text style={styles.paragraphCenter}>
+          v{version} - Build {buildNumber}
         </Text>
       </View>
     </>
