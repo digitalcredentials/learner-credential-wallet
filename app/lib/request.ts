@@ -15,10 +15,10 @@ export type CredentialRequestParams = {
 }
 
 export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential> {
-  const { 
+  const {
     // auth_type,
-    issuer, 
-    vc_request_url, 
+    issuer,
+    vc_request_url,
     challenge,
   } = credentialRequestParams;
 
@@ -35,12 +35,19 @@ export async function requestCredential(credentialRequestParams: CredentialReque
    */
   await new Promise((res) => setTimeout(res, 1000));
 
+  console.log('Launching OIDC auth:', config);
+
   const { accessToken } = await authorize(config).catch((err) => {
     console.error(err);
     throw Error('Unable to receive credential: Authorization with the issuer failed');
   });
 
+  console.log('Received access token, requesting credential.');
+
   const requestBody = await createVerifiablePresentation(undefined, didRecord, challenge);
+
+  console.log(JSON.stringify(requestBody, null, 2));
+
   const request = {
     method: 'POST',
     headers: {

@@ -19,8 +19,8 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="edu.wallet"/>
-        <data 
+        <data android:scheme="edu.mit.eduwallet"/>
+        <data
           android:scheme="dccrequest"
           android:host="request"/>
       </intent-filter>
@@ -32,7 +32,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data 
+        <data
           android:scheme="dccrequest"
           android:host="oauth"/>
       </intent-filter>

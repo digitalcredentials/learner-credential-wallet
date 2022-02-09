@@ -31,10 +31,11 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
   /**
    * The app takes a few miliseconds to update the DID store when the app is launched
    * with a deep link request, so we should wait until the didRecord is
-   * present before handling a deep link and ensure that the splash screen is 
+   * present before handling a deep link and ensure that the splash screen is
    * hidden.
    */
   async function handleDeepLink() {
+    console.log('handleDeepLink', routeParams);
     if (didRecord !== undefined && isCredentialRequestParams(routeParams)) {
       await SplashScreen.hideAsync();
       setLoading(true);
@@ -50,7 +51,7 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
     }
   }
 
-  
+
   useEffect(() => {
     handleDeepLink();
   }, [routeParams, didRecord]);
