@@ -29,6 +29,11 @@ function transformDeepLink(url: string): string {
   return encodeQueryParams(url);
 }
 
+/**
+ * In order to support OAuth redirects, the Android intent filter was set
+ * specific to the scheme `dccrequest` and path `request`. If new paths are
+ * added here, they must also be added to `android/app/src/main/AndroidManifest.xml`.
+ */
 const linking = {
   prefixes: ['dccrequest://'],
   config: {
