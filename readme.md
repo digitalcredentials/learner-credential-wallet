@@ -86,18 +86,14 @@ We may change this Privacy Policy from time to time. If we make any significant 
 
 The controller for your personal information is the eduWallet project at MIT. We can be contacted at eduwallet-support@mit.edu.
 
-## Terms of Service
+## Terms and Conditions of Use
 
-### Disclaimers of Warranty / Limitations of Liability
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+[eduWallet Terms and Conditions of Use](https://eduwallet.app/terms.html)
 
 ## Acknowledgements
 Initial development was supported by the U.S. Department of Education (Contract Number: 91990020C0105). The opinions expressed herein do not necessarily represent the positions or policies of the U.S. Department of Education, and no official endorsement by the U.S. Department of Education should be inferred.​
 
 Initial development was also supported by the Massachusetts Institute of Technology. Continued development is supported by members of the Digital Credentials Consortium.
-
-### Contributions
-To be added shortly.
 
 ### License
 
