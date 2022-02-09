@@ -18,6 +18,11 @@ export const issuerDidRegistry: RegistryRaw<IssuerDidEntry> = {
       location: 'Cambridge, MA, USA',
       url: 'https://openlearning.mit.edu',
     },
+    'did:key:z6MkhVTX9BF3NGYX6cc7jWpbNnR7cAjH8LUffabZP8Qu4ysC': {
+      name: 'DCC Playground',
+      location: 'Cambridge, MA, USA',
+      url: 'https://digitalcredentials.github.io/playground',
+    },
     'did:web:digitalcredentials.odl.mit.edu': {
       name: 'MIT xPRO',
       location: 'Cambridge, MA, USA',
