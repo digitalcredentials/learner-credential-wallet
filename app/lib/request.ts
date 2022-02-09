@@ -40,7 +40,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     throw Error('Unable to receive credential: Authorization with the issuer failed');
   });
 
-  const requestBody = await createVerifiablePresentation([], didRecord, challenge);
+  const requestBody = await createVerifiablePresentation(undefined, didRecord, challenge);
   const request = {
     method: 'POST',
     headers: {
