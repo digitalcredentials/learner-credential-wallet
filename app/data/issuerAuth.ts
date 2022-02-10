@@ -20,7 +20,7 @@ export const issuerAuthRegistry: RegistryRaw<IssuerAuthEntry> = {
       issuer: 'https://kezike-oidc-provider.herokuapp.com',
       clientId: 'edu-wallet',
       redirectUrl: 'dccrequest://oauth',
-      scopes: ['openid', 'profile'],
+      scopes: ['openid', 'profile', 'email'],
     },
     'https://rc.xpro.mit.edu': {
       issuer: 'https://rc.xpro.mit.edu',
