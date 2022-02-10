@@ -22,7 +22,7 @@ export default function VerificationStatusScreen({
         <VerificationCard verifyPayload={verifyPayload} />
         <VerificationStatusCard verifyPayload={verifyPayload} />
         <Text style={styles.footerText}>
-          Please contact your issuing organization if you face any problems with
+          Please contact your issuing organization if you have any problems with
           the verification status.
         </Text>
       </ScrollView>
