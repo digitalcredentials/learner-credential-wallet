@@ -89,7 +89,7 @@
     "react-redux": "^7.2.4",
     "readable-stream": "^1.0.33",
     "realm": "^10.6.1",
-    "rn-nodeify": "tradle/rn-nodeify",
+    "rn-nodeify": "git+https://github.com/tradle/rn-nodeify",
     "stream-browserify": "^1.0.0",
     "text-encoding": "^0.7.0",
     "util": "^0.10.4",
