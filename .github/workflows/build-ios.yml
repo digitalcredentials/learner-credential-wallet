@@ -1,0 +1,26 @@
+name: iOS
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - run: npm ci
+    - run: xcode-select -p
+    - run: pod install
+      working-directory: ios
+      name: Install pod dependencies
+    - name: Build iOS (debug)
+      run: "xcodebuild \
+        -workspace ios/eduWallet.xcworkspace \
+        -scheme eduWallet \
+        clean archive \
+        -sdk iphoneos \
+        -configuration Debug \
+        -UseModernBuildSystem=NO \
+        -archivePath $PWD/eduWallet \
+        CODE_SIGNING_ALLOWED=NO"
