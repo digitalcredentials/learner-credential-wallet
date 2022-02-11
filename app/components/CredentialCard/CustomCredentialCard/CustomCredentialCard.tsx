@@ -1,11 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import type { CredentialRecordRaw } from '../../model/credential';
-import styles from './CustomCredentialCard.styles';
-
-type CredentialCardProps = {
-  rawCredentialRecord: CredentialRecordRaw;
-};
+import styles from '../CredentialCard.styles';
+import type { CredentialCardProps } from '../CredentialCard.d';
 
 
 export default function CustomCredentialCard ({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
