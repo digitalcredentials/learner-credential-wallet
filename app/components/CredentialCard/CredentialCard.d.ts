@@ -8,4 +8,3 @@ export type CredentialRenderInfo = {
   component: FunctionComponent<CredentialCardProps>,
   title: string,
 }
-
