@@ -238,7 +238,7 @@ PODS:
   - React-jsinspector (0.63.4)
   - react-native-aes-cipher (1.0.9):
     - React
-  - react-native-app-auth (6.4.2):
+  - react-native-app-auth (6.4.1):
     - AppAuth (= 1.4.0)
     - React-Core
   - react-native-camera (4.2.1):
@@ -319,7 +319,7 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - RealmJS (10.12.0):
+  - RealmJS (10.11.0):
     - GCDWebServer
     - React
   - RNCMaskedView (0.1.10):
@@ -339,7 +339,7 @@ PODS:
     - React-RCTImage
   - RNSecureRandom (1.0.0):
     - React
-  - RNShare (7.3.5):
+  - RNShare (7.3.3):
     - React-Core
   - RNSVG (12.1.1):
     - React
@@ -593,7 +593,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-aes-cipher: 87362294a7e70f99e19576137818121aeab74962
-  react-native-app-auth: 1f1b595bf4122f95e0f766404c8621054238e313
+  react-native-app-auth: 30621542aea8bf5a1f95428a7a296ea8984d6127
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-document-picker: b95a0f0a22fd37d56cea697f84bc3893b2141d15
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
@@ -610,7 +610,7 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  RealmJS: b6097dab8af3bcf1cd5fa0ac39a4e4c54980c719
+  RealmJS: de65cc7c3ea041750d66beaa28b30585222c3d94
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
@@ -619,7 +619,7 @@ SPEC CHECKSUMS:
   RNPermissions: f7ebe52db07c00901127966ca080b4ec6a6ceb0a
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSecureRandom: 0dcee021fdb3d50cd5cee5db0ebf583c42f5af0e
-  RNShare: 730a2773b1e0007425f2f111dcf75208a919c902
+  RNShare: 3185c074441b7e8897014d95ba982434a0a024a1
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e

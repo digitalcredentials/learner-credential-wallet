@@ -18,7 +18,7 @@ export default function CredentialItem({
   bottomElement,
 }: CredentialItemProps): JSX.Element {
   /**
-   * When the `bottomElement` param is provided, the root view must not be 
+   * When the `bottomElement` param is provided, the root view must not be
    * accessible. This is to support screen reader accessibility for button
    * elements passed through the `bottomElement` param.
    */
@@ -67,10 +67,10 @@ export default function CredentialItem({
       {...accessibilityProps}
     >
       <ListItem.Content style={styles.listItemContentContainer}>
-        <View style={styles.listItemTopContent} 
+        <View style={styles.listItemTopContent}
           accessible={hasBottomElement}
           importantForAccessibility={hasBottomElement ? 'yes' : 'no-hide-descendants'}
-          {...accessibilityProps}     
+          {...accessibilityProps}
         >
           <LeftContent />
           <View style={styles.listItemTextContainer}>
