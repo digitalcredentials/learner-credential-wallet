@@ -9,6 +9,7 @@ import DeviceInfo from 'react-native-device-info';
 
 import appConfig from '../../../app.json';
 import mockCredential from '../../mock/credential';
+import { credentials as mockCredentials } from '../../mock/credential';
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
@@ -54,7 +55,12 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   }
 
   async function addDevCredential() {
-    await CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
+    await mockCredentials.map(async (credential) => {
+      console.log(credential);
+      return CredentialRecord.addCredential(CredentialRecord.rawFrom(credential))
+    });
+
+    //await CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
     dispatch(getAllCredentials());
   }
 
