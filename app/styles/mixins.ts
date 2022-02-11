@@ -30,12 +30,12 @@ export default StyleSheet.create({
   },
 
   /* Header mixins */
-  headerContainer: { 
-    backgroundColor: theme.color.backgroundSecondary, 
+  headerContainer: {
+    backgroundColor: theme.color.backgroundSecondary,
     borderBottomWidth: 0,
     zIndex: 1,
   },
-  headerTitle: { 
+  headerTitle: {
     color: theme.color.textPrimary,
     fontFamily: theme.fontFamily.bold,
     fontSize: theme.fontSize.regular,
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     color: theme.color.textSecondary,
     lineHeight: 24,
   },
-  
+
   /* Button mixins */
   button: {
     backgroundColor: theme.color.iconActive,
@@ -98,6 +98,7 @@ export default StyleSheet.create({
   buttonIconContainer: {
     ...shadow,
     marginVertical: 8,
+    flex: 1,
   },
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,
