@@ -14,6 +14,9 @@ export default StyleSheet.create({
   swipeItem: {
     overflow: 'hidden',
   },
+  swipeButtonContainer: {
+    flex: 1,
+  },
   swipeButton: {
     ...mixins.buttonIcon,
     flex: 1,

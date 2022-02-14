@@ -26,6 +26,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   const dispatch = useDispatch();
   const share = useShareCredentials();
 
+
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { issuer } = credential;
@@ -43,6 +44,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
             buttonStyle={styles.swipeButton}
             containerStyle={mixins.buttonIconContainer}
             titleStyle={mixins.buttonIconTitle}
+            style={styles.swipeButtonContainer}
             onPress={() => share([item])}
             iconRight
             icon={
@@ -61,6 +63,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
             containerStyle={mixins.buttonIconContainer}
             titleStyle={mixins.buttonIconTitle}
             onPress={() => setItemToDelete(item)}
+            style={styles.swipeButtonContainer}
             icon={
               <MaterialIcons
                 name="delete"
