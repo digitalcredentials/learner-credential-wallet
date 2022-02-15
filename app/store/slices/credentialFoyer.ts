@@ -1,5 +1,6 @@
 import uuid from 'react-native-uuid';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import {canonicalize as jcsCanonicalize} from 'json-canonicalize';
 
 import { CredentialRecord } from '../../model';
 import type { Credential } from '../../types/credential';
@@ -27,8 +28,8 @@ export class PendingCredential {
   messageOveride?: ApprovalMessage;
 
   constructor(
-    credential: Credential, 
-    status: ApprovalStatus = ApprovalStatus.Pending, 
+    credential: Credential,
+    status: ApprovalStatus = ApprovalStatus.Pending,
     messageOveride?: ApprovalMessage,
   ) {
     this.credential = credential;
@@ -51,13 +52,13 @@ function comparableStringFor(credential: Credential): string {
   delete rawCredential.issuanceDate;
   delete rawCredential.proof;
 
-  return JSON.stringify(rawCredential);
+  return JSON.stringify(jcsCanonicalize(rawCredential));
 }
 
 const stageCredentials = createAsyncThunk('credentialFoyer/stageCredentials', async (credentials: Credential[]) => {
   const existingCredentialRecords = await CredentialRecord.getAllCredentials();
   const existingCredentialStrings = existingCredentialRecords.map(({ credential }) => comparableStringFor(credential));
-  
+
   const pendingCredentials = credentials.map((credential) => {
     const isDuplicate = existingCredentialStrings.includes(comparableStringFor(credential));
 
