@@ -18,23 +18,18 @@ export default StyleSheet.create({
     color: theme.color.textPrimary,
     paddingLeft: 8,
   },
+  statusTextOutside: {
+    color: theme.color.textSecondary,
+    fontFamily: theme.fontFamily.regular,
+    fontSize: 14,
+    marginTop: 12,
+  },
   approvalContainer: {
     ...mixins.buttonGroup,
     display: 'flex',
     marginTop: 16,
   },
-  acceptButton: {
-    ...mixins.button, 
-    ...mixins.buttonPrimary,
-    marginLeft: 16,
-    height: 36,
-    padding: 10,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  declineButton: {
+  button: {
     ...mixins.button,
     backgroundColor: theme.color.buttonSecondary,
     height: 36,
@@ -44,14 +39,27 @@ export default StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
-  brightActionText: {
+  buttonPrimary: {
+    ...mixins.button, 
+    ...mixins.buttonPrimary,
+    height: 36,
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  buttonText: {
     color: theme.color.textPrimary,
     fontSize: 14,
     fontFamily: theme.fontFamily.medium,
   },
-  darkActionText: {
+  buttonTextPrimary: {
     color: theme.color.textPrimaryDark,
     fontSize: 14,
     fontFamily: theme.fontFamily.medium,
+  },
+  buttonSpacer: {
+    width: 16,
   },
 });
