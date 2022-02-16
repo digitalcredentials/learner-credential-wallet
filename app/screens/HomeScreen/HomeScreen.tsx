@@ -41,7 +41,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         leftButtons={[
           <Button
             key="share"
-            buttonStyle={styles.swipeButton}
+            buttonStyle={[styles.swipeButton, mixins.buttonPrimary]}
             containerStyle={mixins.buttonIconContainer}
             titleStyle={mixins.buttonIconTitle}
             style={styles.swipeButtonContainer}
@@ -51,7 +51,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
               <MaterialIcons
                 name="share"
                 size={theme.iconSize}
-                color={theme.color.iconInactive}
+                color={theme.color.backgroundPrimary}
               />
             }
           />,
@@ -59,7 +59,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         rightButtons={[
           <Button
             key="delete"
-            buttonStyle={styles.swipeButton}
+            buttonStyle={[styles.swipeButton, mixins.buttonError]}
             containerStyle={mixins.buttonIconContainer}
             titleStyle={mixins.buttonIconTitle}
             onPress={() => setItemToDelete(item)}
@@ -68,7 +68,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
               <MaterialIcons
                 name="delete"
                 size={theme.iconSize}
-                color={theme.color.iconInactive}
+                color={theme.color.backgroundPrimary}
               />
             }
           />,

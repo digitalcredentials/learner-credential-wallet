@@ -73,6 +73,11 @@ export default StyleSheet.create({
     padding: 16,
     borderRadius: theme.borderRadius,
   },
+  buttonError: {
+    backgroundColor: theme.color.error,
+    padding: 16,
+    borderRadius: theme.borderRadius,
+  },
   buttonContainer: {
     ...shadow,
     flex: 1,
