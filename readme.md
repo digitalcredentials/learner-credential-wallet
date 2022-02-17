@@ -44,6 +44,9 @@ The following build commands failed:
 
 Then check your version of cocoa pods.  If it is 1.9.3, try upgrading it to something newer, like 1.11.2_1
 
+See [these notes](install-linux.md) on setting up the project on linux.
+
+
 ### Environment
 
 This project uses TypeScript and React Native. It would be best to use an editor that can hook into the TypeScript language server (VSCode does this with Intellisense, Vim does it with CoC). We also use eslint to catch common mistakes and formatting errors. Most editors should support dynamic linting support while editing. If your editor does not, you can manually lint by running `npm run lint` in the project root.
