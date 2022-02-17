@@ -237,13 +237,13 @@ function About({ navigation }: AboutProps): JSX.Element {
           More information at&nbsp;
           <Text
             style={styles.link}
-            onPress={() => Linking.openURL('https://eduwallet.app')}
+            onPress={() => Linking.openURL('https://lcw.app')}
           >
-            https://eduwallet.app
+            https://lcw.app
           </Text>.
         </Text>
         <Text style={styles.paragraphCenter}>
-          Copyright 2021 Massachusetts Institute of Technology
+          Copyright 2021-2022 Massachusetts Institute of Technology
         </Text>
         <Text style={styles.paragraphCenter}>
           v{version} - Build {buildNumber}

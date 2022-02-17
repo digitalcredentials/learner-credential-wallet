@@ -26,7 +26,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   const dispatch = useDispatch();
   const share = useShareCredentials();
 
-
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { issuer } = credential;

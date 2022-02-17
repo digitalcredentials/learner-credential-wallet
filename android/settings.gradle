@@ -1,4 +1,4 @@
-rootProject.name = 'eduWallet'
+rootProject.name = 'Learner Credential Wallet'
 include ':realm'
 project(':realm').projectDir = new File(rootProject.projectDir, '../node_modules/realm/react-native/android')
 
