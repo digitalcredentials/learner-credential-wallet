@@ -82,7 +82,7 @@ We do not collect any personal information.
 ### Additional Information
 We may change this Privacy Policy from time to time. If we make any significant changes in the way we treat your personal information we will make this clear on our website or by contacting you directly.
 
-The controller for your personal information is the Learner Credential Wallet project at MIT. We can be contacted at eduwallet-support@mit.edu.
+The controller for your personal information is the Learner Credential Wallet project at MIT. We can be contacted at lcw-support@mit.edu.
 
 ## Terms and Conditions of Use
 
