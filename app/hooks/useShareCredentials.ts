@@ -9,7 +9,11 @@ export function useShareCredentials(): (credentials: CredentialRecordRaw[]) => v
   const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
 
   if (rawDidRecords.length === 0) {
-    throw new Error('No DID generated. Something went wrong in wallet initialization.');
+    return (credentials: CredentialRecordRaw[]) => {
+    };
+    // FIXME: This error gets thrown on first launch / wallet init -- probably
+    //   a lifecycle issue (this function gets called before DID init).
+    // throw new Error('No DID generated. Something went wrong in wallet initialization.');
   }
 
   const [ rawDidRecord ] = rawDidRecords;

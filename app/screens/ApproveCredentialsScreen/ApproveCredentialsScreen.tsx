@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { View, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { navigationRef } from '../../navigation';
@@ -9,6 +9,7 @@ import { PendingCredential } from '../../store/slices/credentialFoyer';
 import { CredentialItem, NavHeader } from '../../components';
 import { ApprovalControls } from '../../components';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
+import { mixins } from '../../styles';
 import styles from './ApproveCredentialsScreen.styles';
 
 export default function ApproveCredentialsScreen({ navigation }: ApproveCredentialsScreenProps): JSX.Element {
@@ -16,13 +17,13 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
     ({ credentialFoyer }) => credentialFoyer.pendingCredentials,
   );
 
-  function goToAdd() {
+  function goToHome() {
     if (navigationRef.isReady()) {
       navigationRef.navigate('HomeNavigation', { 
-        screen: 'AddCredentialNavigation', 
-        params: { 
-          screen: 'AddScreen', 
-        },
+        screen: 'CredentialNavigation',
+        params: {
+          screen: 'HomeScreen',
+        }, 
       });
     }
   }
@@ -32,7 +33,7 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
       <Button
         buttonStyle={styles.doneButton}
         titleStyle={styles.doneButtonTitle}
-        onPress={goToAdd}
+        onPress={goToHome}
         title="Done"
       />
     );
@@ -64,17 +65,17 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
   }
 
   return (
-    <View>
+    <>
       <NavHeader 
         title="Available Credentials" 
         rightComponent={<Done />}
       />
       <FlatList
-        style={styles.approveCredentialContainer}
+        contentContainerStyle={mixins.credentialListContainer}
         data={pendingCredentials}
         renderItem={renderItem}
         keyExtractor={(_, index) => `credential-${index}`}
       />
-    </View>
+    </>
   );
 }

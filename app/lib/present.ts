@@ -21,7 +21,7 @@ const documentLoader = securityLoader().build();
  * a UUID will be generated and used in it's place.
  */
 export async function createVerifiablePresentation(
-  credentials: Credential[] = [],
+  credentials: Credential[] | undefined,
   didRecord: DidRecordRaw,
   challenge = uuid.v4(),
 ): Promise<VerifiablePresentation> {

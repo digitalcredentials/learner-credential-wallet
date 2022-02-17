@@ -19,7 +19,7 @@ export default function ApproveCredentialScreen({ navigation, route }: ApproveCr
       <ScrollView>
         <View style={styles.container}>
           <CredentialCard rawCredentialRecord={CredentialRecord.rawFrom(credential)} />
-          <VerificationCard credential={credential} />
+          <VerificationCard credential={credential} isButton />
           <ApprovalControls pendingCredential={pendingCredential} />
         </View>
       </ScrollView>

@@ -10,6 +10,7 @@ export default StyleSheet.create({
   instructionContainer: {
     height: 50,
     backgroundColor: theme.color.backgroundPrimary,
+    zIndex: 1,
   },
   instructionText: {
     ...mixins.paragraphText,

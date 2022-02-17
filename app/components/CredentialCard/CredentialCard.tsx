@@ -17,13 +17,17 @@ type CredentialCardProps = {
 export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
   const { credential } = rawCredentialRecord;
   const { credentialSubject, issuer, issuanceDate } = credential;
+
   const title = credentialSubject.hasCredential?.name ?? '';
   const description = credentialSubject.hasCredential?.description ?? '';
   const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
   const subjectName = credentialSubject.name;
   const numberOfCredits = credentialSubject.hasCredential?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
-  const startDate = moment(credentialSubject.hasCredential?.awardedOnCompletionOf?.startDate).format(DATE_FORMAT) ?? '';
-  const endDate = moment(credentialSubject.hasCredential?.awardedOnCompletionOf?.endDate).format(DATE_FORMAT) ?? '';
+
+  const { startDate, endDate } = credentialSubject.hasCredential?.awardedOnCompletionOf ?? {};
+  const startDateFmt = startDate && moment(startDate).format(DATE_FORMAT);
+  const endDateFmt = endDate && moment(endDate).format(DATE_FORMAT);
+
   const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
   const issuerUrl = (typeof issuer === 'string' ? null : issuer?.url) ?? NO_URL;
   const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
@@ -71,7 +75,7 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
         </View>
       </View>
       <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Issuer URL</Text>
+        <Text style={styles.dataLabel}>Issuer Website</Text>
         <IssuerLink />
       </View>
       <View style={styles.dataContainer}>
@@ -92,13 +96,13 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
         {startDate ? (
           <View style={styles.dataContainer}>
             <Text style={styles.dataLabel}>Start Date</Text>
-            <Text style={styles.dataValue}>{startDate}</Text>
+            <Text style={styles.dataValue}>{startDateFmt}</Text>
           </View>
         ) : null}
         {endDate ? (
           <View style={styles.dataContainer}>
             <Text style={styles.dataLabel}>End Date</Text>
-            <Text style={styles.dataValue}>{endDate}</Text>
+            <Text style={styles.dataValue}>{endDateFmt}</Text>
           </View>
         ) : null}
       </View>

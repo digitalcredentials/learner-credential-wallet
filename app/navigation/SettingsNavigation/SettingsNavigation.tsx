@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
+import DeviceInfo from 'react-native-device-info';
 
 import appConfig from '../../../app.json';
 import mockCredential from '../../mock/credential';
@@ -138,14 +139,14 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
         ) : (
           <>
             <Text style={styles.reportSummary}>This will only take a moment.</Text>
-            <View style={styles.loadingContainer}> 
+            <View style={styles.loadingContainer}>
               <AnimatedEllipsis style={styles.loadingDots} minOpacity={0.4} animationDelay={200}/>
             </View>
           </>
         )}
       </ConfirmModal>
       <View style={styles.bodyContainer}>
-        
+
         <Text style={styles.paragraph}>Select a wallet file (.json) from your device to restore from.</Text>
         <Button
           onPress={_importWallet}
@@ -216,31 +217,36 @@ function Backup({ navigation }: BackupProps): JSX.Element {
 }
 
 function About({ navigation }: AboutProps): JSX.Element {
+  const version = DeviceInfo.getVersion();
+  const buildNumber = DeviceInfo.getBuildNumber();
   return (
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <View style={styles.bodyContainerCenter}>
-        <Image 
+        <Image
           style={styles.image}
-          source={walletImage} 
-          accessible 
-          accessibilityLabel={`${appConfig.displayName} Logo`} 
+          source={walletImage}
+          accessible
+          accessibilityLabel={`${appConfig.displayName} Logo`}
         />
         <Text style={styles.paragraphCenter}>{appConfig.displayName}</Text>
         <Text style={styles.paragraphCenter}>
           This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
         </Text>
         <Text style={styles.paragraphCenter} accessibilityRole="link" >
-          More information at&nbsp; 
-          <Text 
-            style={styles.link} 
-            onPress={() => Linking.openURL('https://digitalcredentials.mit.edu')} 
+          More information at&nbsp;
+          <Text
+            style={styles.link}
+            onPress={() => Linking.openURL('https://lcw.app')}
           >
-            https://digitalcredentials.mit.edu
+            https://lcw.app
           </Text>.
         </Text>
         <Text style={styles.paragraphCenter}>
-          Copyright 2021 Massachusetts Institute of Technology
+          Copyright 2021-2022 Massachusetts Institute of Technology
+        </Text>
+        <Text style={styles.paragraphCenter}>
+          v{version} - Build {buildNumber}
         </Text>
       </View>
     </>

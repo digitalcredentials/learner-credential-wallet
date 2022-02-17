@@ -16,6 +16,12 @@ export const issuerAuthRegistry: RegistryRaw<IssuerAuthEntry> = {
       redirectUrl: 'com.googleusercontent.apps.64590692238-if1jf1fco72srsgjc1ged8tm8106fcpc:/oauth2redirect/google',
       scopes: ['openid', 'profile'],
     },
+    'https://kezike-oidc-provider.herokuapp.com': {
+      issuer: 'https://kezike-oidc-provider.herokuapp.com',
+      clientId: 'edu-wallet',
+      redirectUrl: 'dccrequest://oauth',
+      scopes: ['openid', 'profile', 'email'],
+    },
     'https://rc.xpro.mit.edu': {
       issuer: 'https://rc.xpro.mit.edu',
       clientId: 'l5pbLVALWD89VwfS8IsozXRI5yftHo1fpMJgWP53',
