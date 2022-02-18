@@ -43,7 +43,7 @@ const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string)
 const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string, { dispatch }) => {
   await db.initialize(passphrase);
   await db.unlock(passphrase);
-  dispatch(mintDid());
+  await dispatch(mintDid());
 });
 
 const reset = createAsyncThunk('walletState/reset', async () => {
