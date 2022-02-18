@@ -53,11 +53,6 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     dispatch(reset());
   }
 
-  async function addDevCredential() {
-    await CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
-    dispatch(getAllCredentials());
-  }
-
   function lockWallet() {
     AccessibilityInfo.announceForAccessibility('Locked Wallet');
     dispatch(lock());
@@ -72,10 +67,6 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={lockWallet} />
-        <SettingsItem
-          title="Add credential (dev)"
-          onPress={addDevCredential}
-        />
       </View>
       <ConfirmModal
         open={resetModalOpen}
