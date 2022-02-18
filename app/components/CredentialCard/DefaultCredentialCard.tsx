@@ -3,10 +3,10 @@ import moment from 'moment';
 import { View, Text, Image, Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import type { CredentialRecordRaw } from '../../model/credential';
-import { theme } from '../../../styles';
-import styles from '../CredentialCard.styles';
-import type { CredentialCardProps } from '../CredentialCard.d';
+import type { CredentialRecordRaw } from '../model/credential';
+import { theme } from '../../styles';
+import styles from './CredentialCard.styles';
+import type { CredentialCardProps } from './CredentialCard.d';
 
 const NO_URL = 'None';
 const DATE_FORMAT = 'MMM D, YYYY';

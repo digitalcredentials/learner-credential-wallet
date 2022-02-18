@@ -3,9 +3,9 @@ import { View, Text } from 'react-native';
 
 import type { CredentialRecordRaw } from '../../model/credential';
 
-import DefaultCredentialCard from './DefaultCredentialCard/DefaultCredentialCard';
-import CustomCredentialCard from './CustomCredentialCard/CustomCredentialCard';
-import UniversityDegreeCredentialCard from './UniversityDegreeCredentialCard/UniversityDegreeCredentialCard';
+import DefaultCredentialCard from './DefaultCredentialCard';
+import CustomCredentialCard from './CustomCredentialCard';
+import UniversityDegreeCredentialCard from './UniversityDegreeCredentialCard';
 import StudentIdCard from './StudentIdCard';
 
 import type { CredentialCardProps } from './CredentialCard.d';
