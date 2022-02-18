@@ -55,7 +55,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
     }
 
     return (
-      <AccessibleView 
+      <AccessibleView
         label="More options"
         accessibilityRole="button"
         accessibilityState={{ expanded: menuIsOpen }}
@@ -96,7 +96,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
             <MenuItem icon="delete" title="Delete" onPress={onPressDelete} />
           </View>
         ) : null}
-        <ScrollView 
+        <ScrollView
           onScrollEndDrag={() => setMenuIsOpen(false)}
           style={styles.scrollContainer}
           accessible={false}
