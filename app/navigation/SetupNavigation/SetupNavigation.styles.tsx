@@ -19,6 +19,7 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.title,
     color: theme.color.textPrimary,
     padding: 16,
+    textAlign: 'center',
   },
   paragraph: {
     ...mixins.paragraphText,
