@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 
 import type { CredentialRecordRaw } from '../../model/credential';
 
@@ -28,7 +27,7 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
   //
   // for (credType of credentialTypes){
   //   if (credType.match(rawCredential)){
-  //       return credType.component(rawCredential)
+  //       return <credType.component rawCredential={rawCredential} />
   //       // or in CredentialItem:
   //       // return credType.renderTitle(rawCredential)
   //   }
