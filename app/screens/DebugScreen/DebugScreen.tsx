@@ -32,7 +32,7 @@ export default function DebugScreen({ navigation, route }: DebugScreenProps): JS
 
   return (
     <>
-      <NavHeader title="Debug" rightComponent={<Exit />} />
+      <NavHeader title="Details" rightComponent={<Exit />} />
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.paragraph}>Credential:</Text>
