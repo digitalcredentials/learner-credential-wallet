@@ -4,7 +4,6 @@ import { View, Text } from 'react-native';
 import type { CredentialRecordRaw } from '../../model/credential';
 
 import DefaultCredentialCard from './DefaultCredentialCard';
-import CustomCredentialCard from './CustomCredentialCard';
 import UniversityDegreeCredentialCard from './UniversityDegreeCredentialCard';
 import StudentIdCard from './StudentIdCard';
 
@@ -37,13 +36,6 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
 
   if ( credential.type.includes('UniversityDegreeCredential') ){
     return <UniversityDegreeCredentialCard rawCredentialRecord={rawCredentialRecord} />;
-  }
-
-  if (
-    credentialSubject.hasCredential && 
-    credentialSubject.hasCredential.type &&
-    credentialSubject.hasCredential.type.includes('ProgramCompletionCredential')){
-    return CustomCredentialCard({rawCredentialRecord});
   }
 
   if (credential.type.includes('StudentId')){
