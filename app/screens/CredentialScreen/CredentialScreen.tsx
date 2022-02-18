@@ -22,6 +22,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const { rawCredentialRecord, noShishKabob = false } = route.params;
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;
+  // TODO not all credentials are guaranteed to have hasCredential defined
   const title = credentialSubject.hasCredential?.name ?? '';
 
   function onPressShare() {
