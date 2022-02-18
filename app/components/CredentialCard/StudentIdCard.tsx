@@ -1,27 +1,48 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import styles from './CredentialCard.styles';
-import studentIdStyles from './StudentIdCard.styles';
+
+import type { Credential } from '../../types/credential';
+
+import DefaultCredentialCard from './DefaultCredentialCard';
+import UniversityDegreeCredentialCard from './UniversityDegreeCredentialCard';
+import StudentIdCard from './StudentIdCard';
+
 import type { CredentialCardProps } from './CredentialCard.d';
+import type { CredentialRenderInfo } from './CredentialCard.d';
 
 
-export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: CredentialCardProps) : JSX.Element {
+const credentialTypes = [
+  (credential : Credential) => {
+    if(credential.type.includes('StudentId')){
+      return {
+        component: StudentIdCard,
+        title: `${credential.credentialSubject.name} Student ID`,
+      };
+    }
+    return null;
+  },
+  (credential : Credential) => {
+    if (credential.type.includes('UniversityDegreeCredential')){
+      return {
+        component: UniversityDegreeCredentialCard,
+        title: `${credential.credentialSubject.degree?.name ?? ''}`,
+      };
+    }
+    return null;
+  },
+];
+
+export function credentialRenderInfo(credential : Credential) : CredentialRenderInfo {
+  for (const match of credentialTypes){
+    const renderInfo = match(credential);
+    if (renderInfo){
+      return renderInfo;
+    }
+  }
+  return { component: DefaultCredentialCard, title: credential.credentialSubject.hasCredential?.name ?? '' };
+}
+
+export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
   const { credential } = rawCredentialRecord;
-  const { credentialSubject } = credential;
-  const { studentId } = credentialSubject;
-
-  return (
-    <View style={styles.credentialContainer}>
-
-      <View style={styles.dataContainer}>
-        <Text style={styles.header} accessibilityRole="header">Student ID</Text>
-      </View>
-
-      <Image 
-        source={{ uri: studentId?.image }} 
-        style={studentIdStyles.studentIdPhoto}
-      /> 
-
-    </View>
-  );
+  const DisplayComponent = credentialRenderInfo(credential).component;
+  return <DisplayComponent rawCredentialRecord={rawCredentialRecord} />;
 }
