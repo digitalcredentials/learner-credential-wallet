@@ -74,12 +74,10 @@ This project uses TypeScript and React Native. It would be best to use an editor
 ```
 
 ### Adding new credential display
-
-A custom display can be created for different credentials, to do so:
 - Create a new React component for your credential type in [app/components/CredentialCard/](app/components/CredentialCard/) - eg. `app/components/CredentialCard/YourNewTypeCard.tsx`
+- Update [app/components/CredentialCard/CredentialCard.tsx](app/components/CredentialCard/CredentialCard.tsx) with the logic to display the card when appropriate
 - Define addition styles in `app/components/CredentialCard/YourNewTypeCard.styles.tsx`
-- Add a function to the `credentialTypes` list defined in [app/components/CredentialCard/CredentialCard.tsx](app/components/CredentialCard/CredentialCard.tsx). The function should return `{component: YourNewCredentialCard, title: 'the title of the credential that should be used when listing it elsewhere'}` or null if the credential isn't the appropriate type for you custom display
-- **note**: the list will be scanned for the first function that returns a component and title, so it's important that the type check is specific and doesn't match any other types.
+- Make sure [app/screens/CredentialScreen/CredentialScreen.tsx](app/screens/CredentialScreen/CredentialScreen.tsx) correctly displays the title
 
 
 ## Accessibility
@@ -112,4 +110,3 @@ Initial development was also supported by the Massachusetts Institute of Technol
 [MIT License](https://github.com/digitalcredentials/learner-credential-wallet/blob/main/LICENSE) Copyright (c) 2021 Massachusetts Institute of Technology
 
 All files located in external directories are externally maintained libraries used by this software which have their own licenses; we recommend you read them, as their terms may differ from the terms above.
-
