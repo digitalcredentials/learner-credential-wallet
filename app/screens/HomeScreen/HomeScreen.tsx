@@ -26,6 +26,8 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   const dispatch = useDispatch();
   const share = useShareCredentials();
 
+  const itemToDeleteName = itemToDelete?.credential.credentialSubject.hasCredential?.name ?? '';
+
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { issuer } = credential;
@@ -149,7 +151,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         accessibilityFocusContent
       >
         <Text style={styles.modalBodyText}>
-          Are you sure you want to remove {itemToDelete?.credential.credentialSubject?.name ?? ''} from your wallet?
+          Are you sure you want to remove {itemToDeleteName} from your wallet?
         </Text>
       </ConfirmModal>
     </>
