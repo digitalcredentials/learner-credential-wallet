@@ -70,6 +70,13 @@ This project uses TypeScript and React Native. It would be best to use an editor
 └── ios ← Same as android, except it also uses Cocoapods for dependency management
 ```
 
+### Adding new credential display
+- Create a new React component for your credential type in [app/components/CredentialCard/](app/components/CredentialCard/) - eg. `app/components/CredentialCard/YourNewTypeCard.tsx`
+- Update [app/components/CredentialCard/CredentialCard.tsx](app/components/CredentialCard/CredentialCard.tsx) with the logic to display the card when appropriate
+- Define addition styles in `app/components/CredentialCard/YourNewTypeCard.styles.tsx`
+- Make sure [app/screens/CredentialScreen/CredentialScreen.tsx](app/screens/CredentialScreen/CredentialScreen.tsx) correctly displays the title
+
+
 ## Accessibility
 We have conducted a Voluntary Product Accessibility Test, please review the [eduWallet Accessibility Conformance Report, November 2021](https://github.com/digitalcredentials/learner-credential-wallet/blob/65497b574c5fb3f36ed1b59201b353f01842dcfc/docs/MIT%20eduWallet%20VPAT2.4Rev508%20Nov2021-final.pdf)
 
