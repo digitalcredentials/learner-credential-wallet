@@ -50,6 +50,7 @@ export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: 
       <Image 
         source={{ uri: credentialSubject.studentId.barcode }} 
         style={studentIdStyles.barcode}
+        resizeMode="stretch"
       /> 
       </View>
 
