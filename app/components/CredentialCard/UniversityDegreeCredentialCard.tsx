@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from '../CredentialCard.styles';
-import type { CredentialCardProps } from '../CredentialCard.d';
+import styles from './CredentialCard.styles';
+import type { CredentialCardProps } from './CredentialCard.d';
 
 
 export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: CredentialCardProps) : JSX.Element {
