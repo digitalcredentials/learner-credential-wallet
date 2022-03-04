@@ -72,7 +72,7 @@ This project uses TypeScript and React Native. It would be best to use an editor
 ```
 
 ## Accessibility
-We have conducted a Voluntary Product Accessibility Test, please review the [Learner Credential Wallet Accessibility Conformance Report, November 2021](https://github.com/digitalcredentials/learner-credential-wallet/blob/65497b574c5fb3f36ed1b59201b353f01842dcfc/docs/MIT%20eduWallet%20VPAT2.4Rev508%20Nov2021-final.pdf)
+We have conducted a Voluntary Product Accessibility Test, please review the [Learner Credential Wallet Accessibility Conformance Report, December 2021](https://github.com/digitalcredentials/learner-credential-wallet/blob/769bacbc2bfed381a20e2927f2c32a18a6faacbb/docs/Learner%20Credential%20Wallet%20VPAT2.4Rev508-December%202021.pdf)
 
 For more information on accessibility please visit the [MIT Accessibilty](https://accessibility.mit.edu) page.
 
