@@ -35,7 +35,7 @@ function transformDeepLink(url: string): string {
  * added here, they must also be added to `android/app/src/main/AndroidManifest.xml`.
  */
 const linking = {
-  prefixes: ['dccrequest://'],
+  prefixes: ['dccrequest://', 'org.dcconsortium://'],
   config: {
     screens: {
       HomeNavigation: {
@@ -66,9 +66,9 @@ const linking = {
 
 export default function AppNavigation(): JSX.Element | null {
   const loading = useAppLoading();
-  const { 
-    isUnlocked, 
-    isInitialized, 
+  const {
+    isUnlocked,
+    isInitialized,
     needsRestart,
   } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
 
@@ -87,9 +87,9 @@ export default function AppNavigation(): JSX.Element | null {
   }
 
   useEffect(() => {
-    SplashScreen.preventAutoHideAsync();  
+    SplashScreen.preventAutoHideAsync();
   }, []);
-   
+
   if (loading) {
     return null;
   }
