@@ -32,14 +32,15 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
 
   async function onRead({ data: text }: BarCodeReadEvent) {
     console.log('Read text from qrcode', text);
-    if (!isVpqr(text) && !text.startsWith('dccrequest://request?') ) {
+    const isDeeplink = text.startsWith('dccrequest://request?') || text.startsWith('org.dcconsortium://request?');
+    if (!isVpqr(text) && !isDeeplink) {
       setErrorModalOpen(true);
       setErrorMessage('The QR code was read, but no credentials were found.');
- 
+
       return;
     }
 
-    if (text.startsWith('dccrequest://request?')) {
+    if (isDeeplink) {
       console.log('received deeplink via QR code', text);
       const queryParams = qs.parse(text.split('?')[1]);
       if (
