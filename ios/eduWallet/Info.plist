@@ -25,7 +25,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>edu.wallet</string>
+				<string>org.dcconsortium</string>
 			</array>
 		</dict>
 		<dict>
