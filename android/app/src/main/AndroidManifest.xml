@@ -19,7 +19,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="edu.mit.eduwallet"/>
+        <data android:scheme="org.dcconsortium"/>
         <data
           android:scheme="dccrequest"
           android:host="request"/>
