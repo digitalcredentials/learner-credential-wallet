@@ -1,4 +1,4 @@
-package edu.wallet.generated;
+package app.lcw.generated;
 
 import java.util.Arrays;
 import java.util.List;
