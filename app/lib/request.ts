@@ -16,44 +16,57 @@ export type CredentialRequestParams = {
 
 export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential> {
   const {
-    // auth_type,
     issuer,
     vc_request_url,
     challenge,
   } = credentialRequestParams;
-
+  // Default to 'code' - OAuth2 Authorization Code flow
+  const authType = credentialRequestParams.auth_type || 'code';
   console.log('Credential request params', credentialRequestParams);
 
-  if (!registries.issuerAuth.isInRegistry(issuer)) {
-    throw new Error(`Unknown issuer: "${issuer}"`);
+  let accessToken;
+  let oidcConfig;
+
+  switch (authType) {
+  case 'code':
+    if (!registries.issuerAuth.isInRegistry(issuer)) {
+      throw new Error(`Unknown issuer: "${issuer}"`);
+    }
+    oidcConfig = registries.issuerAuth.entryFor(issuer);
+    // There needs to be a delay before authenticating or the app errors out.
+    await new Promise((res) => setTimeout(res, 1000));
+    console.log('Launching OIDC auth:', oidcConfig);
+    try {
+      ({accessToken} = await authorize(oidcConfig));
+    } catch (err) {
+      console.error(err);
+      throw Error(
+        'Unable to receive credential: Authorization with the issuer failed');
+    }
+    console.log('Received access token, requesting credential.');
+    break;
+  case 'bearer':
+    // Bearer token - do nothing. The 'challenge' param will be passed in the VP
+    break;
+  default:
+    throw Error(`Unsupported auth_type value: "${authType}".`);
   }
 
-  const config = registries.issuerAuth.entryFor(issuer);
-
-  /**
-   * There needs to be a delay before authenticating or the app errors out.
-   */
-  await new Promise((res) => setTimeout(res, 1000));
-
-  console.log('Launching OIDC auth:', config);
-
-  const { accessToken } = await authorize(config).catch((err) => {
-    console.error(err);
-    throw Error('Unable to receive credential: Authorization with the issuer failed');
-  });
-
-  console.log('Received access token, requesting credential.');
-
-  const requestBody = await createVerifiablePresentation(undefined, didRecord, challenge);
+  const requestBody = await createVerifiablePresentation(
+    undefined, didRecord, challenge);
 
   console.log(JSON.stringify(requestBody, null, 2));
 
+  const headers: any = {
+    'Content-Type': 'application/json'
+  };
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
   const request = {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(requestBody),
   };
 
