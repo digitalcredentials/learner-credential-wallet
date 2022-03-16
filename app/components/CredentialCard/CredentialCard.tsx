@@ -16,13 +16,15 @@ type CredentialCardProps = {
 
 export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
   const { credential } = rawCredentialRecord;
-  const { credentialSubject, issuer, issuanceDate } = credential;
+  const { credentialSubject, issuer, issuanceDate, expirationDate } = credential;
 
   const title = credentialSubject.hasCredential?.name ?? '';
   const description = credentialSubject.hasCredential?.description ?? '';
-  const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
   const subjectName = credentialSubject.name;
   const numberOfCredits = credentialSubject.hasCredential?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
+
+  const issuanceDateFmt = moment(issuanceDate).format(DATE_FORMAT);
+  const expirationDateFmt = moment(expirationDate).format(DATE_FORMAT);
 
   const { startDate, endDate } = credentialSubject.hasCredential?.awardedOnCompletionOf ?? {};
   const startDateFmt = startDate && moment(startDate).format(DATE_FORMAT);
@@ -78,9 +80,17 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
         <Text style={styles.dataLabel}>Issuer Website</Text>
         <IssuerLink />
       </View>
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Issuance Date</Text>
-        <Text style={styles.dataValue}>{formattedIssuanceDate}</Text>
+      <View style={styles.flexRow}>
+        <View style={styles.dataContainer}>
+          <Text style={styles.dataLabel}>Issuance Date</Text>
+          <Text style={styles.dataValue}>{issuanceDateFmt}</Text>
+        </View>
+        {expirationDate ? (
+          <View style={styles.dataContainer}>
+            <Text style={styles.dataLabel}>Expiration Date</Text>
+            <Text style={styles.dataValue}>{expirationDateFmt}</Text>
+          </View>
+        ) : null}
       </View>
       <View style={styles.dataContainer}>
         <Text style={styles.dataLabel}>Subject Name</Text>
