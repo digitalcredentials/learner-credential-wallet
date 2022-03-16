@@ -14,7 +14,7 @@ type CommonProps = {
 
 type VerifyProps = 
   | { credential: Credential, verifyPayload?: never; }
-  | { credential?: Credential, verifyPayload: VerifyPayload; }
+  | { credential?: never; verifyPayload: VerifyPayload; isButton?: never | false; }
 
 type VerificationCardProps = CommonProps & VerifyProps;
 
@@ -22,7 +22,7 @@ type VerificationCardProps = CommonProps & VerifyProps;
  * The VerificationCard is used to render the verification status of a 
  * credential can be implemented in one of two ways:
  *   1) Pass in a `credential` to generate a `verifyPayload` and render the status.
- *   2) Pass in a `verifyPayload` to render the status.
+ *   2) Pass in a `verifyPayload` to render the status (cannot be a button).
  */
 export default function VerificationCard({ credential, verifyPayload, isButton }: VerificationCardProps): JSX.Element {
   const generatedVerifyPayload = useVerifyCredential(credential);
@@ -38,8 +38,8 @@ export default function VerificationCard({ credential, verifyPayload, isButton }
   const { loading, verified } = verifyPayload;
 
   function goToStatus() {
-    if (navigationRef.isReady() && verifyPayload !== undefined) {
-      navigationRef.navigate('VerificationStatusScreen', { verifyPayload });
+    if (navigationRef.isReady() && verifyPayload !== undefined && credential !== undefined) {
+      navigationRef.navigate('VerificationStatusScreen', { credential, verifyPayload });
     }
   }
 
