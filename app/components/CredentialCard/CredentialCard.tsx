@@ -24,7 +24,7 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
   const numberOfCredits = credentialSubject.hasCredential?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
 
   const issuanceDateFmt = moment(issuanceDate).format(DATE_FORMAT);
-  const expirationDateFmt = moment(expirationDate).format(DATE_FORMAT);
+  const expirationDateFmt = expirationDate && moment(expirationDate).format(DATE_FORMAT);
 
   const { startDate, endDate } = credentialSubject.hasCredential?.awardedOnCompletionOf ?? {};
   const startDateFmt = startDate && moment(startDate).format(DATE_FORMAT);
