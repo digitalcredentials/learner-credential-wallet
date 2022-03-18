@@ -58,9 +58,10 @@ export async function requestCredential(credentialRequestParams: CredentialReque
 
   console.log(JSON.stringify(requestBody, null, 2));
 
-  const headers: any = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json'
   };
+
   if (accessToken) {
     headers.Authorization = `Bearer ${accessToken}`;
   }
