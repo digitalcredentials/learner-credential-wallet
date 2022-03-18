@@ -1,4 +1,5 @@
 import { authorize } from 'react-native-app-auth';
+import * as HtmlEntities from 'html-entities';
 
 import { Credential } from '../types/credential';
 import { DidRecordRaw } from '../model';
@@ -77,7 +78,10 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     throw Error('Unable to receive credential: The issuer failed to return a valid response');
   }
 
-  const responseJson  = await response.json();
+  const responseText = await response.text();
+  const responseTextDecoded = HtmlEntities.decode(responseText);
+  const responseJson = JSON.parse(responseTextDecoded);
+
   const credential = responseJson as Credential;
 
   try {
