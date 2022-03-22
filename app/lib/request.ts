@@ -38,6 +38,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     await new Promise((res) => setTimeout(res, 1000));
     console.log('Launching OIDC auth:', oidcConfig);
     try {
+      console.log('authorize() called with:', oidcConfig);
       ({accessToken} = await authorize(oidcConfig));
     } catch (err) {
       console.error(err);
