@@ -9,7 +9,7 @@ import { theme, mixins } from '../../styles';
 import styles from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
-import { useRequestCredential } from '../../hooks';
+import { useRequestCredentials } from '../../hooks';
 import { ConfirmModal, NavHeader } from '../../components';
 
 
@@ -17,7 +17,7 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
   const [requestModalIsOpen, setRequestModalIsOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const { credential, error, loading } = useRequestCredential(route.params);
+  const { credentials, error, loading } = useRequestCredentials(route.params);
 
   useEffect(() => {
     if (loading) {
@@ -30,12 +30,12 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
       });
     }
 
-    if (credential) {
+    if (credentials) {
       setRequestModalIsOpen(false);
-      dispatch(stageCredentials([credential]));
+      dispatch(stageCredentials(credentials));
       navigation.navigate('ApproveCredentialsScreen');
     }
-  }, [credential, loading]);
+  }, [credentials, loading]);
 
   return (
     <>

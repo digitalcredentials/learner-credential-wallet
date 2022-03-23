@@ -4,9 +4,9 @@ import { Credential } from '../types/credential';
 import { DidRecordRaw } from '../model';
 
 import { createVerifiablePresentation } from './present';
-import { verifyCredential } from './validate';
 import { registries } from './registry';
 import { parseResponseBody } from './parseResponse';
+import { extractCredentialsFrom, verifyVerifiableObject, VerifiableObject } from './verifiableObject';
 
 export type CredentialRequestParams = {
   auth_type?: 'code' | 'bearer';
@@ -15,7 +15,7 @@ export type CredentialRequestParams = {
   challenge?: string;
 }
 
-export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential> {
+export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential[]> {
   const {
     auth_type = 'code',
     issuer,
@@ -82,16 +82,15 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   const responseBody = await parseResponseBody(response);
   const verifiableObject = responseBody as VerifiableObject;
 
-  const credential = responseJson as Credential;
-
-  try {
-    const verified = await verifyCredential(credential);
-    if (!verified) {
-      throw new Error('Credential was received, but could not be verified');
-    }
-  } catch (err) {
-    console.warn(err);
+  const verified = verifyVerifiableObject(verifiableObject);
+  if (!verified) {
+    console.warn('Response was received, but could not be verified');
   }
 
-  return credential;
+  const credentials = extractCredentialsFrom(verifiableObject);
+  if (credentials === null) {
+    throw new Error('Unable to receive credential: The issuer failed to return a Verifiable Credential (VC) or Verifiable Presentation (VP)');
+  }
+
+  return credentials;
 }

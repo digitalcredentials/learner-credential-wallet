@@ -8,7 +8,7 @@ import { DidState } from '../store/slices/did';
 import { Credential } from '../types/credential';
 
 export type RequestPayload = {
-  credential?: Credential;
+  credentials?: Credential[];
   loading: boolean;
   error: string;
 }
@@ -20,11 +20,11 @@ function isCredentialRequestParams(params?: Params): params is CredentialRequest
   return issuer !== undefined && vc_request_url !== undefined;
 }
 
-export function useRequestCredential(routeParams?: Params): RequestPayload {
+export function useRequestCredentials(routeParams?: Params): RequestPayload {
   const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
   const [ didRecord ] = rawDidRecords;
 
-  const [credential, setCredential] = useState<Credential | undefined>();
+  const [credentials, setCredentials] = useState<Credential[] | undefined>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -41,10 +41,10 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
       setLoading(true);
 
       try {
-        const credential = await requestCredential(routeParams, didRecord);
-        setCredential(credential);
+        const credentials = await requestCredential(routeParams, didRecord);
+        setCredentials(credentials);
       } catch (err) {
-        setError(err.message);
+        setError((err as Error).message);
       } finally {
         setLoading(false);
       }
@@ -56,5 +56,5 @@ export function useRequestCredential(routeParams?: Params): RequestPayload {
     handleDeepLink();
   }, [routeParams, didRecord]);
 
-  return { credential, loading, error };
+  return { credential: credentials, loading, error };
 }
