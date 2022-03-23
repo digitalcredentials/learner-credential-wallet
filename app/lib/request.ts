@@ -1,5 +1,4 @@
 import { authorize } from 'react-native-app-auth';
-import * as HtmlEntities from 'html-entities';
 
 import { Credential } from '../types/credential';
 import { DidRecordRaw } from '../model';
@@ -7,6 +6,7 @@ import { DidRecordRaw } from '../model';
 import { createVerifiablePresentation } from './present';
 import { verifyCredential } from './validate';
 import { registries } from './registry';
+import { parseResponseBody } from './parseResponse';
 
 export type CredentialRequestParams = {
   auth_type?: 'code' | 'bearer';
@@ -80,9 +80,8 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     throw Error('Unable to receive credential: The issuer failed to return a valid response');
   }
 
-  const responseText = await response.text();
-  const responseTextDecoded = HtmlEntities.decode(responseText);
-  const responseJson = JSON.parse(responseTextDecoded);
+  const responseBody = await parseResponseBody(response);
+  const verifiableObject = responseBody as VerifiableObject;
 
   const credential = responseJson as Credential;
 
