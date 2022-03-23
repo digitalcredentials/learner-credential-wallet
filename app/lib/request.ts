@@ -9,7 +9,7 @@ import { verifyCredential } from './validate';
 import { registries } from './registry';
 
 export type CredentialRequestParams = {
-  auth_type?: string;
+  auth_type?: 'code' | 'bearer';
   issuer: string;
   vc_request_url: string;
   challenge?: string;
@@ -17,18 +17,18 @@ export type CredentialRequestParams = {
 
 export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential> {
   const {
+    auth_type = 'code',
     issuer,
     vc_request_url,
     challenge,
   } = credentialRequestParams;
-  // Default to 'code' - OAuth2 Authorization Code flow
-  const authType = credentialRequestParams.auth_type || 'code';
+ 
   console.log('Credential request params', credentialRequestParams);
 
   let accessToken;
   let oidcConfig;
 
-  switch (authType) {
+  switch (auth_type) {
   case 'code':
     if (!registries.issuerAuth.isInRegistry(issuer)) {
       throw new Error(`Unknown issuer: "${issuer}"`);
@@ -50,7 +50,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     // Bearer token - do nothing. The 'challenge' param will be passed in the VP
     break;
   default:
-    throw Error(`Unsupported auth_type value: "${authType}".`);
+    throw Error(`Unsupported auth_type value: "${auth_type}".`);
   }
 
   const requestBody = await createVerifiablePresentation(
