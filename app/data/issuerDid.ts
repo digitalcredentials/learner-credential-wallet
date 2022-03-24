@@ -18,6 +18,11 @@ export const issuerDidRegistry: RegistryRaw<IssuerDidEntry> = {
       location: 'Cambridge, MA, USA',
       url: 'https://openlearning.mit.edu',
     },
+    'did:key:z6MkqEwzA36k2PWsWpeQXjFMzT1PpZuVjZ9W9jd2ZGRb6JKr': {
+      'name': 'DCC Sandbox Issuer',
+      'location': 'Cambridge, MA, USA',
+      'url': 'https://verify.dcconsortium.org'
+    },
     'did:key:z6MkhVTX9BF3NGYX6cc7jWpbNnR7cAjH8LUffabZP8Qu4ysC': {
       name: 'DCC Playground',
       location: 'Cambridge, MA, USA',
