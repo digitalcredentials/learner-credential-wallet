@@ -56,5 +56,5 @@ export function useRequestCredentials(routeParams?: Params): RequestPayload {
     handleDeepLink();
   }, [routeParams, didRecord]);
 
-  return { credential: credentials, loading, error };
+  return { credentials, loading, error };
 }
