@@ -82,7 +82,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   const responseBody = await parseResponseBody(response);
   const verifiableObject = responseBody as VerifiableObject;
 
-  const verified = verifyVerifiableObject(verifiableObject);
+  const verified = await verifyVerifiableObject(verifiableObject);
   if (!verified) {
     console.warn('Response was received, but could not be verified');
   }
