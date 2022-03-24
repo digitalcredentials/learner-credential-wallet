@@ -9,7 +9,7 @@ import { parseResponseBody } from './parseResponse';
 import { extractCredentialsFrom, verifyVerifiableObject, VerifiableObject } from './verifiableObject';
 
 export type CredentialRequestParams = {
-  auth_type?: 'code' | 'bearer';
+  auth_type?: string;
   issuer: string;
   vc_request_url: string;
   challenge?: string;
