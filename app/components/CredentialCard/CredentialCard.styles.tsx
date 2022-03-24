@@ -34,6 +34,7 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: theme.fontSize.regular,
     color: theme.color.textPrimary,
+    flex: 1,
   },
   link: {
     fontFamily: theme.fontFamily.regular,
