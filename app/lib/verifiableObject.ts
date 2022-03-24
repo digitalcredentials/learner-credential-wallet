@@ -16,14 +16,15 @@ function isVerifiablePresentation(obj: VerifiableObject): obj is VerifiablePrese
   return obj.type.includes('VerifiablePresentation');
 }
 
-export async function verifyVerifiableObject(obj: VerifiableObject): Promise<boolean | void> {
+export async function verifyVerifiableObject(obj: VerifiableObject): Promise<boolean> {
   try {
-    if (isVerifiableCredential(obj)) return verifyCredential(obj);
-    if (isVerifiablePresentation(obj)) return verifyPresentation(obj);
+    if (isVerifiableCredential(obj)) return await verifyCredential(obj);
+    if (isVerifiablePresentation(obj)) return await verifyPresentation(obj);
   } catch (err) {
     console.warn(err);
-    return false;
   }
+
+  return false;
 }
 
 export function extractCredentialsFrom(obj: VerifiableObject): Credential[] | null {
