@@ -2,7 +2,7 @@ import type { RegistryRaw } from '../lib/registry';
 
 export type IssuerDidEntry = {
   name: string;
-  location: string;
+  location?: string;
   url: string;
 }
 
@@ -27,6 +27,11 @@ export const issuerDidRegistry: RegistryRaw<IssuerDidEntry> = {
       name: 'DCC Playground',
       location: 'Cambridge, MA, USA',
       url: 'https://digitalcredentials.github.io/playground',
+    },
+    'did:key:z6MkpMKDNykeb9hSQkz8RWCRrqHoo3y56gQb3Lj78xWgkNZh': {
+      name: 'College Unbound',
+      url: 'https://collegeunbound.edu',
+      location: 'Providence, RI'
     },
     'did:web:digitalcredentials.odl.mit.edu': {
       name: 'MIT xPRO',
