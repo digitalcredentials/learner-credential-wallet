@@ -2,9 +2,11 @@
 
 # Learner Credential Wallet
 
-Learner Credential Wallet is a cross-platform iOS and Android mobile application for storing and sharing digital learner credentials as specified in the [learner credential wallet specification](https://digitalcredentials.mit.edu/docs/Learner-Credential-Wallet-Specification-May-2021.pdf) developed by the [Digital Credentials Consortium](https://digitalcredentials.mit.edu/). The learner credential wallet specification is based on the draft [W3C Universal Wallet interoperability specification](https://w3c-ccg.github.io/universal-wallet-interop-spec/) and the draft [W3C Verifiable Credentials data model](https://w3c.github.io/vc-data-model/).
+Learner Credential Wallet is a cross-platform iOS and Android mobile application for storing and sharing digital learner credentials.
 
 Install [Learner Credential Wallet](https://lcw.app/) for your mobile!
+
+The wallet is based on the [learner credential wallet specification](https://digitalcredentials.mit.edu/docs/Learner-Credential-Wallet-Specification-May-2021.pdf) developed by the [Digital Credentials Consortium](https://digitalcredentials.mit.edu/). The learner credential wallet specification is based on the draft [W3C Universal Wallet interoperability specification](https://w3c-ccg.github.io/universal-wallet-interop-spec/) and the draft [W3C Verifiable Credentials data model](https://w3c.github.io/vc-data-model/).
 
 ## Goals
 This learner credential wallet includes the features and technical requirements ultimately enabling individuals to curate and present their learning and employment records to others—for example, as applicants to educational programs or to apply for jobs with employers—in an interoperable manner. 
@@ -16,7 +18,7 @@ This learner credential wallet includes the features and technical requirements 
 * Backup and restore their wallet
 
 ## Pilot
-The Digital Credentials Consortium is working with a number of colleges and universities to pilot test Learner Credential Wallet. Please see our Frequently Asked Questions.
+The Digital Credentials Consortium is working with a number of colleges and universities to [pilot test](https://lcw.app/pilot.html) the wallet.
 
 ## Development Setup
 
