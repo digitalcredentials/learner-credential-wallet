@@ -18,8 +18,8 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
   const isExpired = moment() >= moment(expirationDate);
 
   const expirationText = hasExpirationDate
-    ? isExpired 
-      ? `(expired on ${expirationDateFmt})` 
+    ? isExpired
+      ? `(expired on ${expirationDateFmt})`
       : `(expires on ${expirationDateFmt})`
     : '';
 
@@ -49,7 +49,6 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
         <StatusItem text="has been issued by a registered institution" />
         <StatusItem text="the issuing institution could be reached to verify the credential" />
         <StatusItem text={`has not expired${expirationText}`} />
-        <StatusItem text="has not been revoked by the issuing institution" />
       </View>
     );
   }
@@ -62,7 +61,6 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
       <StatusItem text="has not been issued by a registered institution" />
       <StatusItem text="the issuing institution could not be reached to verify the credential" />
       <StatusItem text={`has expired ${expirationText}`} />
-      <StatusItem text="has been revoked by the issuing institution" />
     </View>
   );
 }
