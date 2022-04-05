@@ -27,10 +27,11 @@ async function getSharedFiles(): Promise<any> {
         resolve(files);
       },
       (error: any) => {
+        console.log('Error in getReceivedFiles:');
         console.log(error);
         reject(error);
       },
-      'edu.mit.eduwallet',
+      'org.dcconsortium',
     );
   });
 }
@@ -111,7 +112,7 @@ export function useRequestCredentials(routeParams?: Params): RequestPayload {
 
   useEffect(() => {
     handleDeepLink();
-  }, [routeParams, didRecord, credential]);
+  }, [routeParams, didRecord, credentials]);
 
   return { credentials, loading, error };
 }
