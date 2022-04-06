@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
-// import * as RNFS from 'react-native-fs';
+import * as RNFS from 'react-native-fs';
 
 import { credentialsFromQrText } from '../lib/decode';
 
@@ -72,25 +72,27 @@ export function useRequestCredentials(routeParams?: Params): RequestPayload {
     if(files) {
       console.log('Received files:', files);
       const [file] = files;
-
-      if(!file.text || file.text === 'Add credential') {
+      if(!file.filePath) {
         return;
       }
 
-      // console.log('url:', url);
-      const encoded = 'VP1-' + file.text.split('VP1-')[1];
-
-      console.log('extracted:', encoded);
+      const vp = await RNFS.readFile(file.filePath, 'utf8');
+      console.log('Shared via WebShare:', vp);
 
       await SplashScreen.hideAsync();
       setLoading(true);
 
-      (credentials = await credentialsFromQrText(encoded));
+      try {
+        let {verifiableCredential: credentials} = JSON.parse(vp);
+        if (!Array.isArray(credentials)) {
+          credentials = [credentials];
+        }
+        setCredentials(credentials);
+      } catch (err) {
+        console.log('Could not parse shared vp:', err);
+        setError('Could not parse shared credential(s).');
+      }
 
-      // const fileContents = await RNFS.readFile(file.filePath, 'ascii');
-      // console.log(fileContents);
-      // const credential = fileContents;
-      setCredentials(credentials);
       setLoading(false);
       return;
     }
