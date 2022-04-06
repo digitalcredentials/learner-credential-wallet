@@ -12,7 +12,8 @@ import Photos
 class ShareViewController: SLComposeServiceViewController {
  // TODO: IMPORTANT: This should be your host app bundle identifier
  let hostAppBundleIdentifier = "edu.mit.eduwallet"
- let shareProtocol = "org.dcconsortium" //share url protocol (must be unique to your app, suggest using your apple bundle id, ie: `hostAppBundleIdentifier`)
+ //share url protocol (must be unique to your app, suggest using your apple bundle id, ie: `hostAppBundleIdentifier`)
+ let shareProtocol = "org.dcconsortium"
  let sharedKey = "ReceiveSharingIntent"
   var sharedMedia: [SharedMediaFile] = []
    var sharedText: [String] = []
@@ -36,19 +37,7 @@ class ShareViewController: SLComposeServiceViewController {
      if let content = extensionContext!.inputItems[0] as? NSExtensionItem {
        if let contents = content.attachments {
          for (index, attachment) in (contents).enumerated() {
-           if attachment.hasItemConformingToTypeIdentifier(imageContentType) {
-             handleImages(content: content, attachment: attachment, index: index)
-           } else if attachment.hasItemConformingToTypeIdentifier(textContentType) {
-             print("handling text")
-             handleText(content: content, attachment: attachment, index: index)
-           } else if attachment.hasItemConformingToTypeIdentifier(fileURLType) {
-             handleFiles(content: content, attachment: attachment, index: index)
-           } else if attachment.hasItemConformingToTypeIdentifier(urlContentType) {
-             print("handling url")
-             handleUrl(content: content, attachment: attachment, index: index)
-           } else if attachment.hasItemConformingToTypeIdentifier(videoContentType) {
-             handleVideos(content: content, attachment: attachment, index: index)
-           }
+           handleFiles(content: content, attachment: attachment, index: index)
          }
        }
      }
