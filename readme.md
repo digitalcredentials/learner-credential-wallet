@@ -75,9 +75,8 @@ This project uses TypeScript and React Native. It would be best to use an editor
 
 ### Adding new credential display
 - Create a new React component for your credential type in [app/components/CredentialCard/](app/components/CredentialCard/) - eg. `app/components/CredentialCard/YourNewTypeCard.tsx`
-- Update [app/components/CredentialCard/CredentialCard.tsx](app/components/CredentialCard/CredentialCard.tsx) with the logic to display the card when appropriate
+- Update [app/components/CredentialCard/CredentialCard.tsx](app/components/CredentialCard/CredentialCard.tsx) with the logic to display the card when appropriate and extract the correct title
 - Define addition styles in `app/components/CredentialCard/YourNewTypeCard.styles.tsx`
-- Make sure [app/screens/CredentialScreen/CredentialScreen.tsx](app/screens/CredentialScreen/CredentialScreen.tsx) correctly displays the title
 
 
 ## Accessibility
