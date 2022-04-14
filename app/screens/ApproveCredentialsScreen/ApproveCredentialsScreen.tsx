@@ -20,11 +20,11 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   function goToHome() {
     if (navigationRef.isReady()) {
-      navigationRef.navigate('HomeNavigation', { 
+      navigationRef.navigate('HomeNavigation', {
         screen: 'CredentialNavigation',
         params: {
           screen: 'HomeScreen',
-        }, 
+        },
       });
     }
   }
@@ -67,8 +67,8 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   return (
     <>
-      <NavHeader 
-        title="Available Credentials" 
+      <NavHeader
+        title="Available Credentials"
         rightComponent={<Done />}
       />
       <FlatList
