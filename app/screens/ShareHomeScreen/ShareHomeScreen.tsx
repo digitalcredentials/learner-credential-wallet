@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { WalletState } from '../../store/slices/wallet';
 import { CredentialItem, NavHeader } from '../../components';
+import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { mixins } from '../../styles';
 import styles from './ShareHomeScreen.styles';
 import type { RenderItemProps } from './ShareHomeScreen.d';
@@ -38,7 +39,7 @@ export default function ShareHomeScreen({
   function renderItem({ item, index }: RenderItemProps): JSX.Element {
     const { credential } = item;
     const { credentialSubject, issuer } = credential;
-    const title = credentialSubject.hasCredential?.name ?? '';
+    const title = credentialRenderInfo(item).title;
     const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
 
     return (
