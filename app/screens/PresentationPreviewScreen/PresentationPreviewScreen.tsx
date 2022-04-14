@@ -20,9 +20,7 @@ export default function PresentationPreviewScreen({
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { credentialSubject, issuer } = credential;
-    // TODO 
-    //const title = credentialSubject.hasCredential?.name ?? '';
-    const title = credentialRenderInfo(item).title(item);
+    const title = credentialRenderInfo(item).title;
     const subtitle =
       typeof issuer !== 'string' && issuer.name !== undefined
         ? issuer.name

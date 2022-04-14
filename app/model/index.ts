@@ -200,6 +200,10 @@ class DatabaseAccess {
     const existingCredentialIds = existingCredentials.map(({ credential }) => credential.id);
 
     await Promise.all(credentials.map(async (credential) => {
+      /*
+       * TODO - this is the same field used for the title use in other places when displaying 
+       * a credential. Should that also be used here?
+       */
       const credentialName = credential.credentialSubject.hasCredential?.name ?? 'Unknown Credential';
       if (existingCredentialIds.includes(credential.id)) {
         response.duplicate.push(credentialName);
