@@ -10,6 +10,8 @@ import { CredentialItem, NavHeader } from '../../components';
 import { theme, mixins } from '../../styles';
 import { navigationRef } from '../../navigation';
 
+import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
+
 import styles from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 
@@ -21,7 +23,8 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { issuer } = credential;
-    const title = credential.credentialSubject.hasCredential?.name ?? '';
+    //const title = credential.credentialSubject.hasCredential?.name ?? '';
+    const title = credentialRenderInfo(item).title(item);
     const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
     const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
     const issuerImage = typeof issuer === 'string' ? null : issuer.image;
