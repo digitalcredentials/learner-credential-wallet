@@ -8,39 +8,51 @@ import StudentIdCard from './StudentIdCard';
 
 import type { CredentialCardProps } from './CredentialCard.d';
 
+
+const credentialTypes = [
+  {
+    match: (rawCredential) => {
+      const { credential } = rawCredential;
+      return !!credential.type.includes('UniversityDegreeCredential');
+    },
+    component: UniversityDegreeCredentialCard,
+    title: (rawCredential) => {
+      return 'todo';
+    }
+  },
+  {
+    match: (rawCredential) => {
+      const { credential } = rawCredential;
+      return !!credential.type.includes('StudentId');
+    },
+    component: StudentIdCard,
+    title: (rawCredential) => {
+      return `${rawCredential.credential.credentialSubject.name} Student ID`;
+    }
+  },
+  {
+    match: (rawCredential) => true,
+    component: DefaultCredentialCard,
+    title: (rawCredential) => {
+      return rawCredential.credential.credentialSubject.hasCredential?.name ?? '';
+    }
+  }
+
+];
+
+export function credentialRenderInfo(rawCredential){
+  for (credType of credentialTypes){
+    if (credType.match(rawCredential)){
+        return credType;
+    }
+  }
+
+  // NOTE: not ideal, since instance used for match isn't bound to returned dict, so a call to get a title would look like 
+  // credentialRenderInfo(rawCredentialRecord).title(rawCredentialRecord);
+  // having to pass rawCredentialRecord twice
+}
+
 export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
-  // Switch display type for credential based on credentialSubject > hasCredential > type
-  const { credential } = rawCredentialRecord;
-  const { credentialSubject } = credential;
-
-  // Possible way to handle component + title
-  // const credentialTypes = [
-  //   {
-  //     match: rawCredential => {
-  //     },
-  //     component: StudentIdCard,
-  //     renderTitle: rawCredential => {
-  //     }
-  //   }
-  // ];
-  //
-  //
-  // for (credType of credentialTypes){
-  //   if (credType.match(rawCredential)){
-  //       return <credType.component rawCredential={rawCredential} />
-  //       // or in CredentialItem:
-  //       // return credType.renderTitle(rawCredential)
-  //   }
-  // }
-
-  if ( credential.type.includes('UniversityDegreeCredential') ){
-    return <UniversityDegreeCredentialCard rawCredentialRecord={rawCredentialRecord} />;
-  }
-
-  if (credential.type.includes('StudentId')){
-    return <StudentIdCard rawCredentialRecord={rawCredentialRecord} />;
-  }
-
-  // maybe rename to generic credential card
-  return <DefaultCredentialCard rawCredentialRecord={rawCredentialRecord} />;
+  let DisplayComponent = credentialRenderInfo(rawCredentialRecord).component;
+  return <DisplayComponent rawCredentialRecord={rawCredentialRecord} />;
 }

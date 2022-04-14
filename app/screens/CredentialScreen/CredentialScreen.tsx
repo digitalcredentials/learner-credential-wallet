@@ -7,6 +7,7 @@ import { CredentialRecord } from '../../model';
 import { mixins } from '../../styles';
 import { getAllCredentials } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal, AccessibleView, VerificationCard, CredentialCard } from '../../components';
+import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { useShareCredentials } from '../../hooks';
 import { navigationRef } from '../../navigation';
 
@@ -22,8 +23,9 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const { rawCredentialRecord, noShishKabob = false } = route.params;
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;
-  // TODO not all credentials are guaranteed to have hasCredential defined
-  const title = credentialSubject.hasCredential?.name ?? '';
+  // const title = credentialSubject.hasCredential?.name ?? '';
+  const title = credentialRenderInfo(rawCredentialRecord).title(rawCredentialRecord);
+
 
   function onPressShare() {
     setMenuIsOpen(false);
