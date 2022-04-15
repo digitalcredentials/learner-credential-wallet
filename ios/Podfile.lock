@@ -321,12 +321,12 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - RealmJS (10.14.0):
+  - RealmJS (10.16.0):
     - GCDWebServer
     - React
   - RNCMaskedView (0.1.10):
     - React
-  - RNDeviceInfo (8.5.1):
+  - RNDeviceInfo (8.7.0):
     - React-Core
   - RNExitApp (1.1.0):
     - React
@@ -616,9 +616,9 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  RealmJS: 5a939376f3bdd94708abe2326d33d8f935b9fb37
+  RealmJS: 8a3478957315c29cdc0b3f958f2e370d22330b2d
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNDeviceInfo: 8d4177859b062334835962799460528869a487fb
+  RNDeviceInfo: 36286df381fcaf1933ff9d2d3c34ba2abeb2d8d8
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
   RNFS: fc610f78fdf8bfc89a9e5cc2f898519f4dba1002
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211

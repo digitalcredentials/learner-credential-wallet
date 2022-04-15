@@ -76,17 +76,21 @@ export function useRequestCredentials(routeParams?: Params): RequestPayload {
         return;
       }
 
-      const vp = await RNFS.readFile(file.filePath, 'utf8');
-      console.log('Shared via WebShare:', vp);
-
-      await SplashScreen.hideAsync();
-      setLoading(true);
-
       try {
-        let {verifiableCredential: credentials} = JSON.parse(vp);
+        const shared = await RNFS.readFile(file.filePath, 'utf8');
+
+        await SplashScreen.hideAsync();
+        setLoading(true);
+
+        const vpr = JSON.parse(shared);
+        console.log('Shared via WebShare:', JSON.stringify(vpr));
+
+        let credentials = vpr.credential.data.verifiableCredential;
+
         if (!Array.isArray(credentials)) {
           credentials = [credentials];
         }
+
         setCredentials(credentials);
       } catch (err) {
         console.log('Could not parse shared vp:', err);
