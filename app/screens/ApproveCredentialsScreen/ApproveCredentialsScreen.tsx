@@ -42,7 +42,7 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   function renderItem({ item: pendingCredential }: RenderItemProps) {
     const { credential } = pendingCredential;
-    const { credentialSubject, issuer } = credential;
+    const { issuer } = credential;
     const title = credentialRenderInfo(item).title;
     const issuerName = (typeof issuer === 'string' ? '' : issuer?.name) ?? '';
     const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
