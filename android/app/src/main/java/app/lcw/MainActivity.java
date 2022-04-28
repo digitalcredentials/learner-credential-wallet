@@ -1,4 +1,4 @@
-package edu.wallet;
+package app.lcw;
 import android.content.res.Configuration;
 import android.content.Intent;
 

@@ -10,7 +10,7 @@ export default function VerificationStatusScreen({
   navigation,
   route,
 }: VerificationStatusScreenProps): JSX.Element {
-  const { verifyPayload } = route.params;
+  const { credential, verifyPayload } = route.params;
 
   return (
     <>
@@ -20,9 +20,9 @@ export default function VerificationStatusScreen({
       />
       <ScrollView style={styles.container}>
         <VerificationCard verifyPayload={verifyPayload} />
-        <VerificationStatusCard verifyPayload={verifyPayload} />
+        <VerificationStatusCard credential={credential} verifyPayload={verifyPayload} />
         <Text style={styles.footerText}>
-          Please contact your issuing organization if you face any problems with
+          Please contact your issuing organization if you have any problems with
           the verification status.
         </Text>
       </ScrollView>

@@ -11,4 +11,20 @@ export default StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
   },
+  swipeItem: {
+    overflow: 'hidden',
+  },
+  swipeButtonContainer: {
+    flex: 1,
+  },
+  swipeButton: {
+    ...mixins.buttonIcon,
+    flex: 1,
+  },
+  modalBodyText: {
+    ...mixins.paragraphText,
+    textAlign: 'center',
+    lineHeight: 24,
+    marginVertical: 8,
+  },
 });

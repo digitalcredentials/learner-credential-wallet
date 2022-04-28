@@ -63,8 +63,9 @@ export type Credential = {
   readonly type: string[];               // https://w3c.github.io/vc-data-model/#types
   readonly issuer: Issuer;               // https://w3c.github.io/vc-data-model/#issuer
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
+  readonly expirationDate?: string;      // https://w3c.github.io/vc-data-model/#expiration
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
-  readonly proof?: Proof;                 // https://w3c.github.io/vc-data-model/#proofs-signatures
+  readonly proof?: Proof;                // https://w3c.github.io/vc-data-model/#proofs-signatures
 }
 
 export enum CredentialError {

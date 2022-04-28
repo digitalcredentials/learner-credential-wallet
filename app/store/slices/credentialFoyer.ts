@@ -1,11 +1,13 @@
 import uuid from 'react-native-uuid';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import {canonicalize as jcsCanonicalize} from 'json-canonicalize';
 
 import { CredentialRecord } from '../../model';
 import type { Credential } from '../../types/credential';
 
 export enum ApprovalStatus {
   Pending,
+  PendingDuplicate,
   Accepted,
   Rejected,
   Errored,
@@ -16,7 +18,7 @@ export enum ApprovalMessage {
   Accepted = 'Added to Wallet',
   Rejected = 'Credential Declined',
   Errored = 'Credential Failed to Add',
-  Duplicate = 'Already in Wallet',
+  Duplicate = 'This credential is already in your wallet.'
 }
 
 export class PendingCredential {
@@ -26,8 +28,8 @@ export class PendingCredential {
   messageOveride?: ApprovalMessage;
 
   constructor(
-    credential: Credential, 
-    status: ApprovalStatus = ApprovalStatus.Pending, 
+    credential: Credential,
+    status: ApprovalStatus = ApprovalStatus.Pending,
     messageOveride?: ApprovalMessage,
   ) {
     this.credential = credential;
@@ -44,17 +46,24 @@ const initialState: CredentialFoyerState = {
   pendingCredentials: [],
 };
 
+function comparableStringFor(credential: Credential): string {
+  const rawCredential = { ...credential } as Record<string, unknown>;
+
+  delete rawCredential.issuanceDate;
+  delete rawCredential.proof;
+
+  return JSON.stringify(jcsCanonicalize(rawCredential));
+}
+
 const stageCredentials = createAsyncThunk('credentialFoyer/stageCredentials', async (credentials: Credential[]) => {
-  const existingCredentials = await CredentialRecord.getAllCredentials();
-  const existingCredentialProofValues = existingCredentials.map(({ credential }) => credential.proof?.proofValue);
-  
+  const existingCredentialRecords = await CredentialRecord.getAllCredentials();
+  const existingCredentialStrings = existingCredentialRecords.map(({ credential }) => comparableStringFor(credential));
+
   const pendingCredentials = credentials.map((credential) => {
-    if (existingCredentialProofValues.includes(credential.proof?.proofValue)) {
-      return new PendingCredential(
-        credential, 
-        ApprovalStatus.Accepted, 
-        ApprovalMessage.Duplicate,
-      );
+    const isDuplicate = existingCredentialStrings.includes(comparableStringFor(credential));
+
+    if (isDuplicate) {
+      return new PendingCredential(credential, ApprovalStatus.PendingDuplicate);
     }
 
     return new PendingCredential(credential);

@@ -8,7 +8,6 @@ import StudentIdCard from './StudentIdCard';
 
 import type { CredentialCardProps } from './CredentialCard.d';
 
-
 const credentialTypes = [
   (rawCredential) => {
     const { credential } = rawCredential;

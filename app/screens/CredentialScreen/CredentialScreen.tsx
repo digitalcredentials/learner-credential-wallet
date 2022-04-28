@@ -93,7 +93,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         {menuIsOpen ? (
           <View style={styles.menuContainer} accessibilityViewIsModal={true}>
             <MenuItem icon="share" title="Share" onPress={onPressShare} />
-            <MenuItem icon="bug-report" title="Debug" onPress={onPressDebug} />
+            <MenuItem icon="info" title="Details" onPress={onPressDebug} />
             <MenuItem icon="delete" title="Delete" onPress={onPressDelete} />
           </View>
         ) : null}

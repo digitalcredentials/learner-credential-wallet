@@ -132,12 +132,12 @@ android {
     }
 
     defaultConfig {
-        applicationId 'edu.wallet'
+        applicationId 'app.lcw'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         missingDimensionStrategy 'react-native-camera', 'general'
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 23
+        versionName "1.4.1"
     }
     splits {
         abi {

@@ -27,8 +27,15 @@ type ApprovalControlsProps = {
   pendingCredential: PendingCredential;
 };
 
+type ApprovalButtonProps = {
+  title: string;
+  onPress: () => void;
+  primary?: boolean; 
+}
+
 const iconFor = (status: ApprovalStatus): StatusIcon => ({
   [ApprovalStatus.Pending]: StatusIcon.Schedule,
+  [ApprovalStatus.PendingDuplicate]: StatusIcon.Schedule,
   [ApprovalStatus.Errored]: StatusIcon.Close,
   [ApprovalStatus.Rejected]: StatusIcon.Close,
   [ApprovalStatus.Accepted]: StatusIcon.Done,
@@ -36,6 +43,7 @@ const iconFor = (status: ApprovalStatus): StatusIcon => ({
 
 const colorFor = (status: ApprovalStatus): Color  => ({
   [ApprovalStatus.Pending]: theme.color.success,
+  [ApprovalStatus.PendingDuplicate]: theme.color.success,
   [ApprovalStatus.Errored]: theme.color.error,
   [ApprovalStatus.Rejected]: theme.color.error,
   [ApprovalStatus.Accepted]: theme.color.success,
@@ -43,10 +51,23 @@ const colorFor = (status: ApprovalStatus): Color  => ({
 
 const defaultMessageFor = (status: ApprovalStatus): ApprovalMessage => ({
   [ApprovalStatus.Pending]: ApprovalMessage.Pending,
+  [ApprovalStatus.PendingDuplicate]: ApprovalMessage.Duplicate,
   [ApprovalStatus.Accepted]: ApprovalMessage.Accepted,
   [ApprovalStatus.Rejected]: ApprovalMessage.Rejected,
   [ApprovalStatus.Errored]: ApprovalMessage.Errored,
 })[status];
+
+function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.Element {
+  return (
+    <TouchableOpacity
+      style={[styles.button, primary && styles.buttonPrimary]}
+      onPress={onPress}
+      accessibilityRole="button"
+    >
+      <Text style={[styles.buttonText, primary && styles.buttonTextPrimary]}>{title}</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default function ApprovalControls({ pendingCredential }: ApprovalControlsProps): JSX.Element {
   const dispatch = useDispatch();
@@ -86,26 +107,27 @@ export default function ApprovalControls({ pendingCredential }: ApprovalControls
     focusStatus();
   }
 
-  if (status === ApprovalStatus.Pending) {
+  switch (status) {
+  case ApprovalStatus.Pending:
     return (
       <View style={styles.approvalContainer}>
-        <TouchableOpacity
-          style={styles.declineButton}
-          onPress={reject}
-          accessibilityRole="button"
-        >
-          <Text style={styles.brightActionText}>Decline</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.acceptButton}
-          onPress={accept}
-          accessibilityRole="button"
-        >
-          <Text style={styles.darkActionText}>Accept</Text>
-        </TouchableOpacity>
+        <ApprovalButton title="Decline" onPress={reject} />
+        <View style={styles.buttonSpacer} />
+        <ApprovalButton title="Accept" onPress={accept} primary />
       </View>
     );
-  } else {
+  case ApprovalStatus.PendingDuplicate:
+    return (
+      <>
+        <View style={styles.approvalContainer}>
+          <ApprovalButton title="Skip" onPress={reject} primary />
+          <View style={styles.buttonSpacer} />
+          <ApprovalButton title="Accept" onPress={accept} />
+        </View>
+        <Text style={styles.statusTextOutside}>{message}</Text>
+      </>
+    );
+  default:
     return (
       <View style={styles.approvalContainer} accessible>
         <View style={styles.credentialStatusContainer} ref={statusRef}>
