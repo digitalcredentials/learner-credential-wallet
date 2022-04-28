@@ -25,13 +25,13 @@ export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: 
       <View style={styles.dataContainer}>
         <Text style={styles.dataLabel}>Issuer</Text>
         <View style={styles.flexRow}>
-            <Image
-              source={{ uri: issuer.image }}
-              style={styles.dataImage}
-              accessible={true}
-              accessibilityLabel={issuer.name}
-              accessibilityRole="image"
-            />
+          <Image
+            source={{ uri: issuer.image }}
+            style={styles.dataImage}
+            accessible={true}
+            accessibilityLabel={issuer.name}
+            accessibilityRole="image"
+          />
           <Text style={styles.dataValue}>{issuer.name}</Text>
         </View>
       </View>
@@ -47,13 +47,13 @@ export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: 
       </View>
 
       <View style={studentIdStyles.barcodeContainer}>
-      <Image 
-        source={{ uri: credentialSubject.studentId.barcode }} 
-        style={studentIdStyles.barcode}
-        resizeMode="stretch"
-      /> 
+        <Image 
+          source={{ uri: credentialSubject.studentId.barcode }} 
+          style={studentIdStyles.barcode}
+          resizeMode="stretch"
+        /> 
       </View>
 
     </View>
-  )
+  );
 }

@@ -74,7 +74,7 @@ const studentCard : Credential = {
       qrCode: '',
     },
   },
-}
+};
 
 const anotherCred = {
   '@context': [
@@ -100,7 +100,7 @@ const anotherCred = {
       name: 'Bachelor of Science and Arts',
     },
   },
-}
+};
 
 
 const credentials = [
@@ -113,4 +113,4 @@ const credentials = [
 export default credential;
 export {
   credentials
-}
+};

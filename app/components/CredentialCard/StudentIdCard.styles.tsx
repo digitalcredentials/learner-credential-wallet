@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { theme, mixins } from '../../styles';
 import styles from './CredentialCard.styles';
+import { Color } from '../../styles/colors';
 
 export default StyleSheet.create({
   studentPhoto: {
@@ -9,7 +10,7 @@ export default StyleSheet.create({
   },
   barcodeContainer: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: Color.White,
   },
   barcode: {
     width: '100%',
