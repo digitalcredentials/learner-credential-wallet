@@ -31,21 +31,16 @@ const credentialTypes = [
     }
     return null;
   },
-  (rawCredential : CredentialRecordRaw) => {
-    return {
-      component: DefaultCredentialCard,
-      title: rawCredential.credential.credentialSubject.hasCredential?.name ?? '',
-    };
-  },
 ];
 
 export function credentialRenderInfo(rawCredential : CredentialRecordRaw) : CredentialRenderInfo{
-  for (match of credentialTypes){
+  for (const match of credentialTypes){
     const renderInfo = match(rawCredential);
     if (renderInfo){
       return renderInfo;
     }
   }
+  return { component: DefaultCredentialCard, title: rawCredential.credential.credentialSubject.hasCredential?.name ?? '' };
 }
 
 export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
