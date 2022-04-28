@@ -7,6 +7,7 @@ import UniversityDegreeCredentialCard from './UniversityDegreeCredentialCard';
 import StudentIdCard from './StudentIdCard';
 
 import type { CredentialCardProps } from './CredentialCard.d';
+import type { CredentialRenderInfo } from './CredentialCard.d';
 
 
 const credentialTypes = [
@@ -20,7 +21,7 @@ const credentialTypes = [
     }
     return null;
   },
-  (rawCredential) => {
+  (rawCredential : CredentialRecordRaw) => {
     const { credential } = rawCredential;
     if(credential.type.includes('StudentId')){
       return {
@@ -30,7 +31,7 @@ const credentialTypes = [
     }
     return null;
   },
-  (rawCredential) => {
+  (rawCredential : CredentialRecordRaw) => {
     return {
       component: DefaultCredentialCard,
       title: rawCredential.credential.credentialSubject.hasCredential?.name ?? '',
@@ -38,7 +39,7 @@ const credentialTypes = [
   },
 ];
 
-export function credentialRenderInfo(rawCredential){
+export function credentialRenderInfo(rawCredential : CredentialRecordRaw) : CredentialRenderInfo{
   for (match of credentialTypes){
     const renderInfo = match(rawCredential);
     if (renderInfo){
