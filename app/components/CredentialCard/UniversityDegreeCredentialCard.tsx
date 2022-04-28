@@ -18,5 +18,5 @@ export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: 
         <Text style={styles.dataValue}>{credentialSubject.degree.name}</Text>
       </View>
     </View>
-  )
+  );
 }
