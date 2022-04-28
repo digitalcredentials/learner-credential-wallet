@@ -6,5 +6,5 @@ export type CredentialCardProps = {
 
 export type CredentialRenderInfo = {
   component: FunctionComponent<CredentialCardProps>,
-  title: string,
+  title: string
 }
