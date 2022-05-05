@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { CredentialRecordRaw } from '../../model/credential';
+import type { Credential } from '../../types/credential';
 
 import DefaultCredentialCard from './DefaultCredentialCard';
 import UniversityDegreeCredentialCard from './UniversityDegreeCredentialCard';
@@ -11,8 +11,7 @@ import type { CredentialRenderInfo } from './CredentialCard.d';
 
 
 const credentialTypes = [
-  (rawCredential : CredentialRecordRaw) => {
-    const { credential } = rawCredential;
+  (credential : Credential) => {
     if (credential.type.includes('UniversityDegreeCredential')){
       return {
         component: UniversityDegreeCredentialCard,
@@ -21,29 +20,29 @@ const credentialTypes = [
     }
     return null;
   },
-  (rawCredential : CredentialRecordRaw) => {
-    const { credential } = rawCredential;
+  (credential : Credential) => {
     if(credential.type.includes('StudentId')){
       return {
         component: StudentIdCard,
-        title: `${rawCredential.credential.credentialSubject.name} Student ID`,
+        title: `${credential.credentialSubject.name} Student ID`,
       };
     }
     return null;
   },
 ];
 
-export function credentialRenderInfo(rawCredential : CredentialRecordRaw) : CredentialRenderInfo{
+export function credentialRenderInfo(credential : Credential) : CredentialRenderInfo {
   for (const match of credentialTypes){
-    const renderInfo = match(rawCredential);
+    const renderInfo = match(credential);
     if (renderInfo){
       return renderInfo;
     }
   }
-  return { component: DefaultCredentialCard, title: rawCredential.credential.credentialSubject.hasCredential?.name ?? '' };
+  return { component: DefaultCredentialCard, title: credential.credentialSubject.hasCredential?.name ?? '' };
 }
 
 export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
-  const DisplayComponent = credentialRenderInfo(rawCredentialRecord).component;
+  const { credential } = rawCredentialRecord;
+  const DisplayComponent = credentialRenderInfo(credential).component;
   return <DisplayComponent rawCredentialRecord={rawCredentialRecord} />;
 }
