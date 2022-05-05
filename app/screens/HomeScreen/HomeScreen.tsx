@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { issuer } = credential;
-    const title = credentialRenderInfo(item).title;
+    const { title } = credentialRenderInfo(credential);
     const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
     const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
     const issuerImage = typeof issuer === 'string' ? null : issuer.image;

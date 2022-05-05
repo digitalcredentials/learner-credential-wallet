@@ -22,7 +22,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
 
   const { rawCredentialRecord, noShishKabob = false } = route.params;
   const { credential } = rawCredentialRecord;
-  const title = credentialRenderInfo(rawCredentialRecord).title;
+  const { title } = credentialRenderInfo(credential);
 
 
   function onPressShare() {
