@@ -107,7 +107,8 @@ const anotherCred = {
 
 const credentials = [
   credential,
-  studentCard
+  studentCard,
+  anotherCred,
 ];
 
 
