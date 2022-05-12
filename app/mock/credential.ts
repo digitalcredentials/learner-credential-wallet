@@ -71,7 +71,6 @@ const studentCard : Credential = {
     id: 'did:example:abc123',
     name: 'Ian Malcom',
     studentId: {
-      image: studentIdImg,
       id: '123456789012',
       image: studentIdImg,
     },
