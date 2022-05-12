@@ -9,6 +9,7 @@ export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: 
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;
   const { issuer } = credential;
+  const { studentId } = credentialSubject;
 
   return (
     <View style={styles.credentialContainer}>
@@ -18,41 +19,9 @@ export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: 
       </View>
 
       <Image 
-        source={{ uri: credentialSubject.image }} 
-        style={studentIdStyles.studentPhoto}
+        source={{ uri: studentId.image }} 
+        style={studentIdStyles.studentIdPhoto}
       /> 
-
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Issuer</Text>
-        <View style={styles.flexRow}>
-          <Image
-            source={{ uri: issuer.image }}
-            style={styles.dataImage}
-            accessible={true}
-            accessibilityLabel={issuer.name}
-            accessibilityRole="image"
-          />
-          <Text style={styles.dataValue}>{issuer.name}</Text>
-        </View>
-      </View>
-
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Student name</Text>
-        <Text style={styles.dataValue}>{credentialSubject.name}</Text>
-      </View>
-
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Student number</Text>
-        <Text style={styles.dataValue}>{credentialSubject.studentId.id}</Text>
-      </View>
-
-      <View style={studentIdStyles.barcodeContainer}>
-        <Image 
-          source={{ uri: credentialSubject.studentId.barcode }} 
-          style={studentIdStyles.barcode}
-          resizeMode="stretch"
-        /> 
-      </View>
 
     </View>
   );
