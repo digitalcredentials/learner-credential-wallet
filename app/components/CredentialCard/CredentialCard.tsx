@@ -11,19 +11,19 @@ import type { CredentialRenderInfo } from './CredentialCard.d';
 
 const credentialTypes = [
   (credential : Credential) => {
-    if (credential.type.includes('UniversityDegreeCredential')){
+    if(credential.type.includes('StudentId')){
       return {
-        component: UniversityDegreeCredentialCard,
-        title: 'todo',
+        component: StudentIdCard,
+        title: `${credential.credentialSubject.name} Student ID`,
       };
     }
     return null;
   },
   (credential : Credential) => {
-    if(credential.type.includes('StudentId')){
+    if (credential.type.includes('UniversityDegreeCredential')){
       return {
-        component: StudentIdCard,
-        title: `${credential.credentialSubject.name} Student ID`,
+        component: UniversityDegreeCredentialCard,
+        title: `${credential.credentialSubject.degree.name}`,
       };
     }
     return null;
