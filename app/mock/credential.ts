@@ -71,9 +71,8 @@ const studentCard : Credential = {
     id: 'did:example:abc123',
     name: 'Ian Malcom',
     studentId: {
-      image: studentIdImg,
       id: '123456789012',
-      barcode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAABCAYAAAD3ubPnAAAASElEQVQoz2NkYGD4zwAF///DmRiAkZGRAZs6ZHF0QKk6aurH5Rda2k+pO0lxDzFuIEc/sWE4mOKdWHfTKzzJSXvUDE8GBgYGABc5WAGl/t60AAAAAElFTkSuQmCC',
+      image: studentIdImg,
     },
   },
 };

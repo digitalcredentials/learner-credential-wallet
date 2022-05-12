@@ -24,7 +24,7 @@ const credentialTypes = [
     if (credential.type.includes('UniversityDegreeCredential')){
       return {
         component: UniversityDegreeCredentialCard,
-        title: `${credential.credentialSubject.degree.name}`,
+        title: `${credential.credentialSubject.degree?.name ?? ''}`,
       };
     }
     return null;

@@ -18,7 +18,7 @@ export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: 
       </View>
 
       <Image 
-        source={{ uri: studentId.image }} 
+        source={{ uri: studentId?.image }} 
         style={studentIdStyles.studentIdPhoto}
       /> 
 
