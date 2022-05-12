@@ -8,7 +8,6 @@ import type { CredentialCardProps } from './CredentialCard.d';
 export default function UniversityDegreeCredentialCard({ rawCredentialRecord }: CredentialCardProps) : JSX.Element {
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;
-  const { issuer } = credential;
   const { studentId } = credentialSubject;
 
   return (
