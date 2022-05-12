@@ -2,16 +2,9 @@ import { StyleSheet } from 'react-native';
 import { Color } from '../../styles/colors';
 
 export default StyleSheet.create({
-  studentPhoto: {
+  studentIdPhoto: {
     width: '100%',
-    height: 200,
-  },
-  barcodeContainer: {
-    padding: 20,
-    backgroundColor: Color.White,
-  },
-  barcode: {
-    width: '100%',
-    height: 50,
+    aspectRatio: 1,
+    resizeMode: 'contain',
   },
 });
