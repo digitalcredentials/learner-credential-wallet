@@ -15,11 +15,6 @@ import { QRScreenProps } from './QRScreen.d';
 import { CredentialRequestParams } from '../../lib/request';
 import styles from './QRScreen.styles';
 
-// For debug purposed
-import { CredentialRecord } from '../../model/credential';
-import { credentials as mockCredentials } from '../../mock/credential';
-import { getAllCredentials } from '../../store/slices/wallet';
-
 
 export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -39,15 +34,6 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   async function onRead({ data: text }: BarCodeReadEvent) {
     console.log('Read text from qrcode', text);
     const isDeeplink = text.startsWith('dccrequest://request?') || text.startsWith('org.dcconsortium://request?');
-
-    if (text.startsWith('dccrequest://debug?StudentId')){
-      await mockCredentials.map(async (credential) => {
-        console.log(credential);
-        await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
-      });
-      dispatch(getAllCredentials());
-      return;
-    }
 
     if (!isVpqr(text) && !isDeeplink) {
       setErrorModalOpen(true);
