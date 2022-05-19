@@ -8,8 +8,6 @@ import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import DeviceInfo from 'react-native-device-info';
 
 import appConfig from '../../../app.json';
-import mockCredential from '../../mock/credential';
-import { credentials as mockCredentials } from '../../mock/credential';
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
