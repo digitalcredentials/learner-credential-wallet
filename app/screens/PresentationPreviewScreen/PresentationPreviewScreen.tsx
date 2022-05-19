@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 
 import { mixins } from '../../styles';
 import { CredentialItem, NavHeader } from '../../components';
+import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import styles from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
@@ -18,8 +19,8 @@ export default function PresentationPreviewScreen({
 
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
-    const { credentialSubject, issuer } = credential;
-    const title = credentialSubject.hasCredential?.name ?? '';
+    const { issuer } = credential;
+    const { title } = credentialRenderInfo(credential);
     const subtitle =
       typeof issuer !== 'string' && issuer.name !== undefined
         ? issuer.name
