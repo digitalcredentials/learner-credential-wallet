@@ -15,6 +15,7 @@ import { QRScreenProps } from './QRScreen.d';
 import { CredentialRequestParams } from '../../lib/request';
 import styles from './QRScreen.styles';
 
+
 export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   const [errorModalOpen, setErrorModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -33,6 +34,7 @@ export default function QRScreen({ navigation }: QRScreenProps): JSX.Element {
   async function onRead({ data: text }: BarCodeReadEvent) {
     console.log('Read text from qrcode', text);
     const isDeeplink = text.startsWith('dccrequest://request?') || text.startsWith('org.dcconsortium://request?');
+
     if (!isVpqr(text) && !isDeeplink) {
       setErrorModalOpen(true);
       setErrorMessage('The QR code was read, but no credentials were found.');
