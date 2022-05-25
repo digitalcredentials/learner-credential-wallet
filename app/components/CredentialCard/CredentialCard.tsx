@@ -38,7 +38,15 @@ export function credentialRenderInfo(credential : Credential) : CredentialRender
       return renderInfo;
     }
   }
-  return { component: DefaultCredentialCard, title: credential.credentialSubject.hasCredential?.name ?? '' };
+  let achievement = credential.credentialSubject.hasCredential ??
+    credential.credentialSubject.achievement;
+  if (Array.isArray(achievement)) {
+    achievement = achievement[0];
+  }
+
+  const title = achievement?.name ?? '';
+  return {
+    component: DefaultCredentialCard, title };
 }
 
 export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
