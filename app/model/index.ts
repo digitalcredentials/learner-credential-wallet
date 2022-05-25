@@ -152,9 +152,9 @@ class DatabaseAccess {
     const didRecords = await DidRecord.getAllDidRecords();
     const { didDocument, verificationKey, keyAgreementKey } = didRecords[0];
 
-    /** 
-     * The Unlocked Wallet spec requires all wallet content 
-     * types to be combined into a flat array. 
+    /**
+     * The Unlocked Wallet spec requires all wallet content
+     * types to be combined into a flat array.
      * https://w3c-ccg.github.io/universal-wallet-interop-spec/#unlocked-wallet
      */
     const contents = [
@@ -190,9 +190,9 @@ class DatabaseAccess {
       keyAgreementKey,
     } = parseWalletContents(rawWallet);
 
-    const response: WalletImportResponse = { 
-      success: [], 
-      duplicate: [], 
+    const response: WalletImportResponse = {
+      success: [],
+      duplicate: [],
       failed: [],
     };
 
@@ -201,10 +201,15 @@ class DatabaseAccess {
 
     await Promise.all(credentials.map(async (credential) => {
       /*
-       * TODO - this is the same field used for the title use in other places when displaying 
+       * TODO - this is the same field used for the title use in other places when displaying
        * a credential. Should that also be used here?
        */
-      const credentialName = credential.credentialSubject.hasCredential?.name ?? 'Unknown Credential';
+      let achievement = credential.credentialSubject.hasCredential ??
+        credential.credentialSubject.achievement;
+      if (Array.isArray(achievement)) {
+        achievement = achievement[0];
+      }
+      const credentialName = achievement?.name ?? 'Unknown Credential';
       if (existingCredentialIds.includes(credential.id)) {
         response.duplicate.push(credentialName);
         return;

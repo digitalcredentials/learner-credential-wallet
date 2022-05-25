@@ -52,6 +52,8 @@ type SubjectExtensions = {
   readonly hasCredential?: EducationalOperationalCredential; // https://schema.org/hasCredential
   readonly degree?: DegreeCompletion;
   readonly studentId?: StudentId;
+  // Open Badges v3
+  readonly achievement?: EducationalOperationalCredential | EducationalOperationalCredential[];
 }
 
 export type Subject = SubjectExtensions & {
