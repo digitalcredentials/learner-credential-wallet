@@ -40,6 +40,8 @@ type SubjectExtensions = {
   readonly type?: string;
   readonly name?: string;
   readonly hasCredential?: EducationalOperationalCredential; // https://schema.org/hasCredential
+  // Open Badges v3
+  readonly achievement?: EducationalOperationalCredential | EducationalOperationalCredential[];
 }
 
 export type Subject = SubjectExtensions & {

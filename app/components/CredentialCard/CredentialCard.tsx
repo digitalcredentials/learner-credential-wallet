@@ -18,15 +18,22 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
   const { credential } = rawCredentialRecord;
   const { credentialSubject, issuer, issuanceDate, expirationDate } = credential;
 
-  const title = credentialSubject.hasCredential?.name ?? '';
-  const description = credentialSubject.hasCredential?.description ?? '';
+  let achievement = credential.credentialSubject.hasCredential ??
+    credential.credentialSubject.achievement;
+  if (Array.isArray(achievement)) {
+    achievement = achievement[0];
+  }
+
+  const title = achievement?.name ?? '';
+
+  const description = achievement?.description ?? '';
   const subjectName = credentialSubject.name;
-  const numberOfCredits = credentialSubject.hasCredential?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
+  const numberOfCredits = achievement?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
 
   const issuanceDateFmt = moment(issuanceDate).format(DATE_FORMAT);
   const expirationDateFmt = expirationDate && moment(expirationDate).format(DATE_FORMAT);
 
-  const { startDate, endDate } = credentialSubject.hasCredential?.awardedOnCompletionOf ?? {};
+  const { startDate, endDate } = achievement?.awardedOnCompletionOf ?? {};
   const startDateFmt = startDate && moment(startDate).format(DATE_FORMAT);
   const endDateFmt = endDate && moment(endDate).format(DATE_FORMAT);
 
