@@ -62,7 +62,7 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
 
   const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
 
-  if (!registries.issuerDid.isInRegistry(issuerDid)) {
+  if (!await registries.issuerDid.isInRegistry(issuerDid)) {
     throw new Error(CredentialError.DidNotInRegistry);
   }
 
