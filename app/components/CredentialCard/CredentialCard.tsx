@@ -7,7 +7,7 @@ import type { CredentialRecordRaw } from '../../model/credential';
 import { theme } from '../../styles';
 import styles from './CredentialCard.styles';
 
-const NO_URL = 'None';
+const NO_URL = null;
 const DATE_FORMAT = 'MMM D, YYYY';
 
 type CredentialCardProps = {
