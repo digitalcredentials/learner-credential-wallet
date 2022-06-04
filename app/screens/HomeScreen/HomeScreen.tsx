@@ -26,12 +26,20 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   const dispatch = useDispatch();
   const share = useShareCredentials();
 
-  const itemToDeleteName = itemToDelete?.credential.credentialSubject.hasCredential?.name ?? '';
+  const itemToDeleteName = itemToDelete?.credential.credentialSubject.hasCredential?.name ??
+    itemToDelete?.credential.credentialSubject.achievement ?? '';
 
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { issuer } = credential;
-    const title = credential.credentialSubject.hasCredential?.name ?? '';
+
+    let achievement = credential.credentialSubject.hasCredential ??
+      credential.credentialSubject.achievement;
+    if (Array.isArray(achievement)) {
+      achievement = achievement[0];
+    }
+
+    const title = achievement?.name ?? '';
     const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
     const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
     const issuerImage = typeof issuer === 'string' ? null : issuer.image;

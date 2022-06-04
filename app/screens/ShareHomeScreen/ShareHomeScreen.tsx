@@ -38,7 +38,14 @@ export default function ShareHomeScreen({
   function renderItem({ item, index }: RenderItemProps): JSX.Element {
     const { credential } = item;
     const { credentialSubject, issuer } = credential;
-    const title = credentialSubject.hasCredential?.name ?? '';
+
+    let achievement = credential.credentialSubject.hasCredential ??
+      credential.credentialSubject.achievement;
+    if (Array.isArray(achievement)) {
+      achievement = achievement[0];
+    }
+
+    const title = achievement?.name ?? '';
     const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
 
     return (

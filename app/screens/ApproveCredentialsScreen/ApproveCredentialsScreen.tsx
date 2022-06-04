@@ -19,11 +19,11 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   function goToHome() {
     if (navigationRef.isReady()) {
-      navigationRef.navigate('HomeNavigation', { 
+      navigationRef.navigate('HomeNavigation', {
         screen: 'CredentialNavigation',
         params: {
           screen: 'HomeScreen',
-        }, 
+        },
       });
     }
   }
@@ -42,7 +42,14 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
   function renderItem({ item: pendingCredential }: RenderItemProps) {
     const { credential } = pendingCredential;
     const { credentialSubject, issuer } = credential;
-    const title = credentialSubject.hasCredential?.name ?? '';
+
+    let achievement = credential.credentialSubject.hasCredential ??
+      credential.credentialSubject.achievement;
+    if (Array.isArray(achievement)) {
+      achievement = achievement[0];
+    }
+
+    const title = achievement?.name ?? '';
     const issuerName = (typeof issuer === 'string' ? '' : issuer?.name) ?? '';
     const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
     const onSelect = () => navigation.navigate(
@@ -66,8 +73,8 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   return (
     <>
-      <NavHeader 
-        title="Available Credentials" 
+      <NavHeader
+        title="Available Credentials"
         rightComponent={<Done />}
       />
       <FlatList
