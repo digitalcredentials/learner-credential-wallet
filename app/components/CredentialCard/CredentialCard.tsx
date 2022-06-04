@@ -41,6 +41,8 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
   const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
   const issuerUrl = (typeof issuer === 'string' ? null : issuer?.url) ?? NO_URL;
   const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
+  const badgeImage = achievement?.image;
+  const narrative = criteria?.narrative;
 
   function IssuerLink(): JSX.Element {
     if (issuerUrl === NO_URL) {
@@ -81,9 +83,17 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
               />
             </View>
           )}
-          <Text style={styles.dataValue}>{issuerName}</Text>
+          {issuerName ? (
+            <Text style={styles.dataValue}>{issuerName}</Text>
+          ) : null}
         </View>
       </View>
+      {issuerUrl ? (
+        <View style={styles.dataContainer}>
+          <Text style={styles.dataLabel}>Issuer Website</Text>
+          <IssuerLink />
+        </View>
+      ) : null}
       <View style={styles.flexRow}>
         <View style={styles.dataContainer}>
           <Text style={styles.dataLabel}>Issuance Date</Text>
@@ -96,6 +106,12 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
           </View>
         ) : null}
       </View>
+      {subjectName ? (
+        <View style={styles.dataContainer}>
+          <Text style={styles.dataLabel}>Subject Name</Text>
+          <Text style={styles.dataValue}>{subjectName}</Text>
+        </View>
+      ) : null}
       {numberOfCredits ? (
         <View style={styles.dataContainer}>
           <Text style={styles.dataLabel}>Number of Credits</Text>
@@ -120,17 +136,21 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
         <Text style={styles.dataLabel}>Description</Text>
         <Text style={styles.dataValue}>{description}</Text>
       </View>
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Criteria</Text>
-        <Text style={styles.dataValue}>{criteria.narrative}</Text>
-      </View>
-      <Image
-        source={{ uri: achievement?.image }}
-        style={styles.badgeImage}
-        accessible={true}
-        accessibilityLabel={'Achievement badge'}
-        accessibilityRole="image"
-      />
+      {narrative ? (
+        <View style={styles.dataContainer}>
+          <Text style={styles.dataLabel}>Criteria</Text>
+          <Text style={styles.dataValue}>{narrative}</Text>
+        </View>
+      ) : null}
+      {badgeImage ? (
+        <Image
+          source={{ uri: badgeImage }}
+          style={styles.badgeImage}
+          accessible={true}
+          accessibilityLabel={'Achievement badge'}
+          accessibilityRole="image"
+        />
+      ) : null}
     </View>
   );
 }
