@@ -26,8 +26,9 @@ export default StyleSheet.create({
   },
   badgeImage: {
     borderRadius: 3,
-    marginRight: 12,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    width: 300,
+    height: 300
   },
   dataLabel: {
     fontSize: theme.fontSize.small,

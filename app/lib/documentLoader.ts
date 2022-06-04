@@ -9,6 +9,7 @@ import didContext from 'did-context';
 import ed25519 from 'ed25519-signature-2020-context';
 import x25519 from 'x25519-key-agreement-2020-context';
 import cred from 'credentials-context';
+import obCtx from '@digitalcredentials/open-badges-context';
 import { JsonLdDocumentLoader } from 'jsonld-document-loader';
 import { CryptoLD } from 'crypto-ld';
 import * as didWeb from '@interop/did-web-resolver';
@@ -58,6 +59,9 @@ export function securityLoader() {
   );
 
   loader.addStatic(dccCtx.CONTEXT_URL_V1, dccCtx.CONTEXT_V1);
+  loader.addStatic(obCtx.constants.CONTEXT_URL_V3, obCtx.CONTEXT_V3);
+  loader.addStatic(obCtx.constants.CONTEXT_URL_V3_JFF_V1, obCtx.CONTEXT_V3);
+  loader.addStatic(obCtx.constants.CONTEXT_URL_V3_IMS, obCtx.CONTEXT_V3);
 
   loader.setDidResolver(resolver);
 

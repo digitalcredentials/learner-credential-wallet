@@ -18,6 +18,12 @@ export const issuerDidRegistry: RegistryRaw<IssuerDidEntry> = {
       location: 'Cambridge, MA, USA',
       url: 'https://openlearning.mit.edu',
     },
+    'did:web:keys.jff.org': {
+      name: 'Jobs for the Future (JFF)'
+    },
+    'did:key:z6MkrHKzgsahxBLyNAbLQyB1pcWNYC9GmywiWPgkrvntAZcj': {
+      name: 'Jobs for the Future (JFF)'
+    },
     'did:key:z6MkqEwzA36k2PWsWpeQXjFMzT1PpZuVjZ9W9jd2ZGRb6JKr': {
       'name': 'DCC Sandbox Issuer',
       'location': 'Cambridge, MA, USA',
