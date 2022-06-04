@@ -25,6 +25,7 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
   }
 
   const title = achievement?.name ?? '';
+  const criteria = achievement?.criteria ?? {};
 
   const description = achievement?.description ?? '';
   const subjectName = credentialSubject.name;
@@ -83,10 +84,6 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
           <Text style={styles.dataValue}>{issuerName}</Text>
         </View>
       </View>
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Issuer Website</Text>
-        <IssuerLink />
-      </View>
       <View style={styles.flexRow}>
         <View style={styles.dataContainer}>
           <Text style={styles.dataLabel}>Issuance Date</Text>
@@ -98,10 +95,6 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
             <Text style={styles.dataValue}>{expirationDateFmt}</Text>
           </View>
         ) : null}
-      </View>
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Subject Name</Text>
-        <Text style={styles.dataValue}>{subjectName}</Text>
       </View>
       {numberOfCredits ? (
         <View style={styles.dataContainer}>
@@ -127,6 +120,17 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
         <Text style={styles.dataLabel}>Description</Text>
         <Text style={styles.dataValue}>{description}</Text>
       </View>
+      <View style={styles.dataContainer}>
+        <Text style={styles.dataLabel}>Criteria</Text>
+        <Text style={styles.dataValue}>{criteria.narrative}</Text>
+      </View>
+      <Image
+        source={{ uri: achievement?.image }}
+        style={styles.dataImage}
+        accessible={true}
+        accessibilityLabel={issuerName}
+        accessibilityRole="image"
+      />
     </View>
   );
 }

@@ -34,6 +34,12 @@ export type EducationalOperationalCredential = EducationalOperationalCredentialE
   readonly description?: string;
   readonly competencyRequired?: string;
   readonly credentialCategory?: string;
+  readonly criteria?: Criteria;
+  readonly image?: string;
+}
+
+type Criteria = {
+  readonly narrative?: string
 }
 
 type SubjectExtensions = {
