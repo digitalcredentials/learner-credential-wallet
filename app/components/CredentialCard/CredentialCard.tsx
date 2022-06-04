@@ -126,8 +126,9 @@ export default function CredentialCard({ rawCredentialRecord }: CredentialCardPr
       </View>
       <Image
         source={{ uri: achievement?.image }}
+        style={styles.badgeImage}
         accessible={true}
-        accessibilityLabel={'Badge image'}
+        accessibilityLabel={'Achievement badge'}
         accessibilityRole="image"
       />
     </View>
