@@ -25,7 +25,9 @@ export default StyleSheet.create({
     height: 48,
   },
   badgeImage: {
-    ...mixins.imageIcon
+    borderRadius: 3,
+    marginRight: 12,
+    resizeMode: 'contain'
   },
   dataLabel: {
     fontSize: theme.fontSize.small,
