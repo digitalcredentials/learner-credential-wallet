@@ -12,27 +12,27 @@ type CommonProps = {
   isButton?: boolean;
 }
 
-type VerifyProps = 
+type VerifyProps =
   | { credential: Credential, verifyPayload?: never; }
   | { credential?: never; verifyPayload: VerifyPayload; isButton?: never | false; }
 
 type VerificationCardProps = CommonProps & VerifyProps;
 
 /**
- * The VerificationCard is used to render the verification status of a 
+ * The VerificationCard is used to render the verification status of a
  * credential can be implemented in one of two ways:
  *   1) Pass in a `credential` to generate a `verifyPayload` and render the status.
  *   2) Pass in a `verifyPayload` to render the status (cannot be a button).
  */
 export default function VerificationCard({ credential, verifyPayload, isButton }: VerificationCardProps): JSX.Element {
   const generatedVerifyPayload = useVerifyCredential(credential);
-  
+
   if (generatedVerifyPayload !== null) {
     verifyPayload = generatedVerifyPayload;
   }
 
   if (verifyPayload === undefined) {
-    throw new Error('The VerificationCard component was implemented incorectly.');
+    throw new Error('The VerificationCard component was implemented incorrectly.');
   }
 
   const { loading, verified } = verifyPayload;
