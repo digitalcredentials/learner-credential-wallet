@@ -100,7 +100,6 @@ export default function VerificationCard({ credential, verifyPayload, isButton, 
           {showDetails && (
             <Text style={[styles.dataValue, styles.proofText, styles.lastCheckedText]}>Last Checked: {lastCheckedDate}</Text>
           )}
-
         </View>
       </View>
     );
