@@ -3,7 +3,7 @@ import { VerifiablePresentation } from '../types/presentation';
 import { verifyCredential, verifyPresentation } from './validate';
 
 /**
- * This type is used to identify a request response that could be a 
+ * This type is used to identify a request response that could be a
  * Verifiable Credential or Verifiable Presentation.
  */
 export type VerifiableObject = Credential | VerifiablePresentation;
@@ -18,8 +18,8 @@ function isVerifiablePresentation(obj: VerifiableObject): obj is VerifiablePrese
 
 export async function verifyVerifiableObject(obj: VerifiableObject): Promise<boolean> {
   try {
-    if (isVerifiableCredential(obj)) return await verifyCredential(obj);
-    if (isVerifiablePresentation(obj)) return await verifyPresentation(obj);
+    if (isVerifiableCredential(obj)) return (await verifyCredential(obj)).verified;
+    if (isVerifiablePresentation(obj)) return (await verifyPresentation(obj)).verified;
   } catch (err) {
     console.warn(err);
   }

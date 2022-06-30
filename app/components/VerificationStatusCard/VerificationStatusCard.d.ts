@@ -8,4 +8,5 @@ export type VerificationStatusCardProps = {
 
 export type StatusItemProps = {
   text: string;
+  verified: boolean;
 };
