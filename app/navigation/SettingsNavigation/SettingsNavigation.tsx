@@ -24,6 +24,8 @@ import {
 } from '../';
 import { exportWallet } from '../../lib/export';
 import { importWallet } from '../../lib/import';
+import mockCredential from '../../mock/credential';
+import { CredentialRecord } from '../../model';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +46,10 @@ function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
 }
 
 function Settings({ navigation }: SettingsProps): JSX.Element {
+  function addCredential() {
+    CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
+    dispatch(getAllCredentials());
+  }
   const dispatch = useDispatch();
   const [resetModalOpen, setResetModalOpen] = useState(false);
 
@@ -65,6 +71,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={lockWallet} />
+        <SettingsItem title="Add Credential (Dev)" onPress={addCredential} />
       </View>
       <ConfirmModal
         open={resetModalOpen}
