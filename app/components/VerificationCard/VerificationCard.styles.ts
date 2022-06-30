@@ -9,7 +9,6 @@ export default StyleSheet.create({
   },
   flexRow: {
     flexDirection: 'row',
-    // alignItems: 'center',s
   },
   proofContainer: {
     backgroundColor: theme.color.backgroundSecondary,
