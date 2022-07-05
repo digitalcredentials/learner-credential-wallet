@@ -27,13 +27,11 @@ export function useVerifyCredential(credential?: Credential): VerifyPayload | nu
   const [error, setError] = useState<string | null>(null);
   const [log, setLog] = useState<ResultLog[]>([]);
 
-
   if (credential === undefined) {
     return null;
   }
 
   const verify = useCallback(async () => {
-
     try {
       const cache = Cache.getInstance();
       const { isInternetReachable } = await NetInfo.fetch();

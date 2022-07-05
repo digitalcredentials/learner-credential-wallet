@@ -12,14 +12,10 @@ export class Cache {
   }
 
   async load(key: string, id: string): Promise<unknown> {
-    console.log(key, id);
-    const results = await this.storage.getAllDataForKey(key);
-    console.log(results);
     return this.storage.load({ key, id });
   }
 
   async store(key: string, id: string, data: unknown): Promise<void> {
-    // console.log(key, id, data);
     return this.storage.save({ key, id, data, expires: null });
   }
 

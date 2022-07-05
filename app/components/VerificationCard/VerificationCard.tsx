@@ -61,7 +61,6 @@ export default function VerificationCard({ credential, verifyPayload, isButton, 
           <Text style={[styles.dataValue, styles.proofText]}>
             Verifying...
           </Text>
-
         </View>
       );
     }
