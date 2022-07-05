@@ -44,10 +44,6 @@ function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
 }
 
 function Settings({ navigation }: SettingsProps): JSX.Element {
-  function addCredential() {
-    CredentialRecord.addCredential(CredentialRecord.rawFrom(mockCredential));
-    dispatch(getAllCredentials());
-  }
   const dispatch = useDispatch();
   const [resetModalOpen, setResetModalOpen] = useState(false);
 
