@@ -19,7 +19,7 @@ export default function VerificationStatusScreen({
         goBack={() => navigation.goBack()}
       />
       <ScrollView style={styles.container}>
-        <VerificationCard verifyPayload={verifyPayload} />
+        <VerificationCard verifyPayload={verifyPayload} showDetails/>
         <VerificationStatusCard credential={credential} verifyPayload={verifyPayload} />
         <Text style={styles.footerText}>
           Please contact your issuing organization if you have any problems with
