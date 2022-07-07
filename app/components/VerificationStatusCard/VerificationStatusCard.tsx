@@ -35,7 +35,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
       : `(expires on ${expirationDateFmt})`
     : '';
 
-  function StatusItem({ text, verified = true }: StatusItemProps) {
+  function StatusItem({ positiveText, negativeText, verified = true }: StatusItemProps) {
     return (
       <View style={styles.statusItem}>
         <MaterialIcons
@@ -44,7 +44,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
           color={verified ? theme.color.success : theme.color.error}
           accessibilityLabel={verified ?  'Verified, Icon' : 'Not Verified, Icon'}
         />
-        <Text style={styles.bodyText}>{text}</Text>
+        <Text style={styles.bodyText}>{verified ? positiveText : negativeText}</Text>
       </View>
     );
   }
@@ -52,10 +52,26 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Status details:</Text>
-      <StatusItem text="Has a valid digital signature" verified={details[LogId.ValidSignature]}/>
-      <StatusItem text="Has been issued by a registered institution" verified={details[LogId.IssuerDIDResolves]} />
-      <StatusItem text="Has not been revoked" verified={details[LogId.RevocationStatus]} />
-      <StatusItem text={`Has not expired ${expirationText}`} verified={details[LogId.Expiration]} />
+      <StatusItem
+        positiveText="Has a valid digital signature"
+        negativeText="Has an invalid digital signature"
+        verified={details[LogId.ValidSignature]}
+      />
+      <StatusItem
+        positiveText="Has been issued by a registered institution"
+        negativeText="Has not been issued by a registered institution"
+        verified={details[LogId.IssuerDIDResolves]}
+      />
+      <StatusItem
+        positiveText="Has not been revoked"
+        negativeText="Has been revoked"
+        verified={details[LogId.RevocationStatus]}
+      />
+      <StatusItem
+        positiveText={`Has not expired ${expirationText}`}
+        negativeText={`Has expired ${expirationText}`}
+        verified={details[LogId.Expiration]}
+      />
     </View>
   );
 }
