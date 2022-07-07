@@ -15,7 +15,7 @@ const presentationPurpose = new purposes.AssertionProofPurpose();
 
 export type ResultLog = {
   id: string,
-  verified: boolean
+  valid: boolean
 }
 
 export type Result = {
@@ -71,7 +71,6 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
     return result;
   } catch (err) {
     console.warn(err);
-
     throw new Error(CredentialError.CouldNotBeVerified);
   }
 }

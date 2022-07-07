@@ -18,6 +18,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   proofText: {
+    justifyContent: 'center',
     marginHorizontal: 14,
   },
   lastCheckedText: {

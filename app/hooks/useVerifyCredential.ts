@@ -35,14 +35,15 @@ export function useVerifyCredential(credential?: Credential): VerifyPayload | nu
     try {
       const cache = Cache.getInstance();
       const { isInternetReachable } = await NetInfo.fetch();
-
       let verified: boolean, timestamp: number, log: ResultLog[];
-      if (isInternetReachable) {
+      // ios will return null the first time you check internet connection
+      // assume connected and try to verify.
+      if (isInternetReachable || isInternetReachable === null) {
         const response = await verifyCredential(credential);
         verified = response.verified;
-        log = response.results[0].log;
+        log = response.results ? response.results[0].log : [];
         timestamp = Date.now();
-        await cache.store('verificationResult', credential.id, { verified, timestamp, log })
+        await cache.store('verificationResult', credential.id, { verified, timestamp, log });
       } else {
         ({ verified, timestamp, log } = await cache.load('verificationResult', credential.id) as CachedResult);
       }
@@ -64,6 +65,5 @@ export function useVerifyCredential(credential?: Credential): VerifyPayload | nu
   useEffect(() => {
     verify();
   }, [verify]);
-
   return { loading, verified, error, timestamp, log };
 }

@@ -29,7 +29,6 @@ const DATE_FORMAT = 'MMM D, YYYY';
  */
 export default function VerificationCard({ credential, verifyPayload, isButton, showDetails = false }: VerificationCardProps): JSX.Element {
   const generatedVerifyPayload = useVerifyCredential(credential);
-
   if (generatedVerifyPayload !== null) {
     verifyPayload = generatedVerifyPayload;
   }
@@ -74,12 +73,14 @@ export default function VerificationCard({ credential, verifyPayload, isButton, 
             color={theme.color.success}
             accessibilityLabel="Verified, Icon"
           />
-          <Text style={[styles.dataValue, styles.proofText]}>
-            Credential Verified
-          </Text>
-          {showDetails && (
-            <Text style={[styles.dataValue, styles.proofText, styles.lastCheckedText]}>Last Checked: {lastCheckedDate}</Text>
-          )}
+          <View>
+            <Text style={[styles.dataValue, styles.proofText]}>
+              Credential Verified
+            </Text>
+            {showDetails && (
+              <Text style={[styles.dataValue, styles.proofText, styles.lastCheckedText]}>Last Checked: {lastCheckedDate}</Text>
+            )}
+          </View>
         </View>
       );
     }
