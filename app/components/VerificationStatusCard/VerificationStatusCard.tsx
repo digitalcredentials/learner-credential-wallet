@@ -19,15 +19,11 @@ enum LogId {
 
 export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): JSX.Element {
   const { expirationDate } = credential;
-  console.log(verifyPayload);
 
-  const details = verifyPayload.log.reduce<Record<string, boolean>>((acc, log) => {
-    console.log(log);
+  const details = verifyPayload.log?.reduce<Record<string, boolean>>((acc, log) => {
     acc[log.id] = log.valid;
     return acc;
-  }, {});
-
-  console.log(details);
+  }, {}) || {};
 
   const hasExpirationDate = expirationDate !== undefined;
   const expirationDateFmt = moment(expirationDate).format(DATE_FORMAT);
@@ -39,7 +35,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
       : `(expires on ${expirationDateFmt})`
     : '';
 
-  function StatusItem({ text, verified }: StatusItemProps) {
+  function StatusItem({ text, verified = true }: StatusItemProps) {
     return (
       <View style={styles.statusItem}>
         <MaterialIcons
