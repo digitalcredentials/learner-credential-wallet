@@ -25,8 +25,6 @@ export default StyleSheet.create({
   copyButton: {
     paddingLeft: 24,
     paddingRight: 24,
-    // marginLeft: 8,
-    flex: 1,
     flexGrow: 1,
   },
   copyButtonContainer: {
