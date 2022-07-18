@@ -7,8 +7,11 @@ export type CredentialNavigationParamList = {
     rawCredentialRecord: CredentialRecordRaw;
     noShishKabob?: boolean;
   };
+  ShareCredentialScreen: {
+    rawCredentialRecord: CredentialRecordRaw
+  };
 };
 
 export type HomeScreenProps = StackScreenProps<CredentialNavigationParamList, 'HomeScreen'>;
-export type CredentialScreenHomeProps = StackScreenProps<CredentialNavigationParamList, 'CredentialScreen'>;
-
+export type CredentialScreenProps = StackScreenProps<CredentialNavigationParamList, 'CredentialScreen'>;
+export type ShareCredentialScreenProps = StackScreenProps<CredentialNavigationParamList, 'ShareCredentialScreen'>;

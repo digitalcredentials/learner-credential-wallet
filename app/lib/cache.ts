@@ -19,6 +19,10 @@ export class Cache {
     return this.storage.save({ key, id, data, expires: null });
   }
 
+  async remove(key: string, id: string): Promise<void> {
+    return this.storage.remove({ key, id });
+  }
+
   static getInstance(): Cache {
     if (this.instance === undefined) {
       this.instance = new Cache();

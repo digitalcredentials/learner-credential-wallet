@@ -15,6 +15,7 @@ const theme: ThemeType = {
     textPrimaryDark: Color.Black,
     iconActive: Color.White,
     iconInactive: Color.Gray400,
+    inputInactive: Color.Gray400,
     buttonPrimary: Color.DarkCyan,
     buttonSecondary: Color.Gray600,
     buttonDisabled: Color.Gray500,
