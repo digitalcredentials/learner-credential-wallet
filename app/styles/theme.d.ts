@@ -14,6 +14,7 @@ export type ThemeType = {
     textPrimaryDark: Color;
     iconActive: Color;
     iconInactive: Color;
+    inputInactive: Color;
     buttonPrimary: Color;
     buttonSecondary: Color;
     buttonDisabled: Color;
