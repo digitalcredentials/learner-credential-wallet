@@ -12,6 +12,7 @@
     "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && npx patch-package"
   },
   "dependencies": {
+    "@digitalbazaar/vc-status-list": "^5.0.0",
     "@digitalcredentials/dcc-context": "^1.0.0",
     "@digitalcredentials/did-io": "^1.0.2",
     "@digitalcredentials/did-method-key": "^2.0.3",

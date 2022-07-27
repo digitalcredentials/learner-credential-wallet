@@ -1,5 +1,6 @@
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { purposes } from '@digitalcredentials/jsonld-signatures';
+import { checkStatus } from '@digitalbazaar/vc-status-list';
 import vc from '@digitalcredentials/vc';
 
 import { VerifiablePresentation, PresentationError } from '../types/presentation';
@@ -41,6 +42,7 @@ export async function verifyPresentation(
       suite,
       documentLoader,
       unsignedPresentation,
+      checkStatus
     });
 
     console.log(JSON.stringify(result));
@@ -66,6 +68,7 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
       credential,
       suite,
       documentLoader,
+      checkStatus
     });
 
     return result;
