@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
   flexRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   proofContainer: {
     backgroundColor: theme.color.backgroundSecondary,
@@ -19,7 +19,12 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   proofText: {
+    justifyContent: 'center',
     marginHorizontal: 14,
+  },
+  lastCheckedText: {
+    fontSize: 12,
+    color: theme.color.textSecondary,
   },
   modalBodyText: {
     ...mixins.paragraphText,

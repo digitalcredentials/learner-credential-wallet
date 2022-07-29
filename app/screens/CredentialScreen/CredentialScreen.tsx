@@ -7,16 +7,13 @@ import { CredentialRecord } from '../../model';
 import { mixins } from '../../styles';
 import { getAllCredentials } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal, AccessibleView, VerificationCard, CredentialCard } from '../../components';
+import { CredentialScreenProps, navigationRef } from '../../navigation';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
-import { useShareCredentials } from '../../hooks';
-import { navigationRef } from '../../navigation';
 
-import type { CredentialScreenProps } from './CredentialScreen.d';
 import styles from './CredentialScreen.styles';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const dispatch = useDispatch();
-  const share = useShareCredentials();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -26,8 +23,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
 
 
   function onPressShare() {
-    setMenuIsOpen(false);
-    share([rawCredentialRecord]);
+    navigation.navigate('ShareCredentialScreen', { rawCredentialRecord});
   }
 
   function onPressDebug() {
@@ -55,7 +51,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
     }
 
     return (
-      <AccessibleView 
+      <AccessibleView
         label="More options"
         accessibilityRole="button"
         accessibilityState={{ expanded: menuIsOpen }}
@@ -96,7 +92,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
             <MenuItem icon="delete" title="Delete" onPress={onPressDelete} />
           </View>
         ) : null}
-        <ScrollView 
+        <ScrollView
           onScrollEndDrag={() => setMenuIsOpen(false)}
           style={styles.scrollContainer}
           accessible={false}
@@ -109,7 +105,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
           >
             <View style={styles.container}>
               <CredentialCard rawCredentialRecord={rawCredentialRecord} />
-              <VerificationCard credential={credential} isButton />
+              <VerificationCard credential={credential} isButton showDetails={false}/>
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>

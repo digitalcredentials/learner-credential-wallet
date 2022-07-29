@@ -15,16 +15,16 @@ export default StyleSheet.create({
     ...mixins.headerText,
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
-    marginVertical: 8,
+    marginTop: 8,
   },
   bodyText: {
     ...mixins.paragraphText,
     marginRight: 16,
-    marginVertical: 6,
+    marginLeft: 8,
   },
   statusItem: {
     flexDirection: 'row',
-    alignContent: 'center',
+    marginTop: 16
   },
   bulletContainer: {
     marginTop: 5,

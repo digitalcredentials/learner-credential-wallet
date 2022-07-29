@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 
 import { theme } from '../../styles';
@@ -10,8 +10,20 @@ import styles from './VerificationStatusCard.styles';
 
 const DATE_FORMAT = 'MMM D, YYYY';
 
+enum LogId {
+  ValidSignature = 'valid_signature',
+  Expiration = 'expiration',
+  IssuerDIDResolves = 'issuer_did_resolves',
+  RevocationStatus = 'revocation_status'
+}
+
 export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): JSX.Element {
   const { expirationDate } = credential;
+
+  const details = verifyPayload.log?.reduce<Record<string, boolean>>((acc, log) => {
+    acc[log.id] = log.valid;
+    return acc;
+  }, {}) || {};
 
   const hasExpirationDate = expirationDate !== undefined;
   const expirationDateFmt = moment(expirationDate).format(DATE_FORMAT);
@@ -23,44 +35,43 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
       : `(expires on ${expirationDateFmt})`
     : '';
 
-  const { verified } = verifyPayload;
-
-  function StatusItem({ text }: StatusItemProps) {
+  function StatusItem({ positiveText, negativeText, verified = true }: StatusItemProps) {
     return (
       <View style={styles.statusItem}>
-        <Entypo
-          name="dot-single"
+        <MaterialIcons
+          name={verified ? 'check' : 'close'}
           size={theme.iconSize}
-          color={theme.color.iconInactive}
-          style={styles.bulletContainer}
-          accessibilityLabel="Bullet Point"
+          color={verified ? theme.color.success : theme.color.error}
+          accessibilityLabel={verified ?  'Verified, Icon' : 'Not Verified, Icon'}
         />
-        <Text style={styles.bodyText}>{text}</Text>
-      </View>
-    );
-  }
-
-  if (verified) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.headerText}>This means that the credential:</Text>
-        <StatusItem text="is in a recognized format" />
-        <StatusItem text="the digital signature validates" />
-        <StatusItem text="has been issued by a registered institution" />
-        <StatusItem text="the issuing institution could be reached to verify the credential" />
-        <StatusItem text={`has not expired${expirationText}`} />
+        <Text style={styles.bodyText}>{verified ? positiveText : negativeText}</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>This could mean that the credential:</Text>
-      <StatusItem text="is in an unrecognized format" />
-      <StatusItem text="the digital signature does not validate" />
-      <StatusItem text="has not been issued by a registered institution" />
-      <StatusItem text="the issuing institution could not be reached to verify the credential" />
-      <StatusItem text={`has expired ${expirationText}`} />
+      <Text style={styles.headerText}>Status details:</Text>
+      <StatusItem
+        positiveText="Has a valid digital signature"
+        negativeText="Has an invalid digital signature"
+        verified={details[LogId.ValidSignature]}
+      />
+      <StatusItem
+        positiveText="Has been issued by a registered institution"
+        negativeText="Has not been issued by a registered institution"
+        verified={details[LogId.IssuerDIDResolves]}
+      />
+      <StatusItem
+        positiveText="Has not been revoked"
+        negativeText="Has been revoked"
+        verified={details[LogId.RevocationStatus]}
+      />
+      <StatusItem
+        positiveText={`Has not expired ${expirationText}`}
+        negativeText={`Has expired ${expirationText}`}
+        verified={details[LogId.Expiration]}
+      />
     </View>
   );
 }

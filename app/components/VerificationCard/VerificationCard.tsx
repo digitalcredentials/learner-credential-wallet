@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
@@ -12,30 +13,33 @@ type CommonProps = {
   isButton?: boolean;
 }
 
-type VerifyProps = 
-  | { credential: Credential, verifyPayload?: never; }
-  | { credential?: never; verifyPayload: VerifyPayload; isButton?: never | false; }
+type VerifyProps =
+  | { credential: Credential, verifyPayload?: never; showDetails: boolean }
+  | { credential?: never; verifyPayload: VerifyPayload; isButton?: never | false; showDetails: boolean };
 
 type VerificationCardProps = CommonProps & VerifyProps;
 
+const DATE_FORMAT = 'MMM D, YYYY';
+
 /**
- * The VerificationCard is used to render the verification status of a 
+ * The VerificationCard is used to render the verification status of a
  * credential can be implemented in one of two ways:
  *   1) Pass in a `credential` to generate a `verifyPayload` and render the status.
  *   2) Pass in a `verifyPayload` to render the status (cannot be a button).
  */
-export default function VerificationCard({ credential, verifyPayload, isButton }: VerificationCardProps): JSX.Element {
+export default function VerificationCard({ credential, verifyPayload, isButton, showDetails = false }: VerificationCardProps): JSX.Element {
   const generatedVerifyPayload = useVerifyCredential(credential);
-  
   if (generatedVerifyPayload !== null) {
     verifyPayload = generatedVerifyPayload;
   }
 
   if (verifyPayload === undefined) {
-    throw new Error('The VerificationCard component was implemented incorectly.');
+    throw new Error('The VerificationCard component was implemented incorrectly.');
   }
 
-  const { loading, verified } = verifyPayload;
+  const { loading, verified, timestamp } = verifyPayload;
+
+  const lastCheckedDate = moment(timestamp).format(DATE_FORMAT);
 
   function goToStatus() {
     if (navigationRef.isReady() && verifyPayload !== undefined && credential !== undefined) {
@@ -69,9 +73,14 @@ export default function VerificationCard({ credential, verifyPayload, isButton }
             color={theme.color.success}
             accessibilityLabel="Verified, Icon"
           />
-          <Text style={[styles.dataValue, styles.proofText]}>
-            Credential Verified
-          </Text>
+          <View>
+            <Text style={[styles.dataValue, styles.proofText]}>
+              Credential Verified
+            </Text>
+            {showDetails && (
+              <Text style={[styles.dataValue, styles.proofText, styles.lastCheckedText]}>Last Checked: {lastCheckedDate}</Text>
+            )}
+          </View>
         </View>
       );
     }
@@ -84,9 +93,14 @@ export default function VerificationCard({ credential, verifyPayload, isButton }
           color={theme.color.error}
           accessibilityLabel="Invalid, Icon"
         />
-        <Text style={[styles.dataValue, styles.proofText]}>
-          Invalid Credential
-        </Text>
+        <View>
+          <Text style={[styles.dataValue, styles.proofText]}>
+            Invalid Credential
+          </Text>
+          {showDetails && (
+            <Text style={[styles.dataValue, styles.proofText, styles.lastCheckedText]}>Last Checked: {lastCheckedDate}</Text>
+          )}
+        </View>
       </View>
     );
   }

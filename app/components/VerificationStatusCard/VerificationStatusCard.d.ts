@@ -7,5 +7,7 @@ export type VerificationStatusCardProps = {
 };
 
 export type StatusItemProps = {
-  text: string;
+  positiveText: string;
+  negativeText: string;
+  verified: boolean;
 };
