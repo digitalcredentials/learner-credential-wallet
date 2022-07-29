@@ -8,6 +8,7 @@ import { mixins } from '../../styles';
 import { getAllCredentials } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal, AccessibleView, VerificationCard, CredentialCard } from '../../components';
 import { CredentialScreenProps, navigationRef } from '../../navigation';
+import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 
 import styles from './CredentialScreen.styles';
 
@@ -18,8 +19,8 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
 
   const { rawCredentialRecord, noShishKabob = false } = route.params;
   const { credential } = rawCredentialRecord;
-  const { credentialSubject } = credential;
-  const title = credentialSubject.hasCredential?.name ?? '';
+  const { title } = credentialRenderInfo(credential);
+
 
   function onPressShare() {
     navigation.navigate('ShareCredentialScreen', { rawCredentialRecord});

@@ -73,6 +73,15 @@ This project uses TypeScript and React Native. It would be best to use an editor
 └── ios ← Same as android, except it also uses Cocoapods for dependency management
 ```
 
+### Adding new credential display
+
+A custom display can be created for different credentials, to do so:
+- Create a new React component for your credential type in [app/components/CredentialCard/](app/components/CredentialCard/) - eg. `app/components/CredentialCard/YourNewTypeCard.tsx`
+- Define addition styles in `app/components/CredentialCard/YourNewTypeCard.styles.tsx`
+- Add a function to the `credentialTypes` list defined in [app/components/CredentialCard/CredentialCard.tsx](app/components/CredentialCard/CredentialCard.tsx). The function should return `{component: YourNewCredentialCard, title: 'the title of the credential that should be used when listing it elsewhere'}` or null if the credential isn't the appropriate type for you custom display
+- **note**: the list will be scanned for the first function that returns a component and title, so it's important that the type check is specific and doesn't match any other types.
+
+
 ## Accessibility
 We have conducted a Voluntary Product Accessibility Test, please review the [Learner Credential Wallet Accessibility Conformance Report, December 2021](https://github.com/digitalcredentials/learner-credential-wallet/blob/769bacbc2bfed381a20e2927f2c32a18a6faacbb/docs/Learner%20Credential%20Wallet%20VPAT2.4Rev508-December%202021.pdf)
 
