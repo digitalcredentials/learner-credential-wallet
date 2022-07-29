@@ -12,6 +12,7 @@ import cred from 'credentials-context';
 import { JsonLdDocumentLoader } from 'jsonld-document-loader';
 import { CryptoLD } from 'crypto-ld';
 import * as didWeb from '@interop/did-web-resolver';
+import {httpClient} from '@digitalcredentials/http-client';
 
 const cryptoLd = new CryptoLD();
 cryptoLd.use(Ed25519VerificationKey2020);
@@ -28,6 +29,28 @@ const didKeyDriver = didKey.driver();
 const resolver = new CachedResolver();
 resolver.use(didKeyDriver);
 resolver.use(didWebDriver);
+
+export const httpClientHandler = {
+  /**
+   * @param {object} options - Options hashmap.
+   * @param {string} options.url - Document URL.
+   * @returns {Promise<{contextUrl: null, document, documentUrl}>} - Resolves
+   *   with documentLoader document.
+   */
+  async get(params: any) {
+    if(!params.url.startsWith('http')) {
+      throw new Error('NotFoundError');
+    }
+    let result;
+    try {
+      result = await httpClient.get(params.url);
+    } catch(e) {
+      throw new Error('NotFoundError');
+    }
+
+    return result.data;
+  }
+};
 
 /**
  * Because none of the credential libraries are typed, we need to use implicit
@@ -60,6 +83,10 @@ export function securityLoader() {
   loader.addStatic(dccCtx.CONTEXT_URL_V1, dccCtx.CONTEXT_V1);
 
   loader.setDidResolver(resolver);
+
+  // Enable loading of arbitrary contexts from web
+  loader.setProtocolHandler({protocol: 'http', handler: httpClientHandler});
+  loader.setProtocolHandler({protocol: 'https', handler: httpClientHandler});
 
   return loader;
 }
