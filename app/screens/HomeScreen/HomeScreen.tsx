@@ -13,6 +13,8 @@ import { navigationRef } from '../../navigation';
 import { CredentialRecord } from '../../model';
 import { getAllCredentials } from '../../store/slices/wallet';
 
+import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
+
 import styles from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 import { CredentialRecordRaw } from '../../model';
@@ -31,7 +33,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
     const { issuer } = credential;
-    const title = credential.credentialSubject.hasCredential?.name ?? '';
+    const { title } = credentialRenderInfo(credential);
     const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
     const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
     const issuerImage = typeof issuer === 'string' ? null : issuer.image;

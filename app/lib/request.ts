@@ -22,36 +22,37 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     vc_request_url,
     challenge,
   } = credentialRequestParams;
- 
+
   console.log('Credential request params', credentialRequestParams);
 
   let accessToken;
-  let oidcConfig;
 
   switch (auth_type) {
-  case 'code':
+  case 'code': {
     if (!registries.issuerAuth.isInRegistry(issuer)) {
-      throw new Error(`Unknown issuer: "${issuer}"`);
+	    throw new Error(`Unknown issuer: "${issuer}"`);
     }
-    oidcConfig = registries.issuerAuth.entryFor(issuer);
+    const oidcConfig = registries.issuerAuth.entryFor(issuer);
     // There needs to be a delay before authenticating or the app errors out.
     await new Promise((res) => setTimeout(res, 1000));
     console.log('Launching OIDC auth:', oidcConfig);
+    
     try {
-      console.log('authorize() called with:', oidcConfig);
-      ({accessToken} = await authorize(oidcConfig));
+  	  console.log('authorize() called with:', oidcConfig);
+  	  ({accessToken} = await authorize(oidcConfig));
+  	  console.log('Received access token, requesting credential.');
     } catch (err) {
-      console.error(err);
-      throw Error(
-        'Unable to receive credential: Authorization with the issuer failed');
-    }
-    console.log('Received access token, requesting credential.');
+  	  console.error(err);
+  	  throw new Error(
+          'Unable to receive credential: Authorization with the issuer failed');
+      }
     break;
+  }
   case 'bearer':
     // Bearer token - do nothing. The 'challenge' param will be passed in the VP
     break;
   default:
-    throw Error(`Unsupported auth_type value: "${auth_type}".`);
+    throw new Error(`Unsupported auth_type value: "${auth_type}".`);
   }
 
   const requestBody = await createVerifiablePresentation(
@@ -77,7 +78,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
 
   if (!response.ok) {
     console.error(`Issuer response (failed): ${JSON.stringify(response, null, 2)}`);
-    throw Error('Unable to receive credential: The issuer failed to return a valid response');
+    throw new Error('Unable to receive credential: The issuer failed to return a valid response');
   }
 
   const responseBody = await parseResponseBody(response);

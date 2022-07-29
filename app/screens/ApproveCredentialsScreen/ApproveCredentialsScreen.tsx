@@ -7,6 +7,7 @@ import { navigationRef } from '../../navigation';
 import { RootState } from '../../store';
 import { PendingCredential } from '../../store/slices/credentialFoyer';
 import { CredentialItem, NavHeader } from '../../components';
+import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { ApprovalControls } from '../../components';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
 import { mixins } from '../../styles';
@@ -41,8 +42,8 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
 
   function renderItem({ item: pendingCredential }: RenderItemProps) {
     const { credential } = pendingCredential;
-    const { credentialSubject, issuer } = credential;
-    const title = credentialSubject.hasCredential?.name ?? '';
+    const { issuer } = credential;
+    const { title } = credentialRenderInfo(credential);
     const issuerName = (typeof issuer === 'string' ? '' : issuer?.name) ?? '';
     const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
     const onSelect = () => navigation.navigate(

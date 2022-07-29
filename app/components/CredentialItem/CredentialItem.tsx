@@ -8,7 +8,7 @@ import styles from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
 
 export default function CredentialItem({
-  title,
+  title, // Should this info be passed in here, or determined by the CredentialItem?
   subtitle,
   image = null,
   onSelect,

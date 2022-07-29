@@ -34,7 +34,13 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data
           android:scheme="dccrequest"
-          android:host="oauth"/>
+          android:host="oauth" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="com.googleusercontent.apps.511371443696-0gq71qbne41qc102m98qqv8fvs62kr0c" />
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>

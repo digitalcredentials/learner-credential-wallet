@@ -36,10 +36,24 @@ export type EducationalOperationalCredential = EducationalOperationalCredentialE
   readonly credentialCategory?: string;
 }
 
+export type DegreeCompletion = {
+  readonly type: string;
+  readonly name: string;
+}
+
+export type StudentId = {
+  readonly id: string;
+  readonly image: string;
+}
+
 type SubjectExtensions = {
   readonly type?: string;
   readonly name?: string;
   readonly hasCredential?: EducationalOperationalCredential; // https://schema.org/hasCredential
+  readonly degree?: DegreeCompletion;
+  readonly studentId?: StudentId;
+  // Open Badges v3
+  readonly achievement?: EducationalOperationalCredential | EducationalOperationalCredential[];
 }
 
 export type Subject = SubjectExtensions & {
