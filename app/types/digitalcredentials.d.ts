@@ -5,6 +5,7 @@ declare module '@digitalcredentials/vc';
 declare module '@digitalcredentials/vpqr';
 declare module '@digitalcredentials/ed25519-verification-key-2020';
 declare module '@digitalcredentials/ed25519-signature-2020';
+declare module '@digitalcredentials/http-client';
 declare module '@digitalcredentials/jsonld-signatures';
 declare module '@digitalcredentials/x25519-key-agreement-key-2020';
 declare module 'credentials-context';
