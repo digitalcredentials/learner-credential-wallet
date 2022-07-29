@@ -9,17 +9,28 @@ export type ImportWalletParams = {
   onFinish?: (report: WalletImportReport ) => void;
 }
 
-export async function importWallet({
-  onStart = () => {},
-  onFinish = () => {},
-}: ImportWalletParams): Promise<void> {
+export async function pickWalletFile(): Promise<string> {
   const { uri } = await DocumentPicker.pickSingle({
     type: DocumentPicker.types.allFiles,
   });
 
-  const file = await RNFS.readFile(uri.replace('%20', ' '));
+  return RNFS.readFile(uri.replace('%20', ' '));
+}
+
+export async function importWallet({
+  onStart = () => {},
+  onFinish = () => {},
+}: ImportWalletParams): Promise<void> {
+  const file = await pickWalletFile();
 
   onStart();
+
+  const report = await performImport(file);
+
+  onFinish(report);
+}
+
+export async function performImport(file: string): Promise<Record<string, string[]>> {
   const response = await db.import(file);
 
   const reportSectionText: Record<string, (n: number, s: string) => string> = {
@@ -28,7 +39,7 @@ export async function importWallet({
     failed: (n, s) => `${n} item${s} failed to complete`,
   };
 
-  const report = Object.fromEntries(
+  return Object.fromEntries(
     Object.entries(response)
       .filter(([, value]) => value.length > 0)
       .map(([key, value]) => {
@@ -38,6 +49,4 @@ export async function importWallet({
         return [headerText, value];
       }),
   );
-
-  onFinish(report);
 }

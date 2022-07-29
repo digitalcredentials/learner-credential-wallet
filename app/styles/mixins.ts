@@ -73,6 +73,11 @@ export default StyleSheet.create({
     padding: 16,
     borderRadius: theme.borderRadius,
   },
+  buttonSecondary: {
+    backgroundColor: theme.color.foregroundPrimary,
+    padding: 16,
+    borderRadius: theme.borderRadius,
+  },
   buttonError: {
     backgroundColor: theme.color.error,
     padding: 16,
@@ -92,6 +97,11 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
     color: theme.color.backgroundSecondary,
+  },
+  buttonTitleSecondary: {
+    fontFamily: theme.fontFamily.medium,
+    fontSize: theme.fontSize.regular,
+    color: theme.color.iconActive,
   },
   buttonIcon: {
     justifyContent: 'space-between',
