@@ -60,11 +60,20 @@ export const ShareCredentialScreen = ({ navigation, route }: ShareCredentialScre
   }
 
   async function shareToLinkedIn() {
-    const credential = rawCredentialRecord.credential?.credentialSubject?.hasCredential;
+    let achievement = rawCredentialRecord.credential.credentialSubject.hasCredential ??
+      rawCredentialRecord.credential.credentialSubject.achievement;
+    if (Array.isArray(achievement)) {
+      achievement = achievement[0];
+    }
+    const title = achievement?.name ?? 'Verifiable Credential';
+
     const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
-    if (credential === undefined) return;
+    if (!achievement) {
+      console.log('No achievement/credential found, not sharing to LI.');
+      return;
+    }
     const issuanceDate = moment(rawCredentialRecord.credential.issuanceDate);
-    const organizationInfo = `&name=${credential.name}&organizationName=${issuer.name}`;
+    const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
     const issuance = `&issueYear=${issuanceDate.year()}&issueMonth=${issuanceDate.month()}`;
     let expiration = '';
     if (rawCredentialRecord.credential.expirationDate !== undefined) {
@@ -72,11 +81,12 @@ export const ShareCredentialScreen = ({ navigation, route }: ShareCredentialScre
       expiration = `&expirationYear=${expirationDate.year()}&expirationMonth=${expirationDate.month()}`;
     }
     let certUrl = '';
-    if (publicLink !== null) {
+    if (publicLink) {
       certUrl = `&certUrl=${publicLink}`;
     }
-    const certId = `&certId=${credential.id}`;
+    const certId = `&certId=${achievement.id || ''}`;
     const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
+
     await Linking.canOpenURL(url);
     Linking.openURL(url);
   }
