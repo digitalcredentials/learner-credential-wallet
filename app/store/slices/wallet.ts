@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { mintDid } from './did';
+import { getAllDidRecords, mintDid } from './did';
 import {
   db,
   CredentialRecord,
@@ -36,8 +36,10 @@ const lock = createAsyncThunk('walletState/lock', async () => {
   await db.lock();
 });
 
-const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string) => {
+const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string, { dispatch }) => {
   await db.unlock(passphrase);
+  await dispatch(getAllDidRecords());
+  await dispatch(getAllCredentials());
 });
 
 const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string, { dispatch }) => {
