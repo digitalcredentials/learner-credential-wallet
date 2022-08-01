@@ -9,6 +9,7 @@ import didContext from 'did-context';
 import ed25519 from 'ed25519-signature-2020-context';
 import x25519 from 'x25519-key-agreement-2020-context';
 import cred from 'credentials-context';
+import vcStatusListCtx from '@digitalbazaar/vc-status-list-context';
 import { JsonLdDocumentLoader } from 'jsonld-document-loader';
 import { CryptoLD } from 'crypto-ld';
 import * as didWeb from '@interop/did-web-resolver';
@@ -81,6 +82,8 @@ export function securityLoader() {
   );
 
   loader.addStatic(dccCtx.CONTEXT_URL_V1, dccCtx.CONTEXT_V1);
+
+  loader.addStatic(vcStatusListCtx.CONTEXT_URL_V1, vcStatusListCtx.CONTEXT_V1);
 
   loader.setDidResolver(resolver);
 
