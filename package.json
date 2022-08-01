@@ -12,7 +12,7 @@
     "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && npx patch-package"
   },
   "dependencies": {
-    "@digitalbazaar/vc-status-list": "^5.0.0",
+    "@digitalbazaar/vc-status-list-context": "^3.0.1",
     "@digitalcredentials/dcc-context": "^1.0.0",
     "@digitalcredentials/did-io": "^1.0.2",
     "@digitalcredentials/did-method-key": "^2.0.3",
@@ -20,6 +20,7 @@
     "@digitalcredentials/ed25519-verification-key-2020": "^3.2.2",
     "@digitalcredentials/http-client": "^1.2.2",
     "@digitalcredentials/vc": "^4.1.1",
+    "@digitalcredentials/vc-status-list": "^5.0.2",
     "@digitalcredentials/vpqr": "^2.2.1",
     "@digitalcredentials/x25519-key-agreement-key-2020": "^2.0.2",
     "@expo-google-fonts/roboto": "^0.2.0",
