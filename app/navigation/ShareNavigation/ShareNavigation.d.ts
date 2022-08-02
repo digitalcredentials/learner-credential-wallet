@@ -11,8 +11,16 @@ export type ShareNavigationParamsList = {
     rawCredentialRecord: CredentialRecordRaw;
     noShishKabob?: boolean;
   };
+  ShareSelectionScreen: {
+    method: string
+  };
+  PublicLinkScreen: {
+    rawCredentialRecord: CredentialRecordRaw;
+  }
 };
 
 export type ShareHomeScreenProps = StackScreenProps<ShareNavigationParamsList, 'ShareHomeScreen'>;
 export type PresentationPreviewScreenProps = StackScreenProps<ShareNavigationParamsList, 'PresentationPreviewScreen'>;
 export type CredentialScreenShareProps = StackScreenProps<ShareNavigationParamsList, 'CredentialScreen'>;
+export type ShareSelectionScreenProps = StackScreenProps<ShareNavigationParamsList, 'ShareSelectionScreen'>;
+export type PublicLinkScreenProps = StackScreenProps<ShareNavigationParamsList, 'PublicLinkScreen'>;

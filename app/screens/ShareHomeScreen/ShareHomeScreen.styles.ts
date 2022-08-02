@@ -4,20 +4,24 @@ import { mixins, theme } from '../../styles';
 
 export default StyleSheet.create({
   container: {
-    padding: 16,
-    flex: 1,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    // flex: 1,
+    // justifyContent: 'space-around',
+  },
+  scrollContainer: {
+    flexGrow: 1,
   },
   credentialList: {
     borderRadius: theme.borderRadius,
     overflow: 'hidden',
   },
   paragraph: {
-    ...mixins.paragraphText,
-    marginBottom: 16,
-    marginTop: 8,
+    fontSize: 14,
+    color: theme.color.textPrimary,
+    marginTop: 8
   },
-  shareButton: {
-    ...mixins.buttonPrimary,
-    marginTop: 16,
+  sendButton: {
+    marginTop: 32,
   },
 });
