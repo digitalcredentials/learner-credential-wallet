@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme, mixins } from '../../styles';
 import styles from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
+import { hide } from 'expo-splash-screen';
 
 export default function CredentialItem({
   title, // Should this info be passed in here, or determined by the CredentialItem?
@@ -15,6 +16,7 @@ export default function CredentialItem({
   checkable = false,
   selected = false,
   chevron = false,
+  hideLeft = false,
   bottomElement,
 }: CredentialItemProps): JSX.Element {
   /**
@@ -29,7 +31,9 @@ export default function CredentialItem({
     accessibilityState: { checked: checkable ? selected : undefined },
   };
 
-  function LeftContent(): JSX.Element {
+  function LeftContent(): JSX.Element | null {
+    if (hideLeft) return null;
+
     if (checkable) {
       return (
         <CheckBox
