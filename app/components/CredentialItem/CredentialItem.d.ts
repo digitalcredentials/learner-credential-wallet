@@ -7,4 +7,5 @@ export type CredentialItemProps = {
   selected?: boolean;
   chevron?: boolean;
   bottomElement?: React.ReactNode;
+  hideLeft?: boolean
 }
