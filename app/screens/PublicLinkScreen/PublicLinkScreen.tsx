@@ -58,11 +58,19 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
   }
 
   async function shareToLinkedIn() {
-    const credential = rawCredentialRecord.credential?.credentialSubject?.hasCredential;
+    let achievement = rawCredentialRecord.credential?.credentialSubject?.hasCredential ??
+      rawCredentialRecord.credential?.credentialSubject?.achievement;
+    if (!achievement) {
+      return;
+    }
+    if (Array.isArray(achievement)) {
+      achievement = achievement[0];
+    }
+    const title = achievement?.name ?? '';
     const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
-    if (credential === undefined) return;
+
     const issuanceDate = moment(rawCredentialRecord.credential.issuanceDate);
-    const organizationInfo = `&name=${credential.name}&organizationName=${issuer.name}`;
+    const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
     const issuance = `&issueYear=${issuanceDate.year()}&issueMonth=${issuanceDate.month()}`;
     let expiration = '';
     if (rawCredentialRecord.credential.expirationDate !== undefined) {
@@ -70,10 +78,10 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
       expiration = `&expirationYear=${expirationDate.year()}&expirationMonth=${expirationDate.month()}`;
     }
     let certUrl = '';
-    if (publicLink !== null) {
+    if (publicLink) {
       certUrl = `&certUrl=${publicLink}`;
     }
-    const certId = `&certId=${credential.id}`;
+    const certId = achievement.id ? `&certId=${achievement.id}` : '';
     const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
     await Linking.canOpenURL(url);
     Linking.openURL(url);
@@ -87,7 +95,7 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
     return  (
       <>
         <Text style={styles.title}>
-          {credential.credentialSubject?.hasCredential?.name}
+          {credential.credentialSubject?.hasCredential?.name || 'Credential'}
         </Text>
         <Text style={styles.instructions}>
           Copy the link to share, or add to you LinkedIn profile.
