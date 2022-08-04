@@ -40,6 +40,7 @@ export function useVerifyCredential(credential?: Credential): VerifyPayload | nu
       // assume connected and try to verify.
       if (isInternetReachable || isInternetReachable === null) {
         const response = await verifyCredential(credential);
+        console.log(JSON.stringify(response, null, 2))
         verified = response.verified;
         log = response.results ? response.results[0].log : [];
         timestamp = Date.now();
