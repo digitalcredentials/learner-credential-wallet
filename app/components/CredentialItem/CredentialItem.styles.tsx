@@ -29,23 +29,5 @@ export default StyleSheet.create({
     color: theme.color.textSecondary,
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
-  },
-  checkboxContainer: {    
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-
-    paddingTop: 0,
-    paddingRight: 0,
-    paddingBottom: 0,
-    paddingLeft: 5,
-
-    ...mixins.imageIcon,
-    
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkboxText: {
-    margin: 0,
-  },
+  }
 });
