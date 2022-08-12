@@ -30,3 +30,4 @@ export type CredentialScreenProps = CredentialScreenHomeProps | CredentialScreen
 import { RestoreDetailsSettingsProps } from './SettingsNavigation/SettingsNavigation.d';
 import { RestoreDetailsSetupProps } from './SetupNavigation/SetupNavigation.d';
 export type RestoreDetailsProps = RestoreDetailsSettingsProps | RestoreDetailsSetupProps;
+

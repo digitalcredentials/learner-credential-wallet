@@ -85,7 +85,11 @@ class DatabaseAccess {
 
   public static async enableBiometrics(): Promise<void> {
     const key = await SecureStore.getItemAsync(PRIVILEGED_KEY_KID);
-    console.log('KEY FROM STORE', key);
+
+    if (key === null) {
+      throw new Error('The wallet must be unlocked to enable biometrics');
+    }
+
     await storeInBiometricKeychain(key);
     await SecureStore.setItemAsync(BIOMETRICS_STATUS, ENABLED);
   }

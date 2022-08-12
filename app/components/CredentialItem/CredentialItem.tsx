@@ -1,5 +1,5 @@
 import React, { ComponentProps } from 'react';
-import { Image, View } from 'react-native';
+import { Image, ImageStyle, StyleProp, View } from 'react-native';
 import { ListItem, CheckBox } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -49,7 +49,12 @@ export default function CredentialItem({
     }
 
     if (image) {
-      return <Image source={{ uri: image }} style={mixins.imageIcon} />;
+      return (
+        <Image
+          source={{ uri: image }}
+          style={mixins.imageIcon as StyleProp<ImageStyle>}
+        />
+      );
     }
 
     return (
@@ -65,6 +70,8 @@ export default function CredentialItem({
 
   return (
     <ListItem
+      hasTVPreferredFocus={undefined}
+      tvParallaxProperties={undefined}
       containerStyle={styles.listItemContainer}
       style={styles.listItemOuterContainer}
       onPress={onSelect}
@@ -73,9 +80,12 @@ export default function CredentialItem({
       {...accessibilityProps}
     >
       <ListItem.Content style={styles.listItemContentContainer}>
-        <View style={styles.listItemTopContent}
+        <View
+          style={styles.listItemTopContent}
           accessible={hasBottomElement}
-          importantForAccessibility={hasBottomElement ? 'yes' : 'no-hide-descendants'}
+          importantForAccessibility={
+            hasBottomElement ? 'yes' : 'no-hide-descendants'
+          }
           {...accessibilityProps}
         >
           <LeftContent />
@@ -90,7 +100,12 @@ export default function CredentialItem({
               {subtitle}
             </ListItem.Subtitle>
           </View>
-          {chevron && <ListItem.Chevron />}
+          {chevron && (
+            <ListItem.Chevron
+              hasTVPreferredFocus={undefined}
+              tvParallaxProperties={undefined}
+            />
+          )}
         </View>
         {bottomElement}
       </ListItem.Content>

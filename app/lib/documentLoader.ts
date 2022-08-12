@@ -38,8 +38,7 @@ export const httpClientHandler = {
    * @returns {Promise<{contextUrl: null, document, documentUrl}>} - Resolves
    *   with documentLoader document.
    */
-  /* eslint-disable-next-line */
-  async get(params: any) {
+  async get(params: Record<string, string>): Promise<unknown> {
     if(!params.url.startsWith('http')) {
       throw new Error('NotFoundError');
     }

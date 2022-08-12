@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { View, Text, Image, Linking } from 'react-native';
+import { View, Text, Image, Linking, ImageStyle, StyleProp } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { theme } from '../../styles';
@@ -65,7 +65,7 @@ export default function DefaultCredentialCard({ rawCredentialRecord }: Credentia
           {issuerImage ? (
             <Image
               source={{ uri: issuerImage }}
-              style={styles.dataImage}
+              style={styles.dataImage as StyleProp<ImageStyle>}
               accessible={true}
               accessibilityLabel={issuerName}
               accessibilityRole="image"

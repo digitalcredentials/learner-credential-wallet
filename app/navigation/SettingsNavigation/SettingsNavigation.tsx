@@ -33,6 +33,8 @@ const Stack = createStackNavigator();
 function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
   return (
     <ListItem
+      hasTVPreferredFocus={undefined}
+      tvParallaxProperties={undefined}
       containerStyle={styles.listItemContainer}
       onPress={onPress}
     >
@@ -41,7 +43,10 @@ function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
           {title}
         </ListItem.Title>
       </ListItem.Content>
-      <ListItem.Chevron />
+      <ListItem.Chevron
+        hasTVPreferredFocus={undefined}
+        tvParallaxProperties={undefined}
+      />
     </ListItem>
   );
 }

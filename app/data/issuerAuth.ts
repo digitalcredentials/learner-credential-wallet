@@ -22,11 +22,11 @@ export const issuerAuthRegistry: RegistryRaw<IssuerAuthEntry> = {
       clientId: Platform.select({
         ios: '511371443696-005d8bbrccfs4k3os706701atajej12o.apps.googleusercontent.com',
         android: '511371443696-0gq71qbne41qc102m98qqv8fvs62kr0c.apps.googleusercontent.com'
-      }),
+      }) || '',
       redirectUrl: Platform.select({
         ios: 'com.googleusercontent.apps.511371443696-005d8bbrccfs4k3os706701atajej12o:/oauth2redirect/google',
         android: 'com.googleusercontent.apps.511371443696-0gq71qbne41qc102m98qqv8fvs62kr0c:/oauth2redirect/google'
-      }),
+      }) || '',
       scopes: ['openid', 'profile'],
     },
     'https://kezike-oidc-provider.herokuapp.com': {
