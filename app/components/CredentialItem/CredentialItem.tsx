@@ -42,8 +42,8 @@ export default function CredentialItem({
           checked={selected}
           onPress={onSelect}
           checkedColor={theme.color.buttonPrimary}
-          containerStyle={styles.checkboxContainer}
-          textStyle={styles.checkboxText}
+          containerStyle={mixins.checkboxContainer}
+          textStyle={mixins.checkboxText}
         />
       );
     }

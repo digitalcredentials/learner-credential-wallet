@@ -13,20 +13,24 @@ const shadow = {
   },
 };
 
+const imageIcon = {
+  width: 40,
+  height: 40,
+  borderRadius: 3,
+  marginRight: 12,
+  resizeMode: 'contain',
+};
+
 export default StyleSheet.create({
+  /* Shared mixins */
   shadow,
+  imageIcon,
+
   bodyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.color.backgroundPrimary,
-  },
-  imageIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 3,
-    marginRight: 12,
-    resizeMode: 'contain',
   },
 
   /* Header mixins */
@@ -129,5 +133,25 @@ export default StyleSheet.create({
   /* Credential list mixins */
   credentialListContainer: {
     padding: 16,
+  },
+
+  /* Checkbox mixins */
+  checkboxContainer: {    
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    paddingLeft: 5,
+
+    ...imageIcon,
+    
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkboxText: {
+    margin: 0,
   },
 });
