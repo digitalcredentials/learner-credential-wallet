@@ -10,6 +10,7 @@ import { DidRecord } from './did';
 import { parseWalletContents } from '../lib/parseWallet';
 
 import type { UnlockedWallet, WalletImportResponse } from '../types/wallet';
+import { resetBiometricKeychain, retrieveFromBiometricKeychain, storeInBiometricKeychain } from '../lib/biometrics';
 
 export * from './credential';
 export * from './did';
@@ -25,6 +26,10 @@ const PRIVILEGED_KEY_KID = 'privileged_key';
 const PRIVILEGED_KEY_STATUS_ID = 'privileged_key_status';
 const UNLOCKED = 'locked';
 const LOCKED = 'unlocked';
+
+const BIOMETRICS_STATUS = 'biometrics_status';
+const ENABLED = 'enabled';
+const DISABLED = 'disabled';
 
 const PBKDF2_ITERATIONS = 10000;
 const PBKDF2_SALT_PATH = `${RNFS.DocumentDirectoryPath}/edu-wallet-salt`;
@@ -49,6 +54,45 @@ class DatabaseAccess {
       console.error(err);
       return false;
     }
+  }
+
+  public static async isBiometricsEnabled(): Promise<boolean> {
+    const biometricsStatus = await SecureStore.getItemAsync(BIOMETRICS_STATUS);
+    return biometricsStatus === ENABLED;
+  }
+
+  public static async unlockWithBiometrics(): Promise<void> {
+    if (!(await this.isBiometricsEnabled)) {
+      throw new Error('Biometric authentication is not enabled.');
+    }
+
+    const key = await retrieveFromBiometricKeychain();
+
+    await Promise.all([
+      SecureStore.setItemAsync(PRIVILEGED_KEY_STATUS_ID, UNLOCKED),
+      SecureStore.setItemAsync(PRIVILEGED_KEY_KID, key),
+    ]);
+
+    // Attempt database decryption to see if key is valid
+    try {
+      await DatabaseAccess.instance();
+    } catch (err) {
+      await DatabaseAccess.lock();
+
+      throw err;
+    }
+  }
+
+  public static async enableBiometrics(): Promise<void> {
+    const key = await SecureStore.getItemAsync(PRIVILEGED_KEY_KID);
+    console.log('KEY FROM STORE', key);
+    await storeInBiometricKeychain(key);
+    await SecureStore.setItemAsync(BIOMETRICS_STATUS, ENABLED);
+  }
+
+  public static async disableBiometrics(): Promise<void> {
+    await resetBiometricKeychain();
+    await SecureStore.setItemAsync(BIOMETRICS_STATUS, DISABLED);
   }
 
   /**
@@ -112,6 +156,8 @@ class DatabaseAccess {
     if (await DatabaseAccess.isUnlocked()) {
       throw new Error('Cannot reset unlocked wallet.');
     }
+
+    await DatabaseAccess.disableBiometrics();
 
     await Promise.all([
       RNFS.unlink(`${Realm.defaultPath}.lock`),

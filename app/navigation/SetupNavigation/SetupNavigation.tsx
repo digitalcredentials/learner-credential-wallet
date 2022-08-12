@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, Image, AccessibilityInfo, TextInput } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Button } from 'react-native-elements';
+import { Button, CheckBox } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import appConfig from '../../../app.json';
 import { theme, mixins } from '../../styles';
 import { getAllCredentials, initialize, pollWalletState } from '../../store/slices/wallet';
 import { LoadingIndicator, SafeScreenView, ErrorDialog, AccessibleView, PasswordInput, ConfirmModal } from '../../components';
 import walletImage from '../../assets/wallet.png';
-import { useAccessibilityFocus } from '../../hooks';
+import { useAccessibilityFocus, useAsyncValue } from '../../hooks';
 import { db } from '../../model';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
@@ -22,8 +23,10 @@ import type {
   ForFadeType,
   CustomMethodStepProps,
 } from './SetupNavigation.d';
+
+import { isBiometricsSupported } from '../../lib/biometrics';
 import { performImport, pickWalletFile } from '../../lib/import';
-import { getAllDidRecords} from '../../store/slices/did';
+import { getAllDidRecords } from '../../store/slices/did';
 import { RestoreDetails } from '../SettingsNavigation/SettingsNavigation';
 
 const Stack = createStackNavigator();
@@ -96,7 +99,9 @@ function StartStep({ navigation }: StartStepProps) {
 function PasswordStep({ navigation, route }: PasswordStepProps) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [enableBiometrics, setEnableBiometrics] = useState(false);
   const [errorText, setErrorText] = useState('');
+  const [biometricsSupported] = useAsyncValue(isBiometricsSupported);
   const passwordRef = useRef<TextInput>(null);
 
   const isPasswordValid = password.length >= 10 && password === passwordConfirm;
@@ -121,8 +126,12 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
 
   function _goToNextStep() {
     if (isPasswordValid) {
-      navigation.navigate(route.params.nextStep, { password });
+      navigation.navigate(route.params.nextStep, { password, enableBiometrics });
     }
+  }
+
+  function _onPressBiometrics() {
+    setEnableBiometrics(!enableBiometrics);
   }
 
   return (
@@ -156,10 +165,28 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
           value={passwordConfirm}
           onChangeText={setPasswordConfirm}
           onBlur={_onInputBlur}
-          onSubmitEditing={_goToNextStep}
         />
-        <View style={styles.inputSeparator} />
-        <ErrorDialog message={errorText} />
+        {errorText ? (
+          <>
+            <View style={styles.inputSeparator} />
+            <ErrorDialog message={errorText} />
+          </>
+        ) : null}
+        {biometricsSupported && (
+          <>
+            <View style={styles.inputSeparator} />
+            <TouchableWithoutFeedback onPress={_onPressBiometrics}>
+              <View style={styles.biometricsButton}>
+                <CheckBox
+                  checked={enableBiometrics}
+                  checkedColor={theme.color.buttonPrimary}
+                  containerStyle={[mixins.checkboxContainer, styles.checkboxContainer]}
+                />
+                <Text style={styles.biometricsButtonText}>Use biometrics to unlock</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </>
+        )}
       </View>
       <View style={mixins.buttonGroup}>
         <Button
@@ -195,13 +222,13 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
 }
 
 function CreateStep({ route }: CreateStepProps) {
-  const { password } = route.params;
+  const { password, enableBiometrics } = route.params;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [titleRef, focusTitle] = useAccessibilityFocus<Text>();
 
   function _initializeWallet() {
-    dispatch(initialize(password));
+    dispatch(initialize({ passphrase: password, enableBiometrics }));
   }
 
   useEffect(() => {

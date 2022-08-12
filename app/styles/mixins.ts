@@ -128,6 +128,7 @@ export default StyleSheet.create({
   input: {
     fontSize: theme.fontSize.regular,
     backgroundColor: theme.color.backgroundPrimary,
+    height: 48,
   },
 
   /* Credential list mixins */
