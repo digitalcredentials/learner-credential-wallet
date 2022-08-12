@@ -1,0 +1,16 @@
+diff --git a/node_modules/react-native-keychain/android/build.gradle b/node_modules/react-native-keychain/android/build.gradle
+index ecc3b46..f63f7da 100755
+--- a/node_modules/react-native-keychain/android/build.gradle
++++ b/node_modules/react-native-keychain/android/build.gradle
+@@ -20,6 +20,11 @@ android {
+   compileSdkVersion safeExtGet('compileSdkVersion', 31)
+   buildToolsVersion safeExtGet('buildToolsVersion', '31.0.0')
+ 
++  compileOptions {
++    sourceCompatibility JavaVersion.VERSION_1_8
++    targetCompatibility JavaVersion.VERSION_1_8
++  }
++
+   defaultConfig {
+     minSdkVersion safeExtGet('minSdkVersion', 21)
+     compileSdkVersion safeExtGet('compileSdkVersion', 31)
