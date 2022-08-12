@@ -8,7 +8,12 @@ import type { MenuItemProps } from './MenuItem.d';
 
 export default function MenuItem({ icon, title, onPress }: MenuItemProps): JSX.Element {
   return (
-    <ListItem containerStyle={styles.menuItemContainer} onPress={onPress}>
+    <ListItem
+      containerStyle={styles.menuItemContainer}
+      onPress={onPress}
+      hasTVPreferredFocus={undefined}
+      tvParallaxProperties={undefined}
+    >
       <MaterialIcons
         name={icon}
         size={theme.iconSize}

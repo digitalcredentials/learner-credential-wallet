@@ -13,7 +13,7 @@ export type PasswordInputProps = TextInputProps & {
   label: string;
   value: string;
   onChangeText: (value: string) => void;
-  highlightError: boolean;
+  highlightError?: boolean;
   inputRef?: RefObject<RNTextInput>;
 };
 
@@ -37,7 +37,7 @@ function PasswordInput({
       <TextInput
         ref={_inputRef}
         style={mixins.input}
-        autoCompleteType="off"
+        autoComplete="off"
         textContentType="newPassword"
         passwordRules="minlength: 10;"
         secureTextEntry
