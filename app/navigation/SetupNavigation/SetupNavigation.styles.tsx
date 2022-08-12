@@ -129,4 +129,22 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     textDecorationLine: 'underline',
   },
+  biometricsButton: {
+    ...mixins.shadow,
+    borderRadius: theme.borderRadius,
+    backgroundColor: theme.color.foregroundPrimary,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+  },
+  biometricsButtonText: {
+    color: theme.color.textPrimary,
+    fontFamily: theme.fontFamily.regular,
+    fontSize: theme.fontSize.regular,
+  },
+  checkboxContainer: {
+    height: 24,
+    width: 24,
+    marginRight: 16,
+  },
 });

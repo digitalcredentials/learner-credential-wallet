@@ -4,28 +4,40 @@ import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 
 import appConfig from '../../../app.json';
-import { unlock } from '../../store/slices/wallet';
+import { unlock, unlockWithBiometrics } from '../../store/slices/wallet';
 import { SafeScreenView, ErrorDialog, PasswordInput } from '../../components';
 import walletImage from '../../assets/wallet.png';
 
 import styles from './LoginScreen.styles';
-import { useAccessibilityFocus } from '../../hooks';
+import { useAccessibilityFocus, useAsyncValue } from '../../hooks';
+import { theme } from '../../styles';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getBiometryIconName, isBiometricsSupported } from '../../lib/biometrics';
 
 export default function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState('');
   const [passwordRef, focusPassword] = useAccessibilityFocus<View>();
+  const [biometryIconName] = useAsyncValue(getBiometryIconName);
+  const [biometryEnabled] = useAsyncValue(isBiometricsSupported);
 
   const isError = errorText !== '';
+  const biometryIcon = biometryIconName ? <MaterialCommunityIcons name={biometryIconName} size={theme.iconSize} color={theme.color.textSecondary} /> : undefined;
+  const showBiometricsButton = biometryEnabled && biometryIcon;
 
   async function _unlockWallet() {
     try {
-      AccessibilityInfo.announceForAccessibility('Unlocked Wallet');
       await dispatch(unlock(password));
+      AccessibilityInfo.announceForAccessibility('Unlocked Wallet');
     } catch (err) {
       setErrorText('Incorrect password');
     }
+  }
+
+  async function _unlockWalletWithBiometrics() {
+    await dispatch(unlockWithBiometrics());
+    AccessibilityInfo.announceForAccessibility('Unlocked Wallet');
   }
 
   // Removes error when user begins typing
@@ -57,6 +69,7 @@ export default function LoginScreen(): JSX.Element {
         value={password}
         onChangeText={setPassword}
         onSubmitEditing={_unlockWallet}
+        highlightError={isError}
       />
       <ErrorDialog message={errorText} />
       <Button
@@ -66,7 +79,16 @@ export default function LoginScreen(): JSX.Element {
         title="Unlock Wallet"
         onPress={_unlockWallet}
       />
-
+      {showBiometricsButton && (
+        <Button
+          buttonStyle={styles.buttonClear}
+          titleStyle={styles.buttonClearTitle}
+          containerStyle={styles.buttonClearContainer}
+          title="Use Biometrics"
+          icon={biometryIcon}
+          onPress={_unlockWalletWithBiometrics}
+        />
+      )}
     </SafeScreenView>
   );
 }

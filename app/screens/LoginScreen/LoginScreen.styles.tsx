@@ -18,6 +18,7 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.title,
     color: theme.color.textPrimary,
     padding: 16,
+    textAlign: 'center',
   },
   paragraph: {
     ...mixins.paragraphText,
@@ -45,5 +46,20 @@ export default StyleSheet.create({
   buttonPrimaryContainer: {
     width: '100%',
     marginTop: 20,
+  },
+  buttonClear: {
+    ...mixins.button,
+    backgroundColor: theme.color.transparent,
+    marginVertical: 8,
+  },
+  buttonClearContainer: {
+    width: '100%',
+  },
+  buttonClearTitle: {
+    ...mixins.buttonTitle,
+    marginLeft: 12,
+    color: theme.color.textSecondary,
+    fontFamily: theme.fontFamily.regular,
+    textDecorationLine: 'underline',
   },
 });

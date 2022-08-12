@@ -14,6 +14,12 @@ export type WalletState = {
   rawCredentialRecords: CredentialRecordRaw[];
 }
 
+type InitializeParams = {
+  passphrase: string;
+  enableBiometrics: boolean;
+}
+
+
 const initialState: WalletState = {
   isUnlocked: null,
   isInitialized: null,
@@ -42,9 +48,20 @@ const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string,
   await dispatch(getAllCredentials());
 });
 
-const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string, { dispatch }) => {
+const unlockWithBiometrics = createAsyncThunk('walletState/unlockWithBiometrics', async (_, { dispatch }) => {
+  await db.unlockWithBiometrics();
+  await dispatch(getAllDidRecords());
+  await dispatch(getAllCredentials());
+});
+
+const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics }: InitializeParams, { dispatch }) => {
   await db.initialize(passphrase);
   await db.unlock(passphrase);
+
+  if (enableBiometrics) {
+    await db.enableBiometrics();
+  }
+
   await dispatch(mintDid());
 });
 
@@ -64,6 +81,15 @@ const walletSlice = createSlice({
     }));
 
     builder.addCase(unlock.rejected, (_, action) => {
+      throw action.error;
+    });
+
+    builder.addCase(unlockWithBiometrics.fulfilled, (state) => ({
+      ...state,
+      isUnlocked: true,
+    }));
+
+    builder.addCase(unlockWithBiometrics.rejected, (_, action) => {
       throw action.error;
     });
 
@@ -98,6 +124,7 @@ const walletSlice = createSlice({
 export default walletSlice.reducer;
 export {
   unlock,
+  unlockWithBiometrics,
   lock,
   initialize,
   reset,

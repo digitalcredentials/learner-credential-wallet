@@ -6,6 +6,7 @@ export type SetupNavigationParamList = {
   StartStep: undefined;
   CreateStep: {
     password: string;
+    enableBiometrics: boolean;
   };
   PasswordStep: {
     nextStep: keyof SetupNavigationParamList;

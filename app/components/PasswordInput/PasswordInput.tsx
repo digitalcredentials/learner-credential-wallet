@@ -13,6 +13,7 @@ export type PasswordInputProps = TextInputProps & {
   label: string;
   value: string;
   onChangeText: (value: string) => void;
+  highlightError: boolean;
   inputRef?: RefObject<RNTextInput>;
 };
 
@@ -21,6 +22,7 @@ function PasswordInput({
   value,
   onChangeText,
   inputRef,
+  highlightError,
   ...textInputProps
 }: PasswordInputProps, ref: Ref<View>): JSX.Element {
   const _inputRef = inputRef || useRef<RNTextInput>(null);
@@ -41,7 +43,7 @@ function PasswordInput({
         secureTextEntry
         autoCorrect={false}
         value={value}
-        outlineColor={theme.color.textPrimary}
+        outlineColor={highlightError ? theme.color.error : theme.color.textPrimary}
         selectionColor={theme.color.foregroundPrimary}
         theme={{ colors: {
           placeholder: theme.color.textPrimary,
