@@ -14,6 +14,7 @@ import { JsonLdDocumentLoader } from 'jsonld-document-loader';
 import { CryptoLD } from 'crypto-ld';
 import * as didWeb from '@interop/did-web-resolver';
 import {httpClient} from '@digitalcredentials/http-client';
+import { parseResponseBody } from './parseResponse';
 
 const cryptoLd = new CryptoLD();
 cryptoLd.use(Ed25519VerificationKey2020);
@@ -44,12 +45,16 @@ export const httpClientHandler = {
     }
     let result;
     try {
-      result = await httpClient.get(params.url);
+      const headers: Record<string, string> = {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      };
+      result = await fetch(params.url, { headers });
     } catch(e) {
       throw new Error('NotFoundError');
     }
 
-    return result.data;
+    return parseResponseBody(result);
   }
 };
 
