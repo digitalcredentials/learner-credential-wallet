@@ -385,7 +385,7 @@ PODS:
     - React
   - RNShare (7.3.3):
     - React-Core
-  - RNSVG (12.4.0):
+  - RNSVG (12.4.3):
     - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
@@ -696,7 +696,7 @@ SPEC CHECKSUMS:
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSecureRandom: 0dcee021fdb3d50cd5cee5db0ebf583c42f5af0e
   RNShare: 3185c074441b7e8897014d95ba982434a0a024a1
-  RNSVG: 3dd44d99d1c18e1342aee4bfa53ab3f6a8c4865f
+  RNSVG: f3b60aeeaa81960e2e0536c3a9eef50b667ef3a9
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
   UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
