@@ -63,8 +63,8 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
         verified={details[LogId.IssuerDIDResolves]}
       />
       <StatusItem
-        positiveText="Has not been revoked"
-        negativeText="Has been revoked"
+        positiveText="Has not been revoked by issuer"
+        negativeText="Has been revoked by issuer"
         verified={details[LogId.RevocationStatus]}
       />
       <StatusItem
