@@ -79,7 +79,17 @@ export type Credential = {
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
   readonly expirationDate?: string;      // https://w3c.github.io/vc-data-model/#expiration
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
+  readonly credentialStatus?: CredentialStatus;
   readonly proof?: Proof;                // https://w3c.github.io/vc-data-model/#proofs-signatures
+}
+
+// https://w3c-ccg.github.io/vc-status-list-2021
+export type CredentialStatus = {
+  readonly id: string;
+  readonly type: string | string[];
+  readonly statusPurpose: string;
+  readonly statusListIndex: string;
+  readonly statusListCredential: string;
 }
 
 export enum CredentialError {

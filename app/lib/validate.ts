@@ -8,6 +8,7 @@ import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from './documentLoader';
 import { registries } from './registry';
+import { extractCredentialsFrom } from './verifiableObject';
 
 const documentLoader = securityLoader().build();
 const suite = new Ed25519Signature2020();
@@ -36,13 +37,15 @@ export async function verifyPresentation(
   unsignedPresentation = true,
 ): Promise<VerifyResponse> {
   try {
+    const hasRevocation = extractCredentialsFrom(presentation)?.find(vc => vc.credentialStatus);
     const result = await vc.verify({
       presentation,
       presentationPurpose,
       suite,
       documentLoader,
       unsignedPresentation,
-      checkStatus
+      // Only check revocation status if any VC has a 'credentialStatus' property
+      checkStatus: hasRevocation ? checkStatus : undefined
     });
 
     console.log(JSON.stringify(result));
@@ -64,11 +67,13 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
   }
 
   try {
+    const hasRevocation = extractCredentialsFrom(credential)?.find(vc => vc.credentialStatus);
     const result = await vc.verifyCredential({
       credential,
       suite,
       documentLoader,
-      checkStatus
+      // Only check revocation status if VC has a 'credentialStatus' property
+      checkStatus: hasRevocation ? checkStatus : undefined
     });
 
     return result;
