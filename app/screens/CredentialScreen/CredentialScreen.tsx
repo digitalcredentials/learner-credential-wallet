@@ -21,6 +21,9 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const { credential } = rawCredentialRecord;
   const { title } = credentialRenderInfo(credential);
 
+  // PROFILE TODO: Pull profile name from credential's associated profile
+  const profileName = 'Default';
+
 
   function onPressShare() {
     navigation.navigate('ShareCredentialScreen', { rawCredentialRecord});
@@ -80,7 +83,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         confirmText="Delete"
         accessibilityFocusContent
       >
-        <Text style={styles.modalBodyText}>
+        <Text style={mixins.modalBodyText}>
           Are you sure you want to remove {title} from your wallet?
         </Text>
       </ConfirmModal>
@@ -106,6 +109,11 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
             <View style={styles.container}>
               <CredentialCard rawCredentialRecord={rawCredentialRecord} />
               <VerificationCard credential={credential} isButton showDetails={false}/>
+              <View style={styles.profileContainer}>
+                <Text style={mixins.paragraphText}>
+                  <Text style={styles.textBold}>Profile:</Text> {profileName}
+                </Text>
+              </View>
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>

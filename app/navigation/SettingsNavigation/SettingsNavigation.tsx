@@ -1,29 +1,33 @@
 import React, { useState } from 'react';
-import { View, Image, Linking, ScrollView, AccessibilityInfo } from 'react-native';
+import { View, Image, Linking, AccessibilityInfo } from 'react-native';
 import { Text, Button, ListItem } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
-import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import DeviceInfo from 'react-native-device-info';
 
 import appConfig from '../../../app.json';
 import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
-import { NavHeader, ConfirmModal } from '../../components';
+import { NavHeader, ConfirmModal, LoadingIndicatorDots } from '../../components';
 import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
 import { getAllDidRecords } from '../../store/slices/did';
 import {
   SettingsItemProps,
   SettingsProps,
   RestoreProps,
-  RestoreDetailsProps,
   BackupProps,
   AboutProps,
 } from '../';
 import { exportWallet } from '../../lib/export';
 import { importWallet } from '../../lib/import';
+import { DetailsScreen, ManageProfilesScreen, ViewSourceScreen } from '../../screens';
+import { useResetNavigationOnBlur } from '../../hooks';
+import { SettingsNavigationProps, navigationRef } from '../';
+import { CredentialRecord } from '../../model';
+import mockCredential from '../../mock/credential';
+import { stageCredentials } from '../../store/slices/credentialFoyer';
 
 const Stack = createStackNavigator();
 
@@ -56,15 +60,31 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     dispatch(lock());
   }
 
+  async function addDevCredential() {
+    dispatch(stageCredentials([mockCredential]));
+    dispatch(getAllCredentials());
+
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('HomeNavigation', { 
+        screen: 'AddCredentialNavigation',
+        params: {
+          screen: 'ChooseProfileScreen',
+        }, 
+      });
+    }
+  }
+
   return (
     <>
       <NavHeader title="Settings" />
       <View style={styles.settingsContainer}>
+        <SettingsItem title="Manage profiles" onPress={() => navigation.navigate('ManageProfilesScreen')} />
         <SettingsItem title="Restore" onPress={() => navigation.navigate('Restore')} />
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={lockWallet} />
+        <SettingsItem title="Add Credential (Dev)" onPress={addDevCredential} />
       </View>
       <ConfirmModal
         open={resetModalOpen}
@@ -98,7 +118,10 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
 
   async function _goToDetails() {
     setModalIsOpen(false);
-    navigation.navigate('RestoreDetails', { importReport });
+    navigation.navigate('DetailsScreen', {
+      header: 'Restore Details',
+      details: importReport,
+    });
   }
 
   const reportSummary = Object.keys(importReport).join('\n');
@@ -118,9 +141,9 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
           <>
             <Text style={styles.reportSummary}>{reportSummary}</Text>
             <Button
-              buttonStyle={styles.buttonClear}
-              titleStyle={styles.buttonClearTitle}
-              containerStyle={styles.buttonClearContainer}
+              buttonStyle={mixins.buttonClear}
+              titleStyle={[mixins.buttonClearTitle, styles.underline]}
+              containerStyle={mixins.buttonClearContainer}
               title="Details"
               onPress={_goToDetails}
             />
@@ -128,9 +151,7 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
         ) : (
           <>
             <Text style={styles.reportSummary}>This will only take a moment.</Text>
-            <View style={styles.loadingContainer}>
-              <AnimatedEllipsis style={styles.loadingDots} minOpacity={0.4} animationDelay={200}/>
-            </View>
+            <LoadingIndicatorDots />
           </>
         )}
       </ConfirmModal>
@@ -153,28 +174,6 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
           }
         />
       </View>
-    </>
-  );
-}
-
-function RestoreDetails({ navigation, route }: RestoreDetailsProps): JSX.Element {
-  const { importReport } = route.params;
-
-  return (
-    <>
-      <NavHeader goBack={navigation.goBack} title="Restore Details" />
-      <ScrollView style={styles.bodyContainer}>
-        {Object.entries(importReport).map(([sectionTitle, items]) => (
-          <View style={styles.sectionContainer} key={sectionTitle}>
-            <Text style={styles.header}>{sectionTitle}</Text>
-            {items.map((item, i) => (
-              <Text key={`${i}-${item}`} style={styles.bulletItem}>
-                ●  {item}
-              </Text>
-            ))}
-          </View>
-        ))}
-      </ScrollView>
     </>
   );
 }
@@ -242,15 +241,19 @@ function About({ navigation }: AboutProps): JSX.Element {
   );
 }
 
-export default function SettingsNavigation(): JSX.Element {
+export default function SettingsNavigation({ navigation }: SettingsNavigationProps): JSX.Element {
+  useResetNavigationOnBlur(navigation);
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
       initialRouteName="Settings"
     >
       <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="ManageProfilesScreen" component={ManageProfilesScreen} />
+      <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+      <Stack.Screen name="ViewSourceScreen" component={ViewSourceScreen} />
       <Stack.Screen name="Restore" component={Restore} />
-      <Stack.Screen name="RestoreDetails" component={RestoreDetails} />
       <Stack.Screen name="Backup" component={Backup} />
       <Stack.Screen name="About" component={About} />
     </Stack.Navigator>

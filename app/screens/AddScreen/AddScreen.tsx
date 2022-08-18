@@ -33,7 +33,7 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
     if (credentials) {
       setRequestModalIsOpen(false);
       dispatch(stageCredentials(credentials));
-      navigation.navigate('ApproveCredentialsScreen');
+      navigation.navigate('ChooseProfileScreen');
     }
   }, [credentials, loading]);
 
@@ -76,6 +76,13 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
               color={theme.color.iconInactive}
             />
           }
+        />
+        <Button
+          title="Choose Profile (Dev)"
+          buttonStyle={mixins.buttonIcon}
+          containerStyle={mixins.buttonIconContainer}
+          titleStyle={mixins.buttonIconTitle}
+          onPress={() => navigation.navigate('ChooseProfileScreen')}
         />
       </View>
     </>

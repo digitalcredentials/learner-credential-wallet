@@ -9,11 +9,13 @@ import type { MenuItemProps } from './MenuItem.d';
 export default function MenuItem({ icon, title, onPress }: MenuItemProps): JSX.Element {
   return (
     <ListItem containerStyle={styles.menuItemContainer} onPress={onPress}>
-      <MaterialIcons
-        name={icon}
-        size={theme.iconSize}
-        color={theme.color.iconInactive}
-      />
+      { icon && (
+        <MaterialIcons
+          name={icon}
+          size={theme.iconSize}
+          color={theme.color.iconInactive}
+        />
+      )}
       <ListItem.Content>
         <ListItem.Title style={styles.menuItemTitle}>{title}</ListItem.Title>
       </ListItem.Content>

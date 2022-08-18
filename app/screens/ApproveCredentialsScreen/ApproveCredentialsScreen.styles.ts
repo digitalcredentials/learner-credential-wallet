@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-
 import { mixins, theme } from '../../styles';
 
 export default StyleSheet.create({
@@ -7,6 +6,10 @@ export default StyleSheet.create({
     ...mixins.headerText,
     marginTop: 8,
     marginBottom: 4,
+  },
+  container: {
+    padding: 16,
+    flex: 1,
   },
   doneButton: {
     backgroundColor: theme.color.transparent,
@@ -17,5 +20,14 @@ export default StyleSheet.create({
     lineHeight: 17,
     color: theme.color.textHeader,
     fontSize: theme.fontSize.regular,
+  },
+  profileText: {
+    ...mixins.paragraphText,
+  },
+  profileTextBold: {
+    fontFamily: theme.fontFamily.bold,
+  },
+  listHeader: {
+    marginVertical: 8,
   },
 });

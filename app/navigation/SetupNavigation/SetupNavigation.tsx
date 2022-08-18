@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Image, AccessibilityInfo, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, Image, AccessibilityInfo } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import appConfig from '../../../app.json';
 import { theme, mixins } from '../../styles';
 import { initialize } from '../../store/slices/wallet';
-import { LoadingIndicator, SafeScreenView, ErrorDialog, AccessibleView, PasswordInput } from '../../components';
+import { LoadingIndicator, SafeScreenView, AccessibleView, PasswordForm } from '../../components';
 import walletImage from '../../assets/wallet.png';
 import { useAccessibilityFocus } from '../../hooks';
 
@@ -77,33 +77,10 @@ function StartStep({ navigation }: StartStepProps) {
 }
 
 function PasswordStep({ navigation }: PasswordStepProps) {
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [errorText, setErrorText] = useState('');
-  const passwordRef = useRef<TextInput>(null);
-
-  const isPasswordValid = password.length >= 10 && password === passwordConfirm;
-
-  useEffect(() => passwordRef.current?.focus(), []);
-
-  useEffect(() => {
-    if (isPasswordValid) {
-      setErrorText('');
-    }
-  }, [isPasswordValid]);
-
-  function _onInputBlur() {
-    if (password && passwordConfirm) {
-      if (password.length < 10)
-        setErrorText('Password must contain at least 10 characters');
-      else if (password !== passwordConfirm)
-        setErrorText('Passwords must match');
-      else setErrorText('');
-    }
-  }
+  const [password, setPassword] = useState<string>();
 
   function _goToNextStep() {
-    if (isPasswordValid) {
+    if (password !== undefined) {
       navigation.navigate('CreateStep', { password });
     }
   }
@@ -125,25 +102,7 @@ function PasswordStep({ navigation }: PasswordStepProps) {
         Setup a password to secure your wallet. You will not be able to recover
         a lost password.
       </Text>
-      <View style={styles.inputGroup}>
-        <PasswordInput
-          label="Password"
-          value={password}
-          onChangeText={setPassword}
-          onBlur={_onInputBlur}
-          inputRef={passwordRef}
-        />
-        <View style={styles.inputSeparator} />
-        <PasswordInput
-          label="Confirm Password"
-          value={passwordConfirm}
-          onChangeText={setPasswordConfirm}
-          onBlur={_onInputBlur}
-          onSubmitEditing={_goToNextStep}
-        />
-        <View style={styles.inputSeparator} />
-        <ErrorDialog message={errorText} />
-      </View>
+      <PasswordForm onChangePassword={setPassword} style={styles.inputGroup} focusOnMount />
       <View style={mixins.buttonGroup}>
         <Button
           buttonStyle={[mixins.button, styles.buttonClear]}
@@ -159,8 +118,8 @@ function PasswordStep({ navigation }: PasswordStepProps) {
           titleStyle={mixins.buttonTitle}
           title="Next"
           onPress={_goToNextStep}
-          disabled={!isPasswordValid}
-          disabledStyle={styles.buttonDisabled}
+          disabled={!password}
+          disabledStyle={mixins.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
           iconRight
           icon={
@@ -219,7 +178,7 @@ function CreateStep({ route }: CreateStepProps) {
           title="Take Me To My Wallet"
           onPress={_initializeWallet}
           disabled={loading}
-          disabledStyle={styles.buttonDisabled}
+          disabledStyle={mixins.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
         />
       </View>

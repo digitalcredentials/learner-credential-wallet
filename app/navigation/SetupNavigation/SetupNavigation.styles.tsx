@@ -69,9 +69,6 @@ export default StyleSheet.create({
   buttonClearTitle: {
     color: theme.color.textSecondary,
   },
-  buttonDisabled: {
-    backgroundColor: theme.color.buttonDisabled,
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -80,8 +77,5 @@ export default StyleSheet.create({
     flex: 1,
     width: '100%',
     paddingTop: 40,
-  },
-  inputSeparator: {
-    height: 20,
   },
 });
