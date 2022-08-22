@@ -15,6 +15,7 @@ export type CredentialRecordRaw = {
   readonly updatedAt: Date;
   readonly rawCredential: string;
   readonly credential: Credential;
+  readonly profileRecordId: ObjectID;
 }
 
 export class CredentialRecord implements CredentialRecordRaw {
@@ -22,6 +23,7 @@ export class CredentialRecord implements CredentialRecordRaw {
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
   readonly rawCredential!: string;
+  readonly profileRecordId!: ObjectID;
 
   get credential(): Credential {
     return JSON.parse(this.rawCredential) as Credential;
@@ -29,13 +31,14 @@ export class CredentialRecord implements CredentialRecordRaw {
 
   static schema: Realm.ObjectSchema = {
     name: 'CredentialRecord',
+    primaryKey: '_id',
     properties: {
       _id: 'objectId',
-      rawCredential: 'string',
       createdAt: 'date',
       updatedAt: 'date',
-    },
-    primaryKey: '_id',
+      rawCredential: 'string',
+      profileRecordId: 'objectId',
+    }
   };
 
   asRaw(): CredentialRecordRaw {
@@ -45,48 +48,50 @@ export class CredentialRecord implements CredentialRecordRaw {
       updatedAt: this.updatedAt,
       rawCredential: this.rawCredential,
       credential: this.credential,
+      profileRecordId: this.profileRecordId,
     };
   }
 
-  static rawFrom(credential: Credential): CredentialRecordRaw {
+  static rawFrom({ credential, profileRecordId }: AddCredentialRecordParams): CredentialRecordRaw {
     return {
       _id: new ObjectID(),
       createdAt: new Date(),
       updatedAt: new Date(),
       rawCredential: JSON.stringify(credential),
       credential,
+      profileRecordId,
     };
   }
 
-  static async addCredential(credential: CredentialRecordRaw): Promise<void> { 
-    await db.withInstance((instance) => {
-      instance.write(() => {
-        instance.create(CredentialRecord.schema.name, credential);
-      });
-    });
+  static async addCredentialRecord(params: AddCredentialRecordParams): Promise<CredentialRecordRaw> { 
+    const rawCredentialRecord = CredentialRecord.rawFrom(params);
+
+    return db.withInstance((instance) => 
+      instance.write(() => 
+        instance.create<CredentialRecord>(CredentialRecord.schema.name, rawCredentialRecord).asRaw(),
+      ),
+    );
   }
 
-  static getAllCredentials(): Promise<CredentialRecordRaw[]> {
+  static getAllCredentialRecords(): Promise<CredentialRecordRaw[]> {
     return db.withInstance((instance) => {
       const results = instance.objects<CredentialRecord>(CredentialRecord.schema.name);
-
-      // Results is not an array, but supports map only if it has length... :/
-      if (results.length) {
-        return results.map((record) => record.asRaw());
-      }
-
-      return [];
+      return results.length ? results.map((record) => record.asRaw()) : [];
     });
   }
 
-  static async deleteCredential(rawRecord: CredentialRecordRaw): Promise<void> {
+  static async deleteCredentialRecord(rawCredentialRecord: CredentialRecordRaw): Promise<void> {
     await db.withInstance((instance) => {
-      const objectId = new ObjectID(rawRecord._id);
-      const credentialRecord = instance.objectForPrimaryKey(CredentialRecord.schema.name, objectId);
+      const credentialRecord = instance.objectForPrimaryKey(CredentialRecord.schema.name, new ObjectID(rawCredentialRecord._id));
 
       instance.write(() => {
         instance.delete(credentialRecord);
       });
     });
   }
+}
+
+export type AddCredentialRecordParams = {
+  credential: Credential;
+  profileRecordId: ObjectID;
 }
