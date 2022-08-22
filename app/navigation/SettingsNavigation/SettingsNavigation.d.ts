@@ -14,7 +14,8 @@ export type SettingsNavigationParamList = {
   ProfileQRScreen: QRScreenParams;
   DetailsScreen: {
     header: string;
-    details: Record<string, string[]>
+    details: Record<string, string[]>;
+    goBack?: () => void;
   };
   ViewSourceScreen: {
     data: unknown;

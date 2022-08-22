@@ -7,11 +7,11 @@ import styles from './DetailsScreen.styles';
 import { DetailsScreenProps } from './DetailsScreen.d';
 
 export default function DetailsScreen({ navigation, route }: DetailsScreenProps): JSX.Element {
-  const { header, details } = route.params;
+  const { header, details, goBack = navigation.goBack } = route.params;
 
   return (
     <>
-      <NavHeader goBack={navigation.goBack} title={header} />
+      <NavHeader goBack={goBack} title={header} />
       <ScrollView style={styles.bodyContainer}>
         {Object.entries(details).map(([sectionTitle, items]) => (
           <View style={styles.sectionContainer} key={sectionTitle}>
