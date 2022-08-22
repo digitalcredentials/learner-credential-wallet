@@ -4,6 +4,7 @@ import {canonicalize as jcsCanonicalize} from 'json-canonicalize';
 
 import { CredentialRecord } from '../../model';
 import type { Credential } from '../../types/credential';
+import { RootState } from '..';
 
 export enum ApprovalStatus {
   Pending,
@@ -56,7 +57,7 @@ function comparableStringFor(credential: Credential): string {
 }
 
 const stageCredentials = createAsyncThunk('credentialFoyer/stageCredentials', async (credentials: Credential[]) => {
-  const existingCredentialRecords = await CredentialRecord.getAllCredentials();
+  const existingCredentialRecords = await CredentialRecord.getAllCredentialRecords();
   const existingCredentialStrings = existingCredentialRecords.map(({ credential }) => comparableStringFor(credential));
 
   const pendingCredentials = credentials.map((credential) => {
@@ -113,3 +114,5 @@ const credentialFoyer = createSlice({
 export default credentialFoyer.reducer;
 export const { clearFoyer, setCredentialApproval } = credentialFoyer.actions;
 export { stageCredentials };
+
+export const selectPendingCredentials = (state: RootState): PendingCredential[] => state.credentialFoyer.pendingCredentials;

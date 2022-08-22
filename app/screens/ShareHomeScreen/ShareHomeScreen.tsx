@@ -3,22 +3,19 @@ import { View, FlatList } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
-import { RootState } from '../../store';
-import { WalletState } from '../../store/slices/wallet';
 import { CredentialItem, NavHeader } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { mixins } from '../../styles';
 import styles from './ShareHomeScreen.styles';
 import type { RenderItemProps } from './ShareHomeScreen.d';
 import type { ShareHomeScreenProps } from '../../navigation';
+import { selectRawCredentialRecords } from '../../store/slices/credential';
 
 export default function ShareHomeScreen({
   navigation,
 }: ShareHomeScreenProps): JSX.Element {
   const [selected, setSelected] = useState<number[]>([]);
-  const { rawCredentialRecords } = useSelector<RootState, WalletState>(
-    ({ wallet }) => wallet,
-  );
+  const rawCredentialRecords = useSelector(selectRawCredentialRecords);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

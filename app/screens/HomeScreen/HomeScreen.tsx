@@ -5,13 +5,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 
-import { WalletState } from '../../store/slices/wallet';
-import { RootState } from '../../store';
 import { CredentialItem, NavHeader, ConfirmModal } from '../../components';
 import { theme, mixins } from '../../styles';
 import { navigationRef } from '../../navigation';
-import { CredentialRecord } from '../../model';
-import { getAllCredentials } from '../../store/slices/wallet';
 
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 
@@ -19,11 +15,10 @@ import styles from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 import { CredentialRecordRaw } from '../../model';
 import { useShareCredentials } from '../../hooks';
+import { deleteCredential, selectRawCredentialRecords } from '../../store/slices/credential';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
-  const { rawCredentialRecords } = useSelector<RootState, WalletState>(
-    ({ wallet }) => wallet,
-  );
+  const rawCredentialRecords = useSelector(selectRawCredentialRecords);
   const [itemToDelete, setItemToDelete] = useState<CredentialRecordRaw|null>(null);
   const dispatch = useDispatch();
   const share = useShareCredentials();
@@ -121,8 +116,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
 
   async function deleteItem() {
     if (itemToDelete === null) return;
-    await CredentialRecord.deleteCredential(itemToDelete);
-    dispatch(getAllCredentials());
+    dispatch(deleteCredential(itemToDelete));
     setItemToDelete(null);
     AccessibilityInfo.announceForAccessibility('Credential Deleted');
   }

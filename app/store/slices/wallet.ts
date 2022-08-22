@@ -1,29 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { RootState, getAllRecords } from '..';
+import { db } from '../../model';
+import { createProfile } from './profile';
 
-import { getAllDidRecords, mintDid } from './did';
-import {
-  db,
-  CredentialRecord,
-  CredentialRecordRaw,
-} from '../../model';
+const INITIAL_PROFILE_NAME = 'Default';
 
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
   needsRestart: boolean;
-  rawCredentialRecords: CredentialRecordRaw[];
 }
 
 const initialState: WalletState = {
   isUnlocked: null,
   isInitialized: null,
   needsRestart: false,
-  rawCredentialRecords: [],
 };
-
-const getAllCredentials = createAsyncThunk('walletState/getAllCredentials', async () => ({
-  rawCredentialRecords: await CredentialRecord.getAllCredentials(),
-}));
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
   return {
@@ -38,14 +30,14 @@ const lock = createAsyncThunk('walletState/lock', async () => {
 
 const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string, { dispatch }) => {
   await db.unlock(passphrase);
-  await dispatch(getAllDidRecords());
-  await dispatch(getAllCredentials());
+  dispatch(getAllRecords());
 });
 
 const initialize = createAsyncThunk('walletState/initialize', async (passphrase: string, { dispatch }) => {
   await db.initialize(passphrase);
   await db.unlock(passphrase);
-  await dispatch(mintDid());
+  await dispatch(createProfile({ profileName: INITIAL_PROFILE_NAME }));
+  dispatch(getAllRecords());
 });
 
 const reset = createAsyncThunk('walletState/reset', async () => {
@@ -87,11 +79,6 @@ const walletSlice = createSlice({
       ...state,
       ...action.payload,
     }));
-
-    builder.addCase(getAllCredentials.fulfilled, (state, action) => ({
-      ...state,
-      ...action.payload,
-    }));
   },
 });
 
@@ -102,5 +89,6 @@ export {
   initialize,
   reset,
   pollWalletState,
-  getAllCredentials,
 };
+
+export const selectWalletState = (state: RootState): WalletState => state.wallet;

@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { requestCredential, CredentialRequestParams } from '../lib/request';
-import { RootState } from '../store';
-import { DidState } from '../store/slices/did';
+import { selectRawDidRecords } from '../store/slices/did';
 import { Credential } from '../types/credential';
 
 export type RequestPayload = {
@@ -15,13 +14,13 @@ export type RequestPayload = {
 
 type Params = Record<string, unknown>
 
-function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
+export function isCredentialRequestParams(params?: Params): params is CredentialRequestParams {
   const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
   return issuer !== undefined && vc_request_url !== undefined;
 }
 
 export function useRequestCredentials(routeParams?: Params): RequestPayload {
-  const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
+  const rawDidRecords = useSelector(selectRawDidRecords);
   const [ didRecord ] = rawDidRecords;
 
   const [credentials, setCredentials] = useState<Credential[] | undefined>();
