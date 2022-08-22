@@ -5,7 +5,7 @@ export default StyleSheet.create({
   menuContainer: {
     top: 0,
     right: -10,
-    width: 140,
+    width: 180,
     borderRadius: 3,
     position: 'absolute',
     overflow: 'hidden',
