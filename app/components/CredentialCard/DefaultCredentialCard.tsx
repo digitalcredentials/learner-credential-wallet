@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme } from '../../styles';
 import styles from './CredentialCard.styles';
 import type { CredentialCardProps } from './CredentialCard.d';
+import { CredentialStatusBadges } from '../';
 
 const NO_URL = 'None';
 const DATE_FORMAT = 'MMM D, YYYY';
@@ -54,6 +55,10 @@ export default function DefaultCredentialCard({ rawCredentialRecord }: Credentia
   return (
     <View style={styles.credentialContainer}>
       <View style={styles.dataContainer}>
+        <CredentialStatusBadges 
+          rawCredentialRecord={rawCredentialRecord} 
+          badgeBackgroundColor={theme.color.backgroundPrimary} 
+        />
         <Text style={styles.header} accessibilityRole="header">{title}</Text>
         <Text style={styles.dataLabel}>Issuer</Text>
         <View style={styles.flexRow}>
