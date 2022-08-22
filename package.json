@@ -40,6 +40,7 @@
     "big-integer": "^1.6.49",
     "bson": "^4.4.1",
     "credentials-context": "^2.0.0",
+    "crypto-js": "^4.1.1",
     "crypto-ld": "^6.0.0",
     "did-context": "^3.1.1",
     "ed25519-signature-2020-context": "^1.1.0",

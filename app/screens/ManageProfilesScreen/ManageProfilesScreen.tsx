@@ -30,7 +30,9 @@ export default function ManageProfilesScreen({ navigation }: ManageProfilesScree
     }
   }
 
-  async function onPressAddExisting() {}
+  async function onPressAddExisting() {
+    navigation.navigate('AddExistingProfileScreen');
+  }
 
   const ListHeader = (
     <View>

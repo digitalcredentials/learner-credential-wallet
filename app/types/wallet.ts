@@ -12,14 +12,6 @@ export type ParsedWalletContents = {
   profileMetadata?: ProfileMetadata;
 };
 
-export type WalletImportResponse = {
-  success: string[];
-  duplicate: string[];
-  failed: string[];
-};
-
-export type WalletImportReport = Record<string, string[]>;
-
 export type UnlockedWallet = {
   readonly '@context': string[];
   readonly id: string;
