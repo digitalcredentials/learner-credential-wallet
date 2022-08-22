@@ -1,15 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text } from 'react-native';
-import { useAsyncCallback } from 'react-async-hook';
 import { TextInput } from 'react-native-paper';
-import { Button, CheckBox } from 'react-native-elements';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Button } from 'react-native-elements';
 
-import { MoreMenuButton, MenuItem, ConfirmModal, PasswordForm, LoadingIndicatorDots } from '../';
+import { MoreMenuButton, MenuItem, ConfirmModal, BackupItemModal } from '../';
 import styles from './ProfileItem.styles';
 import { ActionModalProps, ProfileItemProps } from './ProfileItem.d';
 import { mixins, theme } from '../../styles';
 import { navigationRef } from '../../navigation';
+import { useDispatch } from 'react-redux';
+import { deleteProfile, updateProfile } from '../../store/slices/profile';
+import { exportProfile } from '../../lib/export';
 
 enum ActiveModal {
   Rename,
@@ -17,7 +18,7 @@ enum ActiveModal {
   Backup,
 }
 
-export default function ProfileItem({ profile }: ProfileItemProps): JSX.Element {
+export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX.Element {
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
 
   function goToSource() {
@@ -27,7 +28,7 @@ export default function ProfileItem({ profile }: ProfileItemProps): JSX.Element 
         params: {
           screen: 'ViewSourceScreen',
           params: {
-            data: profile
+            data: rawProfileRecord
           },
         },
       });
@@ -40,7 +41,7 @@ export default function ProfileItem({ profile }: ProfileItemProps): JSX.Element 
     if (activeModal === null) return null;
 
     const actionProps = { 
-      profile,
+      rawProfileRecord,
       onRequestClose: () => setActiveModal(null)
     };
 
@@ -56,9 +57,9 @@ export default function ProfileItem({ profile }: ProfileItemProps): JSX.Element 
     <>
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.titleText}>{profile.name}</Text>
+          <Text style={styles.titleText}>{rawProfileRecord.profileName}</Text>
           <Text style={styles.subtitleText}>
-            {profile.credentials.length} {credentialUnit(profile.credentials.length)}
+            {rawProfileRecord.rawCredentialRecords.length} {credentialUnit(rawProfileRecord.rawCredentialRecords.length)}
           </Text>
         </View>
         <MoreMenuButton>
@@ -73,12 +74,12 @@ export default function ProfileItem({ profile }: ProfileItemProps): JSX.Element 
   );
 }
 
-function RenameModal({ profile, onRequestClose }: ActionModalProps): JSX.Element {
-  const [newName, setNewName] = useState(profile.name);
+function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+  const [newName, setNewName] = useState(rawProfileRecord.profileName);
+  const dispatch = useDispatch();
 
-  function onSave() {
-    // PROFILE TODO: Add profile rename method
-
+  async function onSave() {
+    await dispatch(updateProfile({ ...rawProfileRecord, profileName: newName }));
     onRequestClose();
   }
 
@@ -112,72 +113,25 @@ function RenameModal({ profile, onRequestClose }: ActionModalProps): JSX.Element
   );
 }
 
-function BackupModal({ profile, onRequestClose }: ActionModalProps): JSX.Element {
-  const [enablePassword, setEnablePassword] = useState(false);
-  const [password, setPassword] = useState<string>();
-
-  // PROFILE TODO: Use backup profile method
-  const backupProfile = () => new Promise((res) => setTimeout(res, 3000));
-
-  const createBackup = useAsyncCallback((backupProfile), { onSuccess: onRequestClose });
-  const readyToBackup = !(enablePassword && !password);
-
-  if (createBackup.loading) {
-    return <ConfirmModal 
-      title="Backing Up Your Profile"
-      confirmButton={false}
-      cancelButton={false}
-    >
-      <>
-        <Text style={mixins.modalBodyText}>
-          This will only take a moment.
-        </Text>
-        <LoadingIndicatorDots />
-      </>
-    </ConfirmModal>;
-  }
+function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+  const backupProfile = (password: string | undefined) =>
+    exportProfile(rawProfileRecord, password);
 
   return (
-    <ConfirmModal
-      open
-      onCancel={onRequestClose}
-      onConfirm={createBackup.execute}
-      title="Backup Profile"
-      cancelText="Cancel"
-      confirmText="Create Backup"
-      confirmButtonDisabled={!readyToBackup}
-    >
-      <Text style={mixins.modalBodyText}>
-        This will backup your profile and its contents into a file for you to
-        download.
-      </Text>
-      <TouchableWithoutFeedback onPress={() => setEnablePassword(!enablePassword)}>
-        <View style={styles.checkboxButtonContainer}>
-          <CheckBox
-            checked={enablePassword}
-            checkedColor={theme.color.buttonPrimary}
-            containerStyle={[
-              mixins.checkboxContainer,
-              styles.checkboxContainer,
-            ]}
-          />
-          <Text style={styles.checkboxText}>Add password protection</Text>
-        </View>
-      </TouchableWithoutFeedback>
-      {enablePassword && (
-        <PasswordForm
-          onChangePassword={setPassword}
-          style={styles.passwordForm}
-          textInputBackgroundColor={theme.color.foregroundPrimary}
-        />
-      )}
-    </ConfirmModal>
+    <BackupItemModal
+      onRequestClose={onRequestClose} 
+      onBackup={backupProfile}
+      backupItemName="Profile"
+      backupModalText="This will backup your profile and its contents into a file for you to download."
+    />
   );
 }
 
-function DeleteModal({ profile, onRequestClose }: ActionModalProps): JSX.Element {
-  function onDelete() {
-    // PROFILE TODO: Add profile delete method
+function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+  const dispatch = useDispatch();
+
+  async function onDelete() {
+    await dispatch(deleteProfile(rawProfileRecord));
   }
 
   function goToDetails() {
@@ -189,8 +143,8 @@ function DeleteModal({ profile, onRequestClose }: ActionModalProps): JSX.Element
           params: {
             header: 'Delete Profile Details',
             details: {
-              [`${profile.credentials.length} total credential`]:
-                profile.credentials,
+              [`${rawProfileRecord.rawCredentialRecords.length} total credential`]:
+              rawProfileRecord.rawCredentialRecords.map(({ credential }) => credential.credentialSubject.hasCredential?.name ?? ''),
             },
           },
         },
@@ -210,7 +164,7 @@ function DeleteModal({ profile, onRequestClose }: ActionModalProps): JSX.Element
       confirmText="Delete Profile"
     >
       <Text style={mixins.modalBodyText}>
-        Are you sure you want to delete {profile.name} and its {profile.credentials.length} {credentialUnit(profile.credentials.length)}?
+        Are you sure you want to delete {rawProfileRecord.profileName} and its {rawProfileRecord.rawCredentialRecords.length} {credentialUnit(rawProfileRecord.rawCredentialRecords.length)}?
       </Text>
       <Button
         buttonStyle={mixins.buttonClear}

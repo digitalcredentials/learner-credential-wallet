@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 
@@ -6,22 +6,21 @@ import { mixins } from '../../styles';
 import styles from './ChooseProfileScreen.styles';
 import { ChooseProfileScreenProps, ProfileButtonProps } from './ChooseProfileScreen.d';
 import { NavHeader } from '../../components';
+import { useSelector } from 'react-redux';
+import { selectRawProfileRecords } from '../../store/slices/profile';
 
 export default function ChooseProfileScreen({ navigation, route }: ChooseProfileScreenProps): JSX.Element {
   const { onSelectProfile } = route?.params ?? { 
-    onSelectProfile: (profile) =>
-      navigation.navigate('ApproveCredentialsScreen', { profile }),
+    onSelectProfile: (rawProfileRecord) =>
+      navigation.navigate('ApproveCredentialsScreen', { rawProfileRecord }),
   };
-  
-  // PROFILE TODO: Connect to profile store
-  const profiles = [
-    { name: 'Default', credentials: ['Test 1'] },
-    { name: 'School Creds', credentials: ['Test 2', 'Test 3']}
-  ];
+
+  const rawProfileRecords = useSelector(selectRawProfileRecords);
+  const flatListData = useMemo(() => [...rawProfileRecords].reverse(), [rawProfileRecords]);
 
   useEffect(() => {
-    if (profiles.length === 1) {
-      onSelectProfile(profiles[0]);
+    if (rawProfileRecords.length === 1) {
+      onSelectProfile(rawProfileRecords[0]);
     }
   }, []);
 
@@ -38,10 +37,10 @@ export default function ChooseProfileScreen({ navigation, route }: ChooseProfile
         inverted
         ListFooterComponent={ListHeader}
         style={styles.container}
-        data={profiles.reverse()}
+        data={flatListData}
         renderItem={({ item }) => 
           <ProfileButton 
-            profile={item}
+            rawProfileRecord={item}
             onPress={() => onSelectProfile(item)}
           />
         }
@@ -50,10 +49,10 @@ export default function ChooseProfileScreen({ navigation, route }: ChooseProfile
   );
 }
 
-function ProfileButton({ profile, onPress }: ProfileButtonProps) {
+function ProfileButton({ rawProfileRecord, onPress }: ProfileButtonProps) {
   return (
     <Button
-      title={profile.name}
+      title={rawProfileRecord.profileName}
       buttonStyle={mixins.buttonIconCompact}
       containerStyle={mixins.buttonContainerVertical}
       titleStyle={mixins.buttonIconTitle}

@@ -1,8 +1,8 @@
-import { Profile } from '../../types/profile';
+import { ProfileRecordRaw } from '../../model';
 
 export type { ChooseProfileScreenProps } from '../../navigation';
 
 export type ProfileButtonProps = {
-  profile: Profile
+  rawProfileRecord: ProfileRecordRaw
   onPress: () => void;
 }
