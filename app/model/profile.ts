@@ -49,19 +49,23 @@ export class ProfileRecord implements ProfileRecordRaw {
     };
   }
 
+  public static rawFrom({ profileName, rawDidRecord }: Required<AddProfileRecordParams>): ProfileRecordRaw {
+    return {
+      _id: new ObjectID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      profileName,
+      didRecordId: new ObjectID(rawDidRecord._id),
+    };
+  }
+
   public static async addProfileRecord({ profileName, rawDidRecord }: AddProfileRecordParams): Promise<ProfileRecordRaw> { 
     if (rawDidRecord === undefined) {
       const didPayload = await mintDid();
       rawDidRecord = await DidRecord.addDidRecord(didPayload);
     }
 
-    const rawProfileRecord: ProfileRecordRaw = {
-      _id: new ObjectID(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      profileName,
-      didRecordId: rawDidRecord._id,
-    };
+    const rawProfileRecord = ProfileRecord.rawFrom({ profileName, rawDidRecord });
 
     return db.withInstance((instance) => 
       instance.write(() => 

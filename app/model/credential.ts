@@ -9,13 +9,17 @@ import { Credential } from '../types/credential';
  * so we are choosing to store credentials as
  * stringified JSON.
  */
-export type CredentialRecordRaw = {
+
+export type CredentialRecordEntry = {
   readonly _id: ObjectID;
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly rawCredential: string;
-  readonly credential: Credential;
   readonly profileRecordId: ObjectID;
+}
+
+export type CredentialRecordRaw = CredentialRecordEntry & {
+  readonly credential: Credential;
 }
 
 export class CredentialRecord implements CredentialRecordRaw {
@@ -49,6 +53,16 @@ export class CredentialRecord implements CredentialRecordRaw {
       rawCredential: this.rawCredential,
       credential: this.credential,
       profileRecordId: this.profileRecordId,
+    };
+  }
+
+  static entryFrom(record: CredentialRecordEntry): CredentialRecordEntry {
+    return {
+      _id: new ObjectID(record._id),
+      createdAt: new Date(record.createdAt),
+      updatedAt: new Date(record.updatedAt),
+      rawCredential: record.rawCredential,
+      profileRecordId: new ObjectID(record.profileRecordId),
     };
   }
 

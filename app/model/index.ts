@@ -8,6 +8,7 @@ import { NativeModules } from 'react-native';
 import { CredentialRecord } from './credential';
 import { DidRecord } from './did';
 import { ProfileRecord } from './profile';
+import { runMigrations, schemaVersion } from './migration';
 
 export * from './credential';
 export * from './did';
@@ -163,6 +164,8 @@ class DatabaseAccess {
   private static async config(): Promise<Realm.Configuration> {
     return {
       schema: models,
+      schemaVersion,
+      migration: runMigrations,
       encryptionKey: await DatabaseAccess.encryptionKey(),
     };
   }
