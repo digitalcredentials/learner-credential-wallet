@@ -51,8 +51,7 @@ export default function ShareHomeScreen({
             iconRight
             icon={
               <MaterialIcons
-                // style={styles.actionIcon}
-                name="link"
+                name="input"
                 size={theme.iconSize}
                 color={theme.color.iconInactive}
               />

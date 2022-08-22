@@ -230,7 +230,7 @@ export const ShareCredentialScreen = ({ navigation, route }: ShareCredentialScre
                 onPress={() => share([rawCredentialRecord])}
                 icon={
                   <MaterialIcons
-                    name="share"
+                    name="input"
                     size={theme.iconSize}
                     color={theme.color.iconInactive}
                   />
