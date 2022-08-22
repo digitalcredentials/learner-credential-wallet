@@ -23,6 +23,7 @@ import {
 import { exportWallet } from '../../lib/export';
 import { importWallet } from '../../lib/import';
 import { DetailsScreen, ManageProfilesScreen, ViewSourceScreen } from '../../screens';
+import { AddExistingProfileScreen, DetailsScreen, ManageProfilesScreen, QRScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
 import { useResetNavigationOnBlur } from '../../hooks';
 import { SettingsNavigationProps, navigationRef } from '../';
 import { CredentialRecord } from '../../model';
@@ -251,6 +252,7 @@ export default function SettingsNavigation({ navigation }: SettingsNavigationPro
     >
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="ManageProfilesScreen" component={ManageProfilesScreen} />
+      <Stack.Screen name="ProfileQRScreen" component={QRScreen} />
       <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
       <Stack.Screen name="ViewSourceScreen" component={ViewSourceScreen} />
       <Stack.Screen name="Restore" component={Restore} />

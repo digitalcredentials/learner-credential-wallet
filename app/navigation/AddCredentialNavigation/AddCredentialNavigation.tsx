@@ -13,7 +13,7 @@ export default function AddCredentialNavigation({ navigation }: AddCredentialNav
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AddScreen" component={AddScreen} />
-      <Stack.Screen name="QRScreen" component={QRScreen} />
+      <Stack.Screen name="CredentialQRScreen" component={QRScreen} />
       <Stack.Screen name="ChooseProfileScreen" component={ChooseProfileScreen} />
       <Stack.Screen name="ApproveCredentialsScreen" component={ApproveCredentialsScreen} />
       <Stack.Screen name="ApproveCredentialScreen" component={ApproveCredentialScreen} />

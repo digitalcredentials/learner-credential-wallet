@@ -25,5 +25,8 @@ export { navigationRef } from './AppNavigation/AppNavigation';
  */
 import { CredentialScreenHomeProps } from './CredentialNavigation/CredentialNavigation.d';
 import { CredentialScreenShareProps } from './ShareNavigation/ShareNavigation.d';
-
 export type CredentialScreenProps = CredentialScreenHomeProps | CredentialScreenShareProps;
+
+import { CredentialQRScreenProps } from './AddCredentialNavigation/AddCredentialNavigation.d';
+import { ProfileQRScreenProps } from './SettingsNavigation/SettingsNavigation.d';
+export type QRScreenProps = CredentialQRScreenProps | ProfileQRScreenProps;

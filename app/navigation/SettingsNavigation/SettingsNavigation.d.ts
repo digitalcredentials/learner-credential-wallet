@@ -11,6 +11,7 @@ export type SettingsNavigationParamList = {
   Restore: undefined;
   About: undefined;
   ManageProfilesScreen: undefined;
+  ProfileQRScreen: QRScreenParams;
   DetailsScreen: {
     header: string;
     details: Record<string, string[]>
@@ -27,3 +28,4 @@ export type AboutProps = StackScreenProps<SettingsNavigationParamList, 'About'>;
 export type ManageProfilesScreenProps = StackScreenProps<SettingsNavigationParamList, 'ManageProfilesScreen'>;
 export type DetailsScreenProps = StackScreenProps<SettingsNavigationParamList, 'DetailsScreen'>;
 export type ViewSourceScreenProps = StackScreenProps<SettingsNavigationParamList, 'ViewSourceScreen'>;
+export type ProfileQRScreenProps = StackScreenProps<SettingsNavigationParamList, 'ProfileQRScreen'>;
