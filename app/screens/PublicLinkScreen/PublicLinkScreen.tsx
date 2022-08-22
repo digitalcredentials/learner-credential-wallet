@@ -81,8 +81,7 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
     if (publicLink) {
       certUrl = `&certUrl=${publicLink}`;
     }
-    const certId = achievement.id ? `&certId=${achievement.id}` : '';
-    const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
+    const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}`;
     await Linking.canOpenURL(url);
     Linking.openURL(url);
   }
