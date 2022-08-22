@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { theme, mixins } from '../../styles';
 import styles from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
-import { hide } from 'expo-splash-screen';
+import { CredentialStatusBadges } from '../../components';
 
 export default function CredentialItem({
   title, // Should this info be passed in here, or determined by the CredentialItem?
@@ -18,6 +18,8 @@ export default function CredentialItem({
   chevron = false,
   hideLeft = false,
   bottomElement,
+  rawCredentialRecord,
+  showStatusBadges = false,
 }: CredentialItemProps): JSX.Element {
   /**
    * When the `bottomElement` param is provided, the root view must not be
@@ -78,6 +80,11 @@ export default function CredentialItem({
         >
           <LeftContent />
           <View style={styles.listItemTextContainer}>
+            {showStatusBadges && rawCredentialRecord && (
+              <CredentialStatusBadges 
+                rawCredentialRecord={rawCredentialRecord} 
+                badgeBackgroundColor={theme.color.backgroundPrimary} />
+            )}
             <ListItem.Title style={styles.listItemTitle}>{title}</ListItem.Title>
             <ListItem.Subtitle style={styles.listItemSubtitle}>
               {subtitle}
