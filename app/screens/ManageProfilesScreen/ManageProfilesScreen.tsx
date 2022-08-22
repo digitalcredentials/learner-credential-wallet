@@ -37,7 +37,7 @@ export default function ManageProfilesScreen({ navigation }: ManageProfilesScree
   const ListHeader = (
     <View>
       <Button
-        title="Add New Profile"
+        title="Create New Profile"
         buttonStyle={mixins.buttonIconCompact}
         containerStyle={mixins.buttonContainerVertical}
         titleStyle={mixins.buttonIconTitle}
