@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 
 import { CredentialCard, VerificationCard } from '../../components';
-import { NavHeader, ApprovalControls } from '../../components';
+import { NavHeader } from '../../components';
 import type { ApproveCredentialScreenProps } from './ApproveCredentialScreen.d';
 import { CredentialRecord } from '../../model';
 import styles from './ApproveCredentialScreen.styles';
@@ -20,7 +20,6 @@ export default function ApproveCredentialScreen({ navigation, route }: ApproveCr
         <View style={styles.container}>
           <CredentialCard rawCredentialRecord={CredentialRecord.rawFrom(credential)} />
           <VerificationCard credential={credential} isButton />
-          <ApprovalControls pendingCredential={pendingCredential} />
         </View>
       </ScrollView>
     </>
