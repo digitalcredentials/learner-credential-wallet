@@ -1,20 +1,26 @@
-import { useSelector } from 'react-redux';
-
-import { RootState } from '../store';
-import { DidState } from '../store/slices/did';
 import { sharePresentation } from '../lib/present';
 import { CredentialRecordRaw } from '../model/credential';
 
 export function useShareCredentials(): (credentials: CredentialRecordRaw[]) => void {
-  const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
-
-  if (rawDidRecords.length === 0) {
-    throw new Error('No DID generated. Something went wrong in wallet initialization.');
-  }
-
-  const [ rawDidRecord ] = rawDidRecords;
+  // const getDidFor = useSelectorCallback(makeSelectDidForCredential);
 
   return (credentials: CredentialRecordRaw[]) => {
-    sharePresentation(credentials, rawDidRecord);
+    /**
+     * Right now we're leaving the presentation unsigned. To enable signed presentation sharing
+     * Uncomment these lines and pass `rawDidRecord` to `sharePresentation`
+     */
+    // if (!verifyMatchingProfiles(credentials)) {
+    //   throw new Error('Credentials must exist in same profile to be shared as a Verifiable Presentation.');
+    // }
+
+    // const rawDidRecord = getDidFor({ rawCredentialRecord: credentials[0] });
+    sharePresentation(credentials);
   };
 }
+
+// function verifyMatchingProfiles(credentials: CredentialRecordRaw[]): boolean {
+//   const { profileRecordId } = credentials[0];
+//   return credentials.every((credential) => 
+//     credential.profileRecordId.equals(profileRecordId)
+//   );
+// }
