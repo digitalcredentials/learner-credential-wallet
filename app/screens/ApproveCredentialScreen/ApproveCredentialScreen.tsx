@@ -9,7 +9,7 @@ import styles from './ApproveCredentialScreen.styles';
 import { usePendingCredential } from '../../hooks';
 
 export default function ApproveCredentialScreen({ navigation, route }: ApproveCredentialScreenProps): JSX.Element {
-  const { pendingCredentialId } = route.params;
+  const { pendingCredentialId, profileRecordId } = route.params;
   const pendingCredential = usePendingCredential(pendingCredentialId);
   const { credential } = pendingCredential;
 
@@ -18,9 +18,9 @@ export default function ApproveCredentialScreen({ navigation, route }: ApproveCr
       <NavHeader title="Credential Preview" goBack={() => navigation.goBack()} />
       <ScrollView>
         <View style={styles.container}>
-          <CredentialCard rawCredentialRecord={CredentialRecord.rawFrom(credential)} />
+          <CredentialCard rawCredentialRecord={CredentialRecord.rawFrom({ credential, profileRecordId })} />
           <VerificationCard credential={credential} isButton />
-          <ApprovalControls pendingCredential={pendingCredential} />
+          <ApprovalControls pendingCredential={pendingCredential} profileRecordId={profileRecordId} />
         </View>
       </ScrollView>
     </>

@@ -4,8 +4,7 @@ import { FlatList, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { navigationRef } from '../../navigation';
-import { RootState } from '../../store';
-import { PendingCredential } from '../../store/slices/credentialFoyer';
+import { selectPendingCredentials } from '../../store/slices/credentialFoyer';
 import { CredentialItem, NavHeader } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { ApprovalControls } from '../../components';
@@ -13,10 +12,9 @@ import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredent
 import styles from './ApproveCredentialsScreen.styles';
 
 export default function ApproveCredentialsScreen({ navigation, route }: ApproveCredentialsScreenProps): JSX.Element {
-  const { profile } = route.params;
-  const pendingCredentials = useSelector<RootState, PendingCredential[]>(
-    ({ credentialFoyer }) => credentialFoyer.pendingCredentials,
-  );
+  const { rawProfileRecord } = route.params;
+  const profileRecordId = rawProfileRecord._id;
+  const pendingCredentials = useSelector(selectPendingCredentials);
 
   function goToHome() {
     if (navigationRef.isReady()) {
@@ -42,7 +40,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
 
   const ListHeader = (
     <View style={styles.listHeader}>
-      <Text style={styles.profileText}><Text style={styles.profileTextBold}>Adding To Profile:</Text> {profile.name}</Text>
+      <Text style={styles.profileText}><Text style={styles.profileTextBold}>Adding To Profile:</Text> {rawProfileRecord.profileName}</Text>
     </View>
   );
 
@@ -56,6 +54,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
       'ApproveCredentialScreen',
       {
         pendingCredentialId: pendingCredential.id,
+        profileRecordId,
       },
     );
 
@@ -65,7 +64,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
         subtitle={issuerName}
         image={issuerImage}
         onSelect={onSelect}
-        bottomElement={<ApprovalControls pendingCredential={pendingCredential} />}
+        bottomElement={<ApprovalControls pendingCredential={pendingCredential} profileRecordId={profileRecordId} />}
         chevron
       />
     );

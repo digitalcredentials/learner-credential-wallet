@@ -6,3 +6,5 @@ export * from './useRequestCredential';
 export * from './useAppLoading';
 export * from './useAccessibilityFocus';
 export * from './useResetNavigationOnBlur';
+export * from './useSelectorFactory';
+export * from './useSelectorFactoryCallback';
