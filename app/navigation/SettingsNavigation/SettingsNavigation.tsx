@@ -157,7 +157,7 @@ function Restore({ navigation }: RestoreProps): JSX.Element {
   );
 }
 
-function RestoreDetails({ navigation, route }: RestoreDetailsProps): JSX.Element {
+export function RestoreDetails({ navigation, route }: RestoreDetailsProps): JSX.Element {
   const { importReport } = route.params;
 
   return (
