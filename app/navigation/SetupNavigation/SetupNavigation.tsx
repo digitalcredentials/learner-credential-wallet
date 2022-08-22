@@ -104,7 +104,7 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
   const [biometricsSupported] = useAsyncValue(isBiometricsSupported);
   const passwordRef = useRef<TextInput>(null);
 
-  const isPasswordValid = password.length >= 10 && password === passwordConfirm;
+  const isPasswordValid = password.length >= 6 && password === passwordConfirm;
 
   useEffect(() => passwordRef.current?.focus(), []);
 
@@ -116,8 +116,8 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
 
   function _onInputBlur() {
     if (password && passwordConfirm) {
-      if (password.length < 10)
-        setErrorText('Password must contain at least 10 characters');
+      if (password.length < 6)
+        setErrorText('Password must contain at least 6 characters');
       else if (password !== passwordConfirm)
         setErrorText('Passwords must match');
       else setErrorText('');
