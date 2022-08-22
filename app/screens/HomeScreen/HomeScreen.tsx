@@ -78,6 +78,8 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
         ]}
       >
         <CredentialItem
+          rawCredentialRecord={item}
+          showStatusBadges
           title={title}
           subtitle={issuerName}
           image={issuerImage}
