@@ -15,4 +15,5 @@ export { default as ProfileItem } from './ProfileItem/ProfileItem';
 export { default as MoreMenuButton } from './MoreMenuButton/MoreMenuButton';
 export { default as PasswordForm } from './PasswordForm/PasswordForm';
 export { default as LoadingIndicatorDots } from './LoadingIndicatorDots/LoadingIndicatorDots';
+export { default as BackupItemModal } from './BackupItemModal/BackupItemModal';
 export { default as RestoreItemModal } from './RestoreItemModal/RestoreItemModal';

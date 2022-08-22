@@ -1,4 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
+import { QRScreenParams } from '../../screens/QRScreen/QRScreen';
 
 export type SettingsItemProps = {
   readonly title: string;
@@ -7,7 +8,6 @@ export type SettingsItemProps = {
 
 export type SettingsNavigationParamList = {
   Settings: undefined;
-  Backup: undefined;
   RestoreWalletScreen: undefined;
   About: undefined;
   ManageProfilesScreen: undefined;
@@ -24,7 +24,6 @@ export type SettingsNavigationParamList = {
 };
 
 export type SettingsProps = StackScreenProps<SettingsNavigationParamList, 'Settings'>;
-export type BackupProps = StackScreenProps<SettingsNavigationParamList, 'Backup'>;
 export type RestoreWalletScreenProps = StackScreenProps<SettingsNavigationParamList, 'RestoreWalletScreen'>;
 export type AboutProps = StackScreenProps<SettingsNavigationParamList, 'About'>;
 export type ManageProfilesScreenProps = StackScreenProps<SettingsNavigationParamList, 'ManageProfilesScreen'>;
