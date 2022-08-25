@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { theme} from '../../styles';
 
 export default StyleSheet.create({
   container: {

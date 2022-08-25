@@ -11,7 +11,6 @@ import { mixins } from '../../styles';
 import styles from './ShareSelectionScreen.styles';
 import type { RenderItemProps } from './ShareSelectionScreen.d';
 import type { ShareSelectionScreenProps } from '../../navigation';
-import { Credential } from '../../types/credential';
 import { CredentialRecordRaw } from '../../model';
 
 export default function ShareSelectionScreen({
@@ -59,7 +58,7 @@ export default function ShareSelectionScreen({
     );
   }
 
-  function renderShareItem({item, index}: RenderItemProps): JSX.Element {
+  function renderShareItem({item}: RenderItemProps): JSX.Element {
     const { credential } = item;
     const { issuer } = credential;
     const { title } = credentialRenderInfo(credential);

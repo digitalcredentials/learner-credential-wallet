@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import ThemedListItem from 'react-native-elements/dist/list/ListItem';
 import { theme, mixins, Color } from '../../styles';
 
 export default StyleSheet.create({
