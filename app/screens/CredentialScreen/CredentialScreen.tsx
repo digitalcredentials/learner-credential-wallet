@@ -23,7 +23,15 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
 
 
   function onPressShare() {
-    navigation.navigate('ShareCredentialScreen', { rawCredentialRecord});
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('HomeNavigation', {
+        screen: 'CredentialNavigation',
+        params: {
+          screen: 'ShareCredentialScreen',
+          params: { rawCredentialRecord },
+        } 
+      });
+    }
   }
 
   function onPressDebug() {

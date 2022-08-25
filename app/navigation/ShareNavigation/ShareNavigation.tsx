@@ -19,7 +19,7 @@ export default function ShareNavigation(): JSX.Element {
       <Stack.Screen name="ShareSelectionScreen" component={ShareSelectionScreen} />
       <Stack.Screen name="PresentationPreviewScreen" component={PresentationPreviewScreen} />
       <Stack.Screen name="CredentialScreen" component={CredentialScreen} initialParams={{ noShishKabob: true }} />
-      <Stack.Screen name="PublicLinkScreen" component={PublicLinkScreen} initialParams={{ noShishKabob: true }} />
+      <Stack.Screen name="PublicLinkScreen" component={PublicLinkScreen} />
     </Stack.Navigator>
   );
 }

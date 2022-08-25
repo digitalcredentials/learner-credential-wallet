@@ -17,5 +17,5 @@ export type SettingsNavigationParamList = {
 export type SettingsProps = StackScreenProps<SettingsNavigationParamList, 'Settings'>;
 export type BackupProps = StackScreenProps<SettingsNavigationParamList, 'Backup'>;
 export type RestoreProps = StackScreenProps<SettingsNavigationParamList, 'Restore'>;
-export type RestoreDetailsProps = StackScreenProps<SettingsNavigationParamList, 'RestoreDetails'>;
+export type RestoreDetailsSettingsProps = StackScreenProps<SettingsNavigationParamList, 'RestoreDetails'>;
 export type AboutProps = StackScreenProps<SettingsNavigationParamList, 'About'>;

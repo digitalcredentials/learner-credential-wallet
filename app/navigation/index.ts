@@ -25,5 +25,8 @@ export { navigationRef } from './AppNavigation/AppNavigation';
  */
 import { CredentialScreenHomeProps } from './CredentialNavigation/CredentialNavigation.d';
 import { CredentialScreenShareProps } from './ShareNavigation/ShareNavigation.d';
-
 export type CredentialScreenProps = CredentialScreenHomeProps | CredentialScreenShareProps;
+
+import { RestoreDetailsSettingsProps } from './SettingsNavigation/SettingsNavigation.d';
+import { RestoreDetailsSetupProps } from './SetupNavigation/SetupNavigation.d';
+export type RestoreDetailsProps = RestoreDetailsSettingsProps | RestoreDetailsSetupProps;

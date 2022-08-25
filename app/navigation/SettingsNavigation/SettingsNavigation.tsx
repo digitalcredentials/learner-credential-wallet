@@ -21,9 +21,12 @@ import {
   RestoreDetailsProps,
   BackupProps,
   AboutProps,
+  navigationRef,
 } from '../';
 import { exportWallet } from '../../lib/export';
 import { importWallet } from '../../lib/import';
+import { stageCredentials } from '../../store/slices/credentialFoyer';
+import mockCredential from '../../mock/credential';
 
 const Stack = createStackNavigator();
 
@@ -56,6 +59,18 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     dispatch(lock());
   }
 
+  function addDevCredential() {
+    dispatch(stageCredentials([mockCredential]));
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('HomeNavigation', { 
+        screen: 'AddCredentialNavigation',
+        params: {
+          screen: 'ApproveCredentialsScreen',
+        }
+      });
+    }
+  }
+
   return (
     <>
       <NavHeader title="Settings" />
@@ -65,6 +80,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={lockWallet} />
+        <SettingsItem title="Add credential (DEV)" onPress={addDevCredential} />
       </View>
       <ConfirmModal
         open={resetModalOpen}
