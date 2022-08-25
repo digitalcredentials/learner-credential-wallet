@@ -9,7 +9,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 16.x
-    - run: npm ci
+    - run: npm i --legacy-peer-deps
     - run: xcode-select -p
     - run: pod install
       working-directory: ios
