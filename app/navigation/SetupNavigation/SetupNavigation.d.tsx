@@ -36,7 +36,7 @@ export type CustomMethodStepProps = {
   navigation: StackNavigationProp<SetupNavigationParamList, 'CustomMethodStep'>;
 }
 
-export type RestoreDetailsProps = {
+export type RestoreDetailsSetupProps = {
   route: RouteProp<SetupNavigationParamList, 'RestoreDetails'>;
   navigation: StackNavigationProp<SetupNavigationParamList, 'RestoreDetails'>;
 }

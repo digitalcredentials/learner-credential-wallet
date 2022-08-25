@@ -11,11 +11,12 @@ import { navigationRef } from '../../navigation';
 
 type CommonProps = {
   isButton?: boolean;
+  showDetails?: boolean
 }
 
 type VerifyProps =
-  | { credential: Credential, verifyPayload?: never; showDetails: boolean }
-  | { credential?: never; verifyPayload: VerifyPayload; isButton?: never | false; showDetails: boolean };
+  | { credential: Credential, verifyPayload?: never; }
+  | { credential?: never; verifyPayload: VerifyPayload; isButton?: never | false; };
 
 type VerificationCardProps = CommonProps & VerifyProps;
 
