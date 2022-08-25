@@ -7,10 +7,13 @@ import { useDispatch } from 'react-redux';
 
 import appConfig from '../../../app.json';
 import { theme, mixins } from '../../styles';
-import { initialize } from '../../store/slices/wallet';
-import { LoadingIndicator, SafeScreenView, ErrorDialog, AccessibleView, PasswordInput } from '../../components';
+import { getAllCredentials, initialize, pollWalletState } from '../../store/slices/wallet';
+import { LoadingIndicator, SafeScreenView, ErrorDialog, AccessibleView, PasswordInput, ConfirmModal } from '../../components';
 import walletImage from '../../assets/wallet.png';
 import { useAccessibilityFocus } from '../../hooks';
+import { db } from '../../model';
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
+import { navigationRef } from '../../navigation';
 
 import styles from './SetupNavigation.styles';
 import type {
@@ -18,7 +21,11 @@ import type {
   CreateStepProps,
   PasswordStepProps,
   ForFadeType,
+  CustomMethodStepProps,
 } from './SetupNavigation.d';
+import { importWallet, performImport, pickWalletFile } from '../../lib/import';
+import { getAllDidRecords, mintDid } from '../../store/slices/did';
+import { RestoreDetails } from '../SettingsNavigation/SettingsNavigation';
 
 const Stack = createStackNavigator();
 
@@ -35,11 +42,13 @@ export default function SetupNavigation(): JSX.Element {
     >
       <Stack.Screen name="StartStep" component={StartStep} />
       <Stack.Screen name="PasswordStep" component={PasswordStep} />
+      <Stack.Screen name="CustomMethodStep" component={CustomMethodStep} />
       <Stack.Screen
         name="CreateStep"
         component={CreateStep}
         options={{ cardStyleInterpolator: forFade }}
       />
+      <Stack.Screen name="RestoreDetails" component={RestoreDetails} />
     </Stack.Navigator>
   );
 }
@@ -53,7 +62,7 @@ function StartStep({ navigation }: StartStepProps) {
         accessible
         accessibilityLabel={`${appConfig.displayName} Logo`}
       />
-      <Text 
+      <Text
         style={styles.title}
         accessibilityRole="header"
       >
@@ -68,15 +77,24 @@ function StartStep({ navigation }: StartStepProps) {
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
-          title="Start Setup"
-          onPress={() => navigation.navigate('PasswordStep')}
+          title="Quick Setup (Recommended)"
+          onPress={() => navigation.navigate('PasswordStep', { nextStep: 'CreateStep' })}
+        />
+      </View>
+      <View style={[mixins.buttonGroup, styles.topMargin]}>
+        <Button
+          buttonStyle={[mixins.button, mixins.buttonSecondary]}
+          containerStyle={mixins.buttonContainer}
+          titleStyle={mixins.buttonTitleSecondary}
+          title="Custom"
+          onPress={() => navigation.navigate('PasswordStep', { nextStep: 'CustomMethodStep' })}
         />
       </View>
     </SafeScreenView>
   );
 }
 
-function PasswordStep({ navigation }: PasswordStepProps) {
+function PasswordStep({ navigation, route }: PasswordStepProps) {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorText, setErrorText] = useState('');
@@ -104,7 +122,7 @@ function PasswordStep({ navigation }: PasswordStepProps) {
 
   function _goToNextStep() {
     if (isPasswordValid) {
-      navigation.navigate('CreateStep', { password });
+      navigation.navigate(route.params.nextStep, { password });
     }
   }
 
@@ -115,7 +133,7 @@ function PasswordStep({ navigation }: PasswordStepProps) {
         <View style={styles.stepDivider} />
         <Text style={styles.stepText}>2</Text>
       </AccessibleView>
-      <Text 
+      <Text
         style={styles.header}
         accessibilityRole="header"
       >
@@ -222,6 +240,139 @@ function CreateStep({ route }: CreateStepProps) {
           disabledStyle={styles.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
         />
+      </View>
+    </SafeScreenView>
+  );
+}
+
+function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
+  const dispatch = useDispatch();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [reopenModal, setReopenModal] = useState(false);
+  const [done, setDone] = useState(false);
+  const [importReport, setImportReport] = useState({});
+
+  const reportSummary = Object.keys(importReport).join('\n');
+
+  async function _importWallet() {
+    const file = await pickWalletFile();
+    setModalIsOpen(true);
+    await db.initialize(route.params.password);
+    await db.unlock(route.params.password);
+    const report = await performImport(file);
+    setImportReport(report);
+    setDone(true);
+
+    dispatch(getAllCredentials());
+    dispatch(getAllDidRecords());
+  }
+
+  async function goToDetails() {
+    setReopenModal(true);
+    setModalIsOpen(false);
+    navigation.navigate('RestoreDetails', { importReport });
+  }
+
+  React.useEffect(() => {
+    // reopen the modal when the user comes back from the page.
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (reopenModal) {
+        setReopenModal(false);
+        setModalIsOpen(true);
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation, reopenModal]);
+
+  return (
+    <SafeScreenView style={styles.customMethodContainer}>
+      <AccessibleView style={styles.customMethodStepContainer} label="Step 2 of 2">
+        <Text style={styles.stepText}>1</Text>
+        <View style={styles.stepDivider} />
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
+      </AccessibleView>
+      <ConfirmModal
+        open={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        cancelButton={false}
+        confirmButton={done}
+        title={done ? 'Existing Wallet Added' : 'Adding Existing Wallet'}
+        confirmText="View Wallet"
+        onConfirm={() => {
+          dispatch(pollWalletState());
+        }}
+      >
+        {done ? (
+          <>
+            <Text style={styles.reportSummary}>{reportSummary}</Text>
+            <Button
+              buttonStyle={styles.reportButtonClear}
+              titleStyle={styles.reportButtonClearTitle}
+              containerStyle={styles.reportButtonClearContainer}
+              title="Details"
+              onPress={goToDetails}
+            />
+          </>
+        ) : (
+          <>
+            <Text style={styles.reportSummary}>This will only take a moment.</Text>
+            <View style={styles.reportLoadingContainer}>
+              <AnimatedEllipsis style={styles.loadingDots} minOpacity={0.4} animationDelay={200}/>
+            </View>
+          </>
+        )}
+      </ConfirmModal>
+      <Text style={styles.header} accessibilityRole="header">
+        Custom
+      </Text>
+      <Text style={styles.paragraphRegular}>To add an existing wallet, scan a valid QR code or upload a wallet file (.dcc) from your device.</Text>
+      <View style={mixins.buttonGroup}>
+        <Button
+          buttonStyle={[mixins.button, mixins.buttonIcon]}
+          containerStyle={mixins.buttonIconContainer}
+          titleStyle={mixins.buttonIconTitle}
+          title="Scan QR code"
+          onPress={() => {}}
+          iconRight
+          icon={
+            <MaterialIcons
+              name="qr-code-scanner"
+              color={theme.color.iconInactive}
+              size={theme.iconSize}
+            />
+          }
+        />
+      </View>
+      <View style={mixins.buttonContainer}>
+        <Button
+          buttonStyle={[mixins.button, mixins.buttonIcon]}
+          containerStyle={mixins.buttonIconContainer}
+          titleStyle={mixins.buttonIconTitle}
+          title="Restore from a file"
+          onPress={_importWallet}
+          iconRight
+          icon={
+            <MaterialIcons
+              name="upload-file"
+              color={theme.color.iconInactive}
+              size={theme.iconSize}
+            />
+          }
+        />
+      </View>
+      <View style={mixins.buttonGroup}>
+        {
+          !done && (
+            <Button
+              buttonStyle={[mixins.button, styles.buttonClear]}
+              containerStyle={styles.buttonClearContainer}
+              titleStyle={[mixins.buttonTitle, styles.buttonClearTitle]}
+              title="Cancel"
+              onPress={() => navigation.goBack()}
+            />
+          )
+        }
       </View>
     </SafeScreenView>
   );

@@ -50,6 +50,7 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.header,
     fontFamily: theme.fontFamily.bold,
     color: theme.color.textHeader,
+    textAlign: 'center',
     marginTop: 32,
   },
   paragraphRegular: {
@@ -83,5 +84,49 @@ export default StyleSheet.create({
   },
   inputSeparator: {
     height: 20,
+  },
+  topMargin: {
+    marginTop: 16
+  },
+  customMethodContainer: {
+    flex: 1,
+    padding: 16,
+  },
+  customMethodStepContainer: {
+
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  reportSummary: {
+    ...mixins.paragraphText,
+    lineHeight: 24,
+    marginVertical: 8,
+    textAlign: 'center',
+  },
+  loadingDots: {
+    marginTop: -100,
+    fontSize: 130,
+    letterSpacing: -15,
+    color: theme.color.textHeader,
+  },
+  reportLoadingContainer: {
+    marginLeft: -10,
+    marginBottom: -20,
+    alignItems: 'center',
+  },
+
+  reportButtonClear: {
+    ...mixins.button,
+    backgroundColor: theme.color.transparent,
+  },
+  reportButtonClearContainer: {
+    width: '100%',
+  },
+  reportButtonClearTitle: {
+    ...mixins.buttonTitle,
+    color: theme.color.textSecondary,
+    fontFamily: theme.fontFamily.regular,
+    textDecorationLine: 'underline',
   },
 });

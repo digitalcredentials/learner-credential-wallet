@@ -6,6 +6,7 @@ import {
   CredentialRecord,
   CredentialRecordRaw,
 } from '../../model';
+import { Double } from 'bson';
 
 export type WalletState = {
   isUnlocked: boolean | null;

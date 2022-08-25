@@ -84,8 +84,7 @@ export const ShareCredentialScreen = ({ navigation, route }: ShareCredentialScre
     if (publicLink) {
       certUrl = `&certUrl=${publicLink}`;
     }
-    const certId = `&certId=${achievement.id || ''}`;
-    const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
+    const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}`;
 
     await Linking.canOpenURL(url);
     Linking.openURL(url);
