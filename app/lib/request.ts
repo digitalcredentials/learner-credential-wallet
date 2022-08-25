@@ -30,22 +30,22 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   switch (auth_type) {
   case 'code': {
     if (!registries.issuerAuth.isInRegistry(issuer)) {
-	    throw new Error(`Unknown issuer: "${issuer}"`);
+      throw new Error(`Unknown issuer: "${issuer}"`);
     }
     const oidcConfig = registries.issuerAuth.entryFor(issuer);
     // There needs to be a delay before authenticating or the app errors out.
     await new Promise((res) => setTimeout(res, 1000));
     console.log('Launching OIDC auth:', oidcConfig);
-    
+
     try {
-  	  console.log('authorize() called with:', oidcConfig);
-  	  ({accessToken} = await authorize(oidcConfig));
-  	  console.log('Received access token, requesting credential.');
+      console.log('authorize() called with:', oidcConfig);
+      ({accessToken} = await authorize(oidcConfig));
+      console.log('Received access token, requesting credential.');
     } catch (err) {
-  	  console.error(err);
-  	  throw new Error(
-          'Unable to receive credential: Authorization with the issuer failed');
-      }
+      console.error(err);
+      throw new Error(
+        'Unable to receive credential: Authorization with the issuer failed');
+    }
     break;
   }
   case 'bearer':

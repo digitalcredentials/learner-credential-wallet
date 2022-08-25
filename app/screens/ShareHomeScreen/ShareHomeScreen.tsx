@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, FlatList, ScrollView } from 'react-native';
+import React from 'react';
+import { View, ScrollView } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import { useSelector } from 'react-redux';
-
-import { RootState } from '../../store';
-import { WalletState } from '../../store/slices/wallet';
-import { CredentialItem, NavHeader } from '../../components';
-import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
+import { NavHeader } from '../../components';
 import { mixins, theme } from '../../styles';
 import styles from './ShareHomeScreen.styles';
-import type { RenderItemProps } from './ShareHomeScreen';
 import type { ShareHomeScreenProps } from '../../navigation';
 import { MaterialIcons } from '@expo/vector-icons';
+import {CredentialRecordRaw} from '../../model';
+
+export type RenderItemProps = {
+  item: CredentialRecordRaw;
+  index: number;
+};
 
 export default function ShareHomeScreen({
   navigation,

@@ -13,7 +13,6 @@ import vcStatusListCtx from '@digitalbazaar/vc-status-list-context';
 import { JsonLdDocumentLoader } from 'jsonld-document-loader';
 import { CryptoLD } from 'crypto-ld';
 import * as didWeb from '@interop/did-web-resolver';
-import {httpClient} from '@digitalcredentials/http-client';
 import { parseResponseBody } from './parseResponse';
 
 const cryptoLd = new CryptoLD();
@@ -39,6 +38,7 @@ export const httpClientHandler = {
    * @returns {Promise<{contextUrl: null, document, documentUrl}>} - Resolves
    *   with documentLoader document.
    */
+  /* eslint-disable-next-line */
   async get(params: any) {
     if(!params.url.startsWith('http')) {
       throw new Error('NotFoundError');

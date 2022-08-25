@@ -13,7 +13,6 @@ import walletImage from '../../assets/wallet.png';
 import { useAccessibilityFocus } from '../../hooks';
 import { db } from '../../model';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
-import { navigationRef } from '../../navigation';
 
 import styles from './SetupNavigation.styles';
 import type {
@@ -23,8 +22,8 @@ import type {
   ForFadeType,
   CustomMethodStepProps,
 } from './SetupNavigation.d';
-import { importWallet, performImport, pickWalletFile } from '../../lib/import';
-import { getAllDidRecords, mintDid } from '../../store/slices/did';
+import { performImport, pickWalletFile } from '../../lib/import';
+import { getAllDidRecords} from '../../store/slices/did';
 import { RestoreDetails } from '../SettingsNavigation/SettingsNavigation';
 
 const Stack = createStackNavigator();

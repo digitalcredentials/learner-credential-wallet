@@ -14,6 +14,7 @@ import { Cache } from '../../lib/cache';
 import { IssuerObject } from '../../types/credential';
 import moment from 'moment';
 
+/* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types */
 export const ShareCredentialScreen = ({ navigation, route }: ShareCredentialScreenProps) => {
   const { rawCredentialRecord } = route.params;
   const share = useShareCredentials();
