@@ -1,11 +1,19 @@
 import * as Keychain from 'react-native-keychain';
 
 export async function storeInBiometricKeychain(key: string): Promise<void> {
-  await Keychain.setGenericPassword('key', key, {
-    storage: Keychain.STORAGE_TYPE.AES,
-    accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
-    authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
-  });
+  try {
+    await Keychain.setGenericPassword('key', key, {
+      storage: Keychain.STORAGE_TYPE.AES,
+      accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
+      authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
+    });
+  } catch (err) {
+    const { message } = (err as Error);
+
+    if (message === 'The user name or passphrase you entered is not correct.') {
+      throw new Error('Biometric auth currently fails on iOS 15 simulators. See issue: https://github.com/oblador/react-native-keychain/issues/509');
+    }
+  }
 }
 
 export async function retrieveFromBiometricKeychain(): Promise<string> {
