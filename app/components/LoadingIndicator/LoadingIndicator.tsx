@@ -6,10 +6,14 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { theme } from '../../styles';
 import { useAnimation } from '../../hooks';
 import styles from './LoadingIndicator.styles';
-import type { LoadingIndicatorProps } from './LoadingIndicator.d';
+import type { AnimatedPathComponent, LoadingIndicatorProps } from './LoadingIndicator.d';
 import AccessibleView from '../AccessibleView/AccessibleView';
 
-const AnimatedPath = Animated.createAnimatedComponent(Path);
+/** 
+ * react-native-svg has a typescript error where the Path props type is not
+ * recognized when it becomes an animated component.
+ */
+const AnimatedPath = (Animated.createAnimatedComponent(Path) as unknown) as AnimatedPathComponent;
 
 export default function LoadingIndicator({ loading }: LoadingIndicatorProps): JSX.Element {
   const [percent, setPercent] = useState(25);

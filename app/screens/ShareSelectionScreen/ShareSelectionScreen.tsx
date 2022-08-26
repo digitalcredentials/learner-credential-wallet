@@ -3,8 +3,6 @@ import { View, FlatList } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
-import { RootState } from '../../store';
-import { WalletState } from '../../store/slices/wallet';
 import { ConfirmModal, CredentialItem, NavHeader } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { mixins } from '../../styles';
@@ -12,6 +10,7 @@ import styles from './ShareSelectionScreen.styles';
 import type { RenderItemProps } from './ShareSelectionScreen.d';
 import type { ShareSelectionScreenProps } from '../../navigation';
 import { CredentialRecordRaw } from '../../model';
+import { selectRawCredentialRecords } from '../../store/slices/credential';
 
 export default function ShareSelectionScreen({
   navigation,
@@ -19,9 +18,7 @@ export default function ShareSelectionScreen({
 }: ShareSelectionScreenProps): JSX.Element {
   const send = route.params.method === 'send';
   const [selected, setSelected] = useState<number[]>([]);
-  const { rawCredentialRecords } = useSelector<RootState, WalletState>(
-    ({ wallet }) => wallet,
-  );
+  const rawCredentialRecords = useSelector(selectRawCredentialRecords);
   const [singleSelectedCredential, setSingleSelectedCredential] = useState<CredentialRecordRaw | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 

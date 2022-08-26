@@ -45,5 +45,5 @@ export function credentialRequestParamsFromQrText(text: string): CredentialReque
     throw new HumanReadableError('The QR code contained an invalid deep link.');
   }
   
-  return params;
+  return params as CredentialRequestParams;
 }

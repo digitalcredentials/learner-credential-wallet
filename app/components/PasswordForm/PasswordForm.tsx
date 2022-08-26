@@ -13,6 +13,8 @@ type PasswordFormProps = {
   textInputBackgroundColor?: Color;
 }
 
+const PASSWORD_LENGTH_REQUIREMENT = 6;
+
 export default function PasswordForm({ focusOnMount, onChangePassword, style, textInputBackgroundColor }: PasswordFormProps): JSX.Element {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -20,7 +22,7 @@ export default function PasswordForm({ focusOnMount, onChangePassword, style, te
   const passwordRef = useRef<TextInput>(null);
 
   const isPasswordValid = useMemo(() => 
-    password.length >= 10 
+    password.length >= PASSWORD_LENGTH_REQUIREMENT 
     && password === passwordConfirm
   , [password, passwordConfirm]);
 
@@ -46,8 +48,8 @@ export default function PasswordForm({ focusOnMount, onChangePassword, style, te
 
   function _onInputBlur() {
     if (password && passwordConfirm) {
-      if (password.length < 10)
-        setErrorText('Password must contain at least 10 characters');
+      if (password.length < PASSWORD_LENGTH_REQUIREMENT)
+        setErrorText(`Password must contain at least ${PASSWORD_LENGTH_REQUIREMENT} characters`);
       else if (password !== passwordConfirm)
         setErrorText('Passwords must match');
       else setErrorText('');

@@ -28,6 +28,8 @@ const store = configureStore({
   }),
 });
 
+export type AppDispatch = typeof store.dispatch
+
 export const getAllRecords = createAsyncThunk('getAllRecords', async (_, { dispatch }) => {
   await dispatch(_getAllDidRecords());
   await dispatch(_getAllCredentialRecords());

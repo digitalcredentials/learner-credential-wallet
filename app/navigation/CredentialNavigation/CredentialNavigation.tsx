@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeScreen, CredentialScreen } from '../../screens';
 import { CredentialNavigationParamList } from '../';
-import { ShareCredentialScreen } from '../../screens/ShareCredentialScreen/ShareCredentialScreen';
+import { ShareCredentialScreen } from '../../screens';
 
 const Stack = createStackNavigator<CredentialNavigationParamList>();
 

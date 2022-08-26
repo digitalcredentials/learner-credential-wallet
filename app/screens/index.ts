@@ -16,3 +16,8 @@ export { default as ViewSourceScreen } from './ViewSourceScreen/ViewSourceScreen
 export { default as ChooseProfileScreen } from './ChooseProfileScreen/ChooseProfileScreen';
 export { default as AddExistingProfileScreen } from './AddExistingProfileScreen/AddExistingProfileScreen';
 export { default as RestoreWalletScreen } from './RestoreWalletScreen/RestoreWalletScreen';
+export { default as ShareCredentialScreen } from './ShareCredentialScreen/ShareCredentialScreen';
+
+// Type Definitions
+export * from './DetailsScreen/DetailsScreen.d';
+export * from './QRScreen/QRScreen.d';

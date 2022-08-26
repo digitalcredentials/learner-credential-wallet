@@ -20,7 +20,7 @@ export type AddCredentialNavigationParamList = {
 };
 
 export type AddScreenProps = StackScreenProps<AddCredentialNavigationParamList, 'AddScreen'>;
-export type CredentialQRScreenProps = StackScreenProps<AddCredentialNavigationParamList, 'CredentialQRScreen'>;
+export type QRScreenCredentialProps = StackScreenProps<AddCredentialNavigationParamList, 'CredentialQRScreen'>;
 export type ChooseProfileScreenProps = StackScreenProps<AddCredentialNavigationParamList, 'ChooseProfileScreen'>;
 export type ApproveCredentialsScreenProps = StackScreenProps<AddCredentialNavigationParamList, 'ApproveCredentialsScreen'>;
 export type ApproveCredentialScreenProps = StackScreenProps<AddCredentialNavigationParamList, 'ApproveCredentialScreen'>;

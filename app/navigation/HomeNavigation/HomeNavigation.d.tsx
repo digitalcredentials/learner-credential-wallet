@@ -1,5 +1,5 @@
-import { RouteProp, NavigatorScreenParams } from '@react-navigation/native';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { NavigatorScreenParams } from '@react-navigation/native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { CredentialRecordRaw } from '../../model/credential';
 
 import type {
@@ -7,6 +7,7 @@ import type {
   CredentialNavigationParamList,
   SettingsNavigationParamList,
 } from '../';
+
 
 export type HomeNavigationParamList = {
   CredentialNavigation: NavigatorScreenParams<CredentialNavigationParamList>;
@@ -18,25 +19,10 @@ export type HomeNavigationParamList = {
   };
 };
 
-export type CredentialNavigationProps = {
-  route: RouteProp<HomeNavigationParamList, 'CredentialNavigation'>;
-  navigation: BottomTabNavigationProp<HomeNavigationParamList, 'CredentialNavigation'>;
-}
-
-export type ShareNavigationProps = {
-  route: RouteProp<HomeNavigationParamList, 'ShareNavigation'>;
-  navigation: BottomTabNavigationProp<HomeNavigationParamList, 'ShareNavigation'>;
-}
-
-export type AddCredentialNavigationProps = {
-  route: RouteProp<HomeNavigationParamList, 'AddCredentialNavigation'>;
-  navigation: BottomTabNavigationProp<HomeNavigationParamList, 'AddCredentialNavigation'>;
-}
-
-export type SettingsNavigationProps = {
-  route: RouteProp<HomeNavigationParamList, 'SettingsNavigation'>;
-  navigation: BottomTabNavigationProp<HomeNavigationParamList, 'SettingsNavigation'>;
-}
+export type CredentialNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'CredentialNavigation'>;
+export type ShareNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'ShareNavigation'>;
+export type AddCredentialNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'AddCredentialNavigation'>;
+export type SettingsNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'SettingsNavigation'>;
 
 export type TabIconProps = {
   color: string;
