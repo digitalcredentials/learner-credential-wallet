@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Image, Linking, ScrollView, AccessibilityInfo } from 'react-native';
+import { View, Image, Linking, ScrollView, AccessibilityInfo, Switch } from 'react-native';
 import { Text, Button, ListItem } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
@@ -12,7 +12,7 @@ import walletImage from '../../assets/wallet.png';
 import { theme, mixins } from '../../styles';
 import styles from './SettingsNavigation.styles';
 import { NavHeader, ConfirmModal } from '../../components';
-import { lock, reset, getAllCredentials } from '../../store/slices/wallet';
+import { lock, reset, getAllCredentials, WalletState, toggleBiometrics } from '../../store/slices/wallet';
 import { getAllDidRecords } from '../../store/slices/did';
 import {
   SettingsItemProps,
@@ -27,10 +27,18 @@ import { exportWallet } from '../../lib/export';
 import { importWallet } from '../../lib/import';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import mockCredential from '../../mock/credential';
+import { RootState } from '../../store';
 
 const Stack = createStackNavigator();
 
-function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
+function SettingsItem({ title, onPress, rightComponent }: SettingsItemProps): JSX.Element {
+  const _rightComponent = rightComponent || (
+    <ListItem.Chevron
+      hasTVPreferredFocus={undefined}
+      tvParallaxProperties={undefined}
+    />
+  );
+
   return (
     <ListItem
       hasTVPreferredFocus={undefined}
@@ -43,16 +51,14 @@ function SettingsItem({ title, onPress }: SettingsItemProps): JSX.Element {
           {title}
         </ListItem.Title>
       </ListItem.Content>
-      <ListItem.Chevron
-        hasTVPreferredFocus={undefined}
-        tvParallaxProperties={undefined}
-      />
+      {_rightComponent}
     </ListItem>
   );
 }
 
 function Settings({ navigation }: SettingsProps): JSX.Element {
   const dispatch = useDispatch();
+  const { isBiometricsEnabled } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
   const [resetModalOpen, setResetModalOpen] = useState(false);
 
   async function resetWallet() {
@@ -76,10 +82,28 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     }
   }
 
+  function onToggleBiometrics() {
+    dispatch(toggleBiometrics());
+  }
+
   return (
     <>
       <NavHeader title="Settings" />
       <View style={styles.settingsContainer}>
+        <SettingsItem 
+          title="Use biometrics to unlock" 
+          onPress={() => null}
+          rightComponent={(
+            <Switch
+              style={styles.switch}
+              thumbColor={theme.color.backgroundPrimary}
+              trackColor={{ true: theme.color.buttonPrimary, false: theme.color.buttonSecondary }} 
+              ios_backgroundColor={theme.color.buttonSecondary}
+              value={isBiometricsEnabled}
+              onValueChange={onToggleBiometrics}
+            />
+          )}
+        />
         <SettingsItem title="Restore" onPress={() => navigation.navigate('Restore')} />
         <SettingsItem title="Backup" onPress={() => navigation.navigate('Backup')} />
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />

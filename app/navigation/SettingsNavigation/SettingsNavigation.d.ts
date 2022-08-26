@@ -1,9 +1,11 @@
 import { StackScreenProps } from '@react-navigation/stack';
+import { ReactNode } from 'react';
 import { WalletImportReport } from '../../types/wallet';
 
 export type SettingsItemProps = {
   readonly title: string;
   readonly onPress: () => void;
+  readonly rightComponent?: ReactNode;
 }
 
 export type SettingsNavigationParamList = {
