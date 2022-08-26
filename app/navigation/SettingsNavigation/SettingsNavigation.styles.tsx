@@ -103,4 +103,7 @@ export default StyleSheet.create({
     marginBottom: -20,
     alignItems: 'center',
   },
+  switch: { 
+    transform: [{ scale: 0.9 }],
+  },
 });
