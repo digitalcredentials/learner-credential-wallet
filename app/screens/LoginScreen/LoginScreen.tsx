@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Image, AccessibilityInfo, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import appConfig from '../../../app.json';
-import { unlock, unlockWithBiometrics } from '../../store/slices/wallet';
+import { unlock, unlockWithBiometrics, WalletState } from '../../store/slices/wallet';
 import { SafeScreenView, ErrorDialog, PasswordInput } from '../../components';
 import walletImage from '../../assets/wallet.png';
 
@@ -13,18 +13,20 @@ import { useAccessibilityFocus, useAsyncValue } from '../../hooks';
 import { theme } from '../../styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getBiometryIconName, isBiometricsSupported } from '../../lib/biometrics';
+import { RootState } from '../../store';
 
 export default function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
+  const { isBiometricsEnabled } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState('');
   const [passwordRef, focusPassword] = useAccessibilityFocus<View>();
   const [biometryIconName] = useAsyncValue(getBiometryIconName);
-  const [biometryEnabled] = useAsyncValue(isBiometricsSupported);
+  const [biometrySupported] = useAsyncValue(isBiometricsSupported);
 
   const isError = errorText !== '';
   const biometryIcon = biometryIconName ? <MaterialCommunityIcons name={biometryIconName} size={theme.iconSize} color={theme.color.textSecondary} /> : undefined;
-  const showBiometricsButton = biometryEnabled && biometryIcon;
+  const showBiometricsButton = biometrySupported && biometryIcon && isBiometricsEnabled;
 
   async function _unlockWallet() {
     try {
@@ -36,8 +38,12 @@ export default function LoginScreen(): JSX.Element {
   }
 
   async function _unlockWalletWithBiometrics() {
-    await dispatch(unlockWithBiometrics());
-    AccessibilityInfo.announceForAccessibility('Unlocked Wallet');
+    try {
+      await dispatch(unlockWithBiometrics());
+      AccessibilityInfo.announceForAccessibility('Unlocked Wallet');
+    } catch (err) {
+      setErrorText('Unable to verify identify, please enter password');
+    }
   }
 
   // Removes error when user begins typing
