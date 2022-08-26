@@ -1,19 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Text, View, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { RootState } from '../../store';
-import { DidState } from '../../store/slices/did';
 import { NavHeader } from '../../components';
-
 import styles from './DebugScreen.styles';
 import { DebugScreenProps } from '../../navigation';
+import { makeSelectDidFromProfile } from '../../store/selectorFactories';
+import { useSelectorFactory } from '../../hooks/useSelectorFactory';
 
 export default function DebugScreen({ navigation, route }: DebugScreenProps): JSX.Element {
-  const { rawCredentialRecord } = route.params;
-  const { rawDidRecords } = useSelector<RootState, DidState>(({ did }) => did);
-  const [ rawDidRecord ] = rawDidRecords;
+  const { rawCredentialRecord, rawProfileRecord } = route.params;
+  const rawDidRecord = useSelectorFactory(makeSelectDidFromProfile, { rawProfileRecord });
 
   function goBack() {
     navigation.goBack();

@@ -1,24 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-import { getAllDidRecords, mintDid } from './did';
-import {
-  db,
-  CredentialRecord,
-  CredentialRecordRaw,
-} from '../../model';
-import { RootState } from '..';
+import { RootState, getAllRecords } from '..';
+import { importWalletFrom } from '../../lib/import';
+import { db, INITIAL_PROFILE_NAME } from '../../model';
+import { createProfile } from './profile';
 
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
   isBiometricsEnabled: boolean,
   needsRestart: boolean;
-  rawCredentialRecords: CredentialRecordRaw[];
 }
 
 type InitializeParams = {
   passphrase: string;
   enableBiometrics: boolean;
+  existingWallet?: string;
 }
 
 
@@ -27,12 +23,7 @@ const initialState: WalletState = {
   isInitialized: null,
   isBiometricsEnabled: false,
   needsRestart: false,
-  rawCredentialRecords: [],
 };
-
-const getAllCredentials = createAsyncThunk('walletState/getAllCredentials', async () => ({
-  rawCredentialRecords: await CredentialRecord.getAllCredentials(),
-}));
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
   return {
@@ -49,22 +40,19 @@ const lock = createAsyncThunk('walletState/lock', async (_, { dispatch }) => {
 
 const unlock = createAsyncThunk('walletState/unlock', async (passphrase: string, { dispatch }) => {
   await db.unlock(passphrase);
-  await dispatch(getAllDidRecords());
-  await dispatch(getAllCredentials());
+  await dispatch(getAllRecords());
   await dispatch(pollWalletState());
 });
 
 const unlockWithBiometrics = createAsyncThunk('walletState/unlockWithBiometrics', async (_, { dispatch }) => {
   await db.unlockWithBiometrics();
-  await dispatch(getAllDidRecords());
-  await dispatch(getAllCredentials());
+  await dispatch(getAllRecords());
   await dispatch(pollWalletState());
 });
 
-const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics }: InitializeParams, { dispatch }) => {
+const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics, existingWallet }: InitializeParams, { dispatch }) => {
   await db.initialize(passphrase);
   await db.unlock(passphrase);
-  await dispatch(mintDid());
   
   if (enableBiometrics) {
     try {
@@ -74,9 +62,22 @@ const initialize = createAsyncThunk('walletState/initialize', async ({ passphras
     }
   }
 
-  await dispatch(pollWalletState());
-});
+  let reportDetails = undefined;
 
+  if (existingWallet) {
+    try {
+      reportDetails = await importWalletFrom(existingWallet);
+    } catch (err) {
+      await db.lock().then(db.reset);
+      throw err;
+    }
+  } else {
+    await dispatch(createProfile({ profileName: INITIAL_PROFILE_NAME }));
+  }
+
+  await dispatch(getAllRecords());
+  return reportDetails;
+});
 
 const reset = createAsyncThunk('walletState/reset', async () => {
   await db.lock();
@@ -126,11 +127,6 @@ const walletSlice = createSlice({
       ...state,
       ...action.payload,
     }));
-
-    builder.addCase(getAllCredentials.fulfilled, (state, action) => ({
-      ...state,
-      ...action.payload,
-    }));
   },
 });
 
@@ -142,6 +138,7 @@ export {
   initialize,
   reset,
   pollWalletState,
-  getAllCredentials,
   toggleBiometrics
 };
+
+export const selectWalletState = (state: RootState): WalletState => state.wallet;

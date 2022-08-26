@@ -7,17 +7,18 @@ import { NativeModules } from 'react-native';
 
 import { CredentialRecord } from './credential';
 import { DidRecord } from './did';
-import { parseWalletContents } from '../lib/parseWallet';
-
-import type { UnlockedWallet, WalletImportResponse } from '../types/wallet';
 import { resetBiometricKeychain, retrieveFromBiometricKeychain, storeInBiometricKeychain } from '../lib/biometrics';
+import { ProfileRecord } from './profile';
+import { runMigrations, schemaVersion } from './migration';
 
 export * from './credential';
 export * from './did';
+export * from './profile';
 
 const models: Realm.ObjectClass[] = [
   CredentialRecord,
   DidRecord,
+  ProfileRecord,
 ];
 
 const Aes = NativeModules.Aes;
@@ -191,101 +192,6 @@ class DatabaseAccess {
     await DatabaseAccess.lock();
   }
 
-  public static async export(): Promise<UnlockedWallet> {
-    if (!(await this.isUnlocked())) {
-      throw new Error('Cannot export a locked wallet.');
-    }
-
-    const credentialRecords = await CredentialRecord.getAllCredentials();
-    const credentials = credentialRecords.map(({ credential }) => credential);
-
-    const didRecords = await DidRecord.getAllDidRecords();
-    const { didDocument, verificationKey, keyAgreementKey } = didRecords[0];
-
-    /**
-     * The Unlocked Wallet spec requires all wallet content
-     * types to be combined into a flat array.
-     * https://w3c-ccg.github.io/universal-wallet-interop-spec/#unlocked-wallet
-     */
-    const contents = [
-      ...credentials,
-      didDocument,
-      verificationKey,
-      keyAgreementKey,
-    ];
-
-    const wallet: UnlockedWallet = {
-      '@context': [
-        'https://www.w3.org/2018/credentials/v1',
-        'https://w3id.org/wallet/v1',
-      ],
-      id: 'http://example.gov/wallet/3732',
-      type: 'UniversalWallet2020',
-      status: 'UNLOCKED',
-      contents,
-    };
-
-    return wallet;
-  }
-
-  public static async import(rawWallet: string): Promise<WalletImportResponse> {
-    if (!(await this.isUnlocked())) {
-      throw new Error('Cannot import into a locked wallet.');
-    }
-
-    const {
-      credentials,
-      didDocument,
-      verificationKey,
-      keyAgreementKey,
-    } = parseWalletContents(rawWallet);
-
-    const response: WalletImportResponse = {
-      success: [],
-      duplicate: [],
-      failed: [],
-    };
-
-    const existingCredentials = await CredentialRecord.getAllCredentials();
-    const existingCredentialIds = existingCredentials.map(({ credential }) => credential.id);
-
-    await Promise.all(credentials.map(async (credential) => {
-      /*
-       * TODO - this is the same field used for the title use in other places when displaying
-       * a credential. Should that also be used here?
-       */
-      let achievement = credential.credentialSubject.hasCredential ??
-        credential.credentialSubject.achievement;
-      if (Array.isArray(achievement)) {
-        achievement = achievement[0];
-      }
-      const credentialName = achievement?.name ?? 'Unknown Credential';
-      if (existingCredentialIds.includes(credential.id)) {
-        response.duplicate.push(credentialName);
-        return;
-      }
-
-      try {
-        await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
-        response.success.push(credentialName);
-      } catch(err) {
-        console.warn(`Unable to import credential: ${err}`);
-        response.failed.push(credentialName);
-      }
-    }));
-
-    const existingDidRecords = await DidRecord.getAllDidRecords();
-
-    // Replace the DID Document if one already exisits.
-    if (existingDidRecords.length !== 0) {
-      const [didRecord] = existingDidRecords;
-      await DidRecord.deleteDidRecord(didRecord);
-    }
-    await DidRecord.addDidRecord(didDocument, verificationKey, keyAgreementKey);
-
-    return response;
-  }
-
   private static async encryptionKey(): Promise<Int8Array> {
     if (!(await this.isUnlocked())) {
       throw new Error('Wallet is not unlocked.');
@@ -308,6 +214,8 @@ class DatabaseAccess {
   private static async config(): Promise<Realm.Configuration> {
     return {
       schema: models,
+      schemaVersion,
+      migration: runMigrations,
       encryptionKey: await DatabaseAccess.encryptionKey(),
     };
   }

@@ -1,22 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { FlatList } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { navigationRef } from '../../navigation';
-import { RootState } from '../../store';
-import { PendingCredential } from '../../store/slices/credentialFoyer';
+import { selectPendingCredentials } from '../../store/slices/credentialFoyer';
 import { CredentialItem, NavHeader } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { ApprovalControls } from '../../components';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
-import { mixins } from '../../styles';
 import styles from './ApproveCredentialsScreen.styles';
 
-export default function ApproveCredentialsScreen({ navigation }: ApproveCredentialsScreenProps): JSX.Element {
-  const pendingCredentials = useSelector<RootState, PendingCredential[]>(
-    ({ credentialFoyer }) => credentialFoyer.pendingCredentials,
-  );
+export default function ApproveCredentialsScreen({ navigation, route }: ApproveCredentialsScreenProps): JSX.Element {
+  const { rawProfileRecord } = route.params;
+  const profileRecordId = rawProfileRecord._id;
+  const pendingCredentials = useSelector(selectPendingCredentials);
 
   function goToHome() {
     if (navigationRef.isReady()) {
@@ -40,6 +38,12 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
     );
   }
 
+  const ListHeader = (
+    <View style={styles.listHeader}>
+      <Text style={styles.profileText}><Text style={styles.profileTextBold}>Adding To Profile:</Text> {rawProfileRecord.profileName}</Text>
+    </View>
+  );
+
   function renderItem({ item: pendingCredential }: RenderItemProps) {
     const { credential } = pendingCredential;
     const { issuer } = credential;
@@ -50,6 +54,7 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
       'ApproveCredentialScreen',
       {
         pendingCredentialId: pendingCredential.id,
+        profileRecordId,
       },
     );
 
@@ -59,7 +64,7 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
         subtitle={issuerName}
         image={issuerImage}
         onSelect={onSelect}
-        bottomElement={<ApprovalControls pendingCredential={pendingCredential} />}
+        bottomElement={<ApprovalControls pendingCredential={pendingCredential} profileRecordId={profileRecordId} />}
         chevron
       />
     );
@@ -72,7 +77,8 @@ export default function ApproveCredentialsScreen({ navigation }: ApproveCredenti
         rightComponent={<Done />}
       />
       <FlatList
-        contentContainerStyle={mixins.credentialListContainer}
+        style={styles.container}
+        ListHeaderComponent={ListHeader}
         data={pendingCredentials}
         renderItem={renderItem}
         keyExtractor={(_, index) => `credential-${index}`}

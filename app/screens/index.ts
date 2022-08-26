@@ -10,3 +10,9 @@ export { default as ApproveCredentialsScreen } from './ApproveCredentialsScreen/
 export { default as ApproveCredentialScreen } from './ApproveCredentialScreen/ApproveCredentialScreen';
 export { default as RestartScreen } from './RestartScreen/RestartScreen';
 export { default as VerificationStatusScreen } from './VerificationStatusScreen/VerificationStatusScreen';
+export { default as ManageProfilesScreen } from './ManageProfilesScreen/ManageProfilesScreen';
+export { default as DetailsScreen } from './DetailsScreen/DetailsScreen';
+export { default as ViewSourceScreen } from './ViewSourceScreen/ViewSourceScreen';
+export { default as ChooseProfileScreen } from './ChooseProfileScreen/ChooseProfileScreen';
+export { default as AddExistingProfileScreen } from './AddExistingProfileScreen/AddExistingProfileScreen';
+export { default as RestoreWalletScreen } from './RestoreWalletScreen/RestoreWalletScreen';

@@ -10,12 +10,12 @@ import {
   PendingCredential,
   setCredentialApproval,
 } from '../../store/slices/credentialFoyer';
-import { getAllCredentials } from '../../store/slices/wallet';
-import { CredentialRecord } from '../../model';
 import { theme, Color } from '../../styles';
 import styles from './ApprovalControls.styles';
 import type { Credential } from '../../types/credential';
 import { useAccessibilityFocus } from '../../hooks';
+import { addCredential } from '../../store/slices/credential';
+import { ObjectID } from 'bson';
 
 enum StatusIcon {
   Schedule = 'schedule',
@@ -25,6 +25,7 @@ enum StatusIcon {
 
 type ApprovalControlsProps = {
   pendingCredential: PendingCredential;
+  profileRecordId: ObjectID;
 };
 
 type ApprovalButtonProps = {
@@ -69,15 +70,14 @@ function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.E
   );
 }
 
-export default function ApprovalControls({ pendingCredential }: ApprovalControlsProps): JSX.Element {
+export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): JSX.Element {
   const dispatch = useDispatch();
   const { credential, status, messageOveride } = pendingCredential;
   const message = messageOveride || defaultMessageFor(status);
   const [statusRef, focusStatus] = useAccessibilityFocus<View>();
 
   async function add(credential: Credential): Promise<void> {
-    await CredentialRecord.addCredential(CredentialRecord.rawFrom(credential));
-    dispatch(getAllCredentials());
+    await dispatch(addCredential({ credential, profileRecordId }));
   }
 
   function setApprovalStatus(status: ApprovalStatus) {

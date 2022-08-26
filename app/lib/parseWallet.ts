@@ -1,6 +1,7 @@
 import { ParsedWalletContents, WalletContent, UnlockedWallet } from '../types/wallet';
 import { Credential } from '../types/credential';
 import { DidDocument, DidKey } from '../types/did';
+import { ProfileMetadata } from '../types/profile';
 
 function isCredential(item: WalletContent): item is Credential {
   return (item as Credential)['@context']?.includes('https://www.w3.org/2018/credentials/v1') ;
@@ -18,6 +19,10 @@ function isKeyAgreementKey(item: WalletContent): item is DidKey {
   return (item as DidKey)?.type === 'X25519KeyAgreementKey2020' ;
 }
 
+function isProfileMetadata(item: WalletContent): item is ProfileMetadata {
+  return (item as ProfileMetadata)?.type === 'ProfileMetadata' ;
+}
+
 /**
  * The Unlocked Wallet spec doesn't have a good way to differentiate
  * between wallet content types so this function identifies them based
@@ -30,11 +35,12 @@ export function parseWalletContents(rawWallet: string): ParsedWalletContents {
   const didDocument = contents.find(isDidDocument);
   const verificationKey = contents.find(isVerificationKey);
   const keyAgreementKey = contents.find(isKeyAgreementKey);
+  const profileMetadata = contents.find(isProfileMetadata);
 
   const errorMessage = (key: string) => `Unable to parse wallet contents. Missing ${key}`;
   if (didDocument === undefined) throw new Error(errorMessage('didDocument'));
   if (verificationKey === undefined) throw new Error(errorMessage('verificationKey'));
   if (keyAgreementKey === undefined) throw new Error(errorMessage('keyAgreementKey'));
 
-  return { credentials, didDocument, verificationKey, keyAgreementKey };
+  return { credentials, didDocument, verificationKey, keyAgreementKey, profileMetadata };
 }

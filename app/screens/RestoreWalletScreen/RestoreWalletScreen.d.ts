@@ -1,0 +1,1 @@
+export { RestoreWalletScreenProps } from '../../navigation';

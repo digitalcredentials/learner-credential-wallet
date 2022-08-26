@@ -3,14 +3,15 @@ import { View, Text, ScrollView, TouchableWithoutFeedback, AccessibilityInfo } f
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
-import { CredentialRecord } from '../../model';
 import { mixins } from '../../styles';
-import { getAllCredentials } from '../../store/slices/wallet';
 import { MenuItem, NavHeader, ConfirmModal, AccessibleView, VerificationCard, CredentialCard } from '../../components';
 import { CredentialScreenProps, navigationRef } from '../../navigation';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 
 import styles from './CredentialScreen.styles';
+import { deleteCredential } from '../../store/slices/credential';
+import { makeSelectProfileFromCredential } from '../../store/selectorFactories';
+import { useSelectorFactory } from '../../hooks/useSelectorFactory';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const dispatch = useDispatch();
@@ -21,6 +22,8 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const { credential } = rawCredentialRecord;
   const { title } = credentialRenderInfo(credential);
 
+  const rawProfileRecord = useSelectorFactory(makeSelectProfileFromCredential, { rawCredentialRecord });
+  const { profileName } = rawProfileRecord;
 
   function onPressShare() {
     if (navigationRef.isReady()) {
@@ -37,7 +40,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   function onPressDebug() {
     setMenuIsOpen(false);
     if (navigationRef.isReady()) {
-      navigationRef.navigate('DebugScreen', { rawCredentialRecord });
+      navigationRef.navigate('DebugScreen', { rawCredentialRecord, rawProfileRecord });
     }
   }
 
@@ -47,8 +50,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   }
 
   async function onConfirmDelete() {
-    await CredentialRecord.deleteCredential(rawCredentialRecord);
-    dispatch(getAllCredentials());
+    dispatch(deleteCredential(rawCredentialRecord));
     AccessibilityInfo.announceForAccessibility('Credential Deleted');
     navigation.goBack();
   }
@@ -88,7 +90,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         confirmText="Delete"
         accessibilityFocusContent
       >
-        <Text style={styles.modalBodyText}>
+        <Text style={mixins.modalBodyText}>
           Are you sure you want to remove {title} from your wallet?
         </Text>
       </ConfirmModal>
@@ -114,6 +116,11 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
             <View style={styles.container}>
               <CredentialCard rawCredentialRecord={rawCredentialRecord} />
               <VerificationCard credential={credential} isButton showDetails={false}/>
+              <View style={styles.profileContainer}>
+                <Text style={mixins.paragraphText}>
+                  <Text style={styles.textBold}>Profile:</Text> {profileName}
+                </Text>
+              </View>
             </View>
           </TouchableWithoutFeedback>
         </ScrollView>

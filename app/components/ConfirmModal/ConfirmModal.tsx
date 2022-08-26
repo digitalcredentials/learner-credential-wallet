@@ -8,12 +8,13 @@ import { useAccessibilityFocus } from '../../hooks';
 import styles from './ConfirmModal.style';
 
 export type ConfirmModalProps = React.PropsWithChildren<{
-  open: boolean;
+  open?: boolean;
 
-  onRequestClose: () => void;
+  onRequestClose?: () => void;
   onConfirm?: () => void;
   onCancel?: () => void;
 
+  confirmButtonDisabled?: boolean;
   confirmButton?: boolean;
   cancelButton?: boolean;
   cancelOnBackgroundPress?: boolean;
@@ -25,11 +26,12 @@ export type ConfirmModalProps = React.PropsWithChildren<{
 }>
 
 export default function ConfirmModal({
-  open,
-  onRequestClose,
+  open = true,
+  onRequestClose = () => {},
   onConfirm = () => {},
   onCancel = () => {},
   title,
+  confirmButtonDisabled,
   confirmButton = true,
   cancelButton = true,
   cancelOnBackgroundPress = false,
@@ -103,6 +105,9 @@ export default function ConfirmModal({
                 containerStyle={mixins.buttonContainer}
                 titleStyle={mixins.buttonTitle}
                 title={confirmText}
+                disabled={confirmButtonDisabled}
+                disabledStyle={mixins.buttonDisabled}
+                disabledTitleStyle={mixins.buttonTitle}
                 onPress={() => {
                   onRequestClose();
                   onConfirm();

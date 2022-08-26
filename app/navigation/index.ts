@@ -27,7 +27,10 @@ import { CredentialScreenHomeProps } from './CredentialNavigation/CredentialNavi
 import { CredentialScreenShareProps } from './ShareNavigation/ShareNavigation.d';
 export type CredentialScreenProps = CredentialScreenHomeProps | CredentialScreenShareProps;
 
-import { RestoreDetailsSettingsProps } from './SettingsNavigation/SettingsNavigation.d';
-import { RestoreDetailsSetupProps } from './SetupNavigation/SetupNavigation.d';
-export type RestoreDetailsProps = RestoreDetailsSettingsProps | RestoreDetailsSetupProps;
+import { DetailsScreenSettingsProps } from './SettingsNavigation/SettingsNavigation.d';
+import { DetailsScreenSetupProps } from './SetupNavigation/SetupNavigation.d';
+export type DetailsScreenProps = DetailsScreenSettingsProps | DetailsScreenSetupProps;
 
+import { QRScreenCredentialProps } from './AddCredentialNavigation/AddCredentialNavigation.d';
+import { QRScreenProfileProps } from './SettingsNavigation/SettingsNavigation.d';
+export type QRScreenProps = QRScreenCredentialProps | QRScreenProfileProps;

@@ -10,10 +10,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { RootNavigation, SetupNavigation, RootNavigationParamsList } from '../';
 import { RestartScreen, LoginScreen } from '../../screens';
 import { useAppLoading } from '../../hooks';
-import { RootState } from '../../store';
-import { WalletState } from '../../store/slices/wallet';
-import { theme } from '../../styles';
+import { selectWalletState } from '../../store/slices/wallet';
+import { mixins, theme } from '../../styles';
 import { encodeQueryParams } from '../../lib/encode';
+import { EventProvider } from 'react-native-outside-press';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 
@@ -70,7 +70,7 @@ export default function AppNavigation(): JSX.Element | null {
     isUnlocked,
     isInitialized,
     needsRestart,
-  } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
+  } = useSelector(selectWalletState);
 
   function renderScreen(): JSX.Element | null {
     if (needsRestart) {
@@ -98,13 +98,15 @@ export default function AppNavigation(): JSX.Element | null {
     <SafeAreaProvider>
       <View onLayout={SplashScreen.hideAsync} />
       <StatusBar style="light" />
-      <NavigationContainer
-        theme={navigatorTheme}
-        ref={navigationRef}
-        linking={linking}
-      >
-        {renderScreen()}
-      </NavigationContainer>
+      <EventProvider style={mixins.flex}>
+        <NavigationContainer
+          theme={navigatorTheme}
+          ref={navigationRef}
+          linking={linking}
+        >
+          {renderScreen()}
+        </NavigationContainer>
+      </EventProvider>
     </SafeAreaProvider>
   );
 }

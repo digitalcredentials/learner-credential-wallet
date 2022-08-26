@@ -13,6 +13,13 @@ const shadow = {
   },
 };
 
+const paragraphText = {
+  fontFamily: theme.fontFamily.regular,
+  fontSize: theme.fontSize.regular,
+  color: theme.color.textSecondary,
+  lineHeight: 24,
+};
+
 const imageIcon = {
   width: 40,
   height: 40,
@@ -59,12 +66,7 @@ export default StyleSheet.create({
     color: theme.color.textHeader,
     fontSize: theme.fontSize.medium,
   },
-  paragraphText: {
-    fontFamily: theme.fontFamily.regular,
-    fontSize: theme.fontSize.regular,
-    color: theme.color.textSecondary,
-    lineHeight: 24,
-  },
+  paragraphText,
 
   /* Button mixins */
   button: {
@@ -119,9 +121,37 @@ export default StyleSheet.create({
     marginVertical: 8,
     flex: 1,
   },
+  buttonIconCompact: {
+    justifyContent: 'space-between',
+    backgroundColor: theme.color.foregroundPrimary,
+    borderRadius: theme.borderRadius,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    minHeight: 48,
+  },
+  buttonContainerVertical: {
+    ...shadow,
+    marginVertical: 8,
+  },
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
+  },
+  buttonClear: {
+    padding: 16,
+    borderRadius: theme.borderRadius,
+    backgroundColor: theme.color.transparent,
+  },
+  buttonClearContainer: {
+    width: '100%',
+  },
+  buttonClearTitle: {
+    fontSize: theme.fontSize.regular,
+    color: theme.color.textSecondary,
+    fontFamily: theme.fontFamily.regular,
+  },
+  buttonDisabled: {
+    backgroundColor: theme.color.buttonDisabled,
   },
 
   /* Input mixins */
@@ -136,6 +166,17 @@ export default StyleSheet.create({
     padding: 16,
   },
 
+  flex: {
+    flex: 1,
+  },
+
+  modalBodyText: {
+    ...paragraphText,
+    textAlign: 'center',
+    lineHeight: 24,
+    marginVertical: 8,
+  },
+
   /* Checkbox mixins */
   checkboxContainer: {    
     marginTop: 0,
@@ -148,7 +189,7 @@ export default StyleSheet.create({
     paddingLeft: 5,
 
     ...imageIcon,
-    
+
     justifyContent: 'center',
     alignItems: 'center',
   },
