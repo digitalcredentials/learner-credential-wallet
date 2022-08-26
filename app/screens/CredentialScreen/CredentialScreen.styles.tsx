@@ -27,16 +27,16 @@ export default StyleSheet.create({
     color: theme.color.textPrimary,
     textDecorationLine: 'underline',
   },
-  modalBodyText: {
-    ...mixins.paragraphText,
-    textAlign: 'center',
-    lineHeight: 24,
-    marginVertical: 8,
-  },
   scrollContainer: {
     flexGrow: 1,
   },
   outerContainer: {
     flex: 1,
   },
+  profileContainer: {
+    marginVertical: 16,
+  },
+  textBold: {
+    fontFamily: theme.fontFamily.medium,
+  }
 });

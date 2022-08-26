@@ -4,11 +4,13 @@ import type { CredentialRecordRaw } from '../../model/credential';
 import type { VerifyPayload } from '../../hooks';
 import type { HomeNavigationParamList } from '../';
 import { Credential } from '../../types/credential';
+import { ProfileRecordRaw } from '../../model';
 
 export type RootNavigationParamsList = {
   HomeNavigation: NavigatorScreenParams<HomeNavigationParamList>;
   DebugScreen: {
     rawCredentialRecord: CredentialRecordRaw;
+    rawProfileRecord: ProfileRecordRaw;
   };
   VerificationStatusScreen: {
     credential: Credential;

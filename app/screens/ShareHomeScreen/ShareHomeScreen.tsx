@@ -3,20 +3,14 @@ import { View, ScrollView } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { NavHeader } from '../../components';
 import { mixins, theme } from '../../styles';
+
 import styles from './ShareHomeScreen.styles';
 import type { ShareHomeScreenProps } from '../../navigation';
 import { MaterialIcons } from '@expo/vector-icons';
-import {CredentialRecordRaw} from '../../model';
-
-export type RenderItemProps = {
-  item: CredentialRecordRaw;
-  index: number;
-};
 
 export default function ShareHomeScreen({
   navigation,
 }: ShareHomeScreenProps): JSX.Element {
-
   return (
     <>
       <NavHeader title="Share" />

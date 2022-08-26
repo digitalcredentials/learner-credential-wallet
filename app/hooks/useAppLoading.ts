@@ -8,22 +8,18 @@ import {
 } from '@expo-google-fonts/rubik';
 import { Roboto_400Regular } from '@expo-google-fonts/roboto';
 
-import type { RootState } from '../store';
 import {
-  WalletState,
   pollWalletState,
-  getAllCredentials,
   lock,
+  selectWalletState,
 } from '../store/slices/wallet';
-import { getAllDidRecords } from '../store/slices/did';
+import { getAllRecords } from '../store';
 
 export function useAppLoading(): boolean {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  const { isUnlocked, isInitialized } = useSelector<RootState, WalletState>(
-    ({ wallet }) => wallet,
-  );
+  const { isUnlocked, isInitialized } = useSelector(selectWalletState);
 
   const [fontsLoaded] = useFonts({
     Rubik_400Regular,
@@ -53,8 +49,7 @@ export function useAppLoading(): boolean {
       if (isUnlocked && !isInitialized) {
         dispatch(lock());
       } else if (isUnlocked) {
-        dispatch(getAllCredentials());
-        dispatch(getAllDidRecords());
+        dispatch(getAllRecords());
       }
     }
   }, [walletStateInitialized]);

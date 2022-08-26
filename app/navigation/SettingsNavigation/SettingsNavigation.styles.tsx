@@ -73,19 +73,6 @@ export default StyleSheet.create({
   sectionContainer: {
     marginVertical: 16,
   },
-  buttonClear: {
-    ...mixins.button,
-    backgroundColor: theme.color.transparent,
-  },
-  buttonClearContainer: {
-    width: '100%',
-  },
-  buttonClearTitle: {
-    ...mixins.buttonTitle,
-    color: theme.color.textSecondary,
-    fontFamily: theme.fontFamily.regular,
-    textDecorationLine: 'underline',
-  },
   reportSummary: {
     ...mixins.paragraphText,
     lineHeight: 24,

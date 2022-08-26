@@ -41,20 +41,22 @@ export async function createVerifiablePresentation(
   return verifiablePresentation;
 }
 
-export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord: DidRecordRaw): Promise<void> {
+export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord?: DidRecordRaw): Promise<void> {
   const plurality = rawCredentialRecords.length > 1 ? 's' : '';
   const fileName = `Shared Credential${plurality}`;
   const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
   const credentials = rawCredentialRecords.map(({ credential }) => credential);
 
-  const verifiablePresentation = await createVerifiablePresentation(credentials, didRecord);
+  const presentation = didRecord
+    ? await createVerifiablePresentation(credentials, didRecord)
+    : vc.createPresentation({ verifiableCredential: credentials });
 
   if (await RNFS.exists(filePath)) {
     await RNFS.unlink(filePath);
   }
 
-  const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
-  await RNFS.writeFile(filePath, verifiablePresentationString, 'utf8');
+  const presentationString = JSON.stringify(presentation, null, 2);
+  await RNFS.writeFile(filePath, presentationString, 'utf8');
 
   /** 
    * On Android, the clipboard share activity only supports strings (copying
@@ -71,6 +73,6 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     url: `file://${filePath}`,
     type: 'text/plain',
     subject: fileName,
-    message: Platform.OS === 'ios' ? undefined : verifiablePresentationString,
+    message: Platform.OS === 'ios' ? undefined : presentationString,
   });
 }

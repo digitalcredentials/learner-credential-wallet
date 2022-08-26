@@ -70,15 +70,11 @@ export default StyleSheet.create({
   buttonClearTitle: {
     color: theme.color.textSecondary,
   },
-  buttonDisabled: {
-    backgroundColor: theme.color.buttonDisabled,
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
   },
   inputGroup: {
-    flex: 1,
     width: '100%',
     paddingTop: 40,
   },
@@ -147,4 +143,8 @@ export default StyleSheet.create({
     width: 24,
     marginRight: 16,
   },
+  body: {
+    flex: 1,
+    width: '100%',
+  }
 });

@@ -13,3 +13,11 @@ export { default as PasswordInput } from './PasswordInput/PasswordInput';
 export { default as VerificationStatusCard } from './VerificationStatusCard/VerificationStatusCard';
 export { default as StatusBadge } from './StatusBadge/StatusBadge';
 export { default as CredentialStatusBadges } from './CredentialStatusBadges/CredentialStatusBadges';
+export { default as ProfileItem } from './ProfileItem/ProfileItem';
+export { default as MoreMenuButton } from './MoreMenuButton/MoreMenuButton';
+export { default as PasswordForm } from './PasswordForm/PasswordForm';
+export { default as LoadingIndicatorDots } from './LoadingIndicatorDots/LoadingIndicatorDots';
+export { default as BackupItemModal } from './BackupItemModal/BackupItemModal';
+export { default as ImportFileModal } from './ImportFileModal/ImportFileModal';
+
+export * from './ImportFileModal/ImportFileModal.d';

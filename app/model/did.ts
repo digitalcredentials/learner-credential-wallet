@@ -21,7 +21,6 @@ export class DidRecord implements DidRecordRaw {
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
   readonly rawDidDocument!: string;
-  readonly rawDidKey!: string;
   readonly rawVerificationKey!: string;
   readonly rawKeyAgreementKey!: string;
 
@@ -39,6 +38,7 @@ export class DidRecord implements DidRecordRaw {
 
   static schema: Realm.ObjectSchema = {
     name: 'DidRecord',
+    primaryKey: '_id',
     properties: {
       _id: 'objectId',
       createdAt: 'date',
@@ -47,7 +47,6 @@ export class DidRecord implements DidRecordRaw {
       rawKeyAgreementKey: 'string',
       rawVerificationKey: 'string',
     },
-    primaryKey: '_id',
   };
 
   asRaw(): DidRecordRaw {
@@ -64,15 +63,8 @@ export class DidRecord implements DidRecordRaw {
     };
   }
 
-  static async initializeIdentity(): Promise<void> {
-  }
-
-  static rawFrom(
-    didDocument: DidDocument,
-    verificationKey: DidKey,
-    keyAgreementKey: DidKey,
-  ): DidRecordRaw {
-    return {
+  static async addDidRecord({ didDocument, verificationKey, keyAgreementKey }: AddDidRecordParams ): Promise<DidRecordRaw> { 
+    const rawDidRecord: DidRecordRaw = {
       _id: new ObjectID(),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -83,45 +75,34 @@ export class DidRecord implements DidRecordRaw {
       rawKeyAgreementKey: JSON.stringify(keyAgreementKey),
       keyAgreementKey,
     };
-  }
 
-  static async addDidRecord(
-    didDocument: DidDocument,
-    verificationKey: DidKey,
-    keyAgreementKey: DidKey,
-  ): Promise<void> { 
-    await db.withInstance((instance) => {
-      instance.write(() => {
-        instance.create(DidRecord.schema.name, DidRecord.rawFrom(
-          didDocument,
-          verificationKey,
-          keyAgreementKey,
-        ));
-      });
-    });
+    return db.withInstance((instance) => 
+      instance.write(() => 
+        instance.create<DidRecord>(DidRecord.schema.name, rawDidRecord).asRaw(),
+      ),
+    );
   }
 
   static getAllDidRecords(): Promise<DidRecordRaw[]> {
     return db.withInstance((instance) => {
       const results = instance.objects<DidRecord>(DidRecord.schema.name);
-
-      // Results is not an array, but supports map only if it has length... :/
-      if (results.length) {
-        return results.map((record) => record.asRaw());
-      }
-
-      return [];
+      return results.length ? results.map((record) => record.asRaw()) : [];
     });
   }
 
-  static async deleteDidRecord(rawRecord: DidRecordRaw): Promise<void> {
+  static async deleteDidRecord(rawDidRecord: DidRecordRaw): Promise<void> {
     await db.withInstance((instance) => {
-      const objectId = new ObjectID(rawRecord._id);
-      const didRecord = instance.objectForPrimaryKey(DidRecord.schema.name, objectId);
+      const didRecord = instance.objectForPrimaryKey(DidRecord.schema.name, new ObjectID(rawDidRecord._id));
 
       instance.write(() => {
         instance.delete(didRecord);
       });
     });
   }
+}
+
+export type AddDidRecordParams = {
+  didDocument: DidDocument,
+  verificationKey: DidKey,
+  keyAgreementKey: DidKey,
 }

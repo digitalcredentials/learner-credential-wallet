@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Image, AccessibilityInfo, TextInput } from 'react-native';
+import { Text, View, Image, AccessibilityInfo } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, CheckBox } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import appConfig from '../../../app.json';
 import { theme, mixins } from '../../styles';
-import { getAllCredentials, initialize, pollWalletState } from '../../store/slices/wallet';
-import { LoadingIndicator, SafeScreenView, ErrorDialog, AccessibleView, PasswordInput, ConfirmModal } from '../../components';
+import { initialize, pollWalletState } from '../../store/slices/wallet';
+import { LoadingIndicator, SafeScreenView, AccessibleView, PasswordForm } from '../../components';
 import walletImage from '../../assets/wallet.png';
 import { useAccessibilityFocus, useAsyncValue } from '../../hooks';
-import { db } from '../../model';
-import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 import styles from './SetupNavigation.styles';
 import type {
@@ -25,9 +23,10 @@ import type {
 } from './SetupNavigation.d';
 
 import { isBiometricsSupported } from '../../lib/biometrics';
-import { performImport, pickWalletFile } from '../../lib/import';
-import { getAllDidRecords } from '../../store/slices/did';
-import { RestoreDetails } from '../SettingsNavigation/SettingsNavigation';
+import { ReportDetails } from '../../lib/import';
+import { DetailsScreen } from '../../screens';
+import { ImportFileModal } from '../../components';
+import type { ImportFileModalHandle } from '../../components';
 
 const Stack = createStackNavigator();
 
@@ -50,7 +49,7 @@ export default function SetupNavigation(): JSX.Element {
         component={CreateStep}
         options={{ cardStyleInterpolator: forFade }}
       />
-      <Stack.Screen name="RestoreDetails" component={RestoreDetails} />
+      <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
     </Stack.Navigator>
   );
 }
@@ -80,7 +79,7 @@ function StartStep({ navigation }: StartStepProps) {
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
           title="Quick Setup (Recommended)"
-          onPress={() => navigation.navigate('PasswordStep', { nextStep: 'CreateStep' })}
+          onPress={() => navigation.navigate('PasswordStep')}
         />
       </View>
       <View style={[mixins.buttonGroup, styles.topMargin]}>
@@ -89,7 +88,7 @@ function StartStep({ navigation }: StartStepProps) {
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitleSecondary}
           title="Custom"
-          onPress={() => navigation.navigate('PasswordStep', { nextStep: 'CustomMethodStep' })}
+          onPress={() => navigation.navigate('PasswordStep', { isCustomSetup: true })}
         />
       </View>
     </SafeScreenView>
@@ -97,36 +96,17 @@ function StartStep({ navigation }: StartStepProps) {
 }
 
 function PasswordStep({ navigation, route }: PasswordStepProps) {
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [enableBiometrics, setEnableBiometrics] = useState(false);
-  const [errorText, setErrorText] = useState('');
   const [biometricsSupported] = useAsyncValue(isBiometricsSupported);
-  const passwordRef = useRef<TextInput>(null);
-
-  const isPasswordValid = password.length >= 6 && password === passwordConfirm;
-
-  useEffect(() => passwordRef.current?.focus(), []);
-
-  useEffect(() => {
-    if (isPasswordValid) {
-      setErrorText('');
-    }
-  }, [isPasswordValid]);
-
-  function _onInputBlur() {
-    if (password && passwordConfirm) {
-      if (password.length < 6)
-        setErrorText('Password must contain at least 6 characters');
-      else if (password !== passwordConfirm)
-        setErrorText('Passwords must match');
-      else setErrorText('');
-    }
-  }
+  const [password, setPassword] = useState<string>();
+  const { isCustomSetup = false } = route?.params ?? {};
 
   function _goToNextStep() {
-    if (isPasswordValid) {
-      navigation.navigate(route.params.nextStep, { password, enableBiometrics });
+    if (password !== undefined) {
+      navigation.navigate(isCustomSetup ? 'CustomMethodStep' : 'CreateStep', {
+        password,
+        enableBiometrics,
+      });
     }
   }
 
@@ -151,27 +131,8 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
         Setup a password to secure your wallet. You will not be able to recover
         a lost password.
       </Text>
-      <View style={styles.inputGroup}>
-        <PasswordInput
-          label="Password"
-          value={password}
-          onChangeText={setPassword}
-          onBlur={_onInputBlur}
-          inputRef={passwordRef}
-        />
-        <View style={styles.inputSeparator} />
-        <PasswordInput
-          label="Confirm Password"
-          value={passwordConfirm}
-          onChangeText={setPasswordConfirm}
-          onBlur={_onInputBlur}
-        />
-        {errorText ? (
-          <>
-            <View style={styles.inputSeparator} />
-            <ErrorDialog message={errorText} />
-          </>
-        ) : null}
+      <View style={styles.body}>
+        <PasswordForm onChangePassword={setPassword} style={styles.inputGroup} focusOnMount />
         {biometricsSupported && (
           <>
             <View style={styles.inputSeparator} />
@@ -203,8 +164,8 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
           titleStyle={mixins.buttonTitle}
           title="Next"
           onPress={_goToNextStep}
-          disabled={!isPasswordValid}
-          disabledStyle={styles.buttonDisabled}
+          disabled={!password}
+          disabledStyle={mixins.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
           iconRight
           icon={
@@ -223,12 +184,13 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
 
 function CreateStep({ route }: CreateStepProps) {
   const { password, enableBiometrics } = route.params;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const [titleRef, focusTitle] = useAccessibilityFocus<Text>();
 
-  function _initializeWallet() {
-    dispatch(initialize({ passphrase: password, enableBiometrics }));
+  async function _initializeWallet() {
+    await dispatch(initialize({ passphrase: password, enableBiometrics }));
+    await dispatch(pollWalletState());
   }
 
   useEffect(() => {
@@ -263,7 +225,7 @@ function CreateStep({ route }: CreateStepProps) {
           title="Take Me To My Wallet"
           onPress={_initializeWallet}
           disabled={loading}
-          disabledStyle={styles.buttonDisabled}
+          disabledStyle={mixins.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
         />
       </View>
@@ -272,44 +234,32 @@ function CreateStep({ route }: CreateStepProps) {
 }
 
 function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
-  const dispatch = useDispatch();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [reopenModal, setReopenModal] = useState(false);
+  const { password, enableBiometrics } = route.params;
   const [done, setDone] = useState(false);
-  const [importReport, setImportReport] = useState({});
+  const importModalRef = useRef<ImportFileModalHandle>(null);
+  const dispatch = useAppDispatch();
 
-  const reportSummary = Object.keys(importReport).join('\n');
-
-  async function _importWallet() {
-    const file = await pickWalletFile();
-    setModalIsOpen(true);
-    await db.initialize(route.params.password);
-    await db.unlock(route.params.password);
-    const report = await performImport(file);
-    setImportReport(report);
+  async function importWallet(data: string) {
+    const reportDetails = await dispatch(initialize({ passphrase: password, enableBiometrics, existingWallet: data })).unwrap();
     setDone(true);
 
-    dispatch(getAllCredentials());
-    dispatch(getAllDidRecords());
+    return reportDetails;
   }
 
-  async function goToDetails() {
-    setReopenModal(true);
-    setModalIsOpen(false);
-    navigation.navigate('RestoreDetails', { importReport });
+  function onPressRestoreFromFile() {
+    importModalRef.current?.doImport();
   }
 
-  React.useEffect(() => {
-    // reopen the modal when the user comes back from the page.
-    const unsubscribe = navigation.addListener('focus', () => {
-      if (reopenModal) {
-        setReopenModal(false);
-        setModalIsOpen(true);
-      }
+  function onPressDetails(reportDetails: ReportDetails) {
+    navigation.navigate('DetailsScreen', {
+      header: 'Restored Wallet Details',
+      details: reportDetails,
     });
+  }
 
-    return unsubscribe;
-  }, [navigation, reopenModal]);
+  function updateWalletState() {
+    dispatch(pollWalletState());
+  }
 
   return (
     <SafeScreenView style={styles.customMethodContainer}>
@@ -318,37 +268,6 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
         <View style={styles.stepDivider} />
         <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
       </AccessibleView>
-      <ConfirmModal
-        open={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        cancelButton={false}
-        confirmButton={done}
-        title={done ? 'Existing Wallet Added' : 'Adding Existing Wallet'}
-        confirmText="View Wallet"
-        onConfirm={() => {
-          dispatch(pollWalletState());
-        }}
-      >
-        {done ? (
-          <>
-            <Text style={styles.reportSummary}>{reportSummary}</Text>
-            <Button
-              buttonStyle={styles.reportButtonClear}
-              titleStyle={styles.reportButtonClearTitle}
-              containerStyle={styles.reportButtonClearContainer}
-              title="Details"
-              onPress={goToDetails}
-            />
-          </>
-        ) : (
-          <>
-            <Text style={styles.reportSummary}>This will only take a moment.</Text>
-            <View style={styles.reportLoadingContainer}>
-              <AnimatedEllipsis style={styles.loadingDots} minOpacity={0.4} animationDelay={200}/>
-            </View>
-          </>
-        )}
-      </ConfirmModal>
       <Text style={styles.header} accessibilityRole="header">
         Custom
       </Text>
@@ -376,7 +295,7 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
           containerStyle={mixins.buttonIconContainer}
           titleStyle={mixins.buttonIconTitle}
           title="Restore from a file"
-          onPress={_importWallet}
+          onPress={onPressRestoreFromFile}
           iconRight
           icon={
             <MaterialIcons
@@ -388,18 +307,32 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
         />
       </View>
       <View style={mixins.buttonGroup}>
-        {
-          !done && (
-            <Button
-              buttonStyle={[mixins.button, styles.buttonClear]}
-              containerStyle={styles.buttonClearContainer}
-              titleStyle={[mixins.buttonTitle, styles.buttonClearTitle]}
-              title="Cancel"
-              onPress={() => navigation.goBack()}
-            />
-          )
-        }
+        {!done && (
+          <Button
+            buttonStyle={[mixins.button, styles.buttonClear]}
+            containerStyle={styles.buttonClearContainer}
+            titleStyle={[mixins.buttonTitle, styles.buttonClearTitle]}
+            title="Cancel"
+            onPress={() => navigation.goBack()}
+          />
+        )}
       </View>
+      <ImportFileModal
+        ref={importModalRef}
+        onPressDetails={onPressDetails}
+        importItem={importWallet}
+        onFinished={updateWalletState}
+        textConfig={restoreWalletTextConfig}
+      />
     </SafeScreenView>
   );
 }
+
+const restoreWalletTextConfig = {
+  loadingTitle: 'Restoring From File',
+  lockedTitle: 'Wallet Locked',
+  lockedBody: 'Enter the correct password restore this wallet.',
+  finishedTitle: 'Restore Complete',
+  finishedButton: 'View Wallet',
+  errorBody: 'The wallet could not be restored.',
+};
