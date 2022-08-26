@@ -59,7 +59,10 @@ function ProfileButton({ rawProfileRecord, onPress }: ProfileButtonProps) {
       iconRight
       onPress={(onPress)}
       icon={
-        <ListItem.Chevron />
+        <ListItem.Chevron 
+          hasTVPreferredFocus={undefined}
+          tvParallaxProperties={undefined}
+        />
       }
     />
   );

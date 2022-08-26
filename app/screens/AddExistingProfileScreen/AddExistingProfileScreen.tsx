@@ -1,29 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import { theme, mixins } from '../../styles';
-import { NavHeader, RestoreItemModal } from '../../components';
+import { NavHeader, ImportFileModal } from '../../components';
 
 import styles from './AddExistingProfileScreen.styles';
 import { AddExistingProfileScreenProps } from './AddExistingProfileScreen.d';
 import { ProfileRecord } from '../../model';
-import { importProfile, ReportDetails } from '../../lib/import';
+import { importProfileFrom, ReportDetails } from '../../lib/import';
 import { HumanReadableError } from '../../lib/error';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks';
 import { getAllRecords } from '../../store';
-import { RestoreModalState, SubmitPasswordCallback } from '../../components/RestoreItemModal/RestoreItemModal.d';
+import type { ImportFileModalHandle } from '../../components';
 
 
 export default function AddExistingProfileScreen({ navigation }: AddExistingProfileScreenProps): JSX.Element {
-  const [modalState, setModalState] = useState(RestoreModalState.Hidden);  
-  const [reportDetails, setReportDetails] = useState<ReportDetails>();
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const onSubmitPassword = useRef<SubmitPasswordCallback>();
-  const dispatch = useDispatch();
-
-  const reportSummary = reportDetails ? Object.keys(reportDetails).join('\n') : '';
+  const dispatch = useAppDispatch();
+  const importModalRef = useRef<ImportFileModalHandle>(null);
 
   async function onReadQRCode(text: string) {
     try {
@@ -35,39 +30,17 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
     }
 
     navigation.navigate('ManageProfilesScreen');
-  }
-
-  async function onRequestPassword() {
-    return new Promise<string>((resolve) => {
-      onSubmitPassword.current = (password) => {
-        setModalState(RestoreModalState.Loading);
-        resolve(password);
-      };
-      setModalState(RestoreModalState.Password);
-    });
   } 
 
-  async function onPressRestoreFromFile() {
-    try {
-      const reportDetails = await importProfile({
-        onImportStart: () => setModalState(RestoreModalState.Loading),
-        onRequestPassword,
-      });
+  async function importProfile(data: string) {
+    const reportDetails = await importProfileFrom(data);
+    await dispatch(getAllRecords());
 
-      await dispatch(getAllRecords());
+    return reportDetails;
+  }
 
-      setReportDetails(reportDetails);
-      setModalState(RestoreModalState.Details);
-    } catch (err) {
-      if (err instanceof HumanReadableError) {
-        setErrorMessage(err.message);
-      } else {
-        console.error(err);
-        setErrorMessage('Something went wrong');
-      }
-
-      setModalState(RestoreModalState.Error);
-    }
+  function onPressRestoreFromFile() {
+    importModalRef.current?.doImport();
   }
 
   function onPressScanQRCode() {
@@ -77,13 +50,7 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
     });
   }
 
-  function goToDetails() {
-    setModalState(RestoreModalState.Hidden);
-
-    if (reportDetails === undefined) {
-      throw new Error('No import report details');
-    }
-
+  function onPressDetails(reportDetails: ReportDetails) {
     navigation.navigate('DetailsScreen', {
       header: 'Existing Profile Details',
       details: reportDetails,
@@ -91,8 +58,7 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
     });
   }
 
-  function onRequestClose() {
-    setModalState(RestoreModalState.Hidden);
+  function goToManageProfiles() {
     navigation.navigate('ManageProfilesScreen');
   }
 
@@ -135,13 +101,11 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
           }
         />
       </View>
-      <RestoreItemModal
-        onPressDetails={goToDetails}
-        reportSummary={reportSummary}
-        modalState={modalState}
-        errorMessage={errorMessage}
-        onSubmitPassword={onSubmitPassword.current}
-        onRequestClose={onRequestClose}
+      <ImportFileModal
+        ref={importModalRef}
+        onPressDetails={onPressDetails}
+        importItem={importProfile}
+        onFinished={goToManageProfiles}
         textConfig={restoreProfileTextConfig}
       />
     </>
@@ -153,5 +117,6 @@ const restoreProfileTextConfig = {
   lockedTitle: 'Profile Locked',
   lockedBody: 'Enter the correct password to add this profile to your wallet.',
   finishedTitle: 'Existing Profile Added',
+  finishedButton: 'Close',
   errorBody: 'The profile could not be added to your wallet.',
 };

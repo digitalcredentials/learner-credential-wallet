@@ -1,76 +1,41 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { theme, mixins } from '../../styles';
-import { NavHeader, RestoreItemModal } from '../../components';
+import { NavHeader, ImportFileModal } from '../../components';
 
 import styles from './RestoreWalletScreen.styles';
 import { RestoreWalletScreenProps } from './RestoreWalletScreen.d';
-import { importWallet, ReportDetails } from '../../lib/import';
-import { HumanReadableError } from '../../lib/error';
-import { useDispatch } from 'react-redux';
+import { importWalletFrom, ReportDetails } from '../../lib/import';
+import { useAppDispatch } from '../../hooks';
 import { getAllRecords } from '../../store';
-import { RestoreModalState, SubmitPasswordCallback } from '../../components/RestoreItemModal/RestoreItemModal.d';
+import type { ImportFileModalHandle } from '../../components';
 
 export default function RestoreWalletScreen({ navigation }: RestoreWalletScreenProps): JSX.Element {
-  const [modalState, setModalState] = useState(RestoreModalState.Hidden);  
-  const [reportDetails, setReportDetails] = useState<ReportDetails>();
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const onSubmitPassword = useRef<SubmitPasswordCallback>();
-  const dispatch = useDispatch();
+  const importModalRef = useRef<ImportFileModalHandle>(null);
+  const dispatch = useAppDispatch();
 
-  const reportSummary = reportDetails ? Object.keys(reportDetails).join('\n') : '';
+  async function importWallet(data: string) {
+    const reportDetails = await importWalletFrom(data);
+    await dispatch(getAllRecords());
 
-  async function onRequestPassword() {
-    return new Promise<string>((resolve) => {
-      onSubmitPassword.current = (password) => {
-        setModalState(RestoreModalState.Loading);
-        resolve(password);
-      };
-      setModalState(RestoreModalState.Password);
-    });
-  } 
-
-  async function onPressRestoreFromFile() {
-    try {
-      const reportDetails = await importWallet({
-        onImportStart: () => setModalState(RestoreModalState.Loading),
-        onRequestPassword,
-      });
-
-      await dispatch(getAllRecords());
-
-      setReportDetails(reportDetails);
-      setModalState(RestoreModalState.Details);
-    } catch (err) {
-      if (err instanceof HumanReadableError) {
-        setErrorMessage(err.message);
-      } else {
-        console.error(err);
-        setErrorMessage('Something went wrong');
-      }
-
-      setModalState(RestoreModalState.Error);
-    }
+    return reportDetails;
   }
 
-  function goToDetails() {
-    setModalState(RestoreModalState.Hidden);
+  function onPressRestoreFromFile() {
+    importModalRef.current?.doImport();
+  }
 
-    if (reportDetails === undefined) {
-      throw new Error('No import report details');
-    }
-
+  function onPressDetails(reportDetails: ReportDetails) {
     navigation.navigate('DetailsScreen', {
       header: 'Restored Wallet Details',
       details: reportDetails,
     });
   }
 
-  function onRequestClose() {
-    setModalState(RestoreModalState.Hidden);
+  function goToSettings() {
     navigation.navigate('Settings');
   }
 
@@ -97,13 +62,11 @@ export default function RestoreWalletScreen({ navigation }: RestoreWalletScreenP
           }
         />
       </View>
-      <RestoreItemModal
-        onPressDetails={goToDetails}
-        reportSummary={reportSummary}
-        modalState={modalState}
-        errorMessage={errorMessage}
-        onSubmitPassword={onSubmitPassword.current}
-        onRequestClose={onRequestClose}
+      <ImportFileModal
+        ref={importModalRef}
+        onPressDetails={onPressDetails}
+        importItem={importWallet}
+        onFinished={goToSettings}
         textConfig={restoreWalletTextConfig}
       />
     </>
@@ -115,5 +78,6 @@ const restoreWalletTextConfig = {
   lockedTitle: 'Wallet Locked',
   lockedBody: 'Enter the correct password restore this wallet.',
   finishedTitle: 'Restore Complete',
+  finishedButton: 'Close',
   errorBody: 'The wallet could not be restored.',
 };

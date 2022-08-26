@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   useFonts,
   Rubik_400Regular,
@@ -14,9 +14,10 @@ import {
   selectWalletState,
 } from '../store/slices/wallet';
 import { getAllRecords } from '../store';
+import { useAppDispatch } from './useAppDispatch';
 
 export function useAppLoading(): boolean {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
   const { isUnlocked, isInitialized } = useSelector(selectWalletState);

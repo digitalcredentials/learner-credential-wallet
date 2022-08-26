@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, FlatList, AccessibilityInfo } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 
 import { CredentialItem, NavHeader, ConfirmModal } from '../../components';
@@ -14,13 +14,13 @@ import { credentialRenderInfo } from '../../components/CredentialCard/Credential
 import styles from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 import { CredentialRecordRaw } from '../../model';
-import { useShareCredentials } from '../../hooks';
+import { useAppDispatch, useShareCredentials } from '../../hooks';
 import { deleteCredential, selectRawCredentialRecords } from '../../store/slices/credential';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
   const rawCredentialRecords = useSelector(selectRawCredentialRecords);
   const [itemToDelete, setItemToDelete] = useState<CredentialRecordRaw|null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const share = useShareCredentials();
 
   const itemToDeleteName = itemToDelete?.credential.credentialSubject.hasCredential?.name ?? '';

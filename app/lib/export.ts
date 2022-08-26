@@ -1,22 +1,23 @@
 import Share from 'react-native-share';
 import * as RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
-import CryptoJS from 'crypto-js';
 
 import { ProfileRecord, ProfileRecordRaw } from '../model';
+import { encryptData } from './encrypt';
 
 export const LOCKED_PROFILE_PREFIX = 'locked_profile:';
 export const LOCKED_WALLET_PREFIX = 'locked_wallet:';
 
 export async function exportProfile(rawProfileRecord: ProfileRecordRaw, encryptPassphrase?: string): Promise<void> {
   const fileName = 'Profile Backup';
-  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
-  const profile = await ProfileRecord.exportProfileRecord(rawProfileRecord);
 
-  const profileString = JSON.stringify(profile, null, 2);
+  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
+  const exportedProfile = await ProfileRecord.exportProfileRecord(rawProfileRecord);
+  const exportedProfileString = JSON.stringify(exportedProfile, null, 2);
+
   const data = encryptPassphrase 
-    ? `${LOCKED_PROFILE_PREFIX}${CryptoJS.AES.encrypt(profileString, encryptPassphrase)}`
-    : profileString;
+    ? encryptData(exportedProfileString, encryptPassphrase)
+    : exportedProfileString;
 
   /**
    * On Android, RNFS doesn't truncate the file before writing, 
@@ -45,7 +46,7 @@ export async function exportWallet(encryptPassphrase?: string): Promise<void> {
   const exportedWalletString = JSON.stringify(exportedProfiles, null, 2);
 
   const data = encryptPassphrase 
-    ? `${LOCKED_WALLET_PREFIX}${CryptoJS.AES.encrypt(exportedWalletString, encryptPassphrase)}`
+    ? encryptData(exportedWalletString, encryptPassphrase)
     : exportedWalletString;
 
   /**

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks';
 import { Text } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -71,7 +71,7 @@ function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.E
 }
 
 export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { credential, status, messageOveride } = pendingCredential;
   const message = messageOveride || defaultMessageFor(status);
   const [statusRef, focusStatus] = useAccessibilityFocus<View>();

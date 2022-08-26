@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks';
 import { TextInput } from 'react-native-paper';
 
 import { theme, mixins } from '../../styles';
@@ -17,7 +17,7 @@ import styles from './ManageProfilesScreen.styles';
 export default function ManageProfilesScreen({ navigation }: ManageProfilesScreenProps): JSX.Element {
   const [profileName, setProfileName] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false); 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const rawProfileRecords = useSelectorFactory(makeSelectProfilesWithCredentials);
   const flatListData = useMemo(() => [...rawProfileRecords].reverse(), [rawProfileRecords]);

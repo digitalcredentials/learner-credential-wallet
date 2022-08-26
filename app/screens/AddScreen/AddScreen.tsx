@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AccessibilityInfo, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -18,7 +18,7 @@ import { HumanReadableError } from '../../lib/error';
 
 export default function AddScreen({ navigation, route }: AddScreenProps): JSX.Element {
   const [requestModalIsOpen, setRequestModalIsOpen] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { credentials, error, loading } = useRequestCredentials(route.params);
 

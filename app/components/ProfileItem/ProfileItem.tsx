@@ -8,7 +8,7 @@ import styles from './ProfileItem.styles';
 import { ActionModalProps, ProfileItemProps } from './ProfileItem.d';
 import { mixins, theme } from '../../styles';
 import { navigationRef } from '../../navigation';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks';
 import { deleteProfile, updateProfile } from '../../store/slices/profile';
 import { exportProfile } from '../../lib/export';
 
@@ -76,7 +76,7 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
 
 function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
   const [newName, setNewName] = useState(rawProfileRecord.profileName);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   async function onSave() {
     await dispatch(updateProfile({ ...rawProfileRecord, profileName: newName }));
@@ -128,7 +128,7 @@ function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
 }
 
 function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   async function onDelete() {
     await dispatch(deleteProfile(rawProfileRecord));

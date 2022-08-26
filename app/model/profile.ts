@@ -8,6 +8,9 @@ import { UnlockedWallet } from '../types/wallet';
 import { ProfileImportReport, ProfileMetadata } from '../types/profile';
 import { parseWalletContents } from '../lib/parseWallet';
 
+const UNTITLED_PROFILE_NAME = 'Untitled Profile';
+export const INITIAL_PROFILE_NAME = 'Default';
+
 export type ProfileRecordRaw = {
   readonly _id: ObjectID;
   readonly createdAt: Date;
@@ -177,7 +180,7 @@ export class ProfileRecord implements ProfileRecordRaw {
     };
 
     try {
-      const { profileName = 'Untitled Profile' } = profileMetadata?.data ?? {};
+      const { profileName = UNTITLED_PROFILE_NAME } = profileMetadata?.data ?? {};
     
       const rawDidRecord = await DidRecord.addDidRecord({ didDocument, verificationKey, keyAgreementKey });
       const rawProfileRecord = await ProfileRecord.addProfileRecord({ profileName, rawDidRecord });

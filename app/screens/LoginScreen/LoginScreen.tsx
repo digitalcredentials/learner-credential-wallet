@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Image, AccessibilityInfo, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import appConfig from '../../../app.json';
-import { unlock, unlockWithBiometrics, WalletState } from '../../store/slices/wallet';
+import { selectWalletState, unlock, unlockWithBiometrics } from '../../store/slices/wallet';
 import { SafeScreenView, ErrorDialog, PasswordInput } from '../../components';
 import walletImage from '../../assets/wallet.png';
 
 import styles from './LoginScreen.styles';
-import { useAccessibilityFocus, useAsyncValue } from '../../hooks';
+import { useAccessibilityFocus, useAppDispatch, useAsyncValue } from '../../hooks';
 import { theme } from '../../styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getBiometryIconName, isBiometricsSupported } from '../../lib/biometrics';
-import { RootState } from '../../store';
 
 export default function LoginScreen(): JSX.Element {
-  const dispatch = useDispatch();
-  const { isBiometricsEnabled } = useSelector<RootState, WalletState>(({ wallet }) => wallet);
+  const dispatch = useAppDispatch();
+  const { isBiometricsEnabled } = useSelector(selectWalletState);
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState('');
   const [passwordRef, focusPassword] = useAccessibilityFocus<View>();

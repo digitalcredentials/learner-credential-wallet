@@ -255,4 +255,4 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
       </View>
     </>
   );
-};
+}
