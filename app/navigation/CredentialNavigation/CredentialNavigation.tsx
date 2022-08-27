@@ -3,12 +3,15 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeScreen, CredentialScreen } from '../../screens';
-import { CredentialNavigationParamList } from '../';
+import { CredentialNavigationProps, CredentialNavigationParamList } from '../';
 import { ShareCredentialScreen } from '../../screens';
+import { useResetNavigationOnBlur } from '../../hooks';
 
 const Stack = createStackNavigator<CredentialNavigationParamList>();
 
-export default function CredentialNavigation(): JSX.Element {
+export default function CredentialNavigation({ navigation }: CredentialNavigationProps): JSX.Element {
+  useResetNavigationOnBlur(navigation);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
