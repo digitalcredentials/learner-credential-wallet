@@ -4,7 +4,7 @@ import { Button, Text } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { NavHeader } from '../../components';
+import { ConfirmModal, NavHeader } from '../../components';
 import { ShareCredentialScreenProps } from '../../navigation';
 import styles from './ShareCredentialScreen.styles';
 import { mixins, theme } from '../../styles';
@@ -19,6 +19,8 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
   const share = useShareCredentials();
   const [publicLink, setPublicLink] = useState<string | null>(null);
   const [justCreated, setJustCreated] = useState(false);
+  const [linkedInConfirmModalOpen, setLinkedInConfirmModalOpen] = useState(false);
+  const [createLinkConfirmModalOpen, setCreateLinkConfirmModalOpen] = useState(false);
 
   async function createPublicLink() {
     // TODO go get the link from verifier +
@@ -194,7 +196,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
                   containerStyle={{...mixins.buttonIconContainer, ...styles.createLinkButtonContainer}}
                   titleStyle={mixins.buttonTitle}
                   iconRight
-                  onPress={createPublicLink}
+                  onPress={() => setCreateLinkConfirmModalOpen(true)}
                   icon={
                     <MaterialIcons
                       name="link"
@@ -212,7 +214,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
                 containerStyle={mixins.buttonIconContainer}
                 titleStyle={mixins.buttonIconTitle}
                 iconRight
-                onPress={shareToLinkedIn}
+                onPress={() => setLinkedInConfirmModalOpen(true)}
                 icon={
                   <Ionicons
                     name="logo-linkedin"
@@ -242,7 +244,6 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
                     You may also share the public link by having another person scan this QR code.
                   </Text>
                   <View style={styles.qrCodeContainer}>
-
                     <View style={styles.qrCode}>
                       <QRCode value={publicLink} size={200}/>
                     </View>
@@ -253,6 +254,26 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
           </View>
         </ScrollView>
       </View>
+      <ConfirmModal
+        open={createLinkConfirmModalOpen}
+        onRequestClose={() => setCreateLinkConfirmModalOpen(false)}
+        cancelOnBackgroundPress
+        onConfirm={createPublicLink}
+        confirmText="Create Link"
+        title="Are you sure?"
+      >
+        <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
+      </ConfirmModal>
+      <ConfirmModal
+        open={linkedInConfirmModalOpen}
+        onRequestClose={() => setLinkedInConfirmModalOpen(false)}
+        cancelOnBackgroundPress
+        onConfirm={shareToLinkedIn}
+        confirmText="Add to LinkedIn"
+        title="Are you sure?"
+      >
+        <Text style={mixins.modalBodyText}>This will add the credential to your LinkedIn profile.</Text>
+      </ConfirmModal>
     </>
   );
 }
