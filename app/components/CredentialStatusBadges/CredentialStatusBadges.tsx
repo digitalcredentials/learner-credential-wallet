@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import { CredentialStatusBadgesProps } from './CredentialStatusBadges.d';
 import { CredentialRecordRaw } from '../../model';
-import { Cache } from '../../lib/cache';
+import { Cache, CacheKey } from '../../lib/cache';
 import { theme } from '../../styles';
 import { StatusBadge } from '../';
 import styles from './CredentialStatusBadges.styles';
@@ -41,7 +41,7 @@ async function getBadgeValues(rawCredentialRecord: CredentialRecordRaw): Promise
 
 async function hasPublicLink(rawCredentialRecord: CredentialRecordRaw): Promise<boolean> {
   return Cache.getInstance()
-    .load('publiclink', rawCredentialRecord.credential.id)
+    .load(CacheKey.PublicLink, rawCredentialRecord.credential.id)
     .then((s) => s !== undefined)
     .catch(() => false);
 }

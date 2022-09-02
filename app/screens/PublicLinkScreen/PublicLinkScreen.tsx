@@ -9,7 +9,7 @@ import { PublicLinkScreenProps } from '../../navigation';
 import styles from './PublicLinkScreen.styles';
 import { mixins, theme } from '../../styles';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { Cache } from '../../lib/cache';
+import { Cache, CacheKey } from '../../lib/cache';
 import { IssuerObject } from '../../types/credential';
 import moment from 'moment';
 import credential from '../../mock/credential';
@@ -23,12 +23,12 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
     const link = 'https://web-verifier-plus.vercel.app/vc/1';
 
     // store link in cache for future use
-    await Cache.getInstance().store('publiclink', rawCredentialRecord.credential.id, link);
+    await Cache.getInstance().store(CacheKey.PublicLink, rawCredentialRecord.credential.id, link);
     setPublicLink(link);
   }
 
   async function unshareLink() {
-    await Cache.getInstance().remove('publiclink', rawCredentialRecord.credential.id);
+    await Cache.getInstance().remove(CacheKey.PublicLink, rawCredentialRecord.credential.id);
     setPublicLink(null);
     navigation.popToTop();
   }
@@ -48,7 +48,7 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
 
   async function loadShareUrl() {
     try {
-      const url = await Cache.getInstance().load('publiclink', rawCredentialRecord.credential.id) as string;
+      const url = await Cache.getInstance().load(CacheKey.PublicLink, rawCredentialRecord.credential.id) as string;
       setPublicLink(url);
     } catch(e){
       if ((e as Record<string, string>).name === 'NotFoundError') {
