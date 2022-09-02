@@ -1,16 +1,22 @@
 import { useState, useCallback, useEffect } from 'react';
-import NetInfo from '@react-native-community/netinfo';
 import { ResultLog, verifyCredential } from '../lib/validate';
-import { Credential, CredentialError } from '../types/credential';
+import { CredentialError } from '../types/credential';
 import { Cache, CacheKey } from '../lib/cache';
+import { CredentialRecordRaw } from '../model';
 
+/* Verification expiration = 30 days */
+const VERIFICATION_EXPIRATION = 1000 * 60 * 60 * 24 * 30;
+
+export type VerificationResult = {
+  timestamp: number | null;
+  log: ResultLog[];
+  verified: boolean | null;
+}
 
 export type VerifyPayload = {
   loading: boolean;
-  verified: boolean | null;
   error: string | null;
-  timestamp: number | null;
-  log: ResultLog[];
+  result: VerificationResult;
 }
 
 export type CachedResult = {
@@ -19,52 +25,61 @@ export type CachedResult = {
   log: ResultLog[];
 }
 
-// Adapted from https://usehooks.com/useAsync/
-export function useVerifyCredential(credential?: Credential): VerifyPayload | null {
-  const [loading, setLoading] = useState(true);
-  const [verified, setVerified] = useState<boolean | null>(null);
-  const [timestamp, setTimestamp] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [log, setLog] = useState<ResultLog[]>([]);
+const initialResult = { timestamp: null, log: [], verified: null };
 
-  if (credential === undefined) {
+// Adapted from https://usehooks.com/useAsync/
+export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw): VerifyPayload | null {
+  const [loading, setLoading] = useState<VerifyPayload['loading']>(true);
+  const [result, setResult] = useState<VerifyPayload['result']>(initialResult);
+  const [error, setError] = useState<VerifyPayload['error']>(null);
+
+  if (rawCredentialRecord === undefined) {
     return null;
   }
 
   const verify = useCallback(async () => {
     try {
-      const cache = Cache.getInstance();
-      const { isInternetReachable } = await NetInfo.fetch();
-      let verified: boolean, timestamp: number, log: ResultLog[];
-      // ios will return null the first time you check internet connection
-      // assume connected and try to verify.
-      if (isInternetReachable || isInternetReachable === null) {
-        const response = await verifyCredential(credential);
-        console.log('verify response:', JSON.stringify(response, null, 2));
-        verified = response.verified;
-        log = response.results ? response.results[0].log : [];
-        timestamp = Date.now();
-        await cache.store('verificationResult', credential.id, { verified, timestamp, log });
-      } else {
-        ({ verified, timestamp, log } = await cache.load('verificationResult', credential.id) as CachedResult);
-      }
-
-      setLog(log);
-      setVerified(verified);
-      setTimestamp(timestamp);
+      const verificationResult = await getOrGenerateVerificationResultFor(rawCredentialRecord);
+      setResult(verificationResult);
     } catch (err) {
-      if (Object.values(CredentialError).includes(err.message)) {
-        setError(err.message);
+      const { message } = err as Error;
+      const credentialErrors = Object.values(CredentialError) as string[];
+
+      if (credentialErrors.includes(message)) {
+        setError(message);
       } else {
         setError('An error was encountered while verifying this credential.');
       }
     } finally {
       setLoading(false);
     }
-  }, [setLoading, setVerified]);
+  }, [setLoading, setResult]);
 
   useEffect(() => {
     verify();
   }, [verify]);
-  return { loading, verified, error, timestamp, log };
+
+  return { loading, error, result };
+}
+
+async function getOrGenerateVerificationResultFor(rawCredentialRecord: CredentialRecordRaw): Promise<VerificationResult> {
+  const cachedRecordId = String(rawCredentialRecord._id);
+  const cachedResult = await Cache.getInstance().load(CacheKey.VerificationResult, cachedRecordId).catch(() => null) as CachedResult;
+  if (cachedResult) return cachedResult;
+
+  const response = await verifyCredential(rawCredentialRecord.credential);
+  const result = { 
+    verified: response.verified, 
+    log: response.results ? response.results[0].log : [],
+    timestamp: Date.now(),
+  };
+
+  await Cache.getInstance().store(
+    CacheKey.VerificationResult,
+    cachedRecordId,
+    result,
+    VERIFICATION_EXPIRATION
+  );
+
+  return result;
 }

@@ -29,5 +29,9 @@ export default StyleSheet.create({
     color: theme.color.textSecondary,
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
+  },
+  iconContainer: {
+    ...mixins.imageIcon,
+    backgroundColor: theme.color.backgroundPrimary,
   }
 });

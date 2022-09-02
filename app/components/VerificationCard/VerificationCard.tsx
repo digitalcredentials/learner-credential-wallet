@@ -3,11 +3,11 @@ import moment from 'moment';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-import type { Credential } from '../../types/credential';
 import { useVerifyCredential, VerifyPayload } from '../../hooks';
 import styles from './VerificationCard.styles';
 import { theme } from '../../styles';
 import { navigationRef } from '../../navigation';
+import { CredentialRecordRaw } from '../../model';
 
 type CommonProps = {
   isButton?: boolean;
@@ -15,8 +15,8 @@ type CommonProps = {
 }
 
 type VerifyProps =
-  | { credential: Credential, verifyPayload?: never; }
-  | { credential?: never; verifyPayload: VerifyPayload; isButton?: never | false; };
+  | { rawCredentialRecord: CredentialRecordRaw, verifyPayload?: never; }
+  | { rawCredentialRecord?: never; verifyPayload: VerifyPayload; isButton?: never | false; };
 
 type VerificationCardProps = CommonProps & VerifyProps;
 
@@ -28,8 +28,10 @@ const DATE_FORMAT = 'MMM D, YYYY';
  *   1) Pass in a `credential` to generate a `verifyPayload` and render the status.
  *   2) Pass in a `verifyPayload` to render the status (cannot be a button).
  */
-export default function VerificationCard({ credential, verifyPayload, isButton, showDetails = false }: VerificationCardProps): JSX.Element {
-  const generatedVerifyPayload = useVerifyCredential(credential);
+export default function VerificationCard({ rawCredentialRecord, verifyPayload, isButton, showDetails = false }: VerificationCardProps): JSX.Element {
+  const generatedVerifyPayload = useVerifyCredential(rawCredentialRecord);
+  const { credential } = rawCredentialRecord || {};
+
   if (generatedVerifyPayload !== null) {
     verifyPayload = generatedVerifyPayload;
   }
@@ -38,7 +40,7 @@ export default function VerificationCard({ credential, verifyPayload, isButton, 
     throw new Error('The VerificationCard component was implemented incorrectly.');
   }
 
-  const { loading, verified, timestamp } = verifyPayload;
+  const { loading, result: { verified, timestamp } } = verifyPayload;
 
   const lastCheckedDate = moment(timestamp).format(DATE_FORMAT);
 

@@ -19,8 +19,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const { rawCredentialRecord, noShishKabob = false } = route.params;
-  const { credential } = rawCredentialRecord;
-  const { title } = credentialRenderInfo(credential);
+  const { title } = credentialRenderInfo(rawCredentialRecord.credential);
 
   const rawProfileRecord = useSelectorFactory(makeSelectProfileFromCredential, { rawCredentialRecord });
   const { profileName } = rawProfileRecord;
@@ -115,7 +114,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
           >
             <View style={styles.container}>
               <CredentialCard rawCredentialRecord={rawCredentialRecord} />
-              <VerificationCard credential={credential} isButton showDetails={false}/>
+              <VerificationCard rawCredentialRecord={rawCredentialRecord} isButton showDetails={false}/>
               <View style={styles.profileContainer}>
                 <Text style={mixins.paragraphText}>
                   <Text style={styles.textBold}>Profile:</Text> {profileName}
