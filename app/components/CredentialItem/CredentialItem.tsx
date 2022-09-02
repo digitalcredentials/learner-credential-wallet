@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, useMemo } from 'react';
 import { Image, ImageStyle, StyleProp, View } from 'react-native';
 import { ListItem, CheckBox } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { theme, mixins } from '../../styles';
 import styles from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
 import { CredentialStatusBadges } from '../../components';
+import { useVerifyCredential } from '../../hooks';
 
 export default function CredentialItem({
   title, // Should this info be passed in here, or determined by the CredentialItem?
@@ -21,6 +22,9 @@ export default function CredentialItem({
   rawCredentialRecord,
   showStatusBadges = false,
 }: CredentialItemProps): JSX.Element {
+  const verifyCredential = useVerifyCredential(rawCredentialRecord);
+  const isNotVerified = useMemo(() => verifyCredential?.result.verified === false, [verifyCredential]);
+
   /**
    * When the `bottomElement` param is provided, the root view must not be
    * accessible. This is to support screen reader accessibility for button
@@ -45,6 +49,18 @@ export default function CredentialItem({
           containerStyle={mixins.checkboxContainer}
           textStyle={mixins.checkboxText}
         />
+      );
+    }
+
+    if (isNotVerified) {
+      return (
+        <View style={styles.iconContainer}>
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={mixins.imageIcon.width}
+            color={theme.color.error}
+          />
+        </View>
       );
     }
 

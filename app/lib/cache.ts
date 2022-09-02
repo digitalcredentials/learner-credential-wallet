@@ -20,8 +20,8 @@ export class Cache {
     return this.storage.load({ key, id }) || {};
   }
 
-  async store(key: string, id: string, data: unknown): Promise<void> {
-    return this.storage.save({ key, id, data, expires: null });
+  async store(key: string, id: string, data: unknown, expires: number | null = null ): Promise<void> {
+    return this.storage.save({ key, id, data, expires });
   }
 
   async remove(key: string, id: string): Promise<void> {
