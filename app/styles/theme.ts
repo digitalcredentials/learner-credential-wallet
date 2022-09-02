@@ -22,6 +22,7 @@ const theme: ThemeType = {
     shadow: Color.Black,
     success: Color.Green,
     error: Color.Red,
+    errorLight: Color.LightRed,
     transparent: Color.Transparent,
   },
   fontFamily: {

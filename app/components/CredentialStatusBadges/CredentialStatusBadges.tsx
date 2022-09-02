@@ -32,7 +32,7 @@ export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackg
   ) : (
     <StatusBadge 
       backgroundColor={badgeBackgroundColor}
-      color={theme.color.error}
+      color={theme.color.errorLight}
       label="Not Verified"
     />
   );

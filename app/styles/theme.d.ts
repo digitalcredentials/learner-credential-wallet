@@ -21,6 +21,7 @@ export type ThemeType = {
     shadow: Color;
     success: Color;
     error: Color;
+    errorLight: Color;
     transparent: Color;
   };
   fontFamily: {
