@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import { ResultLog, verifyCredential } from '../lib/validate';
 import { Credential, CredentialError } from '../types/credential';
-import { Cache } from '../lib/cache';
+import { Cache, CacheKey } from '../lib/cache';
 
 
 export type VerifyPayload = {
