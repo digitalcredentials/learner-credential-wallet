@@ -19,6 +19,7 @@ export type SettingsNavigationParamList = {
   ViewSourceScreen: {
     data: unknown;
   }
+  DeveloperScreen: undefined;
 };
 
 export type SettingsProps = StackScreenProps<SettingsNavigationParamList, 'Settings'>;
@@ -29,3 +30,4 @@ export type AddExistingProfileScreenProps = StackScreenProps<SettingsNavigationP
 export type DetailsScreenSettingsProps = StackScreenProps<SettingsNavigationParamList, 'DetailsScreen'>;
 export type ViewSourceScreenProps = StackScreenProps<SettingsNavigationParamList, 'ViewSourceScreen'>;
 export type QRScreenProfileProps = StackScreenProps<SettingsNavigationParamList, 'ProfileQRScreen'>;
+export type DeveloperScreenProps = StackScreenProps<SettingsNavigationParamList, 'DeveloperScreen'>;

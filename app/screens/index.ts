@@ -17,6 +17,7 @@ export { default as ChooseProfileScreen } from './ChooseProfileScreen/ChooseProf
 export { default as AddExistingProfileScreen } from './AddExistingProfileScreen/AddExistingProfileScreen';
 export { default as RestoreWalletScreen } from './RestoreWalletScreen/RestoreWalletScreen';
 export { default as ShareCredentialScreen } from './ShareCredentialScreen/ShareCredentialScreen';
+export { default as DeveloperScreen } from './DeveloperScreen/DeveloperScreen';
 
 // Type Definitions
 export * from './DetailsScreen/DetailsScreen.d';

@@ -28,6 +28,10 @@ export class Cache {
     return this.storage.remove({ key, id });
   }
 
+  async removeAll(key: string): Promise<void> {
+    return this.storage.clearMapForKey(key);
+  }
+
   static getInstance(): Cache {
     if (this.instance === undefined) {
       this.instance = new Cache();

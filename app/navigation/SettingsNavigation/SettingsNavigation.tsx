@@ -14,15 +14,13 @@ import {
   SettingsItemProps,
   SettingsProps,
   AboutProps,
-  navigationRef,
 } from '../';
-import { AddExistingProfileScreen, DetailsScreen, ManageProfilesScreen, QRScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
+import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, QRScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
 import { useAppDispatch, useResetNavigationOnBlur } from '../../hooks';
 import { SettingsNavigationProps } from '../';
 import { exportWallet } from '../../lib/export';
-import { stageCredentials } from '../../store/slices/credentialFoyer';
-import mockCredential from '../../mock/credential';
 import { theme } from '../../styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
 
@@ -66,18 +64,6 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     dispatch(lock());
   }
 
-  function addDevCredential() {
-    dispatch(stageCredentials([mockCredential]));
-    if (navigationRef.isReady()) {
-      navigationRef.navigate('HomeNavigation', { 
-        screen: 'AddCredentialNavigation',
-        params: {
-          screen: 'ChooseProfileScreen',
-        }
-      });
-    }
-  }
-
   function onToggleBiometrics() {
     dispatch(toggleBiometrics());
   }
@@ -106,7 +92,6 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={lockWallet} />
-        <SettingsItem title="Add credential (DEV)" onPress={addDevCredential} />
       </View>
       <ConfirmModal
         open={resetModalOpen}
@@ -129,6 +114,11 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
 function About({ navigation }: AboutProps): JSX.Element {
   const version = DeviceInfo.getVersion();
   const buildNumber = DeviceInfo.getBuildNumber();
+
+  function goToDeveloperScreen() {
+    navigation.navigate('DeveloperScreen');
+  }
+
   return (
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
@@ -155,9 +145,11 @@ function About({ navigation }: AboutProps): JSX.Element {
         <Text style={styles.paragraphCenter}>
           Copyright 2021-2022 Massachusetts Institute of Technology
         </Text>
-        <Text style={styles.paragraphCenter}>
-          v{version} - Build {buildNumber}
-        </Text>
+        <TouchableOpacity onPress={goToDeveloperScreen}>
+          <Text style={styles.paragraphCenter}>
+            v{version} - Build {buildNumber}
+          </Text>
+        </TouchableOpacity>
       </View>
     </>
   );
@@ -179,6 +171,7 @@ export default function SettingsNavigation({ navigation }: SettingsNavigationPro
       <Stack.Screen name="ViewSourceScreen" component={ViewSourceScreen} />
       <Stack.Screen name="RestoreWalletScreen" component={RestoreWalletScreen} />
       <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="DeveloperScreen" component={DeveloperScreen} />
     </Stack.Navigator>
   );
 }
