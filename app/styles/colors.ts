@@ -3,6 +3,7 @@ export enum Color {
   DarkCyan = '#24D3EE',
   Green = '#A3E534',
   Red = '#EF4444',
+  LightRed = '#FF6565',
 
   Transparent = 'transparent',
   White = '#FFFFFF',
