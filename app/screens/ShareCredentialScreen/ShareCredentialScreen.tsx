@@ -21,6 +21,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
   const [justCreated, setJustCreated] = useState(false);
   const [linkedInConfirmModalOpen, setLinkedInConfirmModalOpen] = useState(false);
   const [createLinkConfirmModalOpen, setCreateLinkConfirmModalOpen] = useState(false);
+  const hasPublicLink = publicLink !== null;
 
   async function createPublicLink() {
     // TODO go get the link from verifier +
@@ -39,14 +40,14 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
   }
 
   async function openLink () {
-    if (publicLink !== null) {
+    if (hasPublicLink) {
       await Linking.canOpenURL(publicLink);
       Linking.openURL(publicLink);
     }
   }
 
   function copyToClipboard() {
-    if (publicLink !== null) {
+    if (hasPublicLink) {
       Clipboard.setString(publicLink);
     }
   }
@@ -133,7 +134,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
           <View style={styles.container}>
             <LinkInstructions />
             {
-              publicLink !== null ? (
+              hasPublicLink ? (
                 <View>
                   <View style={styles.link}>
                     <TextInput
@@ -238,7 +239,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
                   />
                 }
               />
-              {publicLink !== null && (
+              {hasPublicLink && (
                 <View style={styles.bottomSection}>
                   <Text style={mixins.paragraphText}>
                     You may also share the public link by having another person scan this QR code.
@@ -272,7 +273,12 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
         confirmText="Add to LinkedIn"
         title="Are you sure?"
       >
-        <Text style={mixins.modalBodyText}>This will add the credential to your LinkedIn profile.</Text>
+        <Text style={mixins.modalBodyText}>
+          {hasPublicLink 
+            ? 'This will add the credential to your LinkedIn profile.'
+            : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
+          }
+        </Text>
       </ConfirmModal>
     </>
   );
