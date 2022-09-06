@@ -28,4 +28,9 @@ export default StyleSheet.create({
   passwordForm: {
     marginVertical: 8,
   },
+  noteText: {
+    ...mixins.modalBodyText,
+    fontSize: 14,
+    lineHeight: 20,
+  }
 });
