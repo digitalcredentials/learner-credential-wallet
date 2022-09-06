@@ -20,9 +20,10 @@ export const makeSelectProfileForPendingCredentials = (): Selector<
       }      
     }
 
-    console.debug('No profile found for credential(s)');
-    console.debug('Credential DID:', didKey);
-    console.debug('Profile DIDs:', JSON.stringify(Object.fromEntries(rawProfileRecords.map(({ profileName, didRecordId }) => [profileName, rawDidRecords.find(({ _id }) => _id.equals(didRecordId))?.didDocument.id])), null, 2));
+    console.debug(`Could not infer profile for pending credential(s), see below:
+Credential DID: "${didKey}"
+Profile DIDs: ${JSON.stringify(Object.fromEntries(rawProfileRecords.map(({ profileName, didRecordId }) => [profileName, rawDidRecords.find(({ _id }) => _id.equals(didRecordId))?.didDocument.id])), null, 2)}
+    `);
 
     return null;
   }
