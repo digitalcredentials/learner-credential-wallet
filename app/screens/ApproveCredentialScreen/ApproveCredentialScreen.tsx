@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 
-import { ApprovalControls, CredentialCard, VerificationCard } from '../../components';
+import { CredentialCard, VerificationCard } from '../../components';
 import { NavHeader } from '../../components';
 import type { ApproveCredentialScreenProps } from './ApproveCredentialScreen.d';
 import { CredentialRecord } from '../../model';
@@ -21,7 +21,6 @@ export default function ApproveCredentialScreen({ navigation, route }: ApproveCr
         <View style={styles.container}>
           <CredentialCard rawCredentialRecord={rawCredentialRecord} />
           <VerificationCard rawCredentialRecord={rawCredentialRecord} isButton />
-          <ApprovalControls pendingCredential={pendingCredential} profileRecordId={profileRecordId} />
         </View>
       </ScrollView>
     </>
