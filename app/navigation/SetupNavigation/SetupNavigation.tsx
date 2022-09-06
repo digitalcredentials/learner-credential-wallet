@@ -272,7 +272,7 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
       <Text style={styles.header} accessibilityRole="header">
         Custom
       </Text>
-      <Text style={styles.paragraphRegular}>To add an existing wallet, scan a valid QR code or upload a wallet file (.dcc) from your device.</Text>
+      <Text style={styles.paragraphRegular}>To add an existing profile, scan a valid QR code or upload a profile file (.json) from your device.</Text>
       <View style={mixins.buttonGroup}>
         <Button
           buttonStyle={[mixins.button, mixins.buttonIcon]}
