@@ -62,12 +62,14 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
           <Text style={styles.checkboxText}>Add password protection</Text>
         </View>
       </TouchableWithoutFeedback>
-      {enablePassword && (
+      {enablePassword ? (
         <PasswordForm
           onChangePassword={setPassword}
           style={styles.passwordForm}
           textInputBackgroundColor={theme.color.foregroundPrimary}
         />
+      ) : (
+        <Text style={styles.noteText}>Note: Not password protecting your backup will leave your backup vulnerable.</Text>
       )}
     </ConfirmModal>
   );
