@@ -8,6 +8,6 @@ export * from './useAccessibilityFocus';
 export * from './useResetNavigationOnBlur';
 export * from './useAsyncValue';
 export * from './useSelectorFactory';
-export * from './useSelectorFactoryCallback';
+export * from './useSelectorFactoryAsCallback';
 export * from './useAppDispatch';
 
