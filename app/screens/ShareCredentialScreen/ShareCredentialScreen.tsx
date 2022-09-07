@@ -64,29 +64,30 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
   async function shareToLinkedIn() {
     let achievement = rawCredentialRecord.credential.credentialSubject.hasCredential ??
       rawCredentialRecord.credential.credentialSubject.achievement;
+
     if (Array.isArray(achievement)) {
       achievement = achievement[0];
     }
-    const title = achievement?.name ?? 'Verifiable Credential';
-
-    const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
+    
     if (!achievement) {
       console.log('No achievement/credential found, not sharing to LI.');
       return;
     }
+
+    const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
+    const title = achievement?.name ?? 'Verifiable Credential';
     const issuanceDate = moment(rawCredentialRecord.credential.issuanceDate);
+    const vcId = rawCredentialRecord.credential.id || achievement.id;
+    const expirationDate = moment(rawCredentialRecord.credential.expirationDate);
+    const hasExpirationDate = rawCredentialRecord.credential.expirationDate !== undefined;
+
     const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
     const issuance = `&issueYear=${issuanceDate.year()}&issueMonth=${issuanceDate.month()}`;
-    let expiration = '';
-    if (rawCredentialRecord.credential.expirationDate !== undefined) {
-      const expirationDate = moment(rawCredentialRecord.credential.expirationDate);
-      expiration = `&expirationYear=${expirationDate.year()}&expirationMonth=${expirationDate.month()}`;
-    }
-    let certUrl = '';
-    if (publicLink) {
-      certUrl = `&certUrl=${publicLink}`;
-    }
-    const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}`;
+    const expiration = hasExpirationDate ? `&expirationYear=${expirationDate.year()}&expirationMonth=${expirationDate.month()}` : '';
+    const certUrl = publicLink ? `&certUrl=${publicLink}` : '';
+    const certId = vcId ? `certId=${vcId}` : '';
+
+    const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
 
     await Linking.canOpenURL(url);
     Linking.openURL(url);
