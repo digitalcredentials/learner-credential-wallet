@@ -30,7 +30,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   switch (auth_type) {
   case 'code': {
     if (!registries.issuerAuth.isInRegistry(issuer)) {
-      throw new Error(`Unknown issuer: "${issuer}"`);
+      throw new Error(`Issuer "${issuer}" not found in registry.`);
     }
     const oidcConfig = registries.issuerAuth.entryFor(issuer);
     // There needs to be a delay before authenticating or the app errors out.
