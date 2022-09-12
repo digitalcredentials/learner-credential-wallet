@@ -38,6 +38,10 @@ const profileSlice = createSlice({
       ...state,
       ...action.payload,
     }));
+
+    builder.addCase(deleteProfile.rejected, (_, action) => {
+      throw action.error;
+    });
   },
 });
 
