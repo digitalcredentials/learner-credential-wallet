@@ -21,7 +21,6 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
   const [justCreated, setJustCreated] = useState(false);
   const [linkedInConfirmModalOpen, setLinkedInConfirmModalOpen] = useState(false);
   const [createLinkConfirmModalOpen, setCreateLinkConfirmModalOpen] = useState(false);
-  const hasPublicLink = publicLink !== null;
 
   async function createPublicLink() {
     // TODO go get the link from verifier +
@@ -40,14 +39,14 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
   }
 
   async function openLink () {
-    if (hasPublicLink) {
+    if (publicLink !== null) {
       await Linking.canOpenURL(publicLink);
       Linking.openURL(publicLink);
     }
   }
 
   function copyToClipboard() {
-    if (hasPublicLink) {
+    if (publicLink !== null) {
       Clipboard.setString(publicLink);
     }
   }
@@ -134,7 +133,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
           <View style={styles.container}>
             <LinkInstructions />
             {
-              hasPublicLink ? (
+              publicLink !== null ? (
                 <View>
                   <View style={styles.link}>
                     <TextInput
@@ -239,7 +238,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
                   />
                 }
               />
-              {hasPublicLink && (
+              {publicLink !== null && (
                 <View style={styles.bottomSection}>
                   <Text style={mixins.paragraphText}>
                     You may also share the public link by having another person scan this QR code.
@@ -274,7 +273,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
         title="Are you sure?"
       >
         <Text style={mixins.modalBodyText}>
-          {hasPublicLink 
+          {publicLink !== null 
             ? 'This will add the credential to your LinkedIn profile.'
             : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
           }
