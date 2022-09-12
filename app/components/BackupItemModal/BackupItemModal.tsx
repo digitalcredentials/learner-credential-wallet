@@ -15,7 +15,7 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
 
   const createBackup = useAsyncCallback(
     () => onBackup(enablePassword ? password : undefined),
-    { onSuccess: onRequestClose }
+    { onSuccess: onRequestClose, onError: onRequestClose }
   );
 
   const readyToBackup = !(enablePassword && !password);
@@ -38,7 +38,6 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
   return (
     <ConfirmModal
       open={open}
-      onRequestClose={onRequestClose}
       onCancel={onRequestClose}
       onConfirm={createBackup.execute}
       title={`Backup ${backupItemName}`}
