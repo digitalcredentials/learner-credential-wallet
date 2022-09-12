@@ -11,6 +11,7 @@ import { navigationRef } from '../../navigation';
 import { useAppDispatch } from '../../hooks';
 import { deleteProfile, updateProfile } from '../../store/slices/profile';
 import { exportProfile } from '../../lib/export';
+import { errorMessageFrom } from '../../lib/error';
 
 enum ActiveModal {
   Rename,
@@ -85,7 +86,6 @@ function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
 
   return (
     <ConfirmModal
-      open
       onRequestClose={onRequestClose}
       onConfirm={onSave}
       title="Rename Profile"
@@ -128,10 +128,16 @@ function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
 }
 
 function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+  const [errorMessage, setErrorMessage] = useState<string>();
   const dispatch = useAppDispatch();
 
   async function onDelete() {
-    await dispatch(deleteProfile(rawProfileRecord));
+    try {
+      await dispatch(deleteProfile(rawProfileRecord));
+      onRequestClose();
+    } catch (err) {
+      setErrorMessage(errorMessageFrom(err));
+    }
   }
 
   function goToDetails() {
@@ -154,10 +160,25 @@ function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
     }
   }
 
+  if (errorMessage) {
+    return (
+      <ConfirmModal
+        onRequestClose={onRequestClose}
+        cancelOnBackgroundPress
+        title="Unable to Delete Profile"
+        confirmText="Close"
+        cancelButton={false}
+      >
+        <Text style={mixins.modalBodyText}>
+          {errorMessage}
+        </Text>
+      </ConfirmModal>
+    );
+  }
+
   return (
     <ConfirmModal
-      open
-      onRequestClose={onRequestClose}
+      onCancel={onRequestClose}
       onConfirm={onDelete}
       title="Delete Profile"
       cancelText="Cancel"
