@@ -20,6 +20,7 @@ import type {
   PasswordStepProps,
   ForFadeType,
   CustomMethodStepProps,
+  SetupNavigationParamList,
 } from './SetupNavigation.d';
 
 import { isBiometricsSupported } from '../../lib/biometrics';
@@ -28,7 +29,7 @@ import { DetailsScreen } from '../../screens';
 import { ImportFileModal } from '../../components';
 import type { ImportFileModalHandle } from '../../components';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<SetupNavigationParamList>();
 
 const forFade: ForFadeType = ({ current }) => ({
   cardStyle: {
