@@ -7,6 +7,7 @@ import { mintDid } from '../lib/did';
 import { UnlockedWallet } from '../types/wallet';
 import { ProfileImportReport, ProfileMetadata } from '../types/profile';
 import { parseWalletContents } from '../lib/parseWallet';
+import { HumanReadableError } from '../lib/error';
 
 const UNTITLED_PROFILE_NAME = 'Untitled Profile';
 export const INITIAL_PROFILE_NAME = 'Default';
@@ -93,6 +94,11 @@ export class ProfileRecord implements ProfileRecordRaw {
   }
 
   public static async deleteProfileRecord(rawProfileRecord: ProfileRecordRaw): Promise<void> {
+    const rawProfileRecords = await ProfileRecord.getAllProfileRecords();
+    if (rawProfileRecords.length <= 1) {
+      throw new HumanReadableError('Wallets must contain at least one profile.');
+    }
+
     await db.withInstance(async (instance) => {
       const profileRecord = instance.objectForPrimaryKey<ProfileRecord>(ProfileRecord.schema.name, new ObjectID(rawProfileRecord._id));
       if (profileRecord === undefined) throw new Error('Profile not found');
