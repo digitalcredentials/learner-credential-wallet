@@ -8,7 +8,7 @@ import { ConfirmModal } from '../../components';
 import { NavHeader } from '../../components';
 import { QRScreenProps } from './QRScreen.d';
 import styles from './QRScreen.styles';
-import { HumanReadableError } from '../../lib/error';
+import { errorMessageFrom } from '../../lib/error';
 
 export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Element {
   const { onReadQRCode, instructionText } = route.params;
@@ -31,11 +31,7 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
     try {
       await onReadQRCode(text);
     } catch (err) {
-      if (err instanceof HumanReadableError) {
-        setErrorMessage(err.message);
-      } else {
-        setErrorMessage('Something went wrong');
-      }
+      setErrorMessage(errorMessageFrom(err));
     }
 
   }

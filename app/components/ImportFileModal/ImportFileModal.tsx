@@ -9,7 +9,7 @@ import PasswordInput from '../PasswordInput/PasswordInput';
 import styles from './ImportFileModal.styles';
 import { ImportFileModalProps, ImportFileModalHandle, SubmitPasswordCallback } from './ImportFileModal.d';
 import { pickAndReadFile, ReportDetails } from '../../lib/import';
-import { HumanReadableError } from '../../lib/error';
+import { errorMessageFrom } from '../../lib/error';
 import { decryptData, isLocked } from '../../lib/encrypt';
 
 enum RestoreModalState {
@@ -52,13 +52,7 @@ function ImportFileModal({
       setReportDetails(reportDetails);
       setModalState(RestoreModalState.Details);
     } catch (err) {
-      if (err instanceof HumanReadableError) {
-        setErrorMessage(err.message);
-      } else {
-        console.error(err);
-        setErrorMessage('Something went wrong');
-      }
-
+      setErrorMessage(errorMessageFrom(err));
       setModalState(RestoreModalState.Error);
     }
   }
