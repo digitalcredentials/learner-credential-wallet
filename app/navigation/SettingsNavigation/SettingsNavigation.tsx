@@ -14,7 +14,8 @@ import {
   SettingsItemProps,
   SettingsProps,
   AboutProps,
-} from '../';
+  SettingsNavigationParamList,
+} from './SettingsNavigation.d';
 import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, QRScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
 import { useAppDispatch, useResetNavigationOnBlur } from '../../hooks';
 import { SettingsNavigationProps } from '../';
@@ -22,7 +23,7 @@ import { exportWallet } from '../../lib/export';
 import { theme } from '../../styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<SettingsNavigationParamList>();
 
 function SettingsItem({ title, onPress, rightComponent }: SettingsItemProps): JSX.Element {
   const _rightComponent = rightComponent || (

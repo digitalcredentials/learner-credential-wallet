@@ -20,7 +20,7 @@ enum LogId {
 export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): JSX.Element {
   const { expirationDate } = credential;
 
-  const details = verifyPayload.log?.reduce<Record<string, boolean>>((acc, log) => {
+  const details = verifyPayload.result.log?.reduce<Record<string, boolean>>((acc, log) => {
     acc[log.id] = log.valid;
     return acc;
   }, {}) || {};
