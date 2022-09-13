@@ -52,8 +52,8 @@ const linking = {
   subscribe: (listener: (url: string) => void) => {
     const onReceiveURL = ({ url }: { url: string }) => listener(transformDeepLink(url));
 
-    Linking.addEventListener('url', onReceiveURL);
-    return () => Linking.removeEventListener('url', onReceiveURL);
+    const subscription = Linking.addEventListener('url', onReceiveURL);
+    return () => subscription.remove();
   },
   getInitialURL: async () => {
     const url = await Linking.getInitialURL();
