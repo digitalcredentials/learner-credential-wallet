@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getAllRecords, RootState } from '..';
 import { AddProfileRecordParams, ProfileRecord, ProfileRecordRaw } from '../../model';
+import { _getAllDidRecords } from './did';
 
 export type ProfileState = {
   rawProfileRecords: ProfileRecordRaw[];
@@ -10,9 +11,14 @@ const initialState: ProfileState = {
   rawProfileRecords: [],
 };
 
-const _getAllProfileRecords = createAsyncThunk('profileState/_getAllProfileRecords', async () => ({
-  rawProfileRecords: await ProfileRecord.getAllProfileRecords(),
-}));
+const _getAllProfileRecords = createAsyncThunk('profileState/_getAllProfileRecords', async (_, { dispatch }) => {
+  /* Update associated records */
+  await dispatch(_getAllDidRecords());
+
+  return { 
+    rawProfileRecords: await ProfileRecord.getAllProfileRecords(),
+  };
+});
 
 const createProfile = createAsyncThunk('profileState/createProfile', async (params: AddProfileRecordParams, { dispatch }) => {
   await ProfileRecord.addProfileRecord(params);
