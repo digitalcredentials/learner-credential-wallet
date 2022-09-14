@@ -19,4 +19,8 @@ export function errorMessageFrom(err: unknown, fallback = FALLBACK_ERROR_MESSAGE
     console.error(err);
     return fallback;
   }
-} 
+}
+
+export function errorMessageIncludes(err: unknown, message: string): boolean {
+  return (err as Error).message.includes(message);
+}

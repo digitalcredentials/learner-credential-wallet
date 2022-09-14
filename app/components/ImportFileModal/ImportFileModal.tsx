@@ -9,7 +9,7 @@ import PasswordInput from '../PasswordInput/PasswordInput';
 import styles from './ImportFileModal.styles';
 import { ImportFileModalProps, ImportFileModalHandle, SubmitPasswordCallback } from './ImportFileModal.d';
 import { pickAndReadFile, ReportDetails } from '../../lib/import';
-import { errorMessageFrom } from '../../lib/error';
+import { errorMessageFrom, errorMessageIncludes } from '../../lib/error';
 import { decryptData, isLocked } from '../../lib/encrypt';
 
 enum RestoreModalState {
@@ -52,6 +52,8 @@ function ImportFileModal({
       setReportDetails(reportDetails);
       setModalState(RestoreModalState.Details);
     } catch (err) {
+      if (errorMessageIncludes(err, 'user canceled the document picker')) return;
+
       setErrorMessage(errorMessageFrom(err));
       setModalState(RestoreModalState.Error);
     }
