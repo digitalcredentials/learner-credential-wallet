@@ -8,7 +8,7 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint --max-warnings 0 ./app ./App.tsx && tsc --noEmit",
+    "lint": "eslint --max-warnings 0 ./app ./App.tsx && tsc --noEmit && echo ✓ Passed lint check",
     "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && npx patch-package"
   },
   "dependencies": {
