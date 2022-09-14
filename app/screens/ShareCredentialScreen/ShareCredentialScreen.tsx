@@ -242,7 +242,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
               {publicLink !== null && (
                 <View style={styles.bottomSection}>
                   <Text style={mixins.paragraphText}>
-                    You may also share the public link by having another person scan this QR code.
+                    You may also share the public link by scanning this QR code.
                   </Text>
                   <View style={styles.qrCodeContainer}>
                     <View style={styles.qrCode}>
