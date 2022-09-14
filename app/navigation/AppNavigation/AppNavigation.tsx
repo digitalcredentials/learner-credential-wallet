@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Linking, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, LinkingOptions } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -34,7 +34,7 @@ function transformDeepLink(url: string): string {
  * specific to the scheme `dccrequest` and path `request`. If new paths are
  * added here, they must also be added to `android/app/src/main/AndroidManifest.xml`.
  */
-const linking = {
+const linking: LinkingOptions<RootNavigationParamsList> = {
   prefixes: ['dccrequest://', 'org.dcconsortium://'],
   config: {
     screens: {
@@ -42,7 +42,7 @@ const linking = {
         screens: {
           AddCredentialNavigation: {
             screens: {
-              AddScreen: 'request',
+              ChooseProfileScreen: 'request',
             },
           },
         },

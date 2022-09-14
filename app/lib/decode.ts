@@ -7,7 +7,7 @@ import type { Credential } from '../types/credential';
 //import { VerifiablePresentation, PresentationError } from '../types/presentation';
 import { VerifiablePresentation } from '../types/presentation';
 import { CredentialRequestParams } from './request';
-import { isCredentialRequestParams } from '../hooks';
+import { isCredentialRequestParams } from './request';
 import { HumanReadableError } from './error';
 
 const documentLoader = securityLoader().build();

@@ -5,14 +5,13 @@ import { ProfileRecordRaw } from '../../model';
 import { QRScreenParams } from '../../screens/QRScreen/QRScreen';
 
 export type AddCredentialNavigationParamList = {
-  AddScreen: CredentialRequestParams | undefined;
+  AddScreen: undefined;
   CredentialQRScreen: QRScreenParams;
-  ChooseProfileScreen: {
-    onSelectProfile: (profile: Profile) => void;
-  } | undefined;
+  ChooseProfileScreen: CredentialRequestParams | undefined;
   ApproveCredentialsScreen: {
     rawProfileRecord: ProfileRecordRaw
-  };
+    credentialRequestParams?: CredentialRequestParams;
+  }
   ApproveCredentialScreen: {
     pendingCredentialId: string;
     profileRecordId: ObjectID;

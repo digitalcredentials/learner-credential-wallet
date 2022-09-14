@@ -4,19 +4,21 @@ import { FlatList, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { navigationRef } from '../../navigation';
-import { selectPendingCredentials } from '../../store/slices/credentialFoyer';
-import { CredentialItem, NavHeader } from '../../components';
+import { clearFoyer, selectPendingCredentials } from '../../store/slices/credentialFoyer';
+import { CredentialItem, NavHeader, CredentialRequestHandler, ApprovalControls } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
-import { ApprovalControls } from '../../components';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
 import styles from './ApproveCredentialsScreen.styles';
+import { useAppDispatch } from '../../hooks';
 
 export default function ApproveCredentialsScreen({ navigation, route }: ApproveCredentialsScreenProps): JSX.Element {
-  const { rawProfileRecord } = route.params;
+  const dispatch = useAppDispatch();
+  const { rawProfileRecord, credentialRequestParams } = route.params;
   const profileRecordId = rawProfileRecord._id;
   const pendingCredentials = useSelector(selectPendingCredentials);
 
-  function goToHome() {
+  async function goToHome() {
+    await dispatch(clearFoyer());
     if (navigationRef.isReady()) {
       navigationRef.navigate('HomeNavigation', { 
         screen: 'CredentialNavigation',
@@ -75,6 +77,11 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
       <NavHeader 
         title="Available Credentials" 
         rightComponent={<Done />}
+      />
+      <CredentialRequestHandler
+        credentialRequestParams={credentialRequestParams}
+        rawProfileRecord={rawProfileRecord}
+        onFailed={goToHome}
       />
       <FlatList
         style={styles.container}

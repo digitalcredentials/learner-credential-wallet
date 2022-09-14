@@ -10,17 +10,20 @@ import { useSelector } from 'react-redux';
 import { selectRawProfileRecords } from '../../store/slices/profile';
 import { useSelectorFactory } from '../../hooks';
 import { makeSelectProfileForPendingCredentials } from '../../store/selectorFactories/makeSelectProfileForPendingCredentials';
+import { ProfileRecordRaw } from '../../model';
 
 export default function ChooseProfileScreen({ navigation, route }: ChooseProfileScreenProps): JSX.Element {
-  const { onSelectProfile } = route?.params ?? { 
-    onSelectProfile: (rawProfileRecord) =>
-      navigation.navigate('ApproveCredentialsScreen', { rawProfileRecord }),
-  };
-
   const rawProfileRecords = useSelector(selectRawProfileRecords);
   const associatedProfile = useSelectorFactory(makeSelectProfileForPendingCredentials);
 
   const flatListData = useMemo(() => [...rawProfileRecords].reverse(), [rawProfileRecords]);
+
+  function onSelectProfile(rawProfileRecord: ProfileRecordRaw) {
+    navigation.navigate('ApproveCredentialsScreen', { 
+      rawProfileRecord, 
+      credentialRequestParams: route?.params,
+    });
+  }
 
   useEffect(() => {
     if (rawProfileRecords.length === 1) {
@@ -30,7 +33,6 @@ export default function ChooseProfileScreen({ navigation, route }: ChooseProfile
     if (associatedProfile){
       onSelectProfile(associatedProfile);
     }
-    
   }, []);
 
   const ListHeader = (

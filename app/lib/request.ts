@@ -15,6 +15,11 @@ export type CredentialRequestParams = {
   challenge?: string;
 }
 
+export function isCredentialRequestParams(params?: Record<string, unknown>): params is CredentialRequestParams {
+  const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
+  return issuer !== undefined && vc_request_url !== undefined;
+}
+
 export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential[]> {
   const {
     auth_type = 'code',
