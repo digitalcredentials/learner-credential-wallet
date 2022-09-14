@@ -16,7 +16,6 @@ export { default as ViewSourceScreen } from './ViewSourceScreen/ViewSourceScreen
 export { default as ChooseProfileScreen } from './ChooseProfileScreen/ChooseProfileScreen';
 export { default as AddExistingProfileScreen } from './AddExistingProfileScreen/AddExistingProfileScreen';
 export { default as RestoreWalletScreen } from './RestoreWalletScreen/RestoreWalletScreen';
-export { default as ShareCredentialScreen } from './ShareCredentialScreen/ShareCredentialScreen';
 export { default as DeveloperScreen } from './DeveloperScreen/DeveloperScreen';
 export { default as PublicLinkScreen } from './PublicLinkScreen/PublicLinkScreen';
 export { default as ShareSelectionScreen } from './ShareSelectionScreen/ShareSelectionScreen';
