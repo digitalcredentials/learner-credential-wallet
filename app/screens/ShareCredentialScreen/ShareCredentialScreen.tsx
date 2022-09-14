@@ -242,7 +242,7 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
               {publicLink !== null && (
                 <View style={styles.bottomSection}>
                   <Text style={mixins.paragraphText}>
-                    You may also share the public link by having another person scan this QR code.
+                    You may also share the public link by scanning this QR code.
                   </Text>
                   <View style={styles.qrCodeContainer}>
                     <View style={styles.qrCode}>
@@ -275,8 +275,8 @@ export default function ShareCredentialScreen({ navigation, route }: ShareCreden
       >
         <Text style={mixins.modalBodyText}>
           {publicLink !== null 
-            ? 'This will add the credential to your LinkedIn profile.'
-            : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
+            ? 'This will add the credential to your LinkedIn profile. Anyone that can view your profile will be able to view this credential'
+            : 'This will add the credential to your LinkedIn profile and make it publicly visible. Anyone that can view your profile will be able to view this credential'
           }
         </Text>
       </ConfirmModal>
