@@ -7,14 +7,14 @@ import { NavHeader } from '../../components';
 
 import styles from './DeveloperScreen.styles';
 import { DeveloperScreenProps } from './DeveloperScreen.d';
-import { useDispatch } from 'react-redux';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import mockCredential from '../../mock/credential';
 import { navigationRef } from '../../navigation';
 import { Cache, CacheKey } from '../../lib/cache';
+import { useAppDispatch } from '../../hooks';
 
 export default function DeveloperScreen({ navigation }: DeveloperScreenProps): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   async function addMockCredential() {
     await dispatch(stageCredentials([mockCredential]));

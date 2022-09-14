@@ -77,10 +77,10 @@ const credentialFoyer = createSlice({
   name: 'credentialFoyer',
   initialState,
   reducers: {
-    clearFoyer(state) {
+    clearFoyer(state = initialState) {
       state.pendingCredentials = initialState.pendingCredentials;
     },
-    setCredentialApproval(state, action: PayloadAction<PendingCredential>) {
+    setCredentialApproval(state = initialState, action: PayloadAction<PendingCredential>) {
       const isSubject = ({ id: given }: PendingCredential) => given === action.payload.id;
       const subject = state.pendingCredentials.find(isSubject);
 
