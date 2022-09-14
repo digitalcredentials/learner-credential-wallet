@@ -19,5 +19,6 @@ export { default as PasswordForm } from './PasswordForm/PasswordForm';
 export { default as LoadingIndicatorDots } from './LoadingIndicatorDots/LoadingIndicatorDots';
 export { default as BackupItemModal } from './BackupItemModal/BackupItemModal';
 export { default as ImportFileModal } from './ImportFileModal/ImportFileModal';
+export { default as CredentialRequestHandler } from './CredentialRequestHandler/CredentialRequestHandler';
 
 export * from './ImportFileModal/ImportFileModal.d';

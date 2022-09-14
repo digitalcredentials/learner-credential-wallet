@@ -1,44 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AccessibilityInfo, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { useAppDispatch } from '../../hooks';
-import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { theme, mixins } from '../../styles';
 import styles from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
-import { useRequestCredentials } from '../../hooks';
-import { ConfirmModal, NavHeader } from '../../components';
+import { NavHeader } from '../../components';
 import { credentialRequestParamsFromQrText, credentialsFromQrText, isDeepLink, isVpqr } from '../../lib/decode';
 import { PresentationError } from '../../types/presentation';
 import { HumanReadableError } from '../../lib/error';
 
 
-export default function AddScreen({ navigation, route }: AddScreenProps): JSX.Element {
-  const [requestModalIsOpen, setRequestModalIsOpen] = useState(false);
+export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   const dispatch = useAppDispatch();
-
-  const { credentials, error, loading } = useRequestCredentials(route.params);
-
-  useEffect(() => {
-    if (loading) {
-      setRequestModalIsOpen(true);
-      navigation.setParams({
-        auth_type: undefined,
-        issuer: undefined, 
-        vc_request_url: undefined, 
-        challenge: undefined,
-      });
-    }
-
-    if (credentials) {
-      setRequestModalIsOpen(false);
-      dispatch(stageCredentials(credentials));
-      navigation.navigate('ChooseProfileScreen');
-    }
-  }, [credentials, loading]);
 
   function onPressQRScreen() {
     navigation.navigate('CredentialQRScreen', {
@@ -52,7 +29,7 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
       console.log('Received deep link via QR code', text);
       const params = credentialRequestParamsFromQrText(text);
 
-      navigation.navigate('AddScreen', params);
+      navigation.navigate('ChooseProfileScreen', params);
     } else if (isVpqr(text)) {
       try {
         const credentials = await credentialsFromQrText(text);
@@ -77,23 +54,6 @@ export default function AddScreen({ navigation, route }: AddScreenProps): JSX.El
   return (
     <>
       <NavHeader title="Add Credential" />
-      <ConfirmModal
-        open={requestModalIsOpen}
-        onRequestClose={() => setRequestModalIsOpen(false)}
-        confirmButton={!loading}
-        cancelOnBackgroundPress={!loading}
-        cancelButton={false}
-        title="Handling Credential Request"
-        confirmText="Close"
-      >
-        {loading ? (
-          <View style={styles.loadingContainer}> 
-            <AnimatedEllipsis style={styles.loadingDots} minOpacity={0.4} animationDelay={200}/>
-          </View>
-        ) : (
-          <Text style={styles.modalText}>{error}</Text>
-        )}
-      </ConfirmModal>
       <View style={styles.container}>
         <Text style={styles.paragraph}>
           To add credentials, follow an approved link from an issuer (most often a
