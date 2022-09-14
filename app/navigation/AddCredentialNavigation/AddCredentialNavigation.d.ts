@@ -2,7 +2,7 @@ import type { StackScreenProps } from '@react-navigation/stack';
 import { ObjectID } from 'bson';
 import { CredentialRequestParams } from '../../lib/request';
 import { ProfileRecordRaw } from '../../model';
-import { QRScreenParams } from '../../screens/QRScreen/QRScreen';
+import { QRScreenParams } from '../../screens';
 
 export type AddCredentialNavigationParamList = {
   AddScreen: undefined;

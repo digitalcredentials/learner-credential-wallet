@@ -18,7 +18,13 @@ export { default as AddExistingProfileScreen } from './AddExistingProfileScreen/
 export { default as RestoreWalletScreen } from './RestoreWalletScreen/RestoreWalletScreen';
 export { default as ShareCredentialScreen } from './ShareCredentialScreen/ShareCredentialScreen';
 export { default as DeveloperScreen } from './DeveloperScreen/DeveloperScreen';
+export { default as PublicLinkScreen } from './PublicLinkScreen/PublicLinkScreen';
+export { default as ShareSelectionScreen } from './ShareSelectionScreen/ShareSelectionScreen';
 
 // Type Definitions
 export * from './DetailsScreen/DetailsScreen.d';
 export * from './QRScreen/QRScreen.d';
+export * from './PublicLinkScreen/PublicLinkScreen.d';
+
+// Enum Definitions
+export * from './PublicLinkScreen/PublicLinkScreen';

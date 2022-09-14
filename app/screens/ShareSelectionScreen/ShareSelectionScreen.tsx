@@ -38,6 +38,12 @@ export default function ShareSelectionScreen({
     }
   }
 
+  function goToPublicLink() {
+    if (singleSelectedCredential !== null) {
+      navigation.navigate('PublicLinkScreen', { rawCredentialRecord: singleSelectedCredential });
+    }
+  }
+
   function renderItem({ item, index }: RenderItemProps): JSX.Element {
     const { credential } = item;
     const { issuer } = credential;
@@ -124,7 +130,7 @@ export default function ShareSelectionScreen({
       <ConfirmModal
         open={modalOpen}
         onRequestClose={() => setModalOpen(false)}
-        onConfirm={() => navigation.navigate('PublicLinkScreen', { rawCredentialRecord: singleSelectedCredential as CredentialRecordRaw })}
+        onConfirm={goToPublicLink}
         confirmText="Create Link"
         title="Are you sure?"
       >

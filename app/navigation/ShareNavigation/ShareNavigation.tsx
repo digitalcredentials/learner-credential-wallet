@@ -6,9 +6,9 @@ import {
   ShareHomeScreen,
   PresentationPreviewScreen,
   CredentialScreen,
+  ShareSelectionScreen,
+  PublicLinkScreen,
 } from '../../screens';
-import ShareSelectionScreen from '../../screens/ShareSelectionScreen/ShareSelectionScreen';
-import { PublicLinkScreen } from '../../screens/PublicLinkScreen/PublicLinkScreen';
 
 const Stack = createStackNavigator<ShareNavigationParamsList>();
 
