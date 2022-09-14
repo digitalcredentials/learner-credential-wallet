@@ -34,3 +34,7 @@ export type DetailsScreenProps = DetailsScreenSettingsProps | DetailsScreenSetup
 import { QRScreenCredentialProps } from './AddCredentialNavigation/AddCredentialNavigation.d';
 import { QRScreenProfileProps } from './SettingsNavigation/SettingsNavigation.d';
 export type QRScreenProps = QRScreenCredentialProps | QRScreenProfileProps;
+
+import { PublicLinkScreenCredentialProps } from './CredentialNavigation/CredentialNavigation.d';
+import { PublicLinkScreenShareProps } from './ShareNavigation/ShareNavigation.d';
+export type PublicLinkScreenProps = PublicLinkScreenCredentialProps | PublicLinkScreenShareProps;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { CredentialStatusBadgesProps } from './CredentialStatusBadges.d';
@@ -7,13 +7,20 @@ import { Cache, CacheKey } from '../../lib/cache';
 import { theme } from '../../styles';
 import { StatusBadge } from '../';
 import styles from './CredentialStatusBadges.styles';
-import { useAsync } from 'react-async-hook';
+import { useAsyncCallback } from 'react-async-hook';
 import { useVerifyCredential } from '../../hooks';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackgroundColor }: CredentialStatusBadgesProps): JSX.Element {
-  const showPublicBadge = useAsync<boolean>(hasPublicLink, [rawCredentialRecord]).result;
+  const checkPublicLink = useAsyncCallback<boolean>(hasPublicLink);
   const verifyCredential = useVerifyCredential(rawCredentialRecord);
+
+  useFocusEffect(
+    useCallback(() => {
+      checkPublicLink.execute(rawCredentialRecord);
+    }, [])
+  );
 
   const verifyBadge = verifyCredential?.loading ? (
     <StatusBadge 
@@ -40,7 +47,7 @@ export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackg
   return (
     <View style={styles.container}>
       {verifyBadge}
-      {showPublicBadge && (
+      {checkPublicLink.result && (
         <StatusBadge 
           label="Public" 
           color={theme.color.textSecondary}

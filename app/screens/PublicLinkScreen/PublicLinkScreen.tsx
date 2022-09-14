@@ -1,22 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, ScrollView, Linking } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { NavHeader } from '../../components';
-import { PublicLinkScreenProps } from '../../navigation';
+
+import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import styles from './PublicLinkScreen.styles';
+import { ConfirmModal, NavHeader } from '../../components';
 import { mixins, theme } from '../../styles';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Cache, CacheKey } from '../../lib/cache';
-import { IssuerObject } from '../../types/credential';
-import moment from 'moment';
 import credential from '../../mock/credential';
+import { shareToLinkedIn } from '../../lib/share';
+import { useShareCredentials } from '../../hooks';
 
-export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): JSX.Element => {
-  const { rawCredentialRecord } = route.params;
+export enum PublicLinkScreenMode {
+  Default,
+  ShareCredential,
+}
+
+export default function PublicLinkScreen ({ navigation, route }: PublicLinkScreenProps): JSX.Element {
+  const share = useShareCredentials();
+  const { rawCredentialRecord, screenMode = PublicLinkScreenMode.Default } = route.params;
   const [publicLink, setPublicLink] = useState<string | null>(null);
+  const [justCreated, setJustCreated] = useState(false);
+  const [linkedInConfirmModalOpen, setLinkedInConfirmModalOpen] = useState(false);
+  const [createLinkConfirmModalOpen, setCreateLinkConfirmModalOpen] = useState(false);
+
+  const screenTitle = {
+    [PublicLinkScreenMode.Default]: 'Public Link',
+    [PublicLinkScreenMode.ShareCredential]: 'Share Credential',
+  }[screenMode];
 
   async function createPublicLink() {
     // TODO go get the link from verifier +
@@ -25,12 +40,17 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
     // store link in cache for future use
     await Cache.getInstance().store(CacheKey.PublicLink, rawCredentialRecord.credential.id, link);
     setPublicLink(link);
+    setJustCreated(true);
   }
 
   async function unshareLink() {
     await Cache.getInstance().remove(CacheKey.PublicLink, rawCredentialRecord.credential.id);
     setPublicLink(null);
-    navigation.popToTop();
+    setJustCreated(false);
+
+    if (screenMode === PublicLinkScreenMode.Default) {
+      navigation.popToTop();
+    }
   }
 
   async function openLink () {
@@ -50,66 +70,49 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
     try {
       const url = await Cache.getInstance().load(CacheKey.PublicLink, rawCredentialRecord.credential.id) as string;
       setPublicLink(url);
-    } catch(e){
+    } catch(e) {
       if ((e as Record<string, string>).name === 'NotFoundError') {
-        await createPublicLink();
+        if (screenMode === PublicLinkScreenMode.Default) {
+          await createPublicLink();
+        }
+      } else {
+        console.error(e);
       }
     }
-  }
-
-  async function shareToLinkedIn() {
-    let achievement = rawCredentialRecord.credential?.credentialSubject?.hasCredential ??
-      rawCredentialRecord.credential?.credentialSubject?.achievement;
-    if (!achievement) {
-      return;
-    }
-    if (Array.isArray(achievement)) {
-      achievement = achievement[0];
-    }
-    const title = achievement?.name ?? '';
-    const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
-
-    const issuanceDate = moment(rawCredentialRecord.credential.issuanceDate);
-    const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
-    const issuance = `&issueYear=${issuanceDate.year()}&issueMonth=${issuanceDate.month()}`;
-    let expiration = '';
-    if (rawCredentialRecord.credential.expirationDate !== undefined) {
-      const expirationDate = moment(rawCredentialRecord.credential.expirationDate);
-      expiration = `&expirationYear=${expirationDate.year()}&expirationMonth=${expirationDate.month()}`;
-    }
-    let certUrl = '';
-    if (publicLink) {
-      certUrl = `&certUrl=${publicLink}`;
-    }
-    const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}`;
-    await Linking.canOpenURL(url);
-    Linking.openURL(url);
   }
 
   useEffect(() => {
     loadShareUrl();
   }, []);
 
-  function LinkInstructions() {
-    return  (
+  const instructionsText = useMemo(() => {
+    switch (screenMode) {
+    case PublicLinkScreenMode.Default:
+      return 'Copy the link to share, or add to you LinkedIn profile.';
+    case PublicLinkScreenMode.ShareCredential:
+      if (!publicLink) return 'Create a public link that anyone can use to view this credential, add to your LinkedIn profile, or send a json copy.';
+      if (justCreated) return 'Public link created. Copy the link to share, add to your LinkedIn profile, or send a json copy.';
+      return 'Public link already created. Copy the link to share, add to your LinkedIn profile, or send a json copy.';
+    }    
+  }, [screenMode, publicLink, justCreated]);
+
+  function LinkInstructions() {    
+    return (
       <>
-        <Text style={styles.title}>
-          {credential.credentialSubject?.hasCredential?.name || 'Credential'}
-        </Text>
-        <Text style={styles.instructions}>
-          Copy the link to share, or add to you LinkedIn profile.
-        </Text>
+        {screenMode === PublicLinkScreenMode.Default && (
+          <Text style={styles.title}>
+            {credential.credentialSubject?.hasCredential?.name || 'Credential'}
+          </Text>
+        )}
+        <Text style={styles.instructions}>{instructionsText}</Text>
       </>
     );
-  }
-  if (publicLink === null) {
-    return <></>;
   }
 
   return (
     <>
       <NavHeader
-        title="Public Link"
+        title={screenTitle}
         goBack={() => navigation.goBack()}
       />
 
@@ -120,61 +123,80 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
         >
           <View style={styles.container}>
             <LinkInstructions />
-            <View>
-              <View style={styles.link}>
-                <TextInput
-                  style={{...mixins.input, ...styles.linkText}}
-                  value={publicLink}
-                  theme={{ colors: {
-                    placeholder: theme.color.textPrimary,
-                    text: theme.color.textPrimary,
-                    disabled: theme.color.textPrimary
-                  }}}
-                  mode="outlined"
-                  editable={false}
-                />
-                <Button
-                  title="Copy"
-                  buttonStyle={{...mixins.buttonPrimary, ...styles.copyButton}}
-                  containerStyle={{...mixins.buttonContainer, ...styles.copyButtonContainer}}
-                  titleStyle={mixins.buttonTitle}
-                  onPress={copyToClipboard}
-                />
+            {publicLink !== null ? (
+              <View>
+                <View style={styles.link}>
+                  <TextInput
+                    style={{...mixins.input, ...styles.linkText}}
+                    value={publicLink}
+                    theme={{ colors: {
+                      placeholder: theme.color.textPrimary,
+                      text: theme.color.textPrimary,
+                      disabled: theme.color.textPrimary
+                    }}}
+                    mode="outlined"
+                    editable={false}
+                  />
+                  <Button
+                    title="Copy"
+                    buttonStyle={{...mixins.buttonPrimary, ...styles.copyButton}}
+                    containerStyle={{...mixins.buttonContainer, ...styles.copyButtonContainer}}
+                    titleStyle={mixins.buttonTitle}
+                    onPress={copyToClipboard}
+                  />
+                </View>
+                <View style={styles.actions}>
+                  <Button
+                    title="Unshare"
+                    buttonStyle={{ ...mixins.buttonIcon, ...styles.actionButton }}
+                    containerStyle={{...mixins.buttonContainer}}
+                    titleStyle={mixins.buttonIconTitle}
+                    onPress={unshareLink}
+                    icon={
+                      <MaterialIcons
+                        style={styles.actionIcon}
+                        name="link-off"
+                        size={theme.iconSize}
+                        color={theme.color.iconInactive}
+                      />
+                    }
+                  />
+                  <View style={styles.spacer} />
+                  <Button
+                    title="View Link"
+                    buttonStyle={{...mixins.buttonIcon, ...styles.actionButton }}
+                    containerStyle={mixins.buttonContainer}
+                    titleStyle={mixins.buttonIconTitle}
+                    onPress={openLink}
+                    icon={
+                      <MaterialIcons
+                        style={styles.actionIcon}
+                        name="launch"
+                        size={theme.iconSize}
+                        color={theme.color.iconInactive}
+                      />
+                    }
+                  />
+                </View>
               </View>
-              <View style={styles.actions}>
-                <Button
-                  title="Unshare"
-                  buttonStyle={{ ...mixins.buttonIcon, ...styles.actionButton }}
-                  containerStyle={{...mixins.buttonContainer}}
-                  titleStyle={mixins.buttonIconTitle}
-                  onPress={unshareLink}
-                  icon={
-                    <MaterialIcons
-                      style={styles.actionIcon}
-                      name="link-off"
-                      size={theme.iconSize}
-                      color={theme.color.iconInactive}
-                    />
-                  }
-                />
-                <View style={styles.spacer} />
-                <Button
-                  title="View Link"
-                  buttonStyle={{...mixins.buttonIcon, ...styles.actionButton }}
-                  containerStyle={mixins.buttonContainer}
-                  titleStyle={mixins.buttonIconTitle}
-                  onPress={openLink}
-                  icon={
-                    <MaterialIcons
-                      style={styles.actionIcon}
-                      name="launch"
-                      size={theme.iconSize}
-                      color={theme.color.iconInactive}
-                    />
-                  }
-                />
-              </View>
-            </View>
+            ) : (
+              <Button
+                title="Create Public Link"
+                buttonStyle={{...mixins.buttonIcon, ...mixins.buttonPrimary }}
+                containerStyle={{...mixins.buttonIconContainer, ...styles.createLinkButtonContainer}}
+                titleStyle={mixins.buttonTitle}
+                iconRight
+                onPress={() => setCreateLinkConfirmModalOpen(true)}
+                icon={
+                  <MaterialIcons
+                    name="link"
+                    size={theme.iconSize}
+                    color={theme.color.textPrimaryDark}
+                  />
+                }
+              />
+            )
+            }
             <View style={styles.otherOptionsContainer}>
               <Button
                 title="Add to LinkedIn Profile"
@@ -182,7 +204,7 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
                 containerStyle={mixins.buttonIconContainer}
                 titleStyle={mixins.buttonIconTitle}
                 iconRight
-                onPress={shareToLinkedIn}
+                onPress={() => shareToLinkedIn(rawCredentialRecord)}
                 icon={
                   <Ionicons
                     name="logo-linkedin"
@@ -191,20 +213,64 @@ export const PublicLinkScreen = ({ navigation, route }: PublicLinkScreenProps): 
                   />
                 }
               />
-              <View style={styles.bottomSection}>
-                <Text style={mixins.paragraphText}>
+              {screenMode === PublicLinkScreenMode.ShareCredential && (
+                <Button
+                  title="Send Credential"
+                  buttonStyle={mixins.buttonIcon}
+                  containerStyle={mixins.buttonIconContainer}
+                  titleStyle={mixins.buttonIconTitle}
+                  iconRight
+                  onPress={() => share([rawCredentialRecord])}
+                  icon={
+                    <MaterialIcons
+                      name="input"
+                      size={theme.iconSize}
+                      color={theme.color.iconInactive}
+                    />
+                  }
+                />
+              )}
+              {publicLink !== null && (
+                <View style={styles.bottomSection}>
+                  <Text style={mixins.paragraphText}>
                   You may also share the public link by having another person scan this QR code.
-                </Text>
-                <View style={styles.qrCodeContainer}>
-                  <View style={styles.qrCode}>
-                    <QRCode value={publicLink as string} size={200}/>
+                  </Text>
+                  <View style={styles.qrCodeContainer}>
+                    <View style={styles.qrCode}>
+                      <QRCode value={publicLink} size={200}/>
+                    </View>
                   </View>
                 </View>
-              </View>
+              )}
             </View>
           </View>
         </ScrollView>
       </View>
+      <ConfirmModal
+        open={createLinkConfirmModalOpen}
+        onRequestClose={() => setCreateLinkConfirmModalOpen(false)}
+        cancelOnBackgroundPress
+        onConfirm={createPublicLink}
+        confirmText="Create Link"
+        title="Are you sure?"
+      >
+        <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
+      </ConfirmModal>
+      <ConfirmModal
+        open={linkedInConfirmModalOpen}
+        onRequestClose={() => setLinkedInConfirmModalOpen(false)}
+        cancelOnBackgroundPress
+        onConfirm={() => shareToLinkedIn(rawCredentialRecord)}
+        confirmText="Add to LinkedIn"
+        title="Are you sure?"
+      >
+        <Text style={mixins.modalBodyText}>
+          {publicLink !== null 
+            ? 'This will add the credential to your LinkedIn profile.'
+            : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
+          }
+        </Text>
+      </ConfirmModal>
     </>
   );
-};
+}

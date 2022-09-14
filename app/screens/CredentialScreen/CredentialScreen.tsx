@@ -12,6 +12,7 @@ import styles from './CredentialScreen.styles';
 import { deleteCredential } from '../../store/slices/credential';
 import { makeSelectProfileFromCredential } from '../../store/selectorFactories';
 import { useSelectorFactory } from '../../hooks/useSelectorFactory';
+import { PublicLinkScreenMode } from '../../screens';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const dispatch = useAppDispatch();
@@ -29,8 +30,11 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
       navigationRef.navigate('HomeNavigation', {
         screen: 'CredentialNavigation',
         params: {
-          screen: 'ShareCredentialScreen',
-          params: { rawCredentialRecord },
+          screen: 'PublicLinkScreen',
+          params: { 
+            rawCredentialRecord,
+            screenMode: PublicLinkScreenMode.ShareCredential
+          },
         } 
       });
     }
