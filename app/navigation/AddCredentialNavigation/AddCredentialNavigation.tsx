@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { QRScreen, AddScreen, ApproveCredentialsScreen, ApproveCredentialScreen, ChooseProfileScreen } from '../../screens';
+import { QRScreen, AddScreen, ApproveCredentialsScreen, ApproveCredentialScreen, ChooseProfileScreen, IssuerInfoScreen } from '../../screens';
 import { useResetNavigationOnBlur } from '../../hooks';
 import type { AddCredentialNavigationParamList, AddCredentialNavigationProps } from '../';
 
@@ -17,6 +17,7 @@ export default function AddCredentialNavigation({ navigation }: AddCredentialNav
       <Stack.Screen name="ChooseProfileScreen" component={ChooseProfileScreen} />
       <Stack.Screen name="ApproveCredentialsScreen" component={ApproveCredentialsScreen} />
       <Stack.Screen name="ApproveCredentialScreen" component={ApproveCredentialScreen} />
+      <Stack.Screen name="IssuerInfoScreen" component={IssuerInfoScreen} />
     </Stack.Navigator>
   );
 }
