@@ -29,7 +29,7 @@ const DATE_FORMAT = 'MMM D, YYYY';
  *   2) Pass in a `verifyPayload` to render the status (cannot be a button).
  */
 export default function VerificationCard({ rawCredentialRecord, verifyPayload, isButton, showDetails = false }: VerificationCardProps): JSX.Element {
-  const generatedVerifyPayload = useVerifyCredential(rawCredentialRecord);
+  const generatedVerifyPayload = useVerifyCredential(rawCredentialRecord, true);
   const { credential } = rawCredentialRecord || {};
 
   if (generatedVerifyPayload !== null) {
