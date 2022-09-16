@@ -28,7 +28,7 @@ export type CachedResult = {
 const initialResult = { timestamp: null, log: [], verified: null };
 
 // Adapted from https://usehooks.com/useAsync/
-export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw): VerifyPayload | null {
+export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw, forceFresh = false): VerifyPayload | null {
   const [loading, setLoading] = useState<VerifyPayload['loading']>(true);
   const [result, setResult] = useState<VerifyPayload['result']>(initialResult);
   const [error, setError] = useState<VerifyPayload['error']>(null);
@@ -39,7 +39,7 @@ export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw): 
 
   const verify = useCallback(async () => {
     try {
-      const verificationResult = await getOrGenerateVerificationResultFor(rawCredentialRecord);
+      const verificationResult = await verificationResultFor(rawCredentialRecord, forceFresh);
       setResult(verificationResult);
     } catch (err) {
       const { message } = err as Error;
@@ -62,10 +62,13 @@ export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw): 
   return { loading, error, result };
 }
 
-async function getOrGenerateVerificationResultFor(rawCredentialRecord: CredentialRecordRaw): Promise<VerificationResult> {
+async function verificationResultFor(rawCredentialRecord: CredentialRecordRaw, forceFresh: boolean): Promise<VerificationResult> {
   const cachedRecordId = String(rawCredentialRecord._id);
-  const cachedResult = await Cache.getInstance().load(CacheKey.VerificationResult, cachedRecordId).catch(() => null) as CachedResult;
-  if (cachedResult) return cachedResult;
+
+  if (!forceFresh) {
+    const cachedResult = await Cache.getInstance().load(CacheKey.VerificationResult, cachedRecordId).catch(() => null) as CachedResult;
+    if (cachedResult) return cachedResult;
+  }
 
   const response = await verifyCredential(rawCredentialRecord.credential);
   const result = { 
