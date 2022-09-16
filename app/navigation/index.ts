@@ -38,3 +38,7 @@ export type QRScreenProps = QRScreenCredentialProps | QRScreenProfileProps;
 import { PublicLinkScreenCredentialProps } from './CredentialNavigation/CredentialNavigation.d';
 import { PublicLinkScreenShareProps } from './ShareNavigation/ShareNavigation.d';
 export type PublicLinkScreenProps = PublicLinkScreenCredentialProps | PublicLinkScreenShareProps;
+
+import { IssuerInfoScreenCredentialProps } from './CredentialNavigation/CredentialNavigation.d';
+import { IssuerInfoScreenAddProps } from './AddCredentialNavigation/AddCredentialNavigation.d';
+export type IssuerInfoScreenProps = IssuerInfoScreenCredentialProps | IssuerInfoScreenAddProps;

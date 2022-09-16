@@ -19,11 +19,13 @@ export { default as RestoreWalletScreen } from './RestoreWalletScreen/RestoreWal
 export { default as DeveloperScreen } from './DeveloperScreen/DeveloperScreen';
 export { default as PublicLinkScreen } from './PublicLinkScreen/PublicLinkScreen';
 export { default as ShareSelectionScreen } from './ShareSelectionScreen/ShareSelectionScreen';
+export { default as IssuerInfoScreen } from './IssuerInfoScreen/IssuerInfoScreen';
 
 // Type Definitions
 export * from './DetailsScreen/DetailsScreen.d';
 export * from './QRScreen/QRScreen.d';
 export * from './PublicLinkScreen/PublicLinkScreen.d';
+export * from './IssuerInfoScreen/IssuerInfoScreen.d';
 
 // Enum Definitions
 export * from './PublicLinkScreen/PublicLinkScreen';
