@@ -7,6 +7,7 @@ import type { ApproveCredentialScreenProps } from './ApproveCredentialScreen.d';
 import { CredentialRecord } from '../../model';
 import styles from './ApproveCredentialScreen.styles';
 import { usePendingCredential } from '../../hooks';
+import { navigationRef } from '../../navigation';
 
 export default function ApproveCredentialScreen({ navigation, route }: ApproveCredentialScreenProps): JSX.Element {
   const { pendingCredentialId, profileRecordId } = route.params;
@@ -14,12 +15,24 @@ export default function ApproveCredentialScreen({ navigation, route }: ApproveCr
   const { credential } = pendingCredential;
   const rawCredentialRecord = useMemo(() => CredentialRecord.rawFrom({ credential, profileRecordId }), [credential]);
 
+  function goToIssuerInfo(issuerId: string) {
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('HomeNavigation', {
+        screen: 'AddCredentialNavigation',
+        params: {
+          screen: 'IssuerInfoScreen',
+          params: { issuerId }
+        }
+      });
+    }
+  }
+
   return (
     <>
-      <NavHeader title="Credential Preview" goBack={() => navigation.goBack()} />
+      <NavHeader title="Credential Preview" goBack={navigation.goBack} />
       <ScrollView>
         <View style={styles.container}>
-          <CredentialCard rawCredentialRecord={rawCredentialRecord} />
+          <CredentialCard rawCredentialRecord={rawCredentialRecord} onPressIssuer={goToIssuerInfo} />
           <VerificationCard rawCredentialRecord={rawCredentialRecord} isButton />
         </View>
       </ScrollView>

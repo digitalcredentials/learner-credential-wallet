@@ -40,6 +40,18 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
     }
   }
 
+  function goToIssuerInfo(issuerId: string) {
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('HomeNavigation', {
+        screen: 'CredentialNavigation',
+        params: {
+          screen: 'IssuerInfoScreen',
+          params: { issuerId }
+        }
+      });
+    }
+  }
+
   function onPressDebug() {
     setMenuIsOpen(false);
     if (navigationRef.isReady()) {
@@ -117,7 +129,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
             importantForAccessibility="no"
           >
             <View style={styles.container}>
-              <CredentialCard rawCredentialRecord={rawCredentialRecord} />
+              <CredentialCard rawCredentialRecord={rawCredentialRecord} onPressIssuer={goToIssuerInfo} />
               <VerificationCard rawCredentialRecord={rawCredentialRecord} isButton showDetails={false}/>
               <View style={styles.profileContainer}>
                 <Text style={mixins.paragraphText}>

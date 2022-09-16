@@ -1,18 +1,18 @@
 import React from 'react';
 import moment from 'moment';
 import { View, Text, Image, Linking, ImageStyle, StyleProp } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import { theme } from '../../styles';
 import styles from './CredentialCard.styles';
 import type { CredentialCardProps } from './CredentialCard.d';
 import { CredentialStatusBadges } from '../';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const NO_URL = 'None';
 const DATE_FORMAT = 'MMM D, YYYY';
 
-
-export default function DefaultCredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
+export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
   const { credential } = rawCredentialRecord;
   const { credentialSubject, issuer, issuanceDate } = credential;
 
@@ -35,6 +35,13 @@ export default function DefaultCredentialCard({ rawCredentialRecord }: Credentia
   const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
   const issuerUrl = (typeof issuer === 'string' ? null : issuer?.url) ?? NO_URL;
   const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
+  const issuerId = typeof issuer === 'string' ? null : issuer?.id;
+
+  function _onPressIssuer() {
+    if (issuerId) {
+      onPressIssuer(issuerId);
+    }
+  }
 
   function IssuerLink(): JSX.Element {
     if (issuerUrl === NO_URL) {
@@ -79,12 +86,16 @@ export default function DefaultCredentialCard({ rawCredentialRecord }: Credentia
               />
             </View>
           )}
-          <Text style={styles.dataValue}>{issuerName}</Text>
+          <View style={styles.spaceBetween}>
+            <TouchableOpacity onPress={_onPressIssuer} disabled={!issuerId}>
+              <View style={[styles.flexRow, styles.alignCenter]}>
+                <Text style={styles.issuerValue}>{issuerName}</Text>
+                {issuerId && <MaterialIcons name="info-outline" size={16} color={theme.color.textPrimary} style={styles.infoIcon} />}
+              </View>
+            </TouchableOpacity>
+            <IssuerLink />
+          </View>
         </View>
-      </View>
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Issuer Website</Text>
-        <IssuerLink />
       </View>
       <View style={styles.dataContainer}>
         <Text style={styles.dataLabel}>Issuance Date</Text>

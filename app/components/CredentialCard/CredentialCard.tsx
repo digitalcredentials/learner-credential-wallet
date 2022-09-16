@@ -49,8 +49,8 @@ export function credentialRenderInfo(credential : Credential) : CredentialRender
     component: DefaultCredentialCard, title };
 }
 
-export default function CredentialCard({ rawCredentialRecord }: CredentialCardProps): JSX.Element {
-  const { credential } = rawCredentialRecord;
+export default function CredentialCard(props: CredentialCardProps): JSX.Element {
+  const { credential } = props.rawCredentialRecord;
   const DisplayComponent = credentialRenderInfo(credential).component;
-  return <DisplayComponent rawCredentialRecord={rawCredentialRecord} />;
+  return <DisplayComponent {...props} />;
 }

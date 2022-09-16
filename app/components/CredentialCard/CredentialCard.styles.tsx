@@ -38,12 +38,24 @@ export default StyleSheet.create({
   },
   link: {
     fontFamily: theme.fontFamily.regular,
-    fontSize: theme.fontSize.regular,
-    color: theme.color.textPrimary,
+    color: theme.color.linkColor,
     textDecorationLine: 'underline',
   },
   flexRow: {
     flexDirection: 'row',
+  },
+  alignCenter: {
     alignItems: 'center',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
+  },
+  issuerValue: {
+    fontFamily: theme.fontFamily.regular,
+    fontSize: theme.fontSize.regular,
+    color: theme.color.textPrimary,
+  },
+  infoIcon: {
+    marginLeft: 4,
   },
 });
