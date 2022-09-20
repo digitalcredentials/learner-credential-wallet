@@ -12,20 +12,19 @@ import styles from './LoginScreen.styles';
 import { useAccessibilityFocus, useAppDispatch, useAsyncValue } from '../../hooks';
 import { theme } from '../../styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getBiometryIconName, isBiometricsSupported } from '../../lib/biometrics';
+import { getBiometryIconName } from '../../lib/biometrics';
 
 export default function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { isBiometricsEnabled } = useSelector(selectWalletState);
+  const { isBiometricsEnabled, isBiometricsSupported } = useSelector(selectWalletState);
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState('');
   const [passwordRef, focusPassword] = useAccessibilityFocus<View>();
   const [biometryIconName] = useAsyncValue(getBiometryIconName);
-  const [biometrySupported] = useAsyncValue(isBiometricsSupported);
 
   const isError = errorText !== '';
   const biometryIcon = biometryIconName ? <MaterialCommunityIcons name={biometryIconName} size={theme.iconSize} color={theme.color.textSecondary} /> : undefined;
-  const showBiometricsButton = biometrySupported && biometryIcon && isBiometricsEnabled;
+  const showBiometricsButton = isBiometricsSupported && biometryIcon && isBiometricsEnabled;
 
   async function _unlockWallet() {
     try {

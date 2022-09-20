@@ -25,7 +25,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator<SettingsNavigationParamList>();
 
-function SettingsItem({ title, onPress, rightComponent }: SettingsItemProps): JSX.Element {
+function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItemProps): JSX.Element {
   const _rightComponent = rightComponent || (
     <ListItem.Chevron
       hasTVPreferredFocus={undefined}
@@ -39,6 +39,8 @@ function SettingsItem({ title, onPress, rightComponent }: SettingsItemProps): JS
       tvParallaxProperties={undefined}
       containerStyle={styles.listItemContainer}
       onPress={onPress}
+      disabled={disabled}
+      disabledStyle={styles.listItemContainerDisabled}
     >
       <ListItem.Content>
         <ListItem.Title style={styles.listItemTitle}>
@@ -54,6 +56,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [backupModalOpen, setBackupModalOpen] = useState(false);
+  const { isBiometricsSupported } = useSelector(selectWalletState);
   const { isBiometricsEnabled: initialBiometryValue } = useSelector(selectWalletState);
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(initialBiometryValue);
 
@@ -78,24 +81,23 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     }
   }
 
+  const biometricSwitch = (
+    <Switch
+      style={styles.switch}
+      thumbColor={isBiometricsEnabled ? theme.color.iconActive : theme.color.iconInactive}
+      trackColor={{ true: theme.color.buttonPrimary, false: theme.color.buttonSecondary }} 
+      ios_backgroundColor={theme.color.buttonSecondary}
+      value={isBiometricsEnabled}
+      onValueChange={onToggleBiometrics}
+      disabled={!isBiometricsSupported}
+    />
+  );
+
   return (
     <>
       <NavHeader title="Settings" />
       <ScrollView contentContainerStyle={styles.settingsContainer}>
-        <SettingsItem 
-          title="Use biometrics to unlock" 
-          onPress={() => null}
-          rightComponent={(
-            <Switch
-              style={styles.switch}
-              thumbColor={isBiometricsEnabled ? theme.color.iconActive : theme.color.iconInactive}
-              trackColor={{ true: theme.color.buttonPrimary, false: theme.color.buttonSecondary }} 
-              ios_backgroundColor={theme.color.buttonSecondary}
-              value={isBiometricsEnabled}
-              onValueChange={onToggleBiometrics}
-            />
-          )}
-        />
+        <SettingsItem title="Use biometrics to unlock" onPress={onToggleBiometrics} rightComponent={biometricSwitch} disabled={!isBiometricsSupported} />
         <SettingsItem title="Manage profiles" onPress={() => navigation.navigate('ManageProfilesScreen')} />
         <SettingsItem title="Restore wallet" onPress={() => navigation.navigate('RestoreWalletScreen')} />
         <SettingsItem title="Backup wallet" onPress={() => setBackupModalOpen(true)} />

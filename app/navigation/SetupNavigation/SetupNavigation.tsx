@@ -8,7 +8,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import appConfig from '../../../app.json';
 import { theme, mixins } from '../../styles';
-import { initialize, pollWalletState } from '../../store/slices/wallet';
+import { initialize, pollWalletState, selectWalletState } from '../../store/slices/wallet';
 import { LoadingIndicator, SafeScreenView, AccessibleView, PasswordForm } from '../../components';
 import walletImage from '../../assets/wallet.png';
 import { useAccessibilityFocus, useAsyncValue } from '../../hooks';
@@ -28,6 +28,7 @@ import { ReportDetails } from '../../lib/import';
 import { DetailsScreen } from '../../screens';
 import { ImportFileModal } from '../../components';
 import type { ImportFileModalHandle } from '../../components';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator<SetupNavigationParamList>();
 
@@ -98,7 +99,7 @@ function StartStep({ navigation }: StartStepProps) {
 
 function PasswordStep({ navigation, route }: PasswordStepProps) {
   const [enableBiometrics, setEnableBiometrics] = useState(false);
-  const [biometricsSupported] = useAsyncValue(isBiometricsSupported);
+  const { isBiometricsSupported } = useSelector(selectWalletState);
   const [password, setPassword] = useState<string>();
   const { isCustomSetup = false } = route?.params ?? {};
 
@@ -134,7 +135,7 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
       </Text>
       <View style={styles.body}>
         <PasswordForm onChangePassword={setPassword} style={styles.inputGroup} focusOnMount />
-        {biometricsSupported && (
+        {isBiometricsSupported && (
           <>
             <View style={styles.inputSeparator} />
             <TouchableWithoutFeedback onPress={_onPressBiometrics}>
