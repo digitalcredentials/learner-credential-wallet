@@ -1,6 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 import { theme, mixins } from '../../styles';
+
+const switchScale = Platform.select({ ios: 0.9, android: 1 }) || 1;
 
 export default StyleSheet.create({
   bodyContainer: {
@@ -9,7 +11,7 @@ export default StyleSheet.create({
     backgroundColor: theme.color.backgroundPrimary,
   },
   bodyContainerCenter: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     padding: 16,
     backgroundColor: theme.color.backgroundPrimary,
@@ -91,6 +93,6 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   switch: { 
-    transform: [{ scale: 0.9 }],
+    transform: [{ scale: switchScale }],
   },
 });
