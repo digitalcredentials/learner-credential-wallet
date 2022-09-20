@@ -6,6 +6,7 @@ export type SettingsItemProps = {
   readonly title: string;
   readonly onPress: () => void;
   readonly rightComponent?: ReactNode;
+  readonly disabled?: boolean;
 }
 
 export type SettingsNavigationParamList = {

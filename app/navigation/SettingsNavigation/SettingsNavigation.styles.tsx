@@ -29,6 +29,9 @@ export default StyleSheet.create({
     borderBottomColor: theme.color.backgroundSecondary,
     borderBottomWidth: 3,
   },
+  listItemContainerDisabled: {
+    opacity: 0.5,
+  },
   buttonContainer: {
     ...mixins.buttonIconContainer,
     marginTop: 24,

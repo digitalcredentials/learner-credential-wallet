@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState, getAllRecords } from '..';
+import { isBiometricsSupported } from '../../lib/biometrics';
 import { importWalletFrom } from '../../lib/import';
 import { db, INITIAL_PROFILE_NAME } from '../../model';
 import { createProfile } from './profile';
@@ -7,6 +8,7 @@ import { createProfile } from './profile';
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
+  isBiometricsSupported: boolean | null,
   isBiometricsEnabled: boolean,
   needsRestart: boolean;
 }
@@ -21,6 +23,7 @@ type InitializeParams = {
 const initialState: WalletState = {
   isUnlocked: null,
   isInitialized: null,
+  isBiometricsSupported: null,
   isBiometricsEnabled: false,
   needsRestart: false,
 };
@@ -30,6 +33,7 @@ const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
     isUnlocked: await db.isUnlocked(),
     isInitialized: await db.isInitialized(),
     isBiometricsEnabled: await db.isBiometricsEnabled(),
+    isBiometricsSupported: await isBiometricsSupported(),
   };
 });
 
