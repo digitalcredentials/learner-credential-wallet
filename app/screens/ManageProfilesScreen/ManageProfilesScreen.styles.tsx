@@ -3,7 +3,8 @@ import { mixins, theme } from '../../styles';
 
 export default StyleSheet.create({
   container: {
-    flexDirection: 'column-reverse',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
     padding: 16,
     flex: 1,
   },
