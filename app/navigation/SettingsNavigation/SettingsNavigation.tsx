@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, Linking, AccessibilityInfo, Switch } from 'react-native';
+import { ScrollView, Image, Linking, AccessibilityInfo, Switch } from 'react-native';
 import { Text, ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -81,14 +81,14 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   return (
     <>
       <NavHeader title="Settings" />
-      <View style={styles.settingsContainer}>
+      <ScrollView contentContainerStyle={styles.settingsContainer}>
         <SettingsItem 
           title="Use biometrics to unlock" 
           onPress={() => null}
           rightComponent={(
             <Switch
               style={styles.switch}
-              thumbColor={theme.color.backgroundPrimary}
+              thumbColor={isBiometricsEnabled ? theme.color.iconActive : theme.color.iconInactive}
               trackColor={{ true: theme.color.buttonPrimary, false: theme.color.buttonSecondary }} 
               ios_backgroundColor={theme.color.buttonSecondary}
               value={isBiometricsEnabled}
@@ -102,7 +102,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
         <SettingsItem title="About" onPress={() => navigation.navigate('About')} />
         <SettingsItem title="Sign out" onPress={lockWallet} />
-      </View>
+      </ScrollView>
       <ConfirmModal
         open={resetModalOpen}
         onRequestClose={() => setResetModalOpen(false)}
@@ -132,7 +132,7 @@ function About({ navigation }: AboutProps): JSX.Element {
   return (
     <>
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
-      <View style={styles.bodyContainerCenter}>
+      <ScrollView contentContainerStyle={styles.bodyContainerCenter}>
         <Image
           style={styles.image}
           source={walletImage}
@@ -160,7 +160,7 @@ function About({ navigation }: AboutProps): JSX.Element {
             v{version} - Build {buildNumber}
           </Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </>
   );
 }
