@@ -11,7 +11,7 @@ import { theme, mixins } from '../../styles';
 import { initialize, pollWalletState, selectWalletState } from '../../store/slices/wallet';
 import { LoadingIndicator, SafeScreenView, AccessibleView, PasswordForm } from '../../components';
 import walletImage from '../../assets/wallet.png';
-import { useAccessibilityFocus, useAsyncValue } from '../../hooks';
+import { useAccessibilityFocus } from '../../hooks';
 
 import styles from './SetupNavigation.styles';
 import type {
@@ -23,7 +23,6 @@ import type {
   SetupNavigationParamList,
 } from './SetupNavigation.d';
 
-import { isBiometricsSupported } from '../../lib/biometrics';
 import { ReportDetails } from '../../lib/import';
 import { DetailsScreen } from '../../screens';
 import { ImportFileModal } from '../../components';
