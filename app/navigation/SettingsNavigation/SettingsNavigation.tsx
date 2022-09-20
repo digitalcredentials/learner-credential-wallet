@@ -52,9 +52,10 @@ function SettingsItem({ title, onPress, rightComponent }: SettingsItemProps): JS
 
 function Settings({ navigation }: SettingsProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const { isBiometricsEnabled } = useSelector(selectWalletState);
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [backupModalOpen, setBackupModalOpen] = useState(false);
+  const { isBiometricsEnabled: initialBiometryValue } = useSelector(selectWalletState);
+  const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(initialBiometryValue);
 
   async function resetWallet() {
     dispatch(reset());
@@ -65,8 +66,16 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     dispatch(lock());
   }
 
-  function onToggleBiometrics() {
-    dispatch(toggleBiometrics());
+  async function onToggleBiometrics() {
+    const initialState = isBiometricsEnabled;
+    setIsBiometricsEnabled(!initialState);
+
+    try {
+      await dispatch(toggleBiometrics());
+    } catch (err) {
+      setIsBiometricsEnabled(initialState);
+      console.error('Could not toggle biometrics', err);
+    }
   }
 
   return (
