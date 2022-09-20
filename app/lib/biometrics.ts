@@ -3,7 +3,7 @@ import * as Keychain from 'react-native-keychain';
 export async function storeInBiometricKeychain(key: string): Promise<void> {
   try {
     await Keychain.setGenericPassword('key', key, {
-      storage: Keychain.STORAGE_TYPE.AES,
+      storage: Keychain.STORAGE_TYPE.RSA,
       accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
       authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
     });
@@ -19,7 +19,7 @@ export async function storeInBiometricKeychain(key: string): Promise<void> {
 export async function retrieveFromBiometricKeychain(): Promise<string> {
   try {
     const result = await Keychain.getGenericPassword({
-      storage: Keychain.STORAGE_TYPE.AES,
+      storage: Keychain.STORAGE_TYPE.RSA,
       accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
       authenticationPrompt: {
         title: 'Authenticate to unlock your wallet.',
