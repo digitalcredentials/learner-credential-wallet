@@ -204,7 +204,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                 containerStyle={mixins.buttonIconContainer}
                 titleStyle={mixins.buttonIconTitle}
                 iconRight
-                onPress={() => shareToLinkedIn(rawCredentialRecord)}
+                onPress={() => setLinkedInConfirmModalOpen(true)}
                 icon={
                   <Ionicons
                     name="logo-linkedin"
@@ -255,6 +255,13 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
         title="Are you sure?"
       >
         <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
+        <Button
+          buttonStyle={mixins.buttonClear}
+          titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+          containerStyle={mixins.buttonClearContainer}
+          title="What does this mean?"
+          onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
+        />
       </ConfirmModal>
       <ConfirmModal
         open={linkedInConfirmModalOpen}
@@ -270,6 +277,13 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
           }
         </Text>
+        <Button
+          buttonStyle={mixins.buttonClear}
+          titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+          containerStyle={mixins.buttonClearContainer}
+          title="What does this mean?"
+          onPress={() => Linking.openURL('https://lcw.app/faq.html#add-to-linkedin')}
+        />
       </ConfirmModal>
     </>
   );

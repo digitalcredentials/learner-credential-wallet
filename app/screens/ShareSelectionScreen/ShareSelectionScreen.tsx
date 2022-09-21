@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Linking } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
@@ -135,6 +135,13 @@ export default function ShareSelectionScreen({
         title="Are you sure?"
       >
         <Text style={styles.modalText}>Creating a public link will allow anyone with the link to view the credential.</Text>
+        <Button
+          buttonStyle={mixins.buttonClear}
+          titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+          containerStyle={mixins.buttonClearContainer}
+          title="What does this mean?"
+          onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
+        />
       </ConfirmModal>
     </>
   );
