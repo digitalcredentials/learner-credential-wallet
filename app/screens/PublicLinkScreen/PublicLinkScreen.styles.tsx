@@ -80,5 +80,9 @@ export default StyleSheet.create({
     ...mixins.headerText,
     color: theme.color.textPrimary,
     marginBottom: 16
-  }
+  },
+  modalLink: {
+    color: theme.color.brightAccent,
+    textDecorationLine: 'underline',
+  },
 });

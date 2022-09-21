@@ -23,5 +23,9 @@ export default StyleSheet.create({
   modalText: {
     ...mixins.paragraphText,
     textAlign: 'center'
-  }
+  },
+  modalLink: {
+    color: theme.color.brightAccent,
+    textDecorationLine: 'underline',
+  },
 });
