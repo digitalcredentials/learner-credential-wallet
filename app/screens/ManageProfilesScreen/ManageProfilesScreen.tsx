@@ -13,7 +13,6 @@ import { createProfile } from '../../store/slices/profile';
 
 import { ManageProfilesScreenProps } from './ManageProfilesScreen.d';
 import styles from './ManageProfilesScreen.styles';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ManageProfilesScreen({ navigation }: ManageProfilesScreenProps): JSX.Element {
   const [profileName, setProfileName] = useState('');
