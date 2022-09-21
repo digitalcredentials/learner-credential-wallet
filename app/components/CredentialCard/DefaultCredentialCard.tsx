@@ -27,7 +27,7 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
   const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
   const subjectName = credentialSubject.name;
   const numberOfCredits = achievement?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
-  const criteria = achievement?.criteria ?? '';
+  const criteria = achievement?.criteria?.narrative ?? '';
 
   const { startDate, endDate } = achievement?.awardedOnCompletionOf ?? {};
   const startDateFmt = startDate && moment(startDate).format(DATE_FORMAT);
