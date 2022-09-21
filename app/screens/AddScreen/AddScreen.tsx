@@ -62,7 +62,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
         <Button
           title="Scan QR code"
           buttonStyle={mixins.buttonIcon}
-          containerStyle={mixins.buttonIconContainer}
+          containerStyle={[mixins.buttonIconContainer, mixins.noFlex]}
           titleStyle={mixins.buttonIconTitle}
           iconRight
           onPress={onPressQRScreen}

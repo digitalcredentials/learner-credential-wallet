@@ -170,6 +170,10 @@ export default StyleSheet.create({
     flex: 1,
   },
 
+  noFlex: {
+    flex: 0,
+  },
+
   modalBodyText: {
     ...paragraphText,
     textAlign: 'center',
