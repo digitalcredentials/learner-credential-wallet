@@ -27,6 +27,7 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
   const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
   const subjectName = credentialSubject.name;
   const numberOfCredits = achievement?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
+  const criteria = achievement?.criteria ?? '';
 
   const { startDate, endDate } = achievement?.awardedOnCompletionOf ?? {};
   const startDateFmt = startDate && moment(startDate).format(DATE_FORMAT);
@@ -129,6 +130,12 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
         <Text style={styles.dataLabel}>Description</Text>
         <Text style={styles.dataValue}>{description}</Text>
       </View>
+      {criteria ? (
+        <View style={styles.dataContainer}>
+          <Text style={styles.dataLabel}>Criteria</Text>
+          <Text style={styles.dataValue}>{criteria}</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
