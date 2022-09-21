@@ -25,6 +25,7 @@ export type CompletionDocument = {
 export type EducationalOperationalCredentialExtensions = {
   readonly type?: string[];
   readonly awardedOnCompletionOf?: CompletionDocument;
+  readonly criteria?: string;
 }
 
 // https://schema.org/EducationalOccupationalCredential (this doesn't really conform)
