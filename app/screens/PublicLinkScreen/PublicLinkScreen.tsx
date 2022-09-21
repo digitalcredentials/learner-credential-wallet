@@ -29,8 +29,8 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const [createLinkConfirmModalOpen, setCreateLinkConfirmModalOpen] = useState(false);
 
   const screenTitle = {
-    [PublicLinkScreenMode.Default]: 'Public Link',
-    [PublicLinkScreenMode.ShareCredential]: 'Share Credential',
+    [PublicLinkScreenMode.Default]: 'Public Link (Beta)',
+    [PublicLinkScreenMode.ShareCredential]: 'Share Credential (Beta)',
   }[screenMode];
 
   async function createPublicLink() {

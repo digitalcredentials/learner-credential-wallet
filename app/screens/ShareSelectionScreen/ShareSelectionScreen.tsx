@@ -107,7 +107,7 @@ export default function ShareSelectionScreen({
   return (
     <>
       <NavHeader
-        title={send ? 'Send' : 'Create Public Link'}
+        title={send ? 'Send' : 'Create Public Link (Beta)'}
         goBack={navigation.goBack}
       />
       <View style={styles.container}>
