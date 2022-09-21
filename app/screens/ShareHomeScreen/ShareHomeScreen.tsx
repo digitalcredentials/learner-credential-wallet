@@ -38,8 +38,8 @@ export default function ShareHomeScreen({
 
           <Button
             title="Send a credential"
-            buttonStyle={{ ...mixins.buttonIcon, ...styles.sendButton }}
-            containerStyle={{...mixins.buttonContainer}}
+            buttonStyle={mixins.buttonIcon}
+            containerStyle={[mixins.buttonContainer, styles.sendButton]}
             titleStyle={mixins.buttonIconTitle}
             onPress={() => navigation.navigate('ShareSelectionScreen', { method: 'send' })}
             iconRight

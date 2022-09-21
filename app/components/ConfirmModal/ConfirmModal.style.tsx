@@ -30,10 +30,12 @@ export default StyleSheet.create({
   buttonPrimary: {
     ...mixins.button, 
     ...mixins.buttonPrimary,
+    flexGrow: 1,
   },
   buttonSecondary: {
     ...mixins.button,
     backgroundColor: theme.color.buttonSecondary,
+    flexGrow: 1,
   },
   buttonSecondaryTitle: {
     ...mixins.buttonTitle,
