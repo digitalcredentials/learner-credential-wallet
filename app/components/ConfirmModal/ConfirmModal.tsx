@@ -7,6 +7,13 @@ import { useAccessibilityFocus } from '../../hooks';
 
 import styles from './ConfirmModal.style';
 
+/** 
+ * TODO: Right now the accessibility focus throws errors on Android 
+ * when returning from the share UI. Those errors must be resolved before
+ * this can be enabled. This disable flag is a temporary fix.
+ */ 
+const ENABLE_ACCESSIBILITY_FOCUS = false;
+
 export type ConfirmModalProps = React.PropsWithChildren<{
   open?: boolean;
 
@@ -53,7 +60,9 @@ export default function ConfirmModal({
   }, [open]);
 
   function onContentLayout() {
-    accessibilityFocusContent ? focusContent() : focusTitle();
+    if (ENABLE_ACCESSIBILITY_FOCUS) {
+      accessibilityFocusContent ? focusContent() : focusTitle();
+    }
   }
 
   return (
