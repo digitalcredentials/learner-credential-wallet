@@ -44,9 +44,9 @@ function PasswordInput({
         autoCorrect={false}
         value={value}
         outlineColor={highlightError ? theme.color.error : theme.color.textPrimary}
-        selectionColor={theme.color.foregroundPrimary}
+        selectionColor={theme.color.textPrimary}
         theme={{ colors: {
-          placeholder: theme.color.textPrimary,
+          placeholder: value ? theme.color.textPrimary : theme.color.inputInactive,
           text: theme.color.textPrimary,
           primary: theme.color.brightAccent,
         }}}

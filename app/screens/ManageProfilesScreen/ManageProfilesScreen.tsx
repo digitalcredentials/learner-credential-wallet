@@ -87,10 +87,10 @@ export default function ManageProfilesScreen({ navigation }: ManageProfilesScree
           onChangeText={setProfileName}
           style={styles.input}
           outlineColor={theme.color.textPrimary}
-          selectionColor={theme.color.foregroundPrimary}
+          selectionColor={theme.color.textPrimary}
           theme={{
             colors: {
-              placeholder: theme.color.textPrimary,
+              placeholder: profileName ? theme.color.textPrimary : theme.color.inputInactive,
               text: theme.color.textPrimary,
               primary: theme.color.brightAccent,
             },
