@@ -97,10 +97,10 @@ function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
         onChangeText={setNewName}
         style={styles.input}
         outlineColor={theme.color.textPrimary}
-        selectionColor={theme.color.foregroundPrimary}
+        selectionColor={theme.color.textPrimary}
         theme={{
           colors: {
-            placeholder: theme.color.textPrimary,
+            placeholder: newName ? theme.color.textPrimary : theme.color.inputInactive,
             text: theme.color.textPrimary,
             primary: theme.color.brightAccent,
           },
