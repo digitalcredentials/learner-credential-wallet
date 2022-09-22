@@ -81,6 +81,15 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     }
   }
 
+
+  async function _shareToLinkedIn() {
+    if (publicLink === null) {
+      await createPublicLink();
+    }
+
+    await shareToLinkedIn(rawCredentialRecord);
+  }
+
   useEffect(() => {
     loadShareUrl();
   }, []);
@@ -204,7 +213,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                 containerStyle={mixins.buttonIconContainer}
                 titleStyle={mixins.buttonIconTitle}
                 iconRight
-                onPress={() => setLinkedInConfirmModalOpen(true)}
+                onPress={_shareToLinkedIn}
                 icon={
                   <Ionicons
                     name="logo-linkedin"
