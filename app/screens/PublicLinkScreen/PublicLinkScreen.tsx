@@ -83,7 +83,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
 
   async function _shareToLinkedIn() {
-    if (publicLink === null) {
+    if (!publicLink) {
       await createPublicLink();
     }
 
