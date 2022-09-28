@@ -96,7 +96,7 @@ export class ProfileRecord implements ProfileRecordRaw {
   public static async deleteProfileRecord(rawProfileRecord: ProfileRecordRaw): Promise<void> {
     const rawProfileRecords = await ProfileRecord.getAllProfileRecords();
     if (rawProfileRecords.length <= 1) {
-      throw new HumanReadableError('Wallets must contain at least one profile.');
+      throw new HumanReadableError('You are unable to delete this profile as your wallet must have at least one profile. If you want to delete the contents of your wallet, please select Reset Wallet from the Settings Menu.');
     }
 
     await db.withInstance(async (instance) => {
