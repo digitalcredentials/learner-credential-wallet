@@ -213,7 +213,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                 containerStyle={mixins.buttonIconContainer}
                 titleStyle={mixins.buttonIconTitle}
                 iconRight
-                onPress={_shareToLinkedIn}
+                onPress={() => setLinkedInConfirmModalOpen(true)}
                 icon={
                   <Ionicons
                     name="logo-linkedin"
@@ -276,7 +276,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
         open={linkedInConfirmModalOpen}
         onRequestClose={() => setLinkedInConfirmModalOpen(false)}
         cancelOnBackgroundPress
-        onConfirm={() => shareToLinkedIn(rawCredentialRecord)}
+        onConfirm={_shareToLinkedIn}
         confirmText="Add to LinkedIn"
         title="Are you sure?"
       >
