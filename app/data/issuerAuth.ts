@@ -35,9 +35,10 @@ export const issuerAuthRegistry: RegistryRaw<IssuerAuthEntry> = {
       redirectUrl: 'dccrequest://oauth',
       scopes: ['openid', 'profile', 'email'],
     },
-    'https://sso.sjeccd.edu/sso': {
-      issuer: 'https://sso.sjeccd.edu/sso/',
+    'https://sso.sjeccd.edu': {
+      issuer: 'https://sso.sjeccd.edu',
       clientId: '6c8d20ec9be8a99c2d44599a',
+      clientSecret: '4a5061dd9a163c3c2106862a4c2c88e3',
       redirectUrl: 'dccrequest://oauth',
       scopes: ['openid', 'profile', 'email'],
     },
