@@ -31,7 +31,8 @@ export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw):
   const issuance = `&issueYear=${issuanceDate.year()}&issueMonth=${issuanceDate.month()}`;
   const expiration = hasExpirationDate ? `&expirationYear=${expirationDate.year()}&expirationMonth=${expirationDate.month()}` : '';
   const certUrl = publicLink ? `&certUrl=${publicLink}` : '';
-  const certId = vcId ? `certId=${vcId}` : '';
+  const certId = vcId ? `&certId=${vcId}` : '';
+
 
   const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
   const encodedURL = encodeQueryParams(url);
