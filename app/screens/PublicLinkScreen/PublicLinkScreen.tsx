@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { View, ScrollView, Linking } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { View, ScrollView, Linking, TextInput as RNTextInput } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
+import OutsidePressHandler from 'react-native-outside-press';
 
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import styles from './PublicLinkScreen.styles';
@@ -27,6 +28,9 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const [justCreated, setJustCreated] = useState(false);
   const [linkedInConfirmModalOpen, setLinkedInConfirmModalOpen] = useState(false);
   const [createLinkConfirmModalOpen, setCreateLinkConfirmModalOpen] = useState(false);
+
+  const inputRef = useRef<RNTextInput | null>(null);
+  const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
 
   const screenTitle = {
     [PublicLinkScreenMode.Default]: 'Public Link (Beta)',
@@ -81,13 +85,20 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     }
   }
 
-
   async function _shareToLinkedIn() {
     if (!publicLink) {
       await createPublicLink();
     }
 
     await shareToLinkedIn(rawCredentialRecord);
+  }
+
+  function onFocusInput() {
+    inputRef.current?.setNativeProps({ selection: { start: 0, end: publicLink?.length } });
+  }
+
+  function blurInput() {
+    inputRef.current?.blur();
   }
 
   useEffect(() => {
@@ -124,7 +135,6 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
         title={screenTitle}
         goBack={() => navigation.goBack()}
       />
-
       <View style={styles.outerContainer}>
         <ScrollView
           style={styles.scrollContainer}
@@ -135,17 +145,29 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             {publicLink !== null ? (
               <View>
                 <View style={styles.link}>
-                  <TextInput
-                    style={{...mixins.input, ...styles.linkText}}
-                    value={publicLink}
-                    theme={{ colors: {
-                      placeholder: theme.color.textPrimary,
-                      text: theme.color.textPrimary,
-                      disabled: theme.color.textPrimary
-                    }}}
-                    mode="outlined"
-                    editable={false}
-                  />
+                  <OutsidePressHandler
+                    style={mixins.flex}
+                    onOutsidePress={blurInput}
+                    disabled={disableOutsidePressHandler}
+                  >
+                    <TextInput
+                      ref={inputRef}
+                      style={{...mixins.input, ...styles.linkText}}
+                      value={publicLink}
+                      selectionColor={theme.color.brightAccent}
+                      theme={{ colors: {
+                        placeholder: theme.color.textPrimary,
+                        text: theme.color.textPrimary,
+                        disabled: theme.color.textPrimary,
+                        primary: theme.color.brightAccent,
+                      }}}
+                      autoCorrect={false}
+                      spellCheck={false}
+                      mode="outlined"
+                      onFocus={onFocusInput}
+                      showSoftInputOnFocus={false}
+                    />
+                  </OutsidePressHandler>
                   <Button
                     title="Copy"
                     buttonStyle={{...mixins.buttonPrimary, ...styles.copyButton}}
