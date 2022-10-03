@@ -40,7 +40,7 @@ export const issuerAuthRegistry: RegistryRaw<IssuerAuthEntry> = {
       clientId: '6c8d20ec9be8a99c2d44599a',
       clientSecret: '4a5061dd9a163c3c2106862a4c2c88e3',
       redirectUrl: 'dccrequest://oauth',
-      scopes: ['openid', 'profile', 'email'],
+      scopes: ['openid', 'email']
     },
     'https://rc.xpro.mit.edu': {
       issuer: 'https://rc.xpro.mit.edu',
