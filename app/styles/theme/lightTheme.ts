@@ -6,9 +6,9 @@ import { StatusBarStyle } from '../statusBarStyle';
 export const lightTheme: ThemeType = {
   color: {
     linkColor: Color.Blue,
-    backgroundPrimary: Color.Gray200,
-    backgroundSecondary: Color.Gray100,
-    foregroundPrimary: Color.Gray100,
+    backgroundPrimary: Color.Gray100,
+    backgroundSecondary: Color.White,
+    foregroundPrimary: Color.White,
     textHeader: Color.Blue,
     textPrimary: Color.Gray700,
     brightAccent: Color.Blue,
