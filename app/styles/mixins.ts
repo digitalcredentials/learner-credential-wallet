@@ -5,7 +5,7 @@ const shadow = {
   overflow: 'visible' as ViewStyle['overflow'],
   elevation: 5,
   shadowColor: theme.color.shadow,
-  shadowOpacity: 0.15,
+  shadowOpacity: theme.shadowOpacity,
   shadowRadius: 15,
   shadowOffset: {
     height: 5,
@@ -136,6 +136,7 @@ export default StyleSheet.create({
   buttonIconTitle: {
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
+    color: theme.color.iconActive,
   },
   buttonClear: {
     padding: 16,

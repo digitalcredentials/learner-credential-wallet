@@ -97,7 +97,7 @@ export default function AppNavigation(): JSX.Element | null {
   return (
     <SafeAreaProvider>
       <View onLayout={SplashScreen.hideAsync} />
-      <StatusBar style="light" />
+      <StatusBar style={theme.statusBarStyle} />
       <EventProvider style={mixins.flex}>
         <NavigationContainer
           theme={navigatorTheme}

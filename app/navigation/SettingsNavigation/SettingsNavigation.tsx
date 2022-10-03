@@ -84,9 +84,9 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   const biometricSwitch = (
     <Switch
       style={styles.switch}
-      thumbColor={isBiometricsEnabled ? theme.color.iconActive : theme.color.iconInactive}
-      trackColor={{ true: theme.color.buttonPrimary, false: theme.color.buttonSecondary }} 
-      ios_backgroundColor={theme.color.buttonSecondary}
+      thumbColor={isBiometricsEnabled ? theme.color.backgroundSecondary : theme.color.backgroundPrimary}
+      trackColor={{ true: theme.color.switchActive, false: theme.color.iconInactive }} 
+      ios_backgroundColor={theme.color.iconInactive}
       value={isBiometricsEnabled}
       onValueChange={onToggleBiometrics}
       disabled={!isBiometricsSupported}
