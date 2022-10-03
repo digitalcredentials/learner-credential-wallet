@@ -1,5 +1,6 @@
-import { Color } from './colors';
-import { FontFamily } from './fonts';
+import { Color } from '../colors';
+import { FontFamily } from '../fonts';
+import { StatusBarStyle } from '../statusBarStyle';
 
 export type ThemeType = {
   color: {
@@ -23,6 +24,8 @@ export type ThemeType = {
     error: Color;
     errorLight: Color;
     transparent: Color;
+    switchActive: Color;
+    modalBackground: Color;
   };
   fontFamily: {
     regular: FontFamily;
@@ -39,4 +42,6 @@ export type ThemeType = {
   };
   borderRadius: number;
   iconSize: number;
+  statusBarStyle: StatusBarStyle;
+  shadowOpacity: number;
 }

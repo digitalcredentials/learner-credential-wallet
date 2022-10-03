@@ -34,54 +34,58 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
     const issuerImage = typeof issuer === 'string' ? null : issuer.image;
 
     return (
-      <Swipeable
-        style={styles.swipeItem}
-        leftButtons={[
-          <Button
-            key="share"
-            buttonStyle={[styles.swipeButton, mixins.buttonPrimary]}
-            containerStyle={mixins.buttonIconContainer}
-            titleStyle={mixins.buttonIconTitle}
-            style={styles.swipeButtonContainer}
-            onPress={() => share([item])}
-            iconRight
-            icon={
-              <MaterialIcons
-                name="share"
-                size={theme.iconSize}
-                color={theme.color.backgroundPrimary}
-              />
-            }
-          />,
-        ]}
-        rightButtons={[
-          <Button
-            key="delete"
-            buttonStyle={[styles.swipeButton, mixins.buttonError]}
-            containerStyle={mixins.buttonIconContainer}
-            titleStyle={mixins.buttonIconTitle}
-            onPress={() => setItemToDelete(item)}
-            style={styles.swipeButtonContainer}
-            icon={
-              <MaterialIcons
-                name="delete"
-                size={theme.iconSize}
-                color={theme.color.backgroundPrimary}
-              />
-            }
-          />,
-        ]}
-      >
-        <CredentialItem
-          rawCredentialRecord={item}
-          showStatusBadges
-          title={title}
-          subtitle={issuerName}
-          image={issuerImage}
-          onSelect={onSelect}
-          chevron
-        />
-      </Swipeable>
+      <View style={styles.swipeItemOuter}>
+        <View>
+          <Swipeable
+            style={styles.swipeItem}
+            leftButtons={[
+              <Button
+                key="share"
+                buttonStyle={[styles.swipeButton, mixins.buttonPrimary]}
+                containerStyle={[mixins.buttonIconContainer, styles.noShadow]}
+                titleStyle={mixins.buttonIconTitle}
+                style={styles.swipeButtonContainer}
+                onPress={() => share([item])}
+                iconRight
+                icon={
+                  <MaterialIcons
+                    name="share"
+                    size={theme.iconSize}
+                    color={theme.color.backgroundPrimary}
+                  />
+                }
+              />,
+            ]}
+            rightButtons={[
+              <Button
+                key="delete"
+                buttonStyle={[styles.swipeButton, mixins.buttonError]}
+                containerStyle={[mixins.buttonIconContainer, styles.noShadow]}
+                titleStyle={mixins.buttonIconTitle}
+                onPress={() => setItemToDelete(item)}
+                style={styles.swipeButtonContainer}
+                icon={
+                  <MaterialIcons
+                    name="delete"
+                    size={theme.iconSize}
+                    color={theme.color.backgroundPrimary}
+                  />
+                }
+              />,
+            ]}
+          >
+            <CredentialItem
+              rawCredentialRecord={item}
+              showStatusBadges
+              title={title}
+              subtitle={issuerName}
+              image={issuerImage}
+              onSelect={onSelect}
+              chevron
+            />
+          </Swipeable>
+        </View>
+      </View>
     );
   }
 

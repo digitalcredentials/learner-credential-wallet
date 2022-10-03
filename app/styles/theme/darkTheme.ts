@@ -1,8 +1,9 @@
-import type { ThemeType } from './theme.d';
-import { Color } from './colors';
-import { FontFamily } from './fonts';
+import type { ThemeType } from './index.d';
+import { Color } from '../colors';
+import { FontFamily } from '../fonts';
+import { StatusBarStyle } from '../statusBarStyle';
 
-const theme: ThemeType = {
+export const darkTheme: ThemeType = {
   color: {
     linkColor: Color.DarkCyan,
     backgroundPrimary: Color.Gray800,
@@ -24,6 +25,8 @@ const theme: ThemeType = {
     error: Color.Red,
     errorLight: Color.LightRed,
     transparent: Color.Transparent,
+    switchActive: Color.DarkCyan,
+    modalBackground: Color.Gray900,
   },
   fontFamily: {
     regular: FontFamily.RubikRegular,
@@ -40,6 +43,6 @@ const theme: ThemeType = {
   },
   borderRadius: 5,
   iconSize: 24,
+  statusBarStyle: StatusBarStyle.Light,
+  shadowOpacity: 0.15,
 };
-
-export default theme;

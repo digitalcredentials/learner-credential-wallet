@@ -11,6 +11,9 @@ export default StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
   },
+  swipeItemOuter: {
+    ...mixins.shadow,
+  },
   swipeItem: {
     overflow: 'hidden',
   },
@@ -27,4 +30,8 @@ export default StyleSheet.create({
     lineHeight: 24,
     marginVertical: 8,
   },
+  noShadow: {
+    shadowOpacity: 0,
+    elevation: 0,
+  }
 });

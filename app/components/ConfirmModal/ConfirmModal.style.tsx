@@ -5,7 +5,7 @@ export default StyleSheet.create({
   modalBackground: {
     ...StyleSheet.absoluteFillObject,
     opacity: 0.75,
-    backgroundColor: theme.color.backgroundSecondary,
+    backgroundColor: theme.color.modalBackground,
   },
   modalOuterContainer: {
     flex: 1,
