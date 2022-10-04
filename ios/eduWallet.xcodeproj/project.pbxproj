@@ -342,7 +342,7 @@
 				CODE_SIGN_ENTITLEMENTS = eduwallet/wallet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = A35W4MM59Y;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -352,7 +352,7 @@
 				INFOPLIST_FILE = eduwallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -378,12 +378,12 @@
 				CODE_SIGN_ENTITLEMENTS = eduwallet/wallet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = A35W4MM59Y;
 				INFOPLIST_FILE = eduwallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

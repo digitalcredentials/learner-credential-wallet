@@ -10,7 +10,11 @@
     <meta-data android:name="expo.modules.updates.ENABLED" android:value="false"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH" android:value="NEVER"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0"/>
-    <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan" android:theme="@style/Theme.App.SplashScreen" android:screenOrientation="portrait">
+    <activity android:name=".MainActivity" android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+        android:launchMode="singleTask" android:windowSoftInputMode="adjustPan"
+        android:theme="@style/Theme.App.SplashScreen" android:screenOrientation="portrait"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
@@ -25,9 +29,8 @@
           android:host="request"/>
       </intent-filter>
     </activity>
-    <activity
-    android:name="net.openid.appauth.RedirectUriReceiverActivity"
-    tools:node="replace">
+    <activity android:name="net.openid.appauth.RedirectUriReceiverActivity"
+    tools:node="replace" android:exported="false">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
@@ -43,6 +46,6 @@
         <data android:scheme="com.googleusercontent.apps.511371443696-0gq71qbne41qc102m98qqv8fvs62kr0c" />
       </intent-filter>
     </activity>
-    <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
+    <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false" />
   </application>
 </manifest>
