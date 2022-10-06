@@ -22,6 +22,12 @@ export function errorMessageFrom(err: unknown, fallback = FALLBACK_ERROR_MESSAGE
   }
 }
 
-export function errorMessageIncludes(err: unknown, message: string): boolean {
-  return (err as Error).message.includes(message);
+export function errorMessageMatches(err: unknown, messages: string[]): boolean {
+  const errorMessage = (err as Error).message;
+
+  for (const message of messages) {
+    if (errorMessage.includes(message)) return true;
+  }
+
+  return false;
 }
