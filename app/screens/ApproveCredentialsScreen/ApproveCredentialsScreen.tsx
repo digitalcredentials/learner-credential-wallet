@@ -42,7 +42,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
 
   const ListHeader = (
     <View style={styles.listHeader}>
-      <Text style={styles.profileText}><Text style={styles.profileTextBold}>Adding To Profile:</Text> {rawProfileRecord.profileName}</Text>
+      <Text style={styles.profileText}><Text style={styles.profileTextBold}>Storing in Profile:</Text> {rawProfileRecord.profileName}</Text>
     </View>
   );
 
