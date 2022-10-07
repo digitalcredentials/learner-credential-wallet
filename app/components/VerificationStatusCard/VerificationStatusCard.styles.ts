@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   container: {
     backgroundColor: theme.color.backgroundSecondary,
     borderRadius: theme.borderRadius,
@@ -30,4 +29,4 @@ export default StyleSheet.create({
     marginTop: 5,
     marginRight: 8,
   },
-});
+}));

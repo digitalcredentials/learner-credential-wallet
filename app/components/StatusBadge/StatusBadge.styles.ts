@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme} from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   container: {
     borderRadius: 10,
     flexDirection: 'row',
@@ -21,4 +20,4 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.small,
     letterSpacing: 0.3,
   }
-});
+}));

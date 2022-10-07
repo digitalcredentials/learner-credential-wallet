@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import styles from './CredentialCard.styles';
+import dynamicStyleSheet from './CredentialCard.styles';
 import studentIdStyles from './StudentIdCard.styles';
 import type { CredentialCardProps } from './CredentialCard.d';
+import { useDynamicStyles } from '../../hooks';
 
 
 export default function StudentIdCard({ rawCredentialRecord }: CredentialCardProps) : JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;
   const { studentId } = credentialSubject;

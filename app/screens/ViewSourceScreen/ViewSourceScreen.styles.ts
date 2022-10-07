@@ -1,8 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-import { theme } from '../../styles';
-
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   container: {
     padding: 16,
     flex: 1,
@@ -15,4 +13,4 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.color.iconInactive,
   },
-});
+}));

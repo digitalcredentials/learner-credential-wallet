@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   modalBackground: {
     ...StyleSheet.absoluteFillObject,
     opacity: 0.75,
@@ -41,4 +41,4 @@ export default StyleSheet.create({
     ...mixins.buttonTitle,
     color: theme.color.textPrimary,
   },
-});
+}));

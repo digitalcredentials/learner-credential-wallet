@@ -3,9 +3,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
 
 import { StatusBadgeProps } from './StatusBadge.d';
-import styles from './StatusBadge.styles';
+import dynamicStyleSheet from './StatusBadge.styles';
+import { useDynamicStyles } from '../../hooks';
 
 export default function StatusBadge({ label, color, icon, backgroundColor }: StatusBadgeProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const containerStyle = { backgroundColor };
   const labelStyle = { color };
 

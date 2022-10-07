@@ -3,10 +3,9 @@ import { View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
 
-import { theme } from '../../styles';
-
 import { VerificationStatusCardProps, StatusItemProps } from './VerificationStatusCard.d';
-import styles from './VerificationStatusCard.styles';
+import dynamicStyleSheet from './VerificationStatusCard.styles';
+import { useDynamicStyles } from '../../hooks';
 
 const DATE_FORMAT = 'MMM D, YYYY';
 
@@ -18,6 +17,7 @@ enum LogId {
 }
 
 export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { expirationDate } = credential;
 
   const details = verifyPayload.result.log?.reduce<Record<string, boolean>>((acc, log) => {

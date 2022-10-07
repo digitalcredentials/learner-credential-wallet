@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Text, View, TouchableWithoutFeedback, AccessibilityInfo } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { mixins } from '../../styles';
-import { useAccessibilityFocus } from '../../hooks';
+import { useAccessibilityFocus, useDynamicStyles } from '../../hooks';
 
-import styles from './ConfirmModal.style';
+import dynamicStyleSheet from './ConfirmModal.style';
 
 /** 
  * TODO: Right now the accessibility focus throws errors on Android 
@@ -47,6 +46,8 @@ export default function ConfirmModal({
   cancelText = 'Cancel',
   children,
 }: ConfirmModalProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [titleRef, focusTitle] = useAccessibilityFocus<Text>();
   const [contentRef, focusContent] = useAccessibilityFocus<View>();

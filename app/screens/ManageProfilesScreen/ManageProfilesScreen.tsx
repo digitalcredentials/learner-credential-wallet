@@ -2,19 +2,19 @@ import React, { useMemo, useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { TextInput } from 'react-native-paper';
 
-import { theme, mixins } from '../../styles';
 import { ConfirmModal, NavHeader, ProfileItem } from '../../components';
 import { useSelectorFactory } from '../../hooks/useSelectorFactory';
 import { makeSelectProfilesWithCredentials } from '../../store/selectorFactories';
 import { createProfile } from '../../store/slices/profile';
 
 import { ManageProfilesScreenProps } from './ManageProfilesScreen.d';
-import styles from './ManageProfilesScreen.styles';
+import dynamicStyleSheet from './ManageProfilesScreen.styles';
 
 export default function ManageProfilesScreen({ navigation }: ManageProfilesScreenProps): JSX.Element {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [profileName, setProfileName] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false); 
   const dispatch = useAppDispatch();

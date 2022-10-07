@@ -7,10 +7,12 @@ import { BarCodeReadEvent, RNCameraProps } from 'react-native-camera';
 import { ConfirmModal } from '../../components';
 import { NavHeader } from '../../components';
 import { QRScreenProps } from './QRScreen.d';
-import styles from './QRScreen.styles';
+import dynamicStyleSheet from './QRScreen.styles';
 import { errorMessageFrom } from '../../lib/error';
+import { useDynamicStyles } from '../../hooks';
 
 export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { onReadQRCode, instructionText } = route.params;
 
   const [errorMessage, setErrorMessage] = useState('');

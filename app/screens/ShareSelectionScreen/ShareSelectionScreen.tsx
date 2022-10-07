@@ -5,17 +5,19 @@ import { useSelector } from 'react-redux';
 
 import { ConfirmModal, CredentialItem, NavHeader } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
-import { mixins } from '../../styles';
-import styles from './ShareSelectionScreen.styles';
+import dynamicStyleSheet from './ShareSelectionScreen.styles';
 import type { RenderItemProps } from './ShareSelectionScreen.d';
 import type { ShareSelectionScreenProps } from '../../navigation';
 import { CredentialRecordRaw } from '../../model';
 import { selectRawCredentialRecords } from '../../store/slices/credential';
+import { useDynamicStyles } from '../../hooks';
 
 export default function ShareSelectionScreen({
   navigation,
   route
 }: ShareSelectionScreenProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   const send = route.params.method === 'send';
   const [selected, setSelected] = useState<number[]>([]);
   const rawCredentialRecords = useSelector(selectRawCredentialRecords);

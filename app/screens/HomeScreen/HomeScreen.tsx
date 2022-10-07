@@ -6,18 +6,19 @@ import { useSelector } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 
 import { CredentialItem, NavHeader, ConfirmModal } from '../../components';
-import { theme, mixins } from '../../styles';
 import { navigationRef } from '../../navigation';
 
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 
-import styles from './HomeScreen.styles';
+import dynamicStyleSheet from './HomeScreen.styles';
 import { HomeScreenProps, RenderItemProps } from './HomeScreen.d';
 import { CredentialRecordRaw } from '../../model';
-import { useAppDispatch, useShareCredentials } from '../../hooks';
+import { useAppDispatch, useDynamicStyles, useShareCredentials } from '../../hooks';
 import { deleteCredential, selectRawCredentialRecords } from '../../store/slices/credential';
 
 export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   const rawCredentialRecords = useSelector(selectRawCredentialRecords);
   const [itemToDelete, setItemToDelete] = useState<CredentialRecordRaw|null>(null);
   const dispatch = useAppDispatch();

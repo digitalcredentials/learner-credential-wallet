@@ -1,8 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-import { mixins, theme } from '../../styles';
-
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   credentialStatusContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -62,4 +60,4 @@ export default StyleSheet.create({
   buttonSpacer: {
     width: 16,
   },
-});
+}));

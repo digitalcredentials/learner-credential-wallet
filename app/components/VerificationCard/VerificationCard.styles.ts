@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   dataValue: {
     fontFamily: theme.fontFamily.regular,
     fontSize: theme.fontSize.regular,
@@ -32,4 +31,4 @@ export default StyleSheet.create({
     lineHeight: 24,
     marginVertical: 8,
   },
-});
+}));

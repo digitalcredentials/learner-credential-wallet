@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { mixins, theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   dropDownPicker: {
     backgroundColor: theme.color.backgroundPrimary,
     borderColor: theme.color.iconInactive,
@@ -38,4 +37,4 @@ export default StyleSheet.create({
   dropDownItemSelected: {
     backgroundColor: theme.color.backgroundPrimary,
   },
-});
+}));

@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   loadingContainer: {
     marginLeft: -10,
     marginBottom: -20,
@@ -14,4 +13,4 @@ export default StyleSheet.create({
     letterSpacing: -15,
     color: theme.color.textHeader,
   },
-});
+}));

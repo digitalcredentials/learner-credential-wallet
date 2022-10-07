@@ -2,14 +2,16 @@ import React from 'react';
 import { ScrollView, Text } from 'react-native';
 
 import { NavHeader, VerificationCard, VerificationStatusCard } from '../../components';
+import { useDynamicStyles } from '../../hooks';
 
 import type { VerificationStatusScreenProps } from './VerificationStatusScreen.d';
-import styles from './VerificationStatusScreen.styles';
+import dynamicStyleSheet from './VerificationStatusScreen.styles';
 
 export default function VerificationStatusScreen({
   navigation,
   route,
 }: VerificationStatusScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { credential, verifyPayload } = route.params;
 
   return (

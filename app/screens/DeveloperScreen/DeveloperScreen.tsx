@@ -2,18 +2,17 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { mixins } from '../../styles';
 import { NavHeader } from '../../components';
-
-import styles from './DeveloperScreen.styles';
+import dynamicStyleSheet from './DeveloperScreen.styles';
 import { DeveloperScreenProps } from './DeveloperScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import mockCredential from '../../mock/credential';
 import { navigationRef } from '../../navigation';
 import { Cache, CacheKey } from '../../lib/cache';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 
 export default function DeveloperScreen({ navigation }: DeveloperScreenProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
 
   async function addMockCredential() {

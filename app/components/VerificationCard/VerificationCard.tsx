@@ -3,9 +3,8 @@ import moment from 'moment';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-import { useVerifyCredential, VerifyPayload } from '../../hooks';
-import styles from './VerificationCard.styles';
-import { theme } from '../../styles';
+import { useDynamicStyles, useVerifyCredential, VerifyPayload } from '../../hooks';
+import dynamicStyleSheet from './VerificationCard.styles';
 import { navigationRef } from '../../navigation';
 import { CredentialRecordRaw } from '../../model';
 
@@ -29,6 +28,7 @@ const DATE_FORMAT = 'MMM D, YYYY';
  *   2) Pass in a `verifyPayload` to render the status (cannot be a button).
  */
 export default function VerificationCard({ rawCredentialRecord, verifyPayload, isButton, showDetails = false }: VerificationCardProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const generatedVerifyPayload = useVerifyCredential(rawCredentialRecord, true);
   const { credential } = rawCredentialRecord || {};
 

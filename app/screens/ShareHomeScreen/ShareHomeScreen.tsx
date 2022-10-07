@@ -2,15 +2,17 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { NavHeader } from '../../components';
-import { mixins, theme } from '../../styles';
 
-import styles from './ShareHomeScreen.styles';
+import dynamicStyleSheet from './ShareHomeScreen.styles';
 import type { ShareHomeScreenProps } from '../../navigation';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDynamicStyles } from '../../hooks';
 
 export default function ShareHomeScreen({
   navigation,
 }: ShareHomeScreenProps): JSX.Element {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   return (
     <>
       <NavHeader title="Share" />

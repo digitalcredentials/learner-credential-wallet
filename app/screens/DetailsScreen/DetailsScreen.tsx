@@ -3,10 +3,12 @@ import { View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { NavHeader } from '../../components';
 
-import styles from './DetailsScreen.styles';
+import dynamicStyleSheet from './DetailsScreen.styles';
 import { DetailsScreenProps } from './DetailsScreen.d';
+import { useDynamicStyles } from '../../hooks';
 
 export default function DetailsScreen({ navigation, route }: DetailsScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { header, details, goBack = navigation.goBack } = route.params;
 
   return (

@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { mixins, theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   header: {
     ...mixins.headerText,
     marginTop: 8,
@@ -30,4 +29,4 @@ export default StyleSheet.create({
   listHeader: {
     marginVertical: 8,
   },
-});
+}));

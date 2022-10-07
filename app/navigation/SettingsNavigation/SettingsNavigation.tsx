@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Image, Linking, AccessibilityInfo, Switch } from 'react-native';
+import { ScrollView, Image, Linking, AccessibilityInfo, Switch, ImageStyle } from 'react-native';
 import { Text, ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,7 +7,7 @@ import DeviceInfo from 'react-native-device-info';
 
 import appConfig from '../../../app.json';
 import walletImage from '../../assets/wallet.png';
-import styles from './SettingsNavigation.styles';
+import dynamicStyleSheet from './SettingsNavigation.styles';
 import { NavHeader, ConfirmModal, BackupItemModal } from '../../components';
 import { lock, reset, selectWalletState, toggleBiometrics } from '../../store/slices/wallet';
 import {
@@ -17,15 +17,16 @@ import {
   SettingsNavigationParamList,
 } from './SettingsNavigation.d';
 import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, QRScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
-import { useAppDispatch, useResetNavigationOnBlur, useThemeContext } from '../../hooks';
+import { useAppDispatch, useDynamicStyles, useResetNavigationOnBlur, useThemeContext } from '../../hooks';
 import { SettingsNavigationProps } from '../';
 import { exportWallet } from '../../lib/export';
-import { theme } from '../../styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator<SettingsNavigationParamList>();
 
 function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItemProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
+
   const _rightComponent = rightComponent || (
     <ListItem.Chevron
       hasTVPreferredFocus={undefined}
@@ -53,6 +54,8 @@ function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItem
 }
 
 function Settings({ navigation }: SettingsProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
+
   const dispatch = useAppDispatch();
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [backupModalOpen, setBackupModalOpen] = useState(false);
@@ -137,6 +140,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
 }
 
 function About({ navigation }: AboutProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const version = DeviceInfo.getVersion();
   const buildNumber = DeviceInfo.getBuildNumber();
 
@@ -149,7 +153,7 @@ function About({ navigation }: AboutProps): JSX.Element {
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <ScrollView contentContainerStyle={styles.bodyContainerCenter}>
         <Image
-          style={styles.image}
+          style={styles.image as ImageStyle}
           source={walletImage}
           accessible
           accessibilityLabel={`${appConfig.displayName} Logo`}

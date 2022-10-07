@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { Text } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -10,8 +10,8 @@ import {
   PendingCredential,
   setCredentialApproval,
 } from '../../store/slices/credentialFoyer';
-import { theme, Color } from '../../styles';
-import styles from './ApprovalControls.styles';
+import { Color, ThemeType } from '../../styles';
+import dynamicStyleSheet from './ApprovalControls.styles';
 import type { Credential } from '../../types/credential';
 import { useAccessibilityFocus } from '../../hooks';
 import { addCredential } from '../../store/slices/credential';
@@ -42,7 +42,7 @@ const iconFor = (status: ApprovalStatus): StatusIcon => ({
   [ApprovalStatus.Accepted]: StatusIcon.Done,
 })[status];
 
-const colorFor = (status: ApprovalStatus): Color  => ({
+const colorFor = (status: ApprovalStatus, theme: ThemeType): Color  => ({
   [ApprovalStatus.Pending]: theme.color.success,
   [ApprovalStatus.PendingDuplicate]: theme.color.success,
   [ApprovalStatus.Errored]: theme.color.error,
@@ -59,6 +59,8 @@ const defaultMessageFor = (status: ApprovalStatus): ApprovalMessage => ({
 })[status];
 
 function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
+
   return (
     <TouchableOpacity
       style={[styles.button, primary && styles.buttonPrimary]}
@@ -71,6 +73,7 @@ function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.E
 }
 
 export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const { credential, status, messageOveride } = pendingCredential;
   const message = messageOveride || defaultMessageFor(status);
@@ -132,7 +135,7 @@ export default function ApprovalControls({ pendingCredential, profileRecordId }:
       <View style={styles.approvalContainer} accessible>
         <View style={styles.credentialStatusContainer} ref={statusRef}>
           <MaterialIcons
-            color={colorFor(status)}
+            color={colorFor(status, theme)}
             name={iconFor(status)}
             size={theme.iconSize}
           />

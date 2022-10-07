@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableWithoutFeedback, AccessibilityInfo } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 
-import { mixins } from '../../styles';
 import { MenuItem, NavHeader, ConfirmModal, AccessibleView, VerificationCard, CredentialCard } from '../../components';
 import { CredentialScreenProps, navigationRef } from '../../navigation';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 
-import styles from './CredentialScreen.styles';
+import dynamicStyleSheet from './CredentialScreen.styles';
 import { deleteCredential } from '../../store/slices/credential';
 import { makeSelectProfileFromCredential } from '../../store/selectorFactories';
 import { useSelectorFactory } from '../../hooks/useSelectorFactory';
 import { PublicLinkScreenMode } from '../../screens';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
