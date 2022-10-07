@@ -57,7 +57,7 @@ export default function CredentialItem({
         <View style={styles.iconContainer}>
           <MaterialCommunityIcons
             name="close-circle"
-            size={mixins.imageIcon.width}
+            size={theme.issuerIconSize}
             color={theme.color.error}
           />
         </View>
@@ -77,7 +77,7 @@ export default function CredentialItem({
       <View style={mixins.imageIcon}>
         <MaterialCommunityIcons
           name="certificate"
-          size={mixins.imageIcon.width}
+          size={theme.issuerIconSize}
           color={theme.color.iconActive}
         />
       </View>

@@ -14,6 +14,7 @@ import { selectWalletState } from '../../store/slices/wallet';
 import { mixins, theme } from '../../styles';
 import { encodeQueryParams } from '../../lib/encode';
 import { EventProvider } from 'react-native-outside-press';
+import { ThemeProvider } from '../../components';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 
@@ -96,17 +97,19 @@ export default function AppNavigation(): JSX.Element | null {
 
   return (
     <SafeAreaProvider>
-      <View onLayout={SplashScreen.hideAsync} />
-      <StatusBar style={theme.statusBarStyle} />
-      <EventProvider style={mixins.flex}>
-        <NavigationContainer
-          theme={navigatorTheme}
-          ref={navigationRef}
-          linking={linking}
-        >
-          {renderScreen()}
-        </NavigationContainer>
-      </EventProvider>
+      <ThemeProvider>
+        <View onLayout={SplashScreen.hideAsync} />
+        <StatusBar style={theme.statusBarStyle} />
+        <EventProvider style={mixins.flex}>
+          <NavigationContainer
+            theme={navigatorTheme}
+            ref={navigationRef}
+            linking={linking}
+          >
+            {renderScreen()}
+          </NavigationContainer>
+        </EventProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }

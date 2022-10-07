@@ -1,9 +1,10 @@
-import type { ThemeType } from './index.d';
-import { Color } from '../colors';
-import { FontFamily } from '../fonts';
-import { StatusBarStyle } from '../statusBarStyle';
+import type { ThemeType } from '..';
+import { Color } from '../../colors';
+import { FontFamily } from '../../fonts';
+import { StatusBarStyle } from '../../statusBarStyle';
 
 export const lightTheme: ThemeType = {
+  name: 'LightTheme',
   color: {
     linkColor: Color.Blue,
     backgroundPrimary: Color.Gray100,
@@ -43,6 +44,7 @@ export const lightTheme: ThemeType = {
   },
   borderRadius: 5,
   iconSize: 24,
+  issuerIconSize: 40,
   statusBarStyle: StatusBarStyle.Dark,
   shadowOpacity: 0.1,
 };
