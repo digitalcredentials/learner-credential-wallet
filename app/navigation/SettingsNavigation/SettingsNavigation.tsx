@@ -17,7 +17,7 @@ import {
   SettingsNavigationParamList,
 } from './SettingsNavigation.d';
 import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, QRScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
-import { useAppDispatch, useResetNavigationOnBlur } from '../../hooks';
+import { useAppDispatch, useResetNavigationOnBlur, useThemeContext } from '../../hooks';
 import { SettingsNavigationProps } from '../';
 import { exportWallet } from '../../lib/export';
 import { theme } from '../../styles';
@@ -59,6 +59,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   const { isBiometricsSupported } = useSelector(selectWalletState);
   const { isBiometricsEnabled: initialBiometryValue } = useSelector(selectWalletState);
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(initialBiometryValue);
+  const { isDarkTheme, toggleTheme } = useThemeContext();
 
   async function resetWallet() {
     dispatch(reset());
@@ -93,11 +94,23 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     />
   );
 
+  const themeSwitch = (
+    <Switch
+      style={styles.switch}
+      thumbColor={isDarkTheme ? theme.color.backgroundSecondary : theme.color.backgroundPrimary}
+      trackColor={{ true: theme.color.switchActive, false: theme.color.iconInactive }} 
+      ios_backgroundColor={theme.color.iconInactive}
+      value={isDarkTheme}
+      onValueChange={toggleTheme}
+    />
+  );
+
   return (
     <>
       <NavHeader title="Settings" />
       <ScrollView contentContainerStyle={styles.settingsContainer}>
         <SettingsItem title="Use biometrics to unlock" onPress={onToggleBiometrics} rightComponent={biometricSwitch} disabled={!isBiometricsSupported} />
+        <SettingsItem title="Dark mode" onPress={toggleTheme} rightComponent={themeSwitch} />
         <SettingsItem title="Manage profiles" onPress={() => navigation.navigate('ManageProfilesScreen')} />
         <SettingsItem title="Restore wallet" onPress={() => navigation.navigate('RestoreWalletScreen')} />
         <SettingsItem title="Backup wallet" onPress={() => setBackupModalOpen(true)} />

@@ -3,6 +3,7 @@ import { RootState, getAllRecords } from '..';
 import { isBiometricsSupported } from '../../lib/biometrics';
 import { importWalletFrom } from '../../lib/import';
 import { db, INITIAL_PROFILE_NAME } from '../../model';
+import { loadThemeName, saveThemeName } from '../../styles';
 import { createProfile } from './profile';
 
 export type WalletState = {
@@ -11,6 +12,7 @@ export type WalletState = {
   isBiometricsSupported: boolean | null,
   isBiometricsEnabled: boolean,
   needsRestart: boolean;
+  themeName: string | null;
 }
 
 type InitializeParams = {
@@ -26,6 +28,7 @@ const initialState: WalletState = {
   isBiometricsSupported: null,
   isBiometricsEnabled: false,
   needsRestart: false,
+  themeName: null,
 };
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
@@ -34,6 +37,7 @@ const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
     isInitialized: await db.isInitialized(),
     isBiometricsEnabled: await db.isBiometricsEnabled(),
     isBiometricsSupported: await isBiometricsSupported(),
+    themeName: await loadThemeName(),
   };
 });
 
@@ -101,6 +105,11 @@ const toggleBiometrics = createAsyncThunk('walletState/toggleBiometrics', async 
   await dispatch(pollWalletState());
 });
 
+const updateThemeName = createAsyncThunk('walletState/updateThemeName', async (themeName: string, { dispatch }) => {
+  await saveThemeName(themeName);
+  await dispatch(pollWalletState());
+});
+
 const walletSlice = createSlice({
   name: 'walletState',
   initialState,
@@ -131,6 +140,10 @@ const walletSlice = createSlice({
       ...state,
       ...action.payload,
     }));
+
+    builder.addCase(pollWalletState.rejected, (_, action) => {
+      throw action.error;
+    });
   },
 });
 
@@ -142,7 +155,8 @@ export {
   initialize,
   reset,
   pollWalletState,
-  toggleBiometrics
+  toggleBiometrics,
+  updateThemeName,
 };
 
 export const selectWalletState = (state: RootState): WalletState => state.wallet;

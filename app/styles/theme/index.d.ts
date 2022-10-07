@@ -3,6 +3,7 @@ import { FontFamily } from '../fonts';
 import { StatusBarStyle } from '../statusBarStyle';
 
 export type ThemeType = {
+  name: string;
   color: {
     linkColor: Color;
     backgroundPrimary: Color;
@@ -42,6 +43,7 @@ export type ThemeType = {
   };
   borderRadius: number;
   iconSize: number;
+  issuerIconSize: number;
   statusBarStyle: StatusBarStyle;
   shadowOpacity: number;
 }

@@ -1,17 +1,17 @@
-import { Appearance } from 'react-native';
+import { darkTheme } from './themes/darkTheme';
+import { lightTheme } from './themes/lightTheme';
 
-import { darkTheme } from './darkTheme';
-import { lightTheme } from './lightTheme';
+export const defaultTheme = darkTheme;
 
-const defaultTheme = darkTheme;
-const colorSchemeTheme = {
-  'light': lightTheme,
-  'dark': darkTheme,
+export const themes = {
+  darkTheme, 
+  lightTheme,
 };
 
-const colorScheme = Appearance.getColorScheme();
-const theme = colorScheme 
-  ? colorSchemeTheme[colorScheme] 
-  : defaultTheme;
+export type { ThemeType } from './index.d';
 
-export default theme;
+export * from './themeName';
+export * from './themeContext';
+
+/* Temporary static definition */
+export default defaultTheme;
