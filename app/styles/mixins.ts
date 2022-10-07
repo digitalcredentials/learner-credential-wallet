@@ -106,7 +106,7 @@ const mixins = (theme: ThemeType) => {
     buttonTitleSecondary: {
       fontFamily: theme.fontFamily.medium,
       fontSize: theme.fontSize.regular,
-      color: theme.color.iconActive,
+      color: theme.color.textPrimary,
     },
     buttonIcon: {
       justifyContent: 'space-between',
@@ -135,7 +135,7 @@ const mixins = (theme: ThemeType) => {
     buttonIconTitle: {
       fontFamily: theme.fontFamily.medium,
       fontSize: theme.fontSize.regular,
-      color: theme.color.iconActive,
+      color: theme.color.textPrimary,
     },
     buttonClear: {
       padding: 16,

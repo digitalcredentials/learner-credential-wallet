@@ -2,13 +2,11 @@ import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
 export default createDynamicStyleSheet(({ theme }) => ({
   container: {
-    paddingVertical: 16,
-    paddingHorizontal: 8,
-    // flex: 1,
-    // justifyContent: 'space-around',
+    flex: 1,
   },
-  scrollContainer: {
-    flexGrow: 1,
+  contentContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   credentialList: {
     borderRadius: theme.borderRadius,
