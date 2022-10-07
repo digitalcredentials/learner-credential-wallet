@@ -1,11 +1,10 @@
 import React from 'react';
 import { AccessibilityInfo, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { theme, mixins } from '../../styles';
-import styles from './AddScreen.styles';
+import dynamicStyleSheet from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { NavHeader } from '../../components';
@@ -13,8 +12,8 @@ import { credentialRequestParamsFromQrText, credentialsFromQrText, isDeepLink, i
 import { PresentationError } from '../../types/presentation';
 import { HumanReadableError } from '../../lib/error';
 
-
 export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
 
   function onPressQRScreen() {

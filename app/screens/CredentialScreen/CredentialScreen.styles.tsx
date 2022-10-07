@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   menuContainer: {
     top: 0,
     right: -10,
@@ -39,4 +38,4 @@ export default StyleSheet.create({
   textBold: {
     fontFamily: theme.fontFamily.medium,
   }
-});
+}));

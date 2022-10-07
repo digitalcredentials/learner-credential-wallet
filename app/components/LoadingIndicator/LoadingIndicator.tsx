@@ -3,9 +3,8 @@ import { View, Animated, Easing } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-import { theme } from '../../styles';
-import { useAnimation } from '../../hooks';
-import styles from './LoadingIndicator.styles';
+import { useAnimation, useDynamicStyles } from '../../hooks';
+import dynamicStyleSheet from './LoadingIndicator.styles';
 import type { AnimatedPathComponent, LoadingIndicatorProps } from './LoadingIndicator.d';
 import AccessibleView from '../AccessibleView/AccessibleView';
 
@@ -16,6 +15,7 @@ import AccessibleView from '../AccessibleView/AccessibleView';
 const AnimatedPath = (Animated.createAnimatedComponent(Path) as unknown) as AnimatedPathComponent;
 
 export default function LoadingIndicator({ loading }: LoadingIndicatorProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const [percent, setPercent] = useState(25);
 
   const rotate = useAnimation(['0deg', '360deg'], { duration: 1000 });

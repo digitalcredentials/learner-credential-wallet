@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { mixins, theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   loadingDots: {
     marginTop: -100,
     fontSize: 130,
@@ -19,4 +18,4 @@ export default StyleSheet.create({
     marginVertical: 8,
     textAlign: 'center',
   },
-});
+}));

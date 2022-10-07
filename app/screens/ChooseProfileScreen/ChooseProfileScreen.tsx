@@ -2,17 +2,17 @@ import React, { useEffect, useMemo } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 
-import { mixins } from '../../styles';
-import styles from './ChooseProfileScreen.styles';
+import dynamicStyleSheet from './ChooseProfileScreen.styles';
 import { ChooseProfileScreenProps, ProfileButtonProps } from './ChooseProfileScreen.d';
 import { NavHeader } from '../../components';
 import { useSelector } from 'react-redux';
 import { selectRawProfileRecords } from '../../store/slices/profile';
-import { useSelectorFactory } from '../../hooks';
+import { useDynamicStyles, useSelectorFactory } from '../../hooks';
 import { makeSelectProfileForPendingCredentials } from '../../store/selectorFactories/makeSelectProfileForPendingCredentials';
 import { ProfileRecordRaw } from '../../model';
 
 export default function ChooseProfileScreen({ navigation, route }: ChooseProfileScreenProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const rawProfileRecords = useSelector(selectRawProfileRecords);
   const associatedProfile = useSelectorFactory(makeSelectProfileForPendingCredentials);
 
@@ -61,6 +61,8 @@ export default function ChooseProfileScreen({ navigation, route }: ChooseProfile
 }
 
 function ProfileButton({ rawProfileRecord, onPress }: ProfileButtonProps) {
+  const { mixins } = useDynamicStyles();
+
   return (
     <Button
       title={rawProfileRecord.profileName}

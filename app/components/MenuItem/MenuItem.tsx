@@ -2,11 +2,13 @@ import React from 'react';
 import { ListItem } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { theme } from '../../styles';
-import styles from './MenuItem.styles';
+import dynamicStyleSheet from './MenuItem.styles';
 import type { MenuItemProps } from './MenuItem.d';
+import { useDynamicStyles } from '../../hooks';
 
 export default function MenuItem({ icon, title, onPress }: MenuItemProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
+
   return (
     <ListItem
       containerStyle={styles.menuItemContainer}

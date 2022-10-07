@@ -4,15 +4,15 @@ import { View } from 'react-native';
 import { CredentialStatusBadgesProps } from './CredentialStatusBadges.d';
 import { CredentialRecordRaw } from '../../model';
 import { Cache, CacheKey } from '../../lib/cache';
-import { theme } from '../../styles';
 import { StatusBadge } from '../';
-import styles from './CredentialStatusBadges.styles';
+import dynamicStyleSheet from './CredentialStatusBadges.styles';
 import { useAsyncCallback } from 'react-async-hook';
-import { useVerifyCredential } from '../../hooks';
+import { useDynamicStyles, useVerifyCredential } from '../../hooks';
 import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackgroundColor }: CredentialStatusBadgesProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const checkPublicLink = useAsyncCallback<boolean>(hasPublicLink);
   const verifyCredential = useVerifyCredential(rawCredentialRecord);
 

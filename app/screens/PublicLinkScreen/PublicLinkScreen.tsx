@@ -7,14 +7,13 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import OutsidePressHandler from 'react-native-outside-press';
 
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
-import styles from './PublicLinkScreen.styles';
+import dynamicStyleSheet from './PublicLinkScreen.styles';
 import { ConfirmModal, NavHeader } from '../../components';
-import { mixins, theme } from '../../styles';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Cache, CacheKey } from '../../lib/cache';
 import credential from '../../mock/credential';
 import { shareToLinkedIn } from '../../lib/share';
-import { useShareCredentials } from '../../hooks';
+import { useDynamicStyles, useShareCredentials } from '../../hooks';
 
 export enum PublicLinkScreenMode {
   Default,
@@ -22,6 +21,8 @@ export enum PublicLinkScreenMode {
 }
 
 export default function PublicLinkScreen ({ navigation, route }: PublicLinkScreenProps): JSX.Element {
+  const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
+
   const share = useShareCredentials();
   const { rawCredentialRecord, screenMode = PublicLinkScreenMode.Default } = route.params;
   const [publicLink, setPublicLink] = useState<string | null>(null);

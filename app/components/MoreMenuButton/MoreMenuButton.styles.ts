@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   buttonContainer: {
     padding: 2,
     borderRadius: theme.borderRadius,
@@ -19,4 +18,4 @@ export default StyleSheet.create({
     overflow: 'hidden',
     zIndex: 1,
   },
-});
+}));

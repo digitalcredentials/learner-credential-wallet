@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, AccessibilityInfo, View } from 'react-native';
+import { Text, Image, AccessibilityInfo, View, ImageStyle } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
@@ -8,13 +8,14 @@ import { selectWalletState, unlock, unlockWithBiometrics } from '../../store/sli
 import { SafeScreenView, ErrorDialog, PasswordInput } from '../../components';
 import walletImage from '../../assets/wallet.png';
 
-import styles from './LoginScreen.styles';
-import { useAccessibilityFocus, useAppDispatch, useAsyncValue } from '../../hooks';
-import { theme } from '../../styles';
+import dynamicStyleSheet from './LoginScreen.styles';
+import { useAccessibilityFocus, useAppDispatch, useAsyncValue, useDynamicStyles } from '../../hooks';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getBiometryIconName } from '../../lib/biometrics';
 
 export default function LoginScreen(): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
+
   const dispatch = useAppDispatch();
   const { isBiometricsEnabled, isBiometricsSupported } = useSelector(selectWalletState);
   const [password, setPassword] = useState('');
@@ -56,7 +57,7 @@ export default function LoginScreen(): JSX.Element {
   return (
     <SafeScreenView style={styles.container}>
       <Image
-        style={styles.image}
+        style={styles.image as ImageStyle}
         source={walletImage}
         accessible
         accessibilityLabel={`${appConfig.displayName} Logo`}

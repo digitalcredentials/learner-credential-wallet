@@ -1,8 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-import { theme, mixins } from '../../styles';
-
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   scannerBody: {
     flex: 1,
     backgroundColor: theme.color.backgroundPrimary,
@@ -30,4 +28,4 @@ export default StyleSheet.create({
     height: 0,
     flex: 0,
   },
-});
+}));

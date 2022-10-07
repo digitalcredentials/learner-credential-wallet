@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { mixins, theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   container: {
     backgroundColor: theme.color.foregroundPrimary,
     borderRadius: theme.borderRadius,
@@ -47,4 +46,4 @@ export default StyleSheet.create({
   passwordForm: {
     marginVertical: 8,
   },
-});
+}));

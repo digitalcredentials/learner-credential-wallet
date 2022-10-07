@@ -1,19 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Image, AccessibilityInfo } from 'react-native';
+import { Text, View, Image, AccessibilityInfo, ImageStyle } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, CheckBox } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import appConfig from '../../../app.json';
-import { theme, mixins } from '../../styles';
 import { initialize, pollWalletState, selectWalletState } from '../../store/slices/wallet';
 import { LoadingIndicator, SafeScreenView, AccessibleView, PasswordForm } from '../../components';
 import walletImage from '../../assets/wallet.png';
 import { useAccessibilityFocus } from '../../hooks';
 
-import styles from './SetupNavigation.styles';
+import dynamicStyleSheet from './SetupNavigation.styles';
 import type {
   StartStepProps,
   CreateStepProps,
@@ -56,10 +55,12 @@ export default function SetupNavigation(): JSX.Element {
 }
 
 function StartStep({ navigation }: StartStepProps) {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   return (
     <SafeScreenView style={[styles.container, styles.containerMiddle]}>
       <Image
-        style={styles.image}
+        style={styles.image as ImageStyle}
         source={walletImage}
         accessible
         accessibilityLabel={`${appConfig.displayName} Logo`}
@@ -97,6 +98,8 @@ function StartStep({ navigation }: StartStepProps) {
 }
 
 function PasswordStep({ navigation, route }: PasswordStepProps) {
+  const { theme, mixins, styles } = useDynamicStyles(dynamicStyleSheet);
+
   const [enableBiometrics, setEnableBiometrics] = useState(false);
   const { isBiometricsSupported } = useSelector(selectWalletState);
   const [password, setPassword] = useState<string>();
@@ -184,6 +187,8 @@ function PasswordStep({ navigation, route }: PasswordStepProps) {
 }
 
 function CreateStep({ route }: CreateStepProps) {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   const { password, enableBiometrics } = route.params;
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
@@ -235,6 +240,8 @@ function CreateStep({ route }: CreateStepProps) {
 }
 
 function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   const { password, enableBiometrics } = route.params;
   const [done, setDone] = useState(false);
   const importModalRef = useRef<ImportFileModalHandle>(null);

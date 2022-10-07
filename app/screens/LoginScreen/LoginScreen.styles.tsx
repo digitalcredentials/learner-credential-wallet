@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -62,4 +61,4 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     textDecorationLine: 'underline',
   },
-});
+}));

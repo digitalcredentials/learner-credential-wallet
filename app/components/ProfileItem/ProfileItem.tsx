@@ -4,11 +4,10 @@ import { TextInput } from 'react-native-paper';
 import { Button } from 'react-native-elements';
 
 import { MoreMenuButton, MenuItem, ConfirmModal, BackupItemModal } from '../';
-import styles from './ProfileItem.styles';
+import dynamicStyleSheet from './ProfileItem.styles';
 import { ActionModalProps, ProfileItemProps } from './ProfileItem.d';
-import { mixins, theme } from '../../styles';
 import { navigationRef } from '../../navigation';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { deleteProfile, updateProfile } from '../../store/slices/profile';
 import { exportProfile } from '../../lib/export';
 import { errorMessageFrom } from '../../lib/error';
@@ -20,6 +19,7 @@ enum ActiveModal {
 }
 
 export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX.Element {
+  const { styles, } = useDynamicStyles(dynamicStyleSheet);
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
 
   function goToSource() {
@@ -76,6 +76,7 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
 }
 
 function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const [newName, setNewName] = useState(rawProfileRecord.profileName);
   const dispatch = useAppDispatch();
 
@@ -128,6 +129,7 @@ function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
 }
 
 function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [errorMessage, setErrorMessage] = useState<string>();
   const dispatch = useAppDispatch();
 

@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   container: {
     paddingVertical: 16,
     paddingHorizontal: 8,
@@ -23,4 +22,4 @@ export default StyleSheet.create({
   sendButton: {
     marginTop: 32,
   },
-});
+}));

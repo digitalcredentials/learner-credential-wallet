@@ -8,10 +8,12 @@ import { clearFoyer, selectPendingCredentials } from '../../store/slices/credent
 import { CredentialItem, NavHeader, CredentialRequestHandler, ApprovalControls } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
-import styles from './ApproveCredentialsScreen.styles';
-import { useAppDispatch } from '../../hooks';
+import dynamicStyleSheet from './ApproveCredentialsScreen.styles';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 
 export default function ApproveCredentialsScreen({ navigation, route }: ApproveCredentialsScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
+
   const dispatch = useAppDispatch();
   const { rawProfileRecord, credentialRequestParams } = route.params;
   const profileRecordId = rawProfileRecord._id;

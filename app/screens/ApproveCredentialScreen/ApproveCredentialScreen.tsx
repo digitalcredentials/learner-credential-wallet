@@ -5,11 +5,12 @@ import { CredentialCard, VerificationCard } from '../../components';
 import { NavHeader } from '../../components';
 import type { ApproveCredentialScreenProps } from './ApproveCredentialScreen.d';
 import { CredentialRecord } from '../../model';
-import styles from './ApproveCredentialScreen.styles';
-import { usePendingCredential } from '../../hooks';
+import dynamicStyleSheet from './ApproveCredentialScreen.styles';
+import { useDynamicStyles, usePendingCredential } from '../../hooks';
 import { navigationRef } from '../../navigation';
 
 export default function ApproveCredentialScreen({ navigation, route }: ApproveCredentialScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { pendingCredentialId, profileRecordId } = route.params;
   const pendingCredential = usePendingCredential(pendingCredentialId);
   const { credential } = pendingCredential;

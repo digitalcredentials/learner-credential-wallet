@@ -3,9 +3,8 @@ import { Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Header } from 'react-native-elements';
 
-import { useAccessibilityFocus } from '../../hooks';
+import { useAccessibilityFocus, useDynamicStyles } from '../../hooks';
 import type { NavHeaderProps } from './NavHeader.d';
-import { mixins } from '../../styles';
 import { AccessibleView } from '../';
 
 export default function NavHeader({
@@ -13,6 +12,7 @@ export default function NavHeader({
   goBack,
   ...headerProps
 }: NavHeaderProps): JSX.Element {
+  const { mixins } = useDynamicStyles();
   const [headerRef, focusHeader] = useAccessibilityFocus<Text>();
 
   useEffect(focusHeader, []);

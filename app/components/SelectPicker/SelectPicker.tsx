@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import DropDownPicker, { DropDownPickerProps, ValueType } from 'react-native-dropdown-picker';
 
-import styles from './SelectPicker.styles';
+import { useDynamicStyles } from '../../hooks';
+import dynamicStyleSheet from './SelectPicker.styles';
 
 type SelectPickerProps<T> = DropDownPickerProps<T> & {
   label: string;
@@ -11,6 +12,7 @@ type SelectPickerProps<T> = DropDownPickerProps<T> & {
 }
 
 export default function SelectPicker<T extends ValueType>({ items: initialItems, value, onChangeValue, label }: SelectPickerProps<T>): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState(initialItems);
 

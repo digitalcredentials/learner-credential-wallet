@@ -1,16 +1,16 @@
 import React, { ForwardedRef, forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Text } from 'react-native';
 import { Button } from 'react-native-elements';
-import { mixins } from '../../styles';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import LoadingIndicatorDots from '../LoadingIndicatorDots/LoadingIndicatorDots';
 import PasswordInput from '../PasswordInput/PasswordInput';
 
-import styles from './ImportFileModal.styles';
+import dynamicStyleSheet from './ImportFileModal.styles';
 import { ImportFileModalProps, ImportFileModalHandle, SubmitPasswordCallback } from './ImportFileModal.d';
 import { pickAndReadFile, ReportDetails } from '../../lib/import';
 import { errorMessageFrom, errorMessageMatches } from '../../lib/error';
 import { decryptData, isLocked } from '../../lib/encrypt';
+import { useDynamicStyles } from '../../hooks';
 
 const CANCEL_PICKER_MESSAGES = ['user canceled the document picker', 'User canceled document picker'];
 
@@ -28,6 +28,8 @@ function ImportFileModal({
   onFinished,
   textConfig,
 }: ImportFileModalProps, ref: ForwardedRef<ImportFileModalHandle>): JSX.Element | null {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   const [password, setPassword] = useState('');
   const [modalState, setModalState] = useState(RestoreModalState.Hidden);  
   const [reportDetails, setReportDetails] = useState<ReportDetails>();

@@ -3,16 +3,17 @@ import moment from 'moment';
 import { View, Text, Image, Linking, ImageStyle, StyleProp } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-import { theme } from '../../styles';
-import styles from './CredentialCard.styles';
+import dynamicStyleSheet from './CredentialCard.styles';
 import type { CredentialCardProps } from './CredentialCard.d';
 import { CredentialStatusBadges } from '../';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useDynamicStyles } from '../../hooks';
 
 const NO_URL = 'None';
 const DATE_FORMAT = 'MMM D, YYYY';
 
 export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
   const { credentialSubject, issuer, issuanceDate } = credential;
 
@@ -82,7 +83,7 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
             <View style={styles.dataImage}>
               <MaterialCommunityIcons
                 name="certificate"
-                size={styles.dataImage.width}
+                size={theme.issuerIconSize}
                 color={theme.color.iconActive}
               />
             </View>

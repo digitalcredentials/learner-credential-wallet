@@ -2,18 +2,18 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { mixins } from '../../styles';
 import { CredentialItem, NavHeader } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
-import styles from './PresentationPreviewScreen.styles';
+import dynamicStyleSheet from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
-import { useShareCredentials } from '../../hooks';
+import { useDynamicStyles, useShareCredentials } from '../../hooks';
 
 export default function PresentationPreviewScreen({
   navigation,
   route,
 }: PresentationPreviewScreenProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const { selectedCredentials } = route.params;
   const share = useShareCredentials();
 

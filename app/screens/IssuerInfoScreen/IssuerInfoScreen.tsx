@@ -3,13 +3,15 @@ import { View, Text, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { NavHeader } from '../../components';
 
-import styles from './IssuerInfoScreen.styles';
+import dynamicStyleSheet from './IssuerInfoScreen.styles';
 import { BulletListProps, IssuerInfoScreenProps } from './IssuerInfoScreen.d';
 import { resolveIssuerRegistriesFor } from '../../lib/issuer';
+import { useDynamicStyles } from '../../hooks';
 
 const NO_URL = 'None';
 
 export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { issuerId } = route.params;
 
   const resolvedRegistryConfigs = useMemo(() => resolveIssuerRegistriesFor(issuerId), [issuerId]);
@@ -61,6 +63,8 @@ export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreen
 }
 
 function BulletList({ items }: BulletListProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
+  
   return (
     <View style={styles.bulletListContainer}>
       {items.map((item, i) => (

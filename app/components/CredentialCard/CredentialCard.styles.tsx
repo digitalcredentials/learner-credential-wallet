@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   header: {
     ...mixins.headerText,
     color: theme.color.textPrimary,
@@ -58,4 +57,4 @@ export default StyleSheet.create({
   infoIcon: {
     marginLeft: 4,
   },
-});
+}));

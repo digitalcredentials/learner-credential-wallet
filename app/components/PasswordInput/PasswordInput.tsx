@@ -3,9 +3,9 @@ import { View, TextInput as RNTextInput } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 import { AccessibleView } from '../';
-import { mixins, theme } from '../../styles';
+import { useDynamicStyles } from '../../hooks';
 
-import styles from './PasswordInput.styles';
+import dynamicStyleSheet from './PasswordInput.styles';
 
 type TextInputProps = ComponentProps<typeof TextInput>;
 
@@ -25,6 +25,7 @@ function PasswordInput({
   highlightError,
   ...textInputProps
 }: PasswordInputProps, ref: Ref<View>): JSX.Element {
+  const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
   const _inputRef = inputRef || useRef<RNTextInput>(null);
 
   return (

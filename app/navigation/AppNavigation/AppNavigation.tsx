@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Linking, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -9,22 +9,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { RootNavigation, SetupNavigation, RootNavigationParamsList } from '../';
 import { RestartScreen, LoginScreen } from '../../screens';
-import { useAppLoading } from '../../hooks';
+import { useAppLoading, useDynamicStyles } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
-import { mixins, theme } from '../../styles';
 import { encodeQueryParams } from '../../lib/encode';
 import { EventProvider } from 'react-native-outside-press';
 import { ThemeProvider } from '../../components';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
-
-const navigatorTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: theme.color.backgroundPrimary,
-  },
-};
 
 function transformDeepLink(url: string): string {
   return encodeQueryParams(url);
@@ -66,6 +57,16 @@ const linking: LinkingOptions<RootNavigationParamsList> = {
 
 
 export default function AppNavigation(): JSX.Element | null {
+  const { mixins, theme } = useDynamicStyles();
+
+  const navigatorTheme = useMemo(() => ({
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: theme.color.backgroundPrimary,
+    },
+  }), [theme]);
+
   const loading = useAppLoading();
   const {
     isUnlocked,
@@ -97,19 +98,17 @@ export default function AppNavigation(): JSX.Element | null {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider>
-        <View onLayout={SplashScreen.hideAsync} />
-        <StatusBar style={theme.statusBarStyle} />
-        <EventProvider style={mixins.flex}>
-          <NavigationContainer
-            theme={navigatorTheme}
-            ref={navigationRef}
-            linking={linking}
-          >
-            {renderScreen()}
-          </NavigationContainer>
-        </EventProvider>
-      </ThemeProvider>
+      <View onLayout={SplashScreen.hideAsync} />
+      <StatusBar style={theme.statusBarStyle} />
+      <EventProvider style={mixins.flex}>
+        <NavigationContainer
+          theme={navigatorTheme}
+          ref={navigationRef}
+          linking={linking}
+        >
+          {renderScreen()}
+        </NavigationContainer>
+      </EventProvider>
     </SafeAreaProvider>
   );
 }

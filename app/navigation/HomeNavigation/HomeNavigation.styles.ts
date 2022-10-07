@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-import { theme } from '../../styles';
-
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   barStyle: {
     backgroundColor: theme.color.backgroundSecondary,
     borderTopWidth: 0,
   },
-});
+}));

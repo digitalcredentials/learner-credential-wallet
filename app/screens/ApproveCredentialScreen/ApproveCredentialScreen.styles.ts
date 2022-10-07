@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(() => ({
   container: {
     padding: 16,
   },
-});
+}));

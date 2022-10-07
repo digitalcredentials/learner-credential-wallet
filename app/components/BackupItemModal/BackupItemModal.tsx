@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import {  CheckBox } from 'react-native-elements';
 import { ConfirmModal, LoadingIndicatorDots, PasswordForm } from '..';
-import { mixins, theme } from '../../styles';
 
-import styles from './BackupItemModal.styles';
+import dynamicStyleSheet from './BackupItemModal.styles';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useAsyncCallback } from 'react-async-hook';
 import { BackupItemModalProps } from './BackupItemModal.d';
+import { useDynamicStyles } from '../../hooks';
 
 export default function BackupItemModal({ onRequestClose, open, onBackup, backupItemName, backupModalText }: BackupItemModalProps): JSX.Element {
+  const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
   const [enablePassword, setEnablePassword] = useState(false);
   const [password, setPassword] = useState<string>();
 
