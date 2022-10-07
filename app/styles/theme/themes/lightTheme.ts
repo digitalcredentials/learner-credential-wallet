@@ -28,6 +28,7 @@ export const lightTheme: ThemeType = {
     transparent: Color.Transparent,
     switchActive: Color.DarkCyan,
     modalBackground: Color.Gray400,
+    highlightAndroid: Color.TransparentBlue,
   },
   fontFamily: {
     regular: FontFamily.RubikRegular,

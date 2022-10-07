@@ -27,6 +27,7 @@ export type ThemeType = {
     transparent: Color;
     switchActive: Color;
     modalBackground: Color;
+    highlightAndroid: Color;
   };
   fontFamily: {
     regular: FontFamily;

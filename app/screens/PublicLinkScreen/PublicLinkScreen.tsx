@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, Linking, TextInput as RNTextInput } from 'react-native';
+import { View, ScrollView, Linking, TextInput as RNTextInput, Platform } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
@@ -32,6 +32,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   const inputRef = useRef<RNTextInput | null>(null);
   const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
+  const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
   const screenTitle = {
     [PublicLinkScreenMode.Default]: 'Public Link (Beta)',
@@ -155,7 +156,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                       ref={inputRef}
                       style={{...mixins.input, ...styles.linkText}}
                       value={publicLink}
-                      selectionColor={theme.color.brightAccent}
+                      selectionColor={selectionColor}
                       theme={{ colors: {
                         placeholder: theme.color.textPrimary,
                         text: theme.color.textPrimary,
