@@ -29,8 +29,4 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
   },
-  iconContainer: {
-    ...mixins.imageIcon,
-    backgroundColor: theme.color.backgroundPrimary,
-  }
 }));

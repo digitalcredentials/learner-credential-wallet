@@ -55,7 +55,7 @@ export default function CredentialItem({
 
     if (isNotVerified) {
       return (
-        <View style={styles.iconContainer}>
+        <View style={mixins.imageIcon}>
           <MaterialCommunityIcons
             name="close-circle"
             size={theme.issuerIconSize}
