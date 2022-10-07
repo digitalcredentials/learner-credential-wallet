@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import {  CheckBox } from 'react-native-elements';
+import { useAsyncCallback } from 'react-async-hook';
 import { ConfirmModal, LoadingIndicatorDots, PasswordForm } from '..';
 
 import dynamicStyleSheet from './BackupItemModal.styles';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { useAsyncCallback } from 'react-async-hook';
 import { BackupItemModalProps } from './BackupItemModal.d';
 import { useDynamicStyles } from '../../hooks';
 
