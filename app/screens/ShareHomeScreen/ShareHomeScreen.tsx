@@ -16,48 +16,46 @@ export default function ShareHomeScreen({
   return (
     <>
       <NavHeader title="Share" />
-      <View style={styles.container}>
-        <ScrollView style={styles.container}>
-          <Button
-            title="Create a public link"
-            buttonStyle={{ ...mixins.buttonIcon }}
-            containerStyle={{...mixins.buttonContainer}}
-            titleStyle={mixins.buttonIconTitle}
-            onPress={() => navigation.navigate('ShareSelectionScreen', { method: 'link' })}
-            iconRight
-            icon={
-              <MaterialIcons
-                // style={styles.actionIcon}
-                name="link"
-                size={theme.iconSize}
-                color={theme.color.iconInactive}
-              />
-            }
-          />
-          <Text style={styles.paragraph}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <Button
+          title="Create a public link"
+          buttonStyle={mixins.buttonIcon}
+          containerStyle={mixins.buttonIconContainer}
+          titleStyle={mixins.buttonIconTitle}
+          onPress={() => navigation.navigate('ShareSelectionScreen', { method: 'link' })}
+          iconRight
+          icon={
+            <MaterialIcons
+              // style={styles.actionIcon}
+              name="link"
+              size={theme.iconSize}
+              color={theme.color.iconInactive}
+            />
+          }
+        />
+        <Text style={styles.paragraph}>
             Allows publicly sharing one credential at a time. (Beta)
-          </Text>
+        </Text>
 
-          <Button
-            title="Send a credential"
-            buttonStyle={mixins.buttonIcon}
-            containerStyle={[mixins.buttonContainer, styles.sendButton]}
-            titleStyle={mixins.buttonIconTitle}
-            onPress={() => navigation.navigate('ShareSelectionScreen', { method: 'send' })}
-            iconRight
-            icon={
-              <MaterialIcons
-                name="input"
-                size={theme.iconSize}
-                color={theme.color.iconInactive}
-              />
-            }
-          />
-          <Text style={styles.paragraph}>
+        <Button
+          title="Send a credential"
+          buttonStyle={mixins.buttonIcon}
+          containerStyle={[mixins.buttonIconContainer, styles.sendButton]}
+          titleStyle={mixins.buttonIconTitle}
+          onPress={() => navigation.navigate('ShareSelectionScreen', { method: 'send' })}
+          iconRight
+          icon={
+            <MaterialIcons
+              name="input"
+              size={theme.iconSize}
+              color={theme.color.iconInactive}
+            />
+          }
+        />
+        <Text style={styles.paragraph}>
             Allows sending one or more credentials
-          </Text>
-        </ScrollView>
-      </View>
+        </Text>
+      </ScrollView>
     </>
   );
 }
