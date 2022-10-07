@@ -3,7 +3,6 @@ import { Linking } from 'react-native';
 import { CredentialRecordRaw } from '../model';
 import { IssuerObject } from '../types/credential';
 import { Cache, CacheKey } from './cache';
-import { encodeQueryParams } from './encode';
 
 export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw): Promise<void> {
   const publicLink = await Cache.getInstance().load(CacheKey.PublicLink, rawCredentialRecord.credential.id) as string;
@@ -33,11 +32,8 @@ export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw):
   const certUrl = publicLink ? `&certUrl=${publicLink}` : '';
   const certId = vcId ? `&certId=${vcId}` : '';
 
-
   const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
-  const encodedURL = encodeQueryParams(url);
-  console.log(encodedURL);
 
-  await Linking.canOpenURL(encodedURL);
-  Linking.openURL(encodedURL);
+  await Linking.canOpenURL(url);
+  Linking.openURL(url);
 }
