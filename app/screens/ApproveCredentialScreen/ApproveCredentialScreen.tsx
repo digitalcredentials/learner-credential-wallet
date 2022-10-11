@@ -18,12 +18,9 @@ export default function ApproveCredentialScreen({ navigation, route }: ApproveCr
 
   function goToIssuerInfo(issuerId: string) {
     if (navigationRef.isReady()) {
-      navigationRef.navigate('HomeNavigation', {
-        screen: 'AddCredentialNavigation',
-        params: {
-          screen: 'IssuerInfoScreen',
-          params: { issuerId }
-        }
+      navigationRef.navigate('AcceptCredentialsNavigation', {
+        screen: 'IssuerInfoScreen',
+        params: { issuerId }
       });
     }
   }
