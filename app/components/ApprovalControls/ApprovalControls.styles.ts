@@ -5,7 +5,7 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.color.backgroundSecondary,
+    backgroundColor: theme.color.backgroundPrimary,
     borderRadius: theme.borderRadius,
     width: '100%',
     height: 40,
