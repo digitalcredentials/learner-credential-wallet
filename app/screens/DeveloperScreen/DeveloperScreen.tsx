@@ -18,11 +18,8 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
   async function addMockCredential() {
     await dispatch(stageCredentials([mockCredential]));
     if (navigationRef.isReady()) {
-      navigationRef.navigate('HomeNavigation', { 
-        screen: 'AddCredentialNavigation',
-        params: {
-          screen: 'ChooseProfileScreen',
-        }
+      navigationRef.navigate('AcceptCredentialsNavigation', { 
+        screen: 'ChooseProfileScreen',
       });
     }
   }

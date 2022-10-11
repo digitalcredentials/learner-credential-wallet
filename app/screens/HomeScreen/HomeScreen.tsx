@@ -93,7 +93,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
   function goToCredentialAdd() {
     if (navigationRef.isReady()) {
       navigationRef.navigate('HomeNavigation', {
-        screen: 'AddCredentialNavigation',
+        screen: 'AddNavigation',
         params: {
           screen: 'AddScreen',
         },

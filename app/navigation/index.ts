@@ -1,6 +1,7 @@
 // Navigation Components
 export { default as RootNavigation } from './RootNavigation/RootNavigation';
-export { default as AddCredentialNavigation } from './AddCredentialNavigation/AddCredentialNavigation';
+export { default as AcceptCredentialsNavigation } from './AcceptCredentialsNavigation/AcceptCredentialsNavigation';
+export { default as AddNavigation } from './AddNavigation/AddNavigation';
 export { default as AppNavigation } from './AppNavigation/AppNavigation';
 export { default as CredentialNavigation } from './CredentialNavigation/CredentialNavigation';
 export { default as HomeNavigation } from './HomeNavigation/HomeNavigation';
@@ -13,7 +14,8 @@ export * from './RootNavigation/RootNavigation.d';
 export * from './HomeNavigation/HomeNavigation.d';
 export * from './SettingsNavigation/SettingsNavigation.d';
 export * from './SetupNavigation/SetupNavigation.d';
-export * from './AddCredentialNavigation/AddCredentialNavigation.d';
+export * from './AddNavigation/AddNavigation.d';
+export * from './AcceptCredentialsNavigation/AcceptCredentialsNavigation.d';
 export * from './CredentialNavigation/CredentialNavigation.d';
 export * from './ShareNavigation/ShareNavigation.d';
 
@@ -31,7 +33,7 @@ import { DetailsScreenSettingsProps } from './SettingsNavigation/SettingsNavigat
 import { DetailsScreenSetupProps } from './SetupNavigation/SetupNavigation.d';
 export type DetailsScreenProps = DetailsScreenSettingsProps | DetailsScreenSetupProps;
 
-import { QRScreenCredentialProps } from './AddCredentialNavigation/AddCredentialNavigation.d';
+import { QRScreenCredentialProps } from './AddNavigation/AddNavigation.d';
 import { QRScreenProfileProps } from './SettingsNavigation/SettingsNavigation.d';
 export type QRScreenProps = QRScreenCredentialProps | QRScreenProfileProps;
 
@@ -40,5 +42,5 @@ import { PublicLinkScreenShareProps } from './ShareNavigation/ShareNavigation.d'
 export type PublicLinkScreenProps = PublicLinkScreenCredentialProps | PublicLinkScreenShareProps;
 
 import { IssuerInfoScreenCredentialProps } from './CredentialNavigation/CredentialNavigation.d';
-import { IssuerInfoScreenAddProps } from './AddCredentialNavigation/AddCredentialNavigation.d';
+import { IssuerInfoScreenAddProps } from './AcceptCredentialsNavigation/AcceptCredentialsNavigation.d';
 export type IssuerInfoScreenProps = IssuerInfoScreenCredentialProps | IssuerInfoScreenAddProps;

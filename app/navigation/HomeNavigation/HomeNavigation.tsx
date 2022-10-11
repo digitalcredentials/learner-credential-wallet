@@ -8,10 +8,10 @@ import dynamicStyleSheet from './HomeNavigation.styles';
 import {
   CredentialNavigation,
   ShareNavigation,
-  AddCredentialNavigation,
   SettingsNavigation,
   HomeNavigationParamList,
   TabIconProps,
+  AddNavigation,
 } from '../../navigation';
 import { useDynamicStyles } from '../../hooks';
 
@@ -43,7 +43,7 @@ export default function HomeNavigation(): JSX.Element {
         tabBarIcon: ShareTabIcon,
         tabBarAccessibilityLabel: `Share, (2 of 4)${labelSuffix}`,
       }}/>
-      <Tab.Screen name="AddCredentialNavigation" component={AddCredentialNavigation} options={{
+      <Tab.Screen name="AddNavigation" component={AddNavigation} options={{
         title: 'Add',
         tabBarIcon: AddTabIcon,
         tabBarAccessibilityLabel: `Add, (3 of 4)${labelSuffix}`,

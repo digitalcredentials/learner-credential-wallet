@@ -32,7 +32,7 @@ const linking: LinkingOptions<RootNavigationParamsList> = {
     screens: {
       HomeNavigation: {
         screens: {
-          AddCredentialNavigation: {
+          AcceptCredentialsNavigation: {
             screens: {
               ChooseProfileScreen: 'request',
             },
