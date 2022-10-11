@@ -9,6 +9,7 @@ import {
   ApprovalMessage,
   PendingCredential,
   setCredentialApproval,
+  acceptPendingCredentials,
 } from '../../store/slices/credentialFoyer';
 import { Color, ThemeType } from '../../styles';
 import dynamicStyleSheet from './ApprovalControls.styles';
@@ -98,15 +99,7 @@ export default function ApprovalControls({ pendingCredential, profileRecordId }:
   useEffect(focusStatus, []);
 
   async function accept() {
-    try {
-      await add(credential);
-
-      setApprovalStatus(ApprovalStatus.Accepted);
-    } catch (err) {
-      console.warn(err);
-
-      setApprovalStatus(ApprovalStatus.Errored);
-    }
+    await dispatch(acceptPendingCredentials({ pendingCredentials: [pendingCredential], profileRecordId }));
     focusStatus();
   }
 
