@@ -73,6 +73,11 @@ const mixins = (theme: ThemeType) => {
       padding: 16,
       borderRadius: theme.borderRadius,
     },
+    buttonCompact: {
+      paddingVertical: 12,
+      paddingHorizontal: 18,
+      minHeight: 48,
+    },
     buttonPrimary: {
       backgroundColor: theme.color.buttonPrimary,
       padding: 16,

@@ -1,14 +1,16 @@
 import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
 export default createDynamicStyleSheet(({ theme, mixins }) => ({
-  header: {
-    ...mixins.headerText,
-    marginTop: 8,
-    marginBottom: 4,
-  },
   container: {
     padding: 16,
+    paddingBottom: 0,
     flex: 1,
+  },
+  listContainer: {
+    marginTop: 8,
+  },
+  listContentContainer: {
+    paddingBottom: 8,
   },
   doneButton: {
     backgroundColor: theme.color.transparent,
@@ -17,6 +19,7 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   doneButtonTitle: {
     lineHeight: 17,
+    paddingHorizontal: 8,
     color: theme.color.textHeader,
     fontSize: theme.fontSize.regular,
   },
@@ -28,5 +31,18 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   listHeader: {
     marginVertical: 8,
+  },
+  footerContainer: {
+    ...mixins.shadow,
+    backgroundColor: theme.color.backgroundSecondary,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+  },
+  acceptAllButton: {
+    height: 44,
+    minHeight: undefined,
+  },
+  acceptAllButtonTitle: {
+    fontSize: 14,
   },
 }));
