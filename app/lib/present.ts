@@ -10,6 +10,7 @@ import type { VerifiablePresentation } from '../types/presentation';
 import type { CredentialRecordRaw } from '../model/credential';
 import type { DidRecordRaw } from '../model/did';
 import type { Credential } from '../types/credential';
+import { toQr } from '../lib/decode';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 
@@ -43,11 +44,11 @@ export async function createVerifiablePresentation(
 
 export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord?: DidRecordRaw): Promise<void> {
   const plurality = rawCredentialRecords.length > 1 ? 's' : '';
-  const fileName = `Shared Credential${plurality}`;
-  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
+  const fileName = `SharedCredential${plurality}`;
+  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.txt`;
   const credentials = rawCredentialRecords.map(({ credential }) => credential);
 
-  const presentation = didRecord
+  const verifiablePresentation = didRecord
     ? await createVerifiablePresentation(credentials, didRecord)
     : vc.createPresentation({ verifiableCredential: credentials });
 
@@ -55,8 +56,9 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     await RNFS.unlink(filePath);
   }
 
-  const presentationString = JSON.stringify(presentation, null, 2);
-  await RNFS.writeFile(filePath, presentationString, 'utf8');
+  // const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
+  const verifiablePresentationString = await toQr(verifiablePresentation);
+  await RNFS.writeFile(filePath, verifiablePresentationString, 'utf8');
 
   /**
    * On Android, the clipboard share activity only supports strings (copying
@@ -73,6 +75,6 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     url: `file://${filePath}`,
     type: 'text/plain',
     subject: fileName,
-    message: Platform.OS === 'ios' ? undefined : presentationString,
+    message: Platform.OS === 'ios' ? undefined : verifiablePresentationString,
   });
 }
