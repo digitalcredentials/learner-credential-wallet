@@ -7,8 +7,12 @@ buildscript {
         compileSdkVersion = 31
         targetSdkVersion = 31
     }
+//     maven {   url "https://maven.google.com"   }
     repositories {
         google()
+        maven {
+            url 'https://maven.google.com/'
+        }
         jcenter()
     }
     dependencies {

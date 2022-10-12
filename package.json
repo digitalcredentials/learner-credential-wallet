@@ -85,6 +85,7 @@
     "react-native-qrcode-scanner": "^1.5.4",
     "react-native-qrcode-svg": "^6.1.2",
     "react-native-randombytes": "^3.6.1",
+    "react-native-receive-sharing-intent": "^2.0.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-securerandom": "^1.0.0",

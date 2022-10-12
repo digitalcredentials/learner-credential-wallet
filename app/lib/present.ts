@@ -10,14 +10,15 @@ import type { VerifiablePresentation } from '../types/presentation';
 import type { CredentialRecordRaw } from '../model/credential';
 import type { DidRecordRaw } from '../model/did';
 import type { Credential } from '../types/credential';
+import { toQr } from '../lib/decode';
 
 import { securityLoader } from './documentLoader';
 
 const documentLoader = securityLoader().build();
 
 /**
- * This method wraps the create & sign presentation flow and and allows a 
- * challenge to be specified. If the challenge paramater is not included, 
+ * This method wraps the create & sign presentation flow and and allows a
+ * challenge to be specified. If the challenge paramater is not included,
  * a UUID will be generated and used in it's place.
  */
 export async function createVerifiablePresentation(
@@ -43,11 +44,11 @@ export async function createVerifiablePresentation(
 
 export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord?: DidRecordRaw): Promise<void> {
   const plurality = rawCredentialRecords.length > 1 ? 's' : '';
-  const fileName = `Shared Credential${plurality}`;
-  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
+  const fileName = `SharedCredential${plurality}`;
+  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.txt`;
   const credentials = rawCredentialRecords.map(({ credential }) => credential);
 
-  const presentation = didRecord
+  const verifiablePresentation = didRecord
     ? await createVerifiablePresentation(credentials, didRecord)
     : vc.createPresentation({ verifiableCredential: credentials });
 
@@ -55,15 +56,16 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     await RNFS.unlink(filePath);
   }
 
-  const presentationString = JSON.stringify(presentation, null, 2);
-  await RNFS.writeFile(filePath, presentationString, 'utf8');
+  // const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
+  const verifiablePresentationString = await toQr(verifiablePresentation);
+  await RNFS.writeFile(filePath, verifiablePresentationString, 'utf8');
 
-  /** 
+  /**
    * On Android, the clipboard share activity only supports strings (copying
-   * the file URL if `message` is not provided). To support clipboard 
-   * functionality here, the `message` parameter must be supplied with the 
+   * the file URL if `message` is not provided). To support clipboard
+   * functionality here, the `message` parameter must be supplied with the
    * stringified JSON of the file.
-   * 
+   *
    * On iOS, the clipboard supports file sharing so the `message` parameter
    * should be omitted. Including it would result in sharing both the file and
    * the JSON string.
@@ -73,6 +75,6 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
     url: `file://${filePath}`,
     type: 'text/plain',
     subject: fileName,
-    message: Platform.OS === 'ios' ? undefined : presentationString,
+    message: Platform.OS === 'ios' ? undefined : verifiablePresentationString,
   });
 }

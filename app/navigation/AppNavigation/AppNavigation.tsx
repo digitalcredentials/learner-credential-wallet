@@ -42,13 +42,18 @@ const linking: LinkingOptions<RootNavigationParamsList> = {
     },
   },
   subscribe: (listener: (url: string) => void) => {
-    const onReceiveURL = ({ url }: { url: string }) => listener(transformDeepLink(url));
+    const onReceiveURL = ({ url }: { url: string }) => {
+      console.log('Received URL:', url);
+      return listener(transformDeepLink(url));
+    };
 
     const subscription = Linking.addEventListener('url', onReceiveURL);
     return () => subscription.remove();
   },
   getInitialURL: async () => {
     const url = await Linking.getInitialURL();
+    console.log('getInitialURL:', url);
+
     if (url === null) return;
 
     return transformDeepLink(url);
