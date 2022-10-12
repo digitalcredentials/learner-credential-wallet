@@ -6,7 +6,7 @@ import { NavHeader } from '../../components';
 import dynamicStyleSheet from './DeveloperScreen.styles';
 import { DeveloperScreenProps } from './DeveloperScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
-import mockCredential from '../../mock/credential';
+import { credentials } from '../../mock/credential';
 import { navigationRef } from '../../navigation';
 import { Cache, CacheKey } from '../../lib/cache';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
@@ -16,7 +16,7 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
   const dispatch = useAppDispatch();
 
   async function addMockCredential() {
-    await dispatch(stageCredentials([mockCredential]));
+    await dispatch(stageCredentials(credentials));
     if (navigationRef.isReady()) {
       navigationRef.navigate('AcceptCredentialsNavigation', { 
         screen: 'ChooseProfileScreen',
@@ -34,7 +34,7 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
       <NavHeader title="Developer Settings" goBack={navigation.goBack} />
       <View style={styles.container}>
         <Button
-          title="Add mock credential"
+          title="Add mock credentials"
           buttonStyle={mixins.buttonIconCompact}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
