@@ -1,4 +1,4 @@
-import { fromQrCode } from '@digitalcredentials/vpqr';
+import { fromQrCode, toQrCode } from '@digitalcredentials/vpqr';
 import qs from 'query-string';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
@@ -24,7 +24,7 @@ export function isDeepLink(text: string): boolean {
 export async function credentialsFromQrText(text: string): Promise<Credential[]> {
   const { vp }: { vp: VerifiablePresentation } = await fromQrCode({ text, documentLoader });
 
-  // TODO: We need to separate verificaiton of the presentation from the credentials inside.
+  // TODO: We need to separate verification of the presentation from the credentials inside.
   // https://www.pivotaltracker.com/story/show/179830339
   //const isVerified = await verifyPresentation(vp);
 
@@ -46,4 +46,9 @@ export function credentialRequestParamsFromQrText(text: string): CredentialReque
   }
 
   return params as CredentialRequestParams;
+}
+
+export async function toQr(vp: VerifiablePresentation): Promise<string> {
+  const result = await toQrCode({ vp, documentLoader });
+  return result.payload;
 }
