@@ -28,16 +28,16 @@ export class PendingCredential {
   id: string = uuid.v4() as string;
   status: ApprovalStatus;
   credential: Credential;
-  messageOveride?: ApprovalMessage;
+  messageOverride?: ApprovalMessage;
 
   constructor(
     credential: Credential,
     status: ApprovalStatus = ApprovalStatus.Pending,
-    messageOveride?: ApprovalMessage,
+    messageOverride?: ApprovalMessage,
   ) {
     this.credential = credential;
     this.status = status;
-    this.messageOveride = messageOveride;
+    this.messageOverride = messageOverride;
   }
 }
 
