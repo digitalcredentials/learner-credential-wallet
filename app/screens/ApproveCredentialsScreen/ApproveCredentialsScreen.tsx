@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 
 import { navigationRef } from '../../navigation';
 import { acceptPendingCredentials, clearFoyer, selectPendingCredentials } from '../../store/slices/credentialFoyer';
-import { CredentialItem, NavHeader, CredentialRequestHandler, ApprovalControls, ConfirmModal, LoadingIndicatorDots } from '../../components';
+import { CredentialItem, NavHeader, CredentialRequestHandler, ApprovalControls, ConfirmModal } from '../../components';
 import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
 import dynamicStyleSheet from './ApproveCredentialsScreen.styles';
