@@ -13,9 +13,7 @@ import {
 } from '../../store/slices/credentialFoyer';
 import { Color, ThemeType } from '../../styles';
 import dynamicStyleSheet from './ApprovalControls.styles';
-import type { Credential } from '../../types/credential';
 import { useAccessibilityFocus } from '../../hooks';
-import { addCredential } from '../../store/slices/credential';
 import { ObjectID } from 'bson';
 
 enum StatusIcon {
@@ -76,13 +74,9 @@ function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.E
 export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): JSX.Element {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
-  const { credential, status, messageOveride } = pendingCredential;
+  const { status, messageOveride } = pendingCredential;
   const message = messageOveride || defaultMessageFor(status);
   const [statusRef, focusStatus] = useAccessibilityFocus<View>();
-
-  async function add(credential: Credential): Promise<void> {
-    await dispatch(addCredential({ credential, profileRecordId }));
-  }
 
   function setApprovalStatus(status: ApprovalStatus) {
     dispatch(setCredentialApproval({

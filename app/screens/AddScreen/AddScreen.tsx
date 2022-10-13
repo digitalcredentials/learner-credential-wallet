@@ -11,6 +11,8 @@ import { NavHeader } from '../../components';
 import { credentialRequestParamsFromQrText, credentialsFromQrText, isDeepLink, isVpqr } from '../../lib/decode';
 import { PresentationError } from '../../types/presentation';
 import { HumanReadableError } from '../../lib/error';
+import { navigationRef } from '../../navigation';
+import { CredentialRequestParams } from '../../lib/request';
 
 export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
@@ -23,18 +25,28 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
     });
   }
 
+  function goToChooseProfile(params?: CredentialRequestParams) {
+    if (navigationRef.isReady()) {
+      if (navigationRef.isReady()) {
+        navigationRef.navigate('AcceptCredentialsNavigation', { 
+          screen: 'ChooseProfileScreen',
+          params,
+        });
+      }
+    }
+  }
+
   async function onReadQRCode(text: string) {
     if (isDeepLink(text)) {
       console.log('Received deep link via QR code', text);
       const params = credentialRequestParamsFromQrText(text);
-
-      navigation.navigate('ChooseProfileScreen', params);
+      goToChooseProfile(params);
     } else if (isVpqr(text)) {
       try {
         const credentials = await credentialsFromQrText(text);
         AccessibilityInfo.announceForAccessibility('QR Code Scanned');
         dispatch(stageCredentials(credentials));
-        navigation.navigate('ChooseProfileScreen');
+        goToChooseProfile();
       } catch (err) {
         console.warn(err);
         const message = (err as Error).message;

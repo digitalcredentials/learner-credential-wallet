@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { NavHeader } from '../../components';
 

@@ -13,7 +13,6 @@ import { useAppLoading, useDynamicStyles } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
 import { encodeQueryParams } from '../../lib/encode';
 import { EventProvider } from 'react-native-outside-press';
-import { ThemeProvider } from '../../components';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 
@@ -30,13 +29,9 @@ const linking: LinkingOptions<RootNavigationParamsList> = {
   prefixes: ['dccrequest://', 'org.dcconsortium://'],
   config: {
     screens: {
-      HomeNavigation: {
+      AcceptCredentialsNavigation: {
         screens: {
-          AcceptCredentialsNavigation: {
-            screens: {
-              ChooseProfileScreen: 'request',
-            },
-          },
+          ChooseProfileScreen: 'request',
         },
       },
     },
