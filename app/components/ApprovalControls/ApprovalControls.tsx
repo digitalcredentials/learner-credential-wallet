@@ -74,8 +74,8 @@ function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.E
 export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): JSX.Element {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
-  const { status, messageOveride } = pendingCredential;
-  const message = messageOveride || defaultMessageFor(status);
+  const { status, messageOverride } = pendingCredential;
+  const message = messageOverride || defaultMessageFor(status);
   const [statusRef, focusStatus] = useAccessibilityFocus<View>();
 
   function setApprovalStatus(status: ApprovalStatus) {
