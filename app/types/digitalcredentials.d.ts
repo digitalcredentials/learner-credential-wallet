@@ -5,6 +5,7 @@ declare module '@digitalcredentials/vc-status-list';
 declare module '@digitalcredentials/vpqr';
 declare module '@digitalcredentials/http-client';
 declare module '@digitalcredentials/jsonld-signatures';
+declare module '@digitalcredentials/ed25519-signature-2020';
 declare module 'jsonld-document-loader';
 declare module '@interop/did-web-resolver';
 declare module 'json-canonicalize';
