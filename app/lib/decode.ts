@@ -1,7 +1,7 @@
 import { fromQrCode } from '@digitalcredentials/vpqr';
 import qs from 'query-string';
 
-import { securityLoader } from './documentLoader';
+import { securityLoader } from '@digitalcredentials/security-document-loader';
 //import { verifyPresentation } from '../lib/validate';
 import type { Credential } from '../types/credential';
 //import { VerifiablePresentation, PresentationError } from '../types/presentation';
@@ -44,6 +44,6 @@ export function credentialRequestParamsFromQrText(text: string): CredentialReque
   if (!isValid) {
     throw new HumanReadableError('The QR code contained an invalid deep link.');
   }
-  
+
   return params as CredentialRequestParams;
 }
