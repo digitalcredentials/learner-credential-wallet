@@ -6,7 +6,7 @@ import vc from '@digitalcredentials/vc';
 import { VerifiablePresentation, PresentationError } from '../types/presentation';
 import { Credential, CredentialError } from '../types/credential';
 
-import { securityLoader } from './documentLoader';
+import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { registries } from './registry';
 import { extractCredentialsFrom } from './verifiableObject';
 

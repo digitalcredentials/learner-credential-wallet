@@ -11,13 +11,13 @@ import type { CredentialRecordRaw } from '../model/credential';
 import type { DidRecordRaw } from '../model/did';
 import type { Credential } from '../types/credential';
 
-import { securityLoader } from './documentLoader';
+import { securityLoader } from '@digitalcredentials/security-document-loader';
 
 const documentLoader = securityLoader().build();
 
 /**
- * This method wraps the create & sign presentation flow and and allows a 
- * challenge to be specified. If the challenge paramater is not included, 
+ * This method wraps the create & sign presentation flow and and allows a
+ * challenge to be specified. If the challenge paramater is not included,
  * a UUID will be generated and used in it's place.
  */
 export async function createVerifiablePresentation(
@@ -58,12 +58,12 @@ export async function sharePresentation(rawCredentialRecords: CredentialRecordRa
   const presentationString = JSON.stringify(presentation, null, 2);
   await RNFS.writeFile(filePath, presentationString, 'utf8');
 
-  /** 
+  /**
    * On Android, the clipboard share activity only supports strings (copying
-   * the file URL if `message` is not provided). To support clipboard 
-   * functionality here, the `message` parameter must be supplied with the 
+   * the file URL if `message` is not provided). To support clipboard
+   * functionality here, the `message` parameter must be supplied with the
    * stringified JSON of the file.
-   * 
+   *
    * On iOS, the clipboard supports file sharing so the `message` parameter
    * should be omitted. Including it would result in sharing both the file and
    * the JSON string.
