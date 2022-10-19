@@ -53,10 +53,15 @@ export const issuerDidRegistry: RegistryRaw<IssuerDidEntry> = {
       location: 'Atlanta, GA, USA',
       url: 'https://c21u.gatech.edu',
     },
-    'did:web:dibiho.org:TUM.Test': {
+    'did:web:dibiho.org:TUM': {
       name: 'Technical University of Munich',
       location: 'Munich, Germany',
       url: 'https://www.it.tum.de/it/dibiho/',
+    },
+    'did:web:dibiho.org:HPI': {
+      name: 'openHPI',
+      location: 'Potsdam, Germany',
+      url: 'https://staging.openhpi.de',
     },
   },
 };
