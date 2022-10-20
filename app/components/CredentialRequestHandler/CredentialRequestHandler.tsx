@@ -46,8 +46,6 @@ export default function CredentialRequestHandler({ credentialRequestParams, rawP
     }
   }, [credentialRequestParams, rawProfileRecord]);
 
-  console.log(credentialRequest.loading);
-
   return (
     <ConfirmModal
       open={modalIsOpen}
