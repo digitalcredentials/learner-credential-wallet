@@ -1,5 +1,7 @@
-import { issuerDidRegistry, IssuerDidEntry } from '../data/issuerDid';
+import { IssuerDidEntry } from '../data/issuerDid';
 import { issuerAuthRegistry, IssuerAuthEntry } from '../data/issuerAuth';
+import store from '../store';
+import { displayGlobalError } from '../store/slices/wallet';
 
 type RegistryMetadata = {
   created: string;
@@ -11,20 +13,28 @@ export type RegistryRaw<Entry> = {
   readonly entries: Record<string, Entry>;
 }
 
-class Registry<Entry> implements RegistryRaw<Entry> {
-  readonly meta;
-  readonly entries;
+class Registry<Entry> {
+  entries?: Record<string, Entry>;
 
-  constructor(registry: RegistryRaw<Entry>) {
-    this.meta = registry.meta;
-    this.entries = registry.entries;
+  constructor(registry?: RegistryRaw<Entry>) {
+    if (registry) {
+      this.entries = registry.entries;
+    }
   }
 
   public isInRegistry(key: string): boolean {
+    if (this.entries === undefined) {
+      throw new Error('Registry not initialized.');
+    }
+
     return key in this.entries;
   }
 
   public entryFor(key: string): Entry {
+    if (this.entries === undefined) {
+      throw new Error('Registry not initialized.');
+    }
+
     if (!this.isInRegistry(key)) {
       throw new Error(`${key} not found in registry.`);
     }
@@ -33,39 +43,22 @@ class Registry<Entry> implements RegistryRaw<Entry> {
   }
 }
 
-class RemoteRegistry<Entry> implements RegistryRaw<Entry> {
-  readonly meta;
-  readonly entries;
+class RemoteRegistry<Entry> extends Registry<Entry> {
+  readonly registryUrl;
 
   constructor(url: string) {
+    super();
     this.registryUrl = url;
   }
 
-  private async fetchRegistry(){
-    console.log(`RemoteRegistry.fetchRegistry(url=${this.registryUrl})`);
+  public async fetchRegistry() {
     const response = await fetch(this.registryUrl);
     if (!response.ok) {
-      console.log(`RemoteRegistry.fetchRegistry(url=${this.registryUrl}) failed`);
-      throw Error('Unable to fetch remote registry')
+      throw Error('Unable to fetch remote registry');
     }
+
     const data = await response.json();
-    console.log(JSON.stringify(data));
-    this.meta = data.meta;
     this.entries = data.registry;
-  }
-
-  public async isInRegistry(key: string): boolean {
-    await this.fetchRegistry();
-    return key in this.entries;
-  }
-
-  public async entryFor(key: string): boolean {
-    await this.fetchRegistry();
-    if (!this.isInRegistry(key)) {
-      throw new Error(`${key} not found in registry.`);
-    }
-
-    return this.entries[key];
   }
 }
 
@@ -73,3 +66,17 @@ export const registries = {
   issuerDid: new RemoteRegistry<IssuerDidEntry>('https://raw.githubusercontent.com/digitalcredentials/issuer-registry/main/registry.json'),
   issuerAuth: new Registry<IssuerAuthEntry>(issuerAuthRegistry),
 };
+
+export async function loadRemoteRegistries(): Promise<void> {
+  try {
+    await Promise.all([
+      registries.issuerDid.fetchRegistry(),
+    ]);
+  } catch (err) {
+    store.dispatch(displayGlobalError({ 
+      title: 'Unable to Load Remote Registries', 
+      message: 'Please check your network connection and try again.',
+      fatal: true,
+    }));
+  }
+}
