@@ -15,6 +15,7 @@ type InitializeParams = {
 type GlobalErrorPayload = {
   title: string;
   message: string;
+  fatal?: boolean;
 }
 
 export type WalletState = {
