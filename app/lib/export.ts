@@ -45,9 +45,13 @@ export async function exportWallet(encryptPassphrase?: string): Promise<void> {
   const exportedProfiles = await Promise.all(rawProfileRecords.map(ProfileRecord.exportProfileRecord));
   const exportedWalletString = JSON.stringify(exportedProfiles, null, 2);
 
+  const data = await encryptData(exportedWalletString, 'password');
+
+  /*
   const data = encryptPassphrase 
     ? encryptData(exportedWalletString, encryptPassphrase)
     : exportedWalletString;
+  */
 
   /**
    * On Android, RNFS doesn't truncate the file before writing, 
