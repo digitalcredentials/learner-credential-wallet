@@ -1,10 +1,21 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, getAllRecords } from '..';
 import { isBiometricsSupported } from '../../lib/biometrics';
 import { importWalletFrom } from '../../lib/import';
 import { db, INITIAL_PROFILE_NAME } from '../../model';
 import { loadThemeName, saveThemeName } from '../../styles';
 import { createProfile } from './profile';
+
+type InitializeParams = {
+  passphrase: string;
+  enableBiometrics: boolean;
+  existingWallet?: string;
+}
+
+type GlobalErrorPayload = {
+  title: string;
+  message: string;
+}
 
 export type WalletState = {
   isUnlocked: boolean | null;
@@ -13,14 +24,8 @@ export type WalletState = {
   isBiometricsEnabled: boolean,
   needsRestart: boolean;
   themeName: string | null;
+  globalError: GlobalErrorPayload | null;
 }
-
-type InitializeParams = {
-  passphrase: string;
-  enableBiometrics: boolean;
-  existingWallet?: string;
-}
-
 
 const initialState: WalletState = {
   isUnlocked: null,
@@ -29,6 +34,7 @@ const initialState: WalletState = {
   isBiometricsEnabled: false,
   needsRestart: false,
   themeName: null,
+  globalError: null,
 };
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
@@ -113,7 +119,14 @@ const updateThemeName = createAsyncThunk('walletState/updateThemeName', async (t
 const walletSlice = createSlice({
   name: 'walletState',
   initialState,
-  reducers: {},
+  reducers: {
+    clearGlobalError(state) {
+      state.globalError = null;
+    },
+    displayGlobalError(state, action: PayloadAction<GlobalErrorPayload>) {
+      state.globalError = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(unlock.rejected, (_, action) => {
       throw action.error;
@@ -148,6 +161,8 @@ const walletSlice = createSlice({
 });
 
 export default walletSlice.reducer;
+export const { displayGlobalError, clearGlobalError } = walletSlice.actions;
+
 export {
   unlock,
   unlockWithBiometrics,
