@@ -1,6 +1,8 @@
 import CryptoJS from 'crypto-js';
 import { HumanReadableError } from './error';
 
+import { exportWalletEncrypted } from './export-enc';
+
 const LOCKED_PREFIX = 'LOCKED:';
 
 export function isLocked(data: string): boolean  {
@@ -17,7 +19,10 @@ export function decryptData(data: string, passphrase: string): string {
   }
 }
 
-export function encryptData(data: string, passphrase: string): string {
-  const encryptedFile = CryptoJS.AES.encrypt(data, passphrase);
-  return `${LOCKED_PREFIX}${encryptedFile}`;
+export async function encryptData(data: string, passphrase: string): string {
+
+  //const encryptedFile = CryptoJS.AES.encrypt(data, passphrase);
+  //return `${LOCKED_PREFIX}${encryptedFile}`;
+  const encryptedFile = await exportWalletEncrypted(data, passphrase);
+  return encryptedFile;
 }

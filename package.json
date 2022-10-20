@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint --max-warnings 0 ./app ./App.tsx && tsc --noEmit && echo ✓ Passed lint check",
-    "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && npx patch-package"
+    "postinstall": "npx rn-nodeify --install process,stream,events,module,util --hack && npx patch-package"
   },
   "dependencies": {
     "@digitalbazaar/vc-status-list-context": "^3.0.1",
@@ -19,6 +19,7 @@
     "@digitalcredentials/ed25519-signature-2020": "^3.0.1",
     "@digitalcredentials/ed25519-verification-key-2020": "^3.2.2",
     "@digitalcredentials/http-client": "^1.2.2",
+    "@digitalcredentials/minimal-cipher": "git+https://git@github.com/digitalcredentials/minimal-cipher.git#react-native-updates",
     "@digitalcredentials/vc": "^4.1.1",
     "@digitalcredentials/vc-status-list": "^5.0.2",
     "@digitalcredentials/vpqr": "^2.2.1",
@@ -27,6 +28,7 @@
     "@expo-google-fonts/rubik": "^0.2.0",
     "@expo/vector-icons": "^12.0.0",
     "@interop/did-web-resolver": "^2.2.1",
+    "@microsoft/msrcrypto": "git+https://git@github.com/digitalcredentials/MSR-JavaScript-Crypto.git#unforce-deps",
     "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/masked-view": "0.1.10",
@@ -35,6 +37,7 @@
     "@react-navigation/native": "^6.0.1",
     "@react-navigation/stack": "^6.0.1",
     "@reduxjs/toolkit": "^1.6.1",
+    "@transmute/x25519-key-pair": "^0.7.0-unstable.66",
     "@types/text-encoding": "^0.0.36",
     "big-integer": "^1.6.49",
     "bson": "4.4.1",
@@ -51,6 +54,7 @@
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
     "expo-updates": "0.8.5",
+    "factory.ts": "^1.3.0",
     "html-entities": "^2.3.2",
     "json-canonicalize": "^1.0.4",
     "jsonld-document-loader": "^1.2.0",
@@ -119,21 +123,21 @@
     "typescript": "~4.0.0"
   },
   "react-native": {
-    "crypto": "react-native-crypto",
     "_stream_transform": "readable-stream/transform",
     "_stream_readable": "readable-stream/readable",
     "_stream_writable": "readable-stream/writable",
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify"
+    "stream": "stream-browserify",
+    "crypto": "react-native-crypto"
   },
   "browser": {
-    "crypto": "react-native-crypto",
     "_stream_transform": "readable-stream/transform",
     "_stream_readable": "readable-stream/readable",
     "_stream_writable": "readable-stream/writable",
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify"
+    "stream": "stream-browserify",
+    "crypto": "react-native-crypto"
   }
 }
