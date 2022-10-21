@@ -1,6 +1,4 @@
 import * as MsrCrypto from '@microsoft/msrcrypto';
-//import { wallet as transmuteWallet, passwordToKey } from '../lib/uw/index.ts';
-
 
 async function deriveKeyEncryptionKey(password, salt, iterations){
   const passphraseKey = Buffer.from(password);
@@ -39,7 +37,7 @@ async function deriveKeyEncryptionKey(password, salt, iterations){
 
 async function encrypt(data, password) {
   var saltBuffer = Buffer.from(crypto.getRandomValues(new Uint8Array(16)))
-  const iterations = 12000;
+  const iterations = 120000;
 
   var keyEncryptionKey = await deriveKeyEncryptionKey(password, saltBuffer, iterations);
 
@@ -67,13 +65,6 @@ async function encrypt(data, password) {
   // split ciphertext and tag
   const ciphertext = encrypted.subarray(0, encrypted.length - tagBytes);
   const tag = encrypted.subarray(encrypted.length - tagBytes);
-
-  //console.log(keyEncryptionKey);
-  //console.log(await MsrCrypto.subtle.exportKey('raw', contentEncryptionKey));
-  //console.log(encrypted);
-  //console.log(wrappedKey);
-  //console.log(ciphertext);
-  //console.log(tag);
 
   let jwe = {
     "recipients": [
@@ -121,9 +112,6 @@ async function decrypt(jwe, password){
   encrypted.set(ciphertext);
   encrypted.set(tag, ciphertext.length);
  
-  //console.log(await MsrCrypto.subtle.exportKey('raw', contentEncryptionKey));
-  //console.log(encrypted)
- 
   const decrypted = new Uint8Array (await MsrCrypto.subtle.decrypt(
     {name: 'AES-GCM', iv, tagLength, additionalData},
     contentEncryptionKey,
@@ -132,109 +120,28 @@ async function decrypt(jwe, password){
   return new TextDecoder().decode(decrypted);
 }
 
-
-async function testAesKw(){
-  const extractable = true;
-
-  const publicKey = new Uint8Array([
-        117, 150, 176, 172, 213, 188, 140,
-        209,  46,  14,   0, 188, 180,  95,
-         66, 183, 120, 214, 155, 149,  56,
-        127, 129, 181, 192, 165, 179, 148,
-         42, 226, 248,  12
-  ]);
-
-  const cek = await MsrCrypto.subtle.generateKey(
-    {name: 'AES-GCM', length: 256},
-    true,
-    ['encrypt']
-  );
-  console.log('cek ', cek);
-
-  const kek = await MsrCrypto.subtle.importKey(
-    'raw', publicKey, {name: 'AES-KW', length: 256},
-    true,
-    ['wrapKey', 'unwrapKey']
-  );
-  console.log('kek: ', kek);
-  console.log('kek: ', kek.usages);
-  kek.usages = ['wrapKey', 'unwrapKey']; // Why does importKey change this?
-
-  const wrappedKey = await MsrCrypto.subtle.wrapKey(
-    'raw', cek, kek, kek.algorithm
-  );
-  console.log('wrapKey iii', wrappedKey);
-}
-
-async function testAesGCMKW(){
-  //const crypto = new Crypto();
-  const extractable = true;
-  const publicKey = new Uint8Array([
-        117, 150, 176, 172, 213, 188, 140,
-        209,  46,  14,   0, 188, 180,  95,
-         66, 183, 120, 214, 155, 149,  56,
-        127, 129, 181, 192, 165, 179, 148,
-         42, 226, 248,  12
-  ]);
-  const iv = new Uint8Array([1,2,3,4,5,6,7,8,9,10,11,12]);
-  
-  const cek = await MsrCrypto.subtle.generateKey(
-    {name: 'AES-GCM', length: 256},
-    true,
-    ['encrypt']
-  );
-  console.log('cek ', cek);
-  
-  const kek = await MsrCrypto.subtle.importKey(
-    'raw',
-    publicKey,
-    {name: 'AES-GCM', length: 256},
-    true,
-    ['encrypt', 'decrypt'],
-  );
-  console.log('kek ', kek);
-  
-  const wrappedKey = await MsrCrypto.subtle.wrapKey(
-    'raw', cek, kek, {...kek.algorithm, iv}
-  );
-  console.log('wrappedKey', new Uint8Array(wrappedKey));
-}
-
-
-async function testPBES2(){
-  jwe = await encrypt({this: "is a scret", messa: "ge"}, "password");
-  console.log(jwe);
-  console.log(jwe.recipients);
-
-  let msg = await decrypt(jwe, 'password');
-  console.log(msg);
-}
-
 export async function exportWalletEncrypted(data: string, passphrase: string): Provise<void> {
-
-  //await testPBES2();
-  //return;
-
-  //await testAesGCMKW();
-  //return;
-
-  //await testAesKw();
-  //return;
-
   const walletData = data;
-  console.log(walletData);
 
   let encryptedWallet = await encrypt(data, passphrase);
-  /*transmuteWallet.add(walletData);
-  try {
-    encryptedWallet = await transmuteWallet.export('passphrase');
-  } catch (error) {
-    console.log(error);
-  }*/
+
+  let lockedWallet = {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "http://w3id.org/wallet/v1"
+    ],
+    id: "did:web:example.com" + "#encrypted-wallet",
+    type: ["VerifiableCredential", "EncryptedWallet"],
+    issuer: 'did:web:lcw.app',
+    issuanceDate: new Date().toISOString(),
+    credentialSubject: {
+      jwe: encryptedWallet
+    }
+  };
 
   console.log('------------------------');
   console.log(encryptedWallet);
   console.log('------------------------');
   
-  return JSON.stringify(encryptedWallet);
+  return JSON.stringify(lockedWallet);
 }
