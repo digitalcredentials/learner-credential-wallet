@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 
 import { ProfileRecord, ProfileRecordRaw } from '../model';
 import { encryptData } from './encrypt';
+import { exportWalletEncrypted } from './lockedWallet';
 
 export const LOCKED_PROFILE_PREFIX = 'locked_profile:';
 export const LOCKED_WALLET_PREFIX = 'locked_wallet:';
@@ -45,13 +46,9 @@ export async function exportWallet(encryptPassphrase?: string): Promise<void> {
   const exportedProfiles = await Promise.all(rawProfileRecords.map(ProfileRecord.exportProfileRecord));
   const exportedWalletString = JSON.stringify(exportedProfiles, null, 2);
 
-  const data = await encryptData(exportedWalletString, 'password');
-
-  /*
   const data = encryptPassphrase 
-    ? encryptData(exportedWalletString, encryptPassphrase)
+    ? await exportWalletEncrypted(exportedWalletString, encryptPassphrase)
     : exportedWalletString;
-  */
 
   /**
    * On Android, RNFS doesn't truncate the file before writing, 

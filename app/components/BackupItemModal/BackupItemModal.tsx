@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import {  CheckBox } from 'react-native-elements';
+import { ConfirmModal, LoadingIndicatorDots, PasswordForm } from '..';
+
+import { TouchableOpacity } from 'react-native';
 import { useAsyncCallback } from 'react-async-hook';
 import { ConfirmModal, LoadingIndicatorDots, PasswordForm } from '..';
 
 import dynamicStyleSheet from './BackupItemModal.styles';
 import { BackupItemModalProps } from './BackupItemModal.d';
 import { useDynamicStyles } from '../../hooks';
+
 
 export default function BackupItemModal({ onRequestClose, open, onBackup, backupItemName, backupModalText }: BackupItemModalProps): JSX.Element {
   const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
@@ -21,7 +25,7 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
   const readyToBackup = !(enablePassword && !password);
 
   if (createBackup.loading) {
-    return <ConfirmModal 
+    return <ConfirmModal
       title={`Backing Up Your ${backupItemName}`}
       confirmButton={false}
       cancelButton={false}
@@ -48,10 +52,11 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
       <Text style={mixins.modalBodyText}>
         {backupModalText}
       </Text>
-      <TouchableWithoutFeedback onPress={() => setEnablePassword(!enablePassword)}>
+      <TouchableOpacity onPress={() => setEnablePassword(!enablePassword)}>
         <View style={styles.checkboxButtonContainer}>
           <CheckBox
             checked={enablePassword}
+            onPress={ () => setEnablePassword(!enablePassword)}
             checkedColor={theme.color.buttonPrimary}
             containerStyle={[
               mixins.checkboxContainer,
@@ -60,7 +65,7 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
           />
           <Text style={styles.checkboxText}>Add password protection</Text>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
       {enablePassword ? (
         <PasswordForm
           onChangePassword={setPassword}
