@@ -6,11 +6,13 @@ import { mixins, theme } from '../../styles';
 
 import styles from './BackupItemModal.styles';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { useAsyncCallback } from 'react-async-hook';
 import { BackupItemModalProps } from './BackupItemModal.d';
 
+
 export default function BackupItemModal({ onRequestClose, open, onBackup, backupItemName, backupModalText }: BackupItemModalProps): JSX.Element {
-  const [enablePassword, setEnablePassword] = useState(false);
+  const [enablePassword, setEnablePassword] = useState(true);
   const [password, setPassword] = useState<string>();
 
   const createBackup = useAsyncCallback(
@@ -48,10 +50,11 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
       <Text style={mixins.modalBodyText}>
         {backupModalText}
       </Text>
-      <TouchableWithoutFeedback onPress={() => setEnablePassword(!enablePassword)}>
+      <TouchableOpacity onPress={() => setEnablePassword(!enablePassword)}>
         <View style={styles.checkboxButtonContainer}>
           <CheckBox
             checked={enablePassword}
+            onPress={ () => setEnablePassword(!enablePassword)}
             checkedColor={theme.color.buttonPrimary}
             containerStyle={[
               mixins.checkboxContainer,
@@ -60,7 +63,7 @@ export default function BackupItemModal({ onRequestClose, open, onBackup, backup
           />
           <Text style={styles.checkboxText}>Add password protection</Text>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
       {enablePassword ? (
         <PasswordForm
           onChangePassword={setPassword}
