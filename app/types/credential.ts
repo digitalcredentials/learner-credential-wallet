@@ -33,7 +33,7 @@ export type EducationalOperationalCredentialExtensions = {
 
 // https://schema.org/EducationalOccupationalCredential (this doesn't really conform)
 export type EducationalOperationalCredential = EducationalOperationalCredentialExtensions & {
-  readonly id: string;
+  readonly id?: string;
   readonly name?: string;
   readonly description?: string;
   readonly competencyRequired?: string;
@@ -77,7 +77,7 @@ export type Proof = {
 // https://digitalcredentials.github.io/dcc/v1/dcc-context-v1.json
 export type Credential = {
   readonly '@context': string[];         // https://w3c.github.io/vc-data-model/#contexts
-  readonly id: string;                   // https://w3c.github.io/vc-data-model/#identifiers
+  readonly id?: string;                   // https://w3c.github.io/vc-data-model/#identifiers
   readonly type: string[];               // https://w3c.github.io/vc-data-model/#types
   readonly issuer: Issuer;               // https://w3c.github.io/vc-data-model/#issuer
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
@@ -92,7 +92,7 @@ export type CredentialStatus = {
   readonly id: string;
   readonly type: string | string[];
   readonly statusPurpose: string;
-  readonly statusListIndex: string;
+  readonly statusListIndex: string | number;
   readonly statusListCredential: string;
 }
 
