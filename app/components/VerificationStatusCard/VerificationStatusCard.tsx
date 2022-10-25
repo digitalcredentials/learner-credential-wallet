@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
@@ -44,7 +44,18 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
           color={verified ? theme.color.success : theme.color.error}
           accessibilityLabel={verified ?  'Verified, Icon' : 'Not Verified, Icon'}
         />
-        <Text style={styles.bodyText}>{verified ? positiveText : negativeText}</Text>
+        <Text style={styles.bulletText}>{verified ? positiveText : negativeText}</Text>
+      </View>
+    );
+  }
+
+  if (verifyPayload.error) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.headerText}>Verification error:</Text>
+        <Text style={styles.bodyText}>
+          {verifyPayload.error}
+        </Text>
       </View>
     );
   }

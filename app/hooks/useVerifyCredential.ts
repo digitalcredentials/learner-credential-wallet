@@ -6,23 +6,19 @@ import { CredentialRecordRaw } from '../model';
 
 /* Verification expiration = 30 days */
 const VERIFICATION_EXPIRATION = 1000 * 60 * 60 * 24 * 30;
+const DEFAULT_ERROR_MESSAGE = 'An error was encountered while verifying this credential.';
 
 export type VerificationResult = {
   timestamp: number | null;
   log: ResultLog[];
   verified: boolean | null;
+  error?: Error;
 }
 
 export type VerifyPayload = {
   loading: boolean;
   error: string | null;
   result: VerificationResult;
-}
-
-export type CachedResult = {
-  verified: boolean;
-  timestamp: number;
-  log: ResultLog[];
 }
 
 const initialResult = { timestamp: null, log: [], verified: null };
@@ -38,22 +34,19 @@ export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw, f
   }
 
   const verify = useCallback(async () => {
-    try {
-      const verificationResult = await verificationResultFor(rawCredentialRecord, forceFresh);
-      setResult(verificationResult);
-    } catch (err) {
-      const { message } = err as Error;
-      const credentialErrors = Object.values(CredentialError) as string[];
+    const verificationResult = await verificationResultFor(rawCredentialRecord, forceFresh);
+    setResult(verificationResult);
 
-      if (credentialErrors.includes(message)) {
-        setError(message);
-      } else {
-        setError('An error was encountered while verifying this credential.');
-      }
-    } finally {
-      setLoading(false);
+    if (verificationResult.error) {
+      const { message } = verificationResult.error;
+      const credentialErrors = Object.values(CredentialError) as string[];
+      const errorMessage = credentialErrors.includes(message) ? message : DEFAULT_ERROR_MESSAGE;
+
+      setError(errorMessage);
     }
-  }, [setLoading, setResult]);
+    
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     verify();
@@ -66,15 +59,22 @@ async function verificationResultFor(rawCredentialRecord: CredentialRecordRaw, f
   const cachedRecordId = String(rawCredentialRecord._id);
 
   if (!forceFresh) {
-    const cachedResult = await Cache.getInstance().load(CacheKey.VerificationResult, cachedRecordId).catch(() => null) as CachedResult;
+    const cachedResult = await Cache.getInstance().load(CacheKey.VerificationResult, cachedRecordId).catch(() => null) as VerificationResult;
     if (cachedResult) return cachedResult;
   }
 
-  const response = await verifyCredential(rawCredentialRecord.credential);
-  const result = { 
-    verified: response.verified, 
-    log: response.results ? response.results[0].log : [],
+  let response, error;
+  try {
+    response = await verifyCredential(rawCredentialRecord.credential);
+  } catch (err) {
+    error = err as Error;
+  }
+
+  const result: VerificationResult = { 
+    verified: response?.verified ?? false, 
+    log: response?.results ? response.results[0].log : [],
     timestamp: Date.now(),
+    error,
   };
 
   await Cache.getInstance().store(
