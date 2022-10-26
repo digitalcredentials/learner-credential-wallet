@@ -92,7 +92,7 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
             <TouchableOpacity onPress={_onPressIssuer} disabled={!issuerId}>
               <View style={[styles.flexRow, styles.alignCenter]}>
                 <Text style={styles.issuerValue}>{issuerName}</Text>
-                {issuerId && <MaterialIcons name="info-outline" size={16} color={theme.color.textPrimary} style={styles.infoIcon} />}
+                {issuerId && <MaterialIcons name="info-outline" size={19} color={theme.color.textPrimary} style={styles.infoIcon} />}
               </View>
             </TouchableOpacity>
             <IssuerLink />
