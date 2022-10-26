@@ -55,6 +55,6 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     color: theme.color.textPrimary,
   },
   infoIcon: {
-    marginLeft: 4,
+    marginLeft: 8,
   },
 }));
