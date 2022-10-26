@@ -57,7 +57,7 @@ function useWalletStateInitialized() {
   const dispatch = useAppDispatch();
 
   const { isUnlocked, isInitialized } = useSelector(selectWalletState);
-  const walletStateInitialized = isUnlocked !== null && isInitialized !== null;
+  const walletStateInitialized = isUnlocked && isInitialized;
 
   useEffect(() => {
     if (!walletStateInitialized) {
