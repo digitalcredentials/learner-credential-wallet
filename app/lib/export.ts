@@ -7,7 +7,6 @@ import { encryptData } from './encrypt';
 import { exportWalletEncrypted } from './lockedWallet';
 
 export const LOCKED_PROFILE_PREFIX = 'locked_profile:';
-export const LOCKED_WALLET_PREFIX = 'locked_wallet:';
 
 export async function exportProfile(rawProfileRecord: ProfileRecordRaw, encryptPassphrase?: string): Promise<void> {
   const fileName = 'Profile Backup';

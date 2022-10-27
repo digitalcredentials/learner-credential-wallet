@@ -44,7 +44,7 @@ function ImportFileModal({
 
       if (isLocked(data)) {
         const passphrase = await _requestPassword();
-        data = decryptData(data, passphrase);
+        data = await decryptData(data, passphrase);
       }
 
       const reportDetails = await importItem(data);
