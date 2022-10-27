@@ -117,7 +117,7 @@ async function decrypt(jwe, password){
     contentEncryptionKey,
     encrypted
   ));
-  return new TextDecoder().decode(decrypted);
+  return JSON.parse(new TextDecoder().decode(decrypted));
 }
 
 export async function exportWalletEncrypted(data: string, passphrase: string): Provise<void> {
@@ -144,4 +144,10 @@ export async function exportWalletEncrypted(data: string, passphrase: string): P
   console.log('------------------------');
   
   return JSON.stringify(lockedWallet);
+}
+
+export async function importWalletEncrypted(data: string, passphrase: string){
+  const lockedWallet = JSON.parse(data);
+  const jwe = lockedWallet.credentialSubject.jwe;
+  return await decrypt(jwe, passphrase);
 }
