@@ -1,4 +1,5 @@
 import * as MsrCrypto from '@microsoft/msrcrypto';
+import uuid from 'react-native-uuid';
 
 async function deriveKeyEncryptionKey(password, salt, iterations){
   const passphraseKey = Buffer.from(password);
@@ -121,7 +122,11 @@ async function decrypt(jwe, password){
 }
 
 export async function exportWalletEncrypted(data: string, passphrase: string): Provise<void> {
-  const walletData = data;
+  const walletData = JSON.parse(data);
+  let walletId = walletData.id;
+  if (!walletId && Array.isArray(walletData) && walletData.length > 0){
+    walletId = walletData[0].id;
+  }
 
   let encryptedWallet = await encrypt(data, passphrase);
 
@@ -130,19 +135,16 @@ export async function exportWalletEncrypted(data: string, passphrase: string): P
       "https://www.w3.org/2018/credentials/v1",
       "http://w3id.org/wallet/v1"
     ],
-    id: "did:web:example.com" + "#encrypted-wallet",
+    id: walletId,
     type: ["VerifiableCredential", "EncryptedWallet"],
     issuer: 'did:web:lcw.app',
     issuanceDate: new Date().toISOString(),
     credentialSubject: {
+      id: `urn:uuid:${uuid.v4()}`,
       jwe: encryptedWallet
     }
   };
 
-  console.log('------------------------');
-  console.log(encryptedWallet);
-  console.log('------------------------');
-  
   return JSON.stringify(lockedWallet);
 }
 
