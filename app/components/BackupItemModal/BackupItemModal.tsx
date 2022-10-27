@@ -5,7 +5,6 @@ import { ConfirmModal, LoadingIndicatorDots, PasswordForm } from '..';
 
 import { TouchableOpacity } from 'react-native';
 import { useAsyncCallback } from 'react-async-hook';
-import { ConfirmModal, LoadingIndicatorDots, PasswordForm } from '..';
 
 import dynamicStyleSheet from './BackupItemModal.styles';
 import { BackupItemModalProps } from './BackupItemModal.d';
