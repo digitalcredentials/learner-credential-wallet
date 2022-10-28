@@ -1,6 +1,6 @@
 import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default createDynamicStyleSheet(({ theme, mixins }) => ({
+export default createDynamicStyleSheet(({ theme }) => ({
   bodyContainer: {
     flex: 1,
     padding: 16,
@@ -22,17 +22,12 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     color: theme.color.textSecondary,
     flex: 1,
   },
-  bulletListContainer: {
-    marginTop: -4,
-  },
-  bulletItem: {
-    ...mixins.paragraphText,
-    fontSize: theme.fontSize.regular,
-    marginBottom: -2,
-  },
   link: {
     fontFamily: theme.fontFamily.regular,
     color: theme.color.linkColor,
     textDecorationLine: 'underline',
+  },
+  bulletList: {
+    marginTop: -4,
   },
 }));
