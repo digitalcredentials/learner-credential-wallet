@@ -9,7 +9,7 @@ export type RegistryRaw<Entry> = {
   readonly name: string;
 }
 
-export type RegistryCollectionConfig = {
+export type RemoteRegistryConfig = {
   name: string;
   url: string;
 }
