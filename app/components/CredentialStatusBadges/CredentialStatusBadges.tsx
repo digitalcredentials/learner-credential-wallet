@@ -60,7 +60,6 @@ export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackg
 
 async function hasPublicLink(rawCredentialRecord: CredentialRecordRaw): Promise<boolean> {
   if (rawCredentialRecord.credential.id === undefined) {
-    console.error('Invalid Credential, `id` is not defined.');
     return false;
   }
 

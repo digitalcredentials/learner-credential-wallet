@@ -6,7 +6,7 @@ import { Cache, CacheKey } from './cache';
 
 export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw): Promise<void> {
   if (rawCredentialRecord.credential.id === undefined) {
-    console.error('Invalid Credential, `id` is not defined.');
+    console.error('Credential cannot be shared, `id` is not defined.');
     return;
   }
 
