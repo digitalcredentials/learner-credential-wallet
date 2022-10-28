@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { View, Text, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { NavHeader } from '../../components';
+import { BulletList, NavHeader } from '../../components';
 
 import dynamicStyleSheet from './IssuerInfoScreen.styles';
-import { BulletListProps, IssuerInfoScreenProps } from './IssuerInfoScreen.d';
+import { IssuerInfoScreenProps } from './IssuerInfoScreen.d';
 import { resolveIssuerRegistriesFor } from '../../lib/issuer';
 import { useDynamicStyles } from '../../hooks';
 
@@ -55,23 +55,9 @@ export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreen
         </View>
         <View style={styles.dataContainer}>
           <Text style={styles.dataLabel}>Registries</Text>
-          <BulletList items={registryList} />
+          <BulletList items={registryList} style={styles.bulletList} />
         </View>
       </ScrollView>
     </>
-  );
-}
-
-function BulletList({ items }: BulletListProps): JSX.Element {
-  const { styles } = useDynamicStyles(dynamicStyleSheet);
-  
-  return (
-    <View style={styles.bulletListContainer}>
-      {items.map((item, i) => (
-        <Text key={`${i}-${item}`} style={styles.bulletItem}>
-          ●  {item}
-        </Text>
-      ))}
-    </View>
   );
 }
