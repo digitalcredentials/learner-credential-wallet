@@ -1,11 +1,12 @@
 import type { AuthConfiguration } from 'react-native-app-auth';
-import type { RegistryRaw } from '../lib/registry';
+import type { RegistryRaw } from '../types/registry';
 import {Platform} from 'react-native';
 
 export type IssuerAuthEntry = AuthConfiguration
 
 // TODO: Import this from the DCC module once it is published
 export const issuerAuthRegistry: RegistryRaw<IssuerAuthEntry> = {
+  name: 'Issuer Auth Registry',
   meta: {
     created: '2021-12-15T18:41:36+0000',
     updated: '2021-12-20T10:47:36+0000',

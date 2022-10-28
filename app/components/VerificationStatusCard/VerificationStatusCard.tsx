@@ -6,8 +6,8 @@ import moment from 'moment';
 import { VerificationStatusCardProps, StatusItemProps } from './VerificationStatusCard.d';
 import dynamicStyleSheet from './VerificationStatusCard.styles';
 import { useDynamicStyles } from '../../hooks';
-import { resolveIssuerRegistriesFor } from '../../lib/issuer';
 import { BulletList } from '../../components';
+import { registryCollections } from '../../lib/registry';
 
 const DATE_FORMAT = 'MMM D, YYYY';
 
@@ -23,7 +23,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
   const { expirationDate, issuer } = credential;
 
   const issuerId = typeof issuer === 'string' ? null : issuer?.id;
-  const registryList = useMemo(() => issuerId ? resolveIssuerRegistriesFor(issuerId).map(({ name }) => name) : null, [issuerId]);
+  const registryList = useMemo(() => issuerId ? registryCollections.issuerDid.registriesFor(issuerId).map(({ name }) => name) : null, [issuerId]);
 
   const details = verifyPayload.result.log?.reduce<Record<string, boolean>>((acc, log) => {
     acc[log.id] = log.valid;

@@ -1,82 +1,86 @@
-import { IssuerDidEntry } from '../data/issuerDid';
+/**
+ * The registry structure nomenclature is as follows:
+ * RegistryCollection > Registry > Entry (e.g. an issuer configuration)
+ * 
+ * See type definitions for exact data structures.
+ */
+
 import { issuerAuthRegistry, IssuerAuthEntry } from '../data/issuerAuth';
-import store from '../store';
-import { displayGlobalError } from '../store/slices/wallet';
+import registryCollectionsConfig from '../../config/registryCollections.json';
+import { RegistryCollectionConfig, IssuerDidEntry, RegistryRaw } from '../types/registry';
 
-type RegistryMetadata = {
-  created: string;
-  updated: string;
-}
+class Registry<Entry> implements RegistryRaw<Entry> {
+  entries;
+  meta;
+  name;
 
-export type RegistryRaw<Entry> = {
-  readonly meta: RegistryMetadata;
-  readonly entries: Record<string, Entry>;
-}
-
-class Registry<Entry> {
-  entries?: Record<string, Entry>;
-
-  constructor(registry?: RegistryRaw<Entry>) {
-    if (registry) {
-      this.entries = registry.entries;
-    }
+  constructor(registry: RegistryRaw<Entry>) {
+    this.entries = registry.entries;
+    this.meta = registry.meta;
+    this.name = registry.name;
   }
 
-  public isInRegistry(key: string): boolean {
-    if (this.entries === undefined) {
-      throw new Error('Registry not initialized.');
-    }
-
-    return key in this.entries;
+  public isInRegistry(issuerKey: string): boolean {
+    return issuerKey in this.entries;
   }
 
-  public entryFor(key: string): Entry {
-    if (this.entries === undefined) {
-      throw new Error('Registry not initialized.');
+  public entryFor(issuerKey: string): Entry {
+    if (!this.isInRegistry(issuerKey)) {
+      throw new Error(`${issuerKey} not found in registry.`);
     }
 
-    if (!this.isInRegistry(key)) {
-      throw new Error(`${key} not found in registry.`);
-    }
-
-    return this.entries[key];
+    return this.entries[issuerKey];
   }
 }
 
-class RemoteRegistry<Entry> extends Registry<Entry> {
-  readonly registryUrl;
+class RegistryCollection<Entry> {
+  configs: RegistryCollectionConfig[];
+  registries: Registry<Entry>[] = [];
 
-  constructor(url: string) {
-    super();
-    this.registryUrl = url;
+  constructor(configs: RegistryCollectionConfig[]) {
+    this.configs = configs;
   }
 
-  public async fetchRegistry() {
-    const response = await fetch(this.registryUrl);
-    if (!response.ok) {
-      throw Error('Unable to fetch remote registry');
-    }
+  public async fetchRegistries() {
+    const allRegistries = await Promise.all(this.configs.map(async ({ url, name }) => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Received ${response.status} from ${url}`);
 
-    const data = await response.json();
-    this.entries = data.registry;
+        const data = await response.json();
+        return new Registry<Entry>({
+          meta: data.meta,
+          entries: data.registry,
+          name,
+        });
+      } catch (err) {
+        console.log(`Could not fetch registry "${name}" at ${url}`);
+        return;
+      }
+    }));
+
+    this.registries = allRegistries.filter(Boolean) as Registry<Entry>[];
+  }
+
+  public isInRegistryCollection(key: string): boolean {
+    return this.registries.some(registry => registry.isInRegistry(key));
+  }
+
+  public registriesFor(key: string): Registry<Entry>[] {
+    return this.registries.filter(registry => registry.isInRegistry(key));
   }
 }
 
-export const registries = {
-  issuerDid: new RemoteRegistry<IssuerDidEntry>('https://raw.githubusercontent.com/digitalcredentials/issuer-registry/main/registry.json'),
+export const staticRegistries = {
   issuerAuth: new Registry<IssuerAuthEntry>(issuerAuthRegistry),
 };
 
-export async function loadRemoteRegistries(): Promise<void> {
-  try {
-    await Promise.all([
-      registries.issuerDid.fetchRegistry(),
-    ]);
-  } catch (err) {
-    store.dispatch(displayGlobalError({ 
-      title: 'Unable to Load Remote Registries', 
-      message: 'Please check your network connection and try again.',
-      fatal: true,
-    }));
-  }
+export const registryCollections = {
+  issuerDid: new RegistryCollection<IssuerDidEntry>(registryCollectionsConfig.issuerDid),
+};
+
+export async function loadRegistryCollections(): Promise<void> {
+  await Promise.all([
+    registryCollections.issuerDid.fetchRegistries(),
+  ]);
 }
