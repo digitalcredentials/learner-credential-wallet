@@ -31,6 +31,7 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
 
   async function addRevokedCredential() {
     await dispatch(stageCredentials([revokedCredential]));
+    goToChooseProfile();
   }
 
   function receiveCredentialThroughDeepLink() {
