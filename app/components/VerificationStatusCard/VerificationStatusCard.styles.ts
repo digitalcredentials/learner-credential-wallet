@@ -14,19 +14,17 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
     marginVertical: 8,
-  },
-  bulletText: {
-    ...mixins.paragraphText,
-    marginRight: 16,
-    marginLeft: 8,
-  },
+  },  
   statusItem: {
     flexDirection: 'row',
     marginVertical: 8
   },
-  bulletContainer: {
-    marginTop: 5,
-    marginRight: 8,
+  statusItemContent: {
+    marginRight: 16,
+    marginLeft: 8,
+  },
+  statusItemLabel: {
+    ...mixins.paragraphText,
   },
   bodyText: {
     ...mixins.paragraphText,
