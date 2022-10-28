@@ -7,7 +7,7 @@ import { CredentialImportReport } from '../types/credential';
 export type ReportDetails = Record<string, string[]>;
 
 export async function readFile(path: string): Promise<string> {
-  const decodedPath = path.replace(/%20/g, '');
+  const decodedPath = path.replace(/%20/g, ' ');
   return RNFS.readFile(decodedPath, 'utf8');
 }
 
