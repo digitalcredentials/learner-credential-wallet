@@ -9,6 +9,7 @@ import { VerifiablePresentation } from '../types/presentation';
 import { CredentialRequestParams } from './request';
 import { isCredentialRequestParams } from './request';
 import { HumanReadableError } from './error';
+import { isVerifiableCredential } from './verifiableObject';
 
 const documentLoader = securityLoader().build();
 const vpqrPattern = /^VP1-[A-Z|0-9]+/;
@@ -51,4 +52,17 @@ export function credentialRequestParamsFromQrText(text: string): CredentialReque
 export async function toQr(vp: VerifiablePresentation): Promise<string> {
   const result = await toQrCode({ vp, documentLoader });
   return result.payload;
+}
+
+export async function credentialsFrom(data: string): Promise<Credential[]> {
+  const items = isVpqr(data) 
+    ? await credentialsFromQrText(data)
+    : [JSON.parse(data)];
+
+  const credentials = items.filter(isVerifiableCredential);
+  if (credentials.length === 0) {
+    throw new Error('No credentials parsed from data');
+  }
+
+  return credentials;
 }

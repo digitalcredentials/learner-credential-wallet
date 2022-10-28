@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AccessibilityInfo, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import dynamicStyleSheet from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { NavHeader } from '../../components';
-import { credentialRequestParamsFromQrText, credentialsFromQrText, isDeepLink, isVpqr } from '../../lib/decode';
+import { credentialRequestParamsFromQrText, credentialsFrom, credentialsFromQrText, isDeepLink, isVpqr } from '../../lib/decode';
 import { PresentationError } from '../../types/presentation';
-import { HumanReadableError } from '../../lib/error';
+import { errorMessageMatches, HumanReadableError } from '../../lib/error';
 import { navigationRef } from '../../navigation';
 import { CredentialRequestParams } from '../../lib/request';
+import { pickAndReadFile } from '../../lib/import';
+import { displayGlobalError } from '../../store/slices/wallet';
+import { CANCEL_PICKER_MESSAGES } from '../../lib/constants';
 
 export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
@@ -33,6 +36,23 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
           params,
         });
       }
+    }
+  }
+
+  async function addCredentialFromFile() {
+    try {
+      const data = await pickAndReadFile();
+      const credentials = await credentialsFrom(data);
+      dispatch(stageCredentials(credentials));
+      goToChooseProfile();
+    } catch (err) {
+      if (errorMessageMatches(err, CANCEL_PICKER_MESSAGES)) return;
+
+      console.error(err);
+      await dispatch(displayGlobalError({ 
+        title: 'Unable to Add Credentials',
+        message: 'Ensure the file contains one or more credentials, and is a supported file type.' 
+      }));
     }
   }
 
@@ -72,7 +92,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
         </Text>
         <Button
           title="Scan QR code"
-          buttonStyle={mixins.buttonIcon}
+          buttonStyle={mixins.buttonIconCompact}
           containerStyle={[mixins.buttonIconContainer, mixins.noFlex]}
           titleStyle={mixins.buttonIconTitle}
           iconRight
@@ -80,6 +100,21 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
           icon={
             <MaterialIcons
               name="qr-code-scanner"
+              size={theme.iconSize}
+              color={theme.color.iconInactive}
+            />
+          }
+        />
+        <Button
+          title="Add from file"
+          buttonStyle={mixins.buttonIconCompact}
+          containerStyle={[mixins.buttonIconContainer, mixins.noFlex]}
+          titleStyle={mixins.buttonIconTitle}
+          iconRight
+          onPress={addCredentialFromFile}
+          icon={
+            <MaterialCommunityIcons
+              name="file-upload"
               size={theme.iconSize}
               color={theme.color.iconInactive}
             />

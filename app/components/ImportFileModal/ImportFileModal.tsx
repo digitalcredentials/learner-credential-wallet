@@ -11,8 +11,7 @@ import { pickAndReadFile, ReportDetails } from '../../lib/import';
 import { errorMessageFrom, errorMessageMatches } from '../../lib/error';
 import { decryptData, isLocked } from '../../lib/encrypt';
 import { useDynamicStyles } from '../../hooks';
-
-const CANCEL_PICKER_MESSAGES = ['user canceled the document picker', 'User canceled document picker'];
+import { CANCEL_PICKER_MESSAGES } from '../../lib/constants';
 
 enum RestoreModalState {
   Loading,

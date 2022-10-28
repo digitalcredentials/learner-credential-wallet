@@ -7,7 +7,7 @@ import { stageCredentials } from '../store/slices/credentialFoyer';
 import { Credential } from '../types/credential';
 import { navigationRef } from '../navigation';
 import { displayGlobalError } from '../store/slices/wallet';
-import { credentialsFromQrText } from './decode';
+import { credentialsFrom } from './decode';
 import { readFile } from './import';
 
 export async function onShareIntent(): Promise<void> {
@@ -17,11 +17,10 @@ export async function onShareIntent(): Promise<void> {
   const credentials: Credential[] = [];
   let hasError = false;
 
-  await Promise.all(files.map(async (file) => {
+  await Promise.all(files.map(async ({ filePath }) => {
     try {
-      const { filePath } = file;
-      const fileContent = await readFile(filePath);
-      const fileCredentials = await credentialsFromQrText(fileContent);
+      const fileData = await readFile(filePath);
+      const fileCredentials = await credentialsFrom(fileData);
       credentials.push(...fileCredentials);
     } catch (err) {
       hasError = true;
@@ -30,7 +29,10 @@ export async function onShareIntent(): Promise<void> {
   }));
 
   if (hasError) {
-    await store.dispatch(displayGlobalError({ title: 'Unable to Add Credentials', message: 'Ensure the file contains one or more credentials, and is a supported file type.' }));
+    await store.dispatch(displayGlobalError({ 
+      title: 'Unable to Add Credentials', 
+      message: 'Ensure the file contains one or more credentials, and is a supported file type.'
+    }));
   } else {
     await store.dispatch(stageCredentials(credentials));
 
