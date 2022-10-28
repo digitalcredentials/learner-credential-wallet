@@ -5,6 +5,11 @@ import { IssuerObject } from '../types/credential';
 import { Cache, CacheKey } from './cache';
 
 export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw): Promise<void> {
+  if (rawCredentialRecord.credential.id === undefined) {
+    console.error('Invalid Credential, `id` is not defined.');
+    return;
+  }
+
   const publicLink = await Cache.getInstance().load(CacheKey.PublicLink, rawCredentialRecord.credential.id) as string;
 
   let achievement = rawCredentialRecord.credential.credentialSubject.hasCredential ??
