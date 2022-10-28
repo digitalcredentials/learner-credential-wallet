@@ -1,0 +1,24 @@
+{
+  "issuerDid": [
+    {
+      "name": "Issuer Registry",
+      "url": "https://digitalcredentials.github.io/issuer-registry/registry.json"
+    },
+    {
+      "name": "Sandbox Registry",
+      "url": "https://digitalcredentials.github.io/sandbox-registry/registry.json"
+    },
+    {
+      "name": "Community Registry",
+      "url": "https://digitalcredentials.github.io/community-registry/registry.json"
+    },
+    {
+      "name": "DCC Pilot Registry",
+      "url": "https://digitalcredentials.github.io/dcc-pilot-registry/registry.json"
+    },
+    {
+      "name": "DCC Registry",
+      "url": "https://digitalcredentials.github.io/dcc-registry/registry.json"
+    }
+  ]
+}

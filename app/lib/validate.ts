@@ -7,7 +7,7 @@ import { VerifiablePresentation, PresentationError } from '../types/presentation
 import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
-import { registries } from './registry';
+import { registryCollections } from './registry';
 import { extractCredentialsFrom } from './verifiableObject';
 
 const documentLoader = securityLoader().build();
@@ -61,7 +61,7 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
   const { issuer } = credential;
   const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
 
-  const isInRegistry = await registries.issuerDid.isInRegistry(issuerDid);
+  const isInRegistry = await registryCollections.issuerDid.isInRegistryCollection(issuerDid);
   if (!isInRegistry) {
     throw new Error(CredentialError.DidNotInRegistry);
   }

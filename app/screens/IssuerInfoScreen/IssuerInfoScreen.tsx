@@ -5,19 +5,19 @@ import { BulletList, NavHeader } from '../../components';
 
 import dynamicStyleSheet from './IssuerInfoScreen.styles';
 import { IssuerInfoScreenProps } from './IssuerInfoScreen.d';
-import { resolveIssuerRegistriesFor } from '../../lib/issuer';
 import { useDynamicStyles } from '../../hooks';
+import { registryCollections } from '../../lib/registry';
 
 const NO_URL = 'None';
 
-export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreenProps): JSX.Element {
+export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreenProps): JSX.Element | null {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { issuerId } = route.params;
 
-  const resolvedRegistryConfigs = useMemo(() => resolveIssuerRegistriesFor(issuerId), [issuerId]);
+  const resolvedRegistryConfigs = useMemo(() => registryCollections.issuerDid.registriesFor(issuerId), [issuerId]);
 
   const registryList = resolvedRegistryConfigs.map(({ name }) => name);
-  const firstIssuerEntry = resolvedRegistryConfigs.map(({ issuerEntry }) => issuerEntry)[0];
+  const firstIssuerEntry = resolvedRegistryConfigs[0].entryFor(issuerId);
 
   const { name, url, location } = firstIssuerEntry;
 

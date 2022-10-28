@@ -15,7 +15,7 @@ import {
 } from '../store/slices/wallet';
 import { getAllRecords } from '../store';
 import { useAppDispatch } from './useAppDispatch';
-import { loadRemoteRegistries } from '../lib/registry';
+import { loadRegistryCollections } from '../lib/registry';
 
 export function useAppLoading(): boolean {
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ export function useAppLoading(): boolean {
 
   async function runSecondaryTasks() {
     await Promise.all([
-      loadRemoteRegistries(),
+      loadRegistryCollections(),
     ]);
 
     setLoading(false);
