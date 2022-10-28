@@ -7,7 +7,7 @@
 
 import { issuerAuthRegistry, IssuerAuthEntry } from '../data/issuerAuth';
 import registryCollectionsConfig from '../../config/registryCollections.json';
-import { RegistryCollectionConfig, IssuerDidEntry, RegistryRaw } from '../types/registry';
+import { RemoteRegistryConfig, IssuerDidEntry, RegistryRaw } from '../types/registry';
 
 class Registry<Entry> implements RegistryRaw<Entry> {
   entries;
@@ -34,10 +34,10 @@ class Registry<Entry> implements RegistryRaw<Entry> {
 }
 
 class RegistryCollection<Entry> {
-  configs: RegistryCollectionConfig[];
+  configs: RemoteRegistryConfig[];
   registries: Registry<Entry>[] = [];
 
-  constructor(configs: RegistryCollectionConfig[]) {
+  constructor(configs: RemoteRegistryConfig[]) {
     this.configs = configs;
   }
 
