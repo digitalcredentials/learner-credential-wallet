@@ -8,7 +8,7 @@ import { verifyCredential, verifyPresentation } from './validate';
  */
 export type VerifiableObject = Credential | VerifiablePresentation;
 
-function isVerifiableCredential(obj: VerifiableObject): obj is Credential {
+export function isVerifiableCredential(obj: VerifiableObject): obj is Credential {
   return obj.type?.includes('VerifiableCredential');
 }
 
