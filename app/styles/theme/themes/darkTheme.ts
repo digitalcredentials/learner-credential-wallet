@@ -1,7 +1,7 @@
 import type { ThemeType } from '..';
 import { Color } from '../../colors';
 import { FontFamily } from '../../fonts';
-import { StatusBarStyle } from '../../statusBarStyle';
+import { ColorScheme } from '../../colorScheme';
 
 export const darkTheme: ThemeType = {
   name: 'DarkTheme',
@@ -46,6 +46,7 @@ export const darkTheme: ThemeType = {
   borderRadius: 5,
   iconSize: 24,
   issuerIconSize: 40,
-  statusBarStyle: StatusBarStyle.Light,
+  statusBarStyle: ColorScheme.Light,
+  keyboardAppearance: ColorScheme.Dark,
   shadowOpacity: 0.15,
 };

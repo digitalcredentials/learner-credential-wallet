@@ -1,4 +1,4 @@
-export enum StatusBarStyle {
+export enum ColorScheme {
   Light = 'light',
   Dark = 'dark',
 }
