@@ -1,7 +1,7 @@
 import type { ThemeType } from '..';
 import { Color } from '../../colors';
 import { FontFamily } from '../../fonts';
-import { ColorScheme, StatusBarStyle } from '../../colorScheme';
+import { ColorScheme } from '../../colorScheme';
 
 export const lightTheme: ThemeType = {
   name: 'LightTheme',
