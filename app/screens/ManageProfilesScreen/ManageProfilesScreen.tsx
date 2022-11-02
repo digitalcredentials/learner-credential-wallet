@@ -97,7 +97,7 @@ export default function ManageProfilesScreen({ navigation }: ManageProfilesScree
           }}
           label="Profile Name"
           mode="outlined"
-          keyboardAppearance="dark"
+          keyboardAppearance={theme.keyboardAppearance}
         />
       </ConfirmModal>
       <FlatList

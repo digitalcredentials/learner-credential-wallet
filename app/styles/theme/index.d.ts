@@ -1,6 +1,6 @@
 import { Color } from '../colors';
 import { FontFamily } from '../fonts';
-import { StatusBarStyle } from '../statusBarStyle';
+import { ColorScheme } from '../colorScheme';
 
 export type ThemeType = {
   name: string;
@@ -45,6 +45,7 @@ export type ThemeType = {
   borderRadius: number;
   iconSize: number;
   issuerIconSize: number;
-  statusBarStyle: StatusBarStyle;
+  statusBarStyle: ColorScheme;
+  keyboardAppearance: ColorScheme;
   shadowOpacity: number;
 }
