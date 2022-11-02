@@ -13,9 +13,14 @@ import { isVerifiableCredential } from './verifiableObject';
 
 const documentLoader = securityLoader().build();
 const vpqrPattern = /^VP1-[A-Z|0-9]+/;
+const urlPattern = /^https?:\/\/.+/;
 
 export function isVpqr(text: string): boolean {
   return vpqrPattern.test(text);
+}
+
+export function isUrl(text: string): boolean {
+  return urlPattern.test(text);
 }
 
 export function isDeepLink(text: string): boolean {
