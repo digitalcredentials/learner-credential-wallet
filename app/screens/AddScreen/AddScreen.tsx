@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { AccessibilityInfo, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { TextInput } from 'react-native-paper';
 
 import dynamicStyleSheet from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { NavHeader } from '../../components';
-import { credentialRequestParamsFromQrText, credentialsFrom, credentialsFromQrText, isDeepLink, isVpqr } from '../../lib/decode';
+import { credentialRequestParamsFromQrText, credentialsFrom, credentialsFromQrText, isDeepLink, isUrl, isVpqr } from '../../lib/decode';
 import { PresentationError } from '../../types/presentation';
 import { errorMessageMatches, HumanReadableError } from '../../lib/error';
 import { navigationRef } from '../../navigation';
@@ -16,10 +16,13 @@ import { CredentialRequestParams } from '../../lib/request';
 import { pickAndReadFile } from '../../lib/import';
 import { displayGlobalError } from '../../store/slices/wallet';
 import { CANCEL_PICKER_MESSAGES } from '../../lib/constants';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 
 export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
+  const [fileUrl, setFileUrl] = useState('');
   const dispatch = useAppDispatch();
+  const urlIsValid = isUrl(fileUrl);
 
   function onPressQRScreen() {
     navigation.navigate('CredentialQRScreen', {
@@ -52,6 +55,24 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
       await dispatch(displayGlobalError({ 
         title: 'Unable to Add Credentials',
         message: 'Ensure the file contains one or more credentials, and is a supported file type.' 
+      }));
+    }
+  }
+
+  async function addCredentialFromUrl() {
+    try {
+      const response = await fetch(fileUrl);
+      const data = await response.text();
+      const credentials = await credentialsFrom(data);
+      dispatch(stageCredentials(credentials));
+      goToChooseProfile();
+    } catch (err) {
+      if (errorMessageMatches(err, CANCEL_PICKER_MESSAGES)) return;
+
+      console.error(err);
+      await dispatch(displayGlobalError({ 
+        title: 'Unable to Add Credentials',
+        message: 'Ensure the URL references a file that contains one or more credentials.' 
       }));
     }
   }
@@ -120,6 +141,36 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
             />
           }
         />
+        <View style={styles.sectionContainer}>
+          <View style={styles.actionInputContainer}>
+            <TextInput
+              value={fileUrl}
+              onChangeText={setFileUrl}
+              style={styles.input}
+              outlineColor={theme.color.textPrimary}
+              selectionColor={theme.color.textPrimary}
+              theme={{
+                colors: {
+                  placeholder: fileUrl ? theme.color.textPrimary : theme.color.inputInactive,
+                  text: theme.color.textPrimary,
+                  primary: theme.color.brightAccent,
+                },
+              }}
+              label="Add from URL"
+              mode="outlined"
+              keyboardAppearance={theme.keyboardAppearance}
+            />
+            <Button
+              title="Add"
+              buttonStyle={[mixins.buttonCompact, mixins.buttonPrimary, styles.actionButton]}
+              containerStyle={[mixins.buttonContainer, styles.actionButtonContainer]}
+              titleStyle={[mixins.buttonTitle, !urlIsValid && styles.actionButtonInactiveTitle]}
+              onPress={addCredentialFromUrl}
+              disabled={!urlIsValid}
+              disabledStyle={styles.actionButtonInactive}
+            />
+          </View>
+        </View>
       </View>
     </>
   );
