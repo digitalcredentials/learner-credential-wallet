@@ -12,6 +12,7 @@
     "postinstall": "npx rn-nodeify --install crypto,process,stream,events,module,util --hack && npx patch-package"
   },
   "dependencies": {
+    "@digitalcredentials/cborld": "^4.3.4",
     "@digitalcredentials/crypto-ld": "^7.0.3",
     "@digitalcredentials/did-io": "^1.0.2",
     "@digitalcredentials/did-method-key": "^2.0.3",
