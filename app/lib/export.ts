@@ -16,7 +16,7 @@ export async function exportProfile(rawProfileRecord: ProfileRecordRaw, encryptP
   const exportedProfileString = JSON.stringify(exportedProfile, null, 2);
 
   const data = encryptPassphrase 
-    ? encryptData(exportedProfileString, encryptPassphrase)
+    ? await exportWalletEncrypted(exportedProfileString, encryptPassphrase)
     : exportedProfileString;
 
   /**
