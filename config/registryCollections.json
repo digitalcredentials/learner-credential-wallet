@@ -1,7 +1,7 @@
 {
   "issuerDid": [
     {
-      "name": "DCC Issuer Registry",
+      "name": "DCC Pilot Registry",
       "url": "https://digitalcredentials.github.io/issuer-registry/registry.json"
     },
     {
@@ -11,10 +11,6 @@
     {
       "name": "DCC Community Registry",
       "url": "https://digitalcredentials.github.io/community-registry/registry.json"
-    },
-    {
-      "name": "DCC Pilot Registry",
-      "url": "https://digitalcredentials.github.io/dcc-pilot-registry/registry.json"
     },
     {
       "name": "DCC Registry",
