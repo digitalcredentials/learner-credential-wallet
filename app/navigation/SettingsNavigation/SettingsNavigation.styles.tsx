@@ -1,10 +1,9 @@
-import { StyleSheet, Platform } from 'react-native';
-
-import { theme, mixins } from '../../styles';
+import { Platform } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
 const switchScale = Platform.select({ ios: 0.9, android: 1 }) || 1;
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   bodyContainer: {
     flex: 1,
     padding: 16,
@@ -98,4 +97,4 @@ export default StyleSheet.create({
   switch: { 
     transform: [{ scale: switchScale }],
   },
-});
+}));

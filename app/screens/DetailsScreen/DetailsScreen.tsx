@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { NavHeader } from '../../components';
+import { BulletList, NavHeader } from '../../components';
 
-import styles from './DetailsScreen.styles';
+import dynamicStyleSheet from './DetailsScreen.styles';
 import { DetailsScreenProps } from './DetailsScreen.d';
+import { useDynamicStyles } from '../../hooks';
 
 export default function DetailsScreen({ navigation, route }: DetailsScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { header, details, goBack = navigation.goBack } = route.params;
 
   return (
@@ -16,11 +18,7 @@ export default function DetailsScreen({ navigation, route }: DetailsScreenProps)
         {Object.entries(details).map(([sectionTitle, items]) => (
           <View style={styles.sectionContainer} key={sectionTitle}>
             <Text style={styles.header}>{sectionTitle}</Text>
-            {items.map((item, i) => (
-              <Text key={`${i}-${item}`} style={styles.bulletItem}>
-                ●  {item}
-              </Text>
-            ))}
+            <BulletList items={items} />
           </View>
         ))}
       </ScrollView>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   useFonts,
@@ -15,13 +15,34 @@ import {
 } from '../store/slices/wallet';
 import { getAllRecords } from '../store';
 import { useAppDispatch } from './useAppDispatch';
+import { loadRegistryCollections } from '../lib/registry';
 
 export function useAppLoading(): boolean {
-  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
-  const { isUnlocked, isInitialized } = useSelector(selectWalletState);
+  const primaryTasks = [
+    useFontsLoaded(),
+    useWalletStateInitialized(),
+  ];
 
+  const primaryTasksFinished = useMemo(() => primaryTasks.every(t => t), primaryTasks);
+
+  useEffect(() => { 
+    if (primaryTasksFinished) runSecondaryTasks();
+  }, [primaryTasksFinished]);
+
+  async function runSecondaryTasks() {
+    await Promise.all([
+      loadRegistryCollections(),
+    ]);
+
+    setLoading(false);
+  }
+
+  return loading;
+}
+
+function useFontsLoaded() {
   const [fontsLoaded] = useFonts({
     Rubik_400Regular,
     Rubik_500Medium,
@@ -29,14 +50,14 @@ export function useAppLoading(): boolean {
     Roboto_400Regular,
   });
 
-  const walletStateInitialized = isUnlocked !== null && isInitialized !== null;
-  const finishedLoading = walletStateInitialized && fontsLoaded;
+  return fontsLoaded;
+}
 
-  useEffect(() => {
-    if (finishedLoading) {
-      setLoading(false);
-    }
-  }, [finishedLoading]);
+function useWalletStateInitialized() {
+  const dispatch = useAppDispatch();
+
+  const { isUnlocked, isInitialized } = useSelector(selectWalletState);
+  const walletStateInitialized = isUnlocked !== null && isInitialized !== null;
 
   useEffect(() => {
     if (!walletStateInitialized) {
@@ -55,5 +76,5 @@ export function useAppLoading(): boolean {
     }
   }, [walletStateInitialized]);
 
-  return loading;
+  return walletStateInitialized;
 }

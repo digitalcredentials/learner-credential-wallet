@@ -33,6 +33,10 @@ const credentialSlice = createSlice({
       ...state,
       ...action.payload,
     }));
+
+    builder.addCase(addCredential.rejected, (_, action) => {
+      throw action.error;
+    });
   },
 });
 

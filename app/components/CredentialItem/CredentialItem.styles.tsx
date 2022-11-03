@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   listItemContainer: {
     ...mixins.button,
     backgroundColor: theme.color.foregroundPrimary,
@@ -30,8 +29,4 @@ export default StyleSheet.create({
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
   },
-  iconContainer: {
-    ...mixins.imageIcon,
-    backgroundColor: theme.color.backgroundPrimary,
-  }
-});
+}));

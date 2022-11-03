@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { mixins, theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   bodyContainer: {
     flex: 1,
     padding: 16,
@@ -19,4 +18,4 @@ export default StyleSheet.create({
     fontSize: theme.fontSize.regular,
     marginBottom: -4,
   },
-});
+}));

@@ -1,21 +1,23 @@
 import React, { useMemo } from 'react';
 import { View, Text, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { NavHeader } from '../../components';
+import { BulletList, NavHeader } from '../../components';
 
-import styles from './IssuerInfoScreen.styles';
-import { BulletListProps, IssuerInfoScreenProps } from './IssuerInfoScreen.d';
-import { resolveIssuerRegistriesFor } from '../../lib/issuer';
+import dynamicStyleSheet from './IssuerInfoScreen.styles';
+import { IssuerInfoScreenProps } from './IssuerInfoScreen.d';
+import { useDynamicStyles } from '../../hooks';
+import { registryCollections } from '../../lib/registry';
 
 const NO_URL = 'None';
 
-export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreenProps): JSX.Element {
+export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreenProps): JSX.Element | null {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { issuerId } = route.params;
 
-  const resolvedRegistryConfigs = useMemo(() => resolveIssuerRegistriesFor(issuerId), [issuerId]);
+  const resolvedRegistryConfigs = useMemo(() => registryCollections.issuerDid.registriesFor(issuerId), [issuerId]);
 
   const registryList = resolvedRegistryConfigs.map(({ name }) => name);
-  const firstIssuerEntry = resolvedRegistryConfigs.map(({ issuerEntry }) => issuerEntry)[0];
+  const firstIssuerEntry = resolvedRegistryConfigs[0].entryFor(issuerId);
 
   const { name, url, location } = firstIssuerEntry;
 
@@ -53,21 +55,9 @@ export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreen
         </View>
         <View style={styles.dataContainer}>
           <Text style={styles.dataLabel}>Registries</Text>
-          <BulletList items={registryList} />
+          <BulletList items={registryList} style={styles.bulletList} />
         </View>
       </ScrollView>
     </>
-  );
-}
-
-function BulletList({ items }: BulletListProps): JSX.Element {
-  return (
-    <View style={styles.bulletListContainer}>
-      {items.map((item, i) => (
-        <Text key={`${i}-${item}`} style={styles.bulletItem}>
-          ●  {item}
-        </Text>
-      ))}
-    </View>
   );
 }

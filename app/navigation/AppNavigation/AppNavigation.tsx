@@ -1,70 +1,33 @@
-import React, { useEffect } from 'react';
-import { Linking, View } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
+import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer, DefaultTheme, LinkingOptions } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { RootNavigation, SetupNavigation, RootNavigationParamsList } from '../';
 import { RestartScreen, LoginScreen } from '../../screens';
-import { useAppLoading } from '../../hooks';
+import { useAppLoading, useDynamicStyles } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
-import { mixins, theme } from '../../styles';
-import { encodeQueryParams } from '../../lib/encode';
 import { EventProvider } from 'react-native-outside-press';
+import { deepLinkConfig } from '../../lib/deepLink';
+import { GlobalErrorModal } from '../../components';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 
-const navigatorTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: theme.color.backgroundPrimary,
-  },
-};
-
-function transformDeepLink(url: string): string {
-  return encodeQueryParams(url);
-}
-
-/**
- * In order to support OAuth redirects, the Android intent filter was set
- * specific to the scheme `dccrequest` and path `request`. If new paths are
- * added here, they must also be added to `android/app/src/main/AndroidManifest.xml`.
- */
-const linking: LinkingOptions<RootNavigationParamsList> = {
-  prefixes: ['dccrequest://', 'org.dcconsortium://'],
-  config: {
-    screens: {
-      HomeNavigation: {
-        screens: {
-          AddCredentialNavigation: {
-            screens: {
-              ChooseProfileScreen: 'request',
-            },
-          },
-        },
-      },
-    },
-  },
-  subscribe: (listener: (url: string) => void) => {
-    const onReceiveURL = ({ url }: { url: string }) => listener(transformDeepLink(url));
-
-    const subscription = Linking.addEventListener('url', onReceiveURL);
-    return () => subscription.remove();
-  },
-  getInitialURL: async () => {
-    const url = await Linking.getInitialURL();
-    if (url === null) return;
-
-    return transformDeepLink(url);
-  },
-};
-
-
 export default function AppNavigation(): JSX.Element | null {
+  const { mixins, theme } = useDynamicStyles();
+
+  const navigatorTheme = useMemo(() => ({
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: theme.color.backgroundPrimary,
+    },
+  }), [theme]);
+
   const loading = useAppLoading();
   const {
     isUnlocked,
@@ -91,7 +54,7 @@ export default function AppNavigation(): JSX.Element | null {
   }, []);
 
   if (loading) {
-    return null;
+    return <GlobalErrorModal />;
   }
 
   return (
@@ -102,7 +65,7 @@ export default function AppNavigation(): JSX.Element | null {
         <NavigationContainer
           theme={navigatorTheme}
           ref={navigationRef}
-          linking={linking}
+          linking={deepLinkConfig}
         >
           {renderScreen()}
         </NavigationContainer>

@@ -12,6 +12,7 @@ export const makeSelectProfileForPendingCredentials = (): Selector<
   [selectRawProfileRecords, selectRawDidRecords, selectPendingCredentials],
   (rawProfileRecords, rawDidRecords, pendingCredentials) => {
     const didKey = reduceCommonDidKeyFrom(pendingCredentials);
+
     if (didKey) {
       const rawDidRecord = rawDidRecords.find(({ didDocument }) => didDocument.id === didKey);
       if (rawDidRecord) {
@@ -19,11 +20,6 @@ export const makeSelectProfileForPendingCredentials = (): Selector<
         return rawProfileRecord;
       }      
     }
-
-    console.debug(`Could not infer profile for pending credential(s), see below:
-Credential DID: "${didKey}"
-Profile DIDs: ${JSON.stringify(Object.fromEntries(rawProfileRecords.map(({ profileName, didRecordId }) => [profileName, rawDidRecords.find(({ _id }) => _id.equals(didRecordId))?.didDocument.id])), null, 2)}
-    `);
 
     return null;
   }

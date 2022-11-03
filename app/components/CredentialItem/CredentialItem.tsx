@@ -3,11 +3,10 @@ import { Image, ImageStyle, StyleProp, View } from 'react-native';
 import { ListItem, CheckBox } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { theme, mixins } from '../../styles';
-import styles from './CredentialItem.styles';
+import dynamicStyleSheet from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
 import { CredentialStatusBadges } from '../../components';
-import { useVerifyCredential } from '../../hooks';
+import { useDynamicStyles, useVerifyCredential } from '../../hooks';
 
 export default function CredentialItem({
   title, // Should this info be passed in here, or determined by the CredentialItem?
@@ -22,6 +21,8 @@ export default function CredentialItem({
   rawCredentialRecord,
   showStatusBadges = false,
 }: CredentialItemProps): JSX.Element {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
+
   const verifyCredential = useVerifyCredential(rawCredentialRecord);
   const isNotVerified = useMemo(() => verifyCredential?.result.verified === false, [verifyCredential]);
 
@@ -54,10 +55,10 @@ export default function CredentialItem({
 
     if (isNotVerified) {
       return (
-        <View style={styles.iconContainer}>
+        <View style={mixins.imageIcon}>
           <MaterialCommunityIcons
             name="close-circle"
-            size={mixins.imageIcon.width}
+            size={theme.issuerIconSize}
             color={theme.color.error}
           />
         </View>
@@ -77,7 +78,7 @@ export default function CredentialItem({
       <View style={mixins.imageIcon}>
         <MaterialCommunityIcons
           name="certificate"
-          size={mixins.imageIcon.width}
+          size={theme.issuerIconSize}
           color={theme.color.iconActive}
         />
       </View>

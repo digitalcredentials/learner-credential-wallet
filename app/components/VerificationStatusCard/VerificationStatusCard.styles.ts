@@ -1,33 +1,34 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   container: {
     backgroundColor: theme.color.backgroundSecondary,
     borderRadius: theme.borderRadius,
     marginTop: 16,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    paddingRight: 40,
     justifyContent: 'space-between',
   },
   headerText: {
     ...mixins.headerText,
     fontFamily: theme.fontFamily.medium,
     fontSize: theme.fontSize.regular,
-    marginTop: 8,
+    marginVertical: 8,
+  },  
+  statusItem: {
+    flexDirection: 'row',
+    marginVertical: 8
   },
-  bodyText: {
-    ...mixins.paragraphText,
+  statusItemContent: {
     marginRight: 16,
     marginLeft: 8,
   },
-  statusItem: {
-    flexDirection: 'row',
-    marginTop: 16
+  statusItemLabel: {
+    ...mixins.paragraphText,
   },
-  bulletContainer: {
-    marginTop: 5,
-    marginRight: 8,
-  },
-});
+  bodyText: {
+    ...mixins.paragraphText,
+    marginVertical: 8,
+    lineHeight: 22,
+  }
+}));

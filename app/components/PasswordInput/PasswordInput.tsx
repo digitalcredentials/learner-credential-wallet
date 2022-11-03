@@ -1,11 +1,11 @@
 import React, { ComponentProps, forwardRef, Ref, useRef, RefObject } from 'react';
-import { View, TextInput as RNTextInput } from 'react-native';
+import { View, TextInput as RNTextInput, Platform } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 import { AccessibleView } from '../';
-import { mixins, theme } from '../../styles';
+import { useDynamicStyles } from '../../hooks';
 
-import styles from './PasswordInput.styles';
+import dynamicStyleSheet from './PasswordInput.styles';
 
 type TextInputProps = ComponentProps<typeof TextInput>;
 
@@ -25,7 +25,9 @@ function PasswordInput({
   highlightError,
   ...textInputProps
 }: PasswordInputProps, ref: Ref<View>): JSX.Element {
+  const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
   const _inputRef = inputRef || useRef<RNTextInput>(null);
+  const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
   return (
     <AccessibleView 
@@ -44,7 +46,7 @@ function PasswordInput({
         autoCorrect={false}
         value={value}
         outlineColor={highlightError ? theme.color.error : theme.color.textPrimary}
-        selectionColor={theme.color.textPrimary}
+        selectionColor={selectionColor}
         theme={{ colors: {
           placeholder: value ? theme.color.textPrimary : theme.color.inputInactive,
           text: theme.color.textPrimary,

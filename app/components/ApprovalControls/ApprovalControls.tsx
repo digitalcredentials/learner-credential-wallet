@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { Text } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -9,12 +9,11 @@ import {
   ApprovalMessage,
   PendingCredential,
   setCredentialApproval,
+  acceptPendingCredentials,
 } from '../../store/slices/credentialFoyer';
-import { theme, Color } from '../../styles';
-import styles from './ApprovalControls.styles';
-import type { Credential } from '../../types/credential';
+import { Color, ThemeType } from '../../styles';
+import dynamicStyleSheet from './ApprovalControls.styles';
 import { useAccessibilityFocus } from '../../hooks';
-import { addCredential } from '../../store/slices/credential';
 import { ObjectID } from 'bson';
 
 enum StatusIcon {
@@ -42,7 +41,7 @@ const iconFor = (status: ApprovalStatus): StatusIcon => ({
   [ApprovalStatus.Accepted]: StatusIcon.Done,
 })[status];
 
-const colorFor = (status: ApprovalStatus): Color  => ({
+const colorFor = (status: ApprovalStatus, theme: ThemeType): Color  => ({
   [ApprovalStatus.Pending]: theme.color.success,
   [ApprovalStatus.PendingDuplicate]: theme.color.success,
   [ApprovalStatus.Errored]: theme.color.error,
@@ -59,6 +58,8 @@ const defaultMessageFor = (status: ApprovalStatus): ApprovalMessage => ({
 })[status];
 
 function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
+
   return (
     <TouchableOpacity
       style={[styles.button, primary && styles.buttonPrimary]}
@@ -71,14 +72,11 @@ function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.E
 }
 
 export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
-  const { credential, status, messageOveride } = pendingCredential;
-  const message = messageOveride || defaultMessageFor(status);
+  const { status, messageOverride } = pendingCredential;
+  const message = messageOverride || defaultMessageFor(status);
   const [statusRef, focusStatus] = useAccessibilityFocus<View>();
-
-  async function add(credential: Credential): Promise<void> {
-    await dispatch(addCredential({ credential, profileRecordId }));
-  }
 
   function setApprovalStatus(status: ApprovalStatus) {
     dispatch(setCredentialApproval({
@@ -95,15 +93,7 @@ export default function ApprovalControls({ pendingCredential, profileRecordId }:
   useEffect(focusStatus, []);
 
   async function accept() {
-    try {
-      await add(credential);
-
-      setApprovalStatus(ApprovalStatus.Accepted);
-    } catch (err) {
-      console.warn(err);
-
-      setApprovalStatus(ApprovalStatus.Errored);
-    }
+    await dispatch(acceptPendingCredentials({ pendingCredentials: [pendingCredential], profileRecordId }));
     focusStatus();
   }
 
@@ -132,7 +122,7 @@ export default function ApprovalControls({ pendingCredential, profileRecordId }:
       <View style={styles.approvalContainer} accessible>
         <View style={styles.credentialStatusContainer} ref={statusRef}>
           <MaterialIcons
-            color={colorFor(status)}
+            color={colorFor(status, theme)}
             name={iconFor(status)}
             size={theme.iconSize}
           />

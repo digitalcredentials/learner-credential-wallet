@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { mixins } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ mixins }) => ({
   container: {
     padding: 16,
     flex: 1,
@@ -34,4 +33,4 @@ export default StyleSheet.create({
     shadowOpacity: 0,
     elevation: 0,
   }
-});
+}));

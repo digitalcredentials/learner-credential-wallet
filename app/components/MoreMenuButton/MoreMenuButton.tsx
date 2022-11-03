@@ -2,16 +2,17 @@ import React, { Children, cloneElement, ElementType, isValidElement, ReactElemen
 import { MaterialIcons } from '@expo/vector-icons';
 import OutsidePressHandler from 'react-native-outside-press';
 
-import styles from './MoreMenuButton.styles';
-import { mixins } from '../../styles';
+import dynamicStyleSheet from './MoreMenuButton.styles';
 import { AccessibleView } from '..';
 import { View } from 'react-native';
+import { useDynamicStyles } from '../../hooks';
 
 type MoreMenuButtonProps = {
   children: ReactNode;
 }
 
 export default function MoreMenuButton({ children }: MoreMenuButtonProps): JSX.Element {
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   function onPressButton() {

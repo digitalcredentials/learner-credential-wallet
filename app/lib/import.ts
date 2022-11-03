@@ -6,12 +6,17 @@ import { CredentialImportReport } from '../types/credential';
 
 export type ReportDetails = Record<string, string[]>;
 
+export async function readFile(path: string): Promise<string> {
+  const decodedPath = path.replace(/%20/g, ' ');
+  return RNFS.readFile(decodedPath, 'utf8');
+}
+
 export async function pickAndReadFile(): Promise<string> {
   const { uri } = await DocumentPicker.pickSingle({
     type: DocumentPicker.types.allFiles,
   });
 
-  return RNFS.readFile(uri.replace('%20', ' '));
+  return readFile(uri);
 }
 
 function credentialReportDetailsFrom(report: CredentialImportReport): ReportDetails {

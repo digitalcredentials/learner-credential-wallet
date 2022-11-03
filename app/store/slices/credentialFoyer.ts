@@ -5,6 +5,8 @@ import {canonicalize as jcsCanonicalize} from 'json-canonicalize';
 import { CredentialRecord } from '../../model';
 import type { Credential } from '../../types/credential';
 import { RootState } from '..';
+import { addCredential } from './credential';
+import { ObjectID } from 'bson';
 
 export enum ApprovalStatus {
   Pending,
@@ -26,22 +28,27 @@ export class PendingCredential {
   id: string = uuid.v4() as string;
   status: ApprovalStatus;
   credential: Credential;
-  messageOveride?: ApprovalMessage;
+  messageOverride?: ApprovalMessage;
 
   constructor(
     credential: Credential,
     status: ApprovalStatus = ApprovalStatus.Pending,
-    messageOveride?: ApprovalMessage,
+    messageOverride?: ApprovalMessage,
   ) {
     this.credential = credential;
     this.status = status;
-    this.messageOveride = messageOveride;
+    this.messageOverride = messageOverride;
   }
 }
 
 export type CredentialFoyerState = {
   pendingCredentials: PendingCredential[];
 };
+
+type AcceptPendingCredentialsParams = {
+  pendingCredentials: PendingCredential[];
+  profileRecordId: ObjectID;
+}
 
 const initialState: CredentialFoyerState = {
   pendingCredentials: [],
@@ -71,6 +78,32 @@ const stageCredentials = createAsyncThunk('credentialFoyer/stageCredentials', as
   });
 
   return { pendingCredentials };
+});
+
+const acceptPendingCredentials = createAsyncThunk('credentialFoyer/stageCredentials', async ({ pendingCredentials, profileRecordId }: AcceptPendingCredentialsParams, { dispatch, getState }) => {
+  await Promise.all(
+    pendingCredentials.map((pendingCredential) => {
+      try {
+        const { credential } = pendingCredential;
+        dispatch(addCredential({ credential, profileRecordId }));
+        dispatch(setCredentialApproval({...pendingCredential, status: ApprovalStatus.Accepted }));
+      } catch (err) {
+        dispatch(setCredentialApproval({...pendingCredential, status: ApprovalStatus.Errored }));
+        console.warn('Error while accepting credential:', err);
+      }
+    })
+  );
+
+  const state = await getState() as RootState;
+  const freshPendingCredentials = selectPendingCredentials(state);
+
+  const focusedPendingCredentialIds = pendingCredentials.map(({ id }) => id);
+  const freshFocusedPendingCredentials = freshPendingCredentials.filter(({ id }) => focusedPendingCredentialIds.includes(id));
+  const notAcceptedCredentialCount = freshFocusedPendingCredentials.filter(({ status }) => status !== ApprovalStatus.Accepted).length;
+
+  if (notAcceptedCredentialCount !== 0) {
+    throw new Error('Unable to accept all credentials');
+  }
 });
 
 const credentialFoyer = createSlice({
@@ -108,11 +141,15 @@ const credentialFoyer = createSlice({
       ...state,
       ...action.payload,
     }));
+
+    builder.addCase(acceptPendingCredentials.rejected, (_, action) => {
+      throw action.error;
+    });
   },
 });
 
 export default credentialFoyer.reducer;
 export const { clearFoyer, setCredentialApproval } = credentialFoyer.actions;
-export { stageCredentials };
+export { stageCredentials, acceptPendingCredentials };
 
-export const selectPendingCredentials = (state: RootState): PendingCredential[] => state.credentialFoyer.pendingCredentials;
+export const selectPendingCredentials = (state: RootState): PendingCredential[] => (state.credentialFoyer || initialState).pendingCredentials;

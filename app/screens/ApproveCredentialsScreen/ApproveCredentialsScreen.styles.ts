@@ -1,15 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { mixins, theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
-  header: {
-    ...mixins.headerText,
-    marginTop: 8,
-    marginBottom: 4,
-  },
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   container: {
     padding: 16,
+    paddingBottom: 0,
     flex: 1,
+  },
+  listContainer: {
+    marginTop: 8,
+  },
+  listContentContainer: {
+    paddingBottom: 8,
   },
   doneButton: {
     backgroundColor: theme.color.transparent,
@@ -18,6 +19,7 @@ export default StyleSheet.create({
   },
   doneButtonTitle: {
     lineHeight: 17,
+    paddingHorizontal: 8,
     color: theme.color.textHeader,
     fontSize: theme.fontSize.regular,
   },
@@ -30,4 +32,17 @@ export default StyleSheet.create({
   listHeader: {
     marginVertical: 8,
   },
-});
+  footerContainer: {
+    ...mixins.shadow,
+    backgroundColor: theme.color.backgroundSecondary,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+  },
+  acceptAllButton: {
+    height: 44,
+    minHeight: undefined,
+  },
+  acceptAllButtonTitle: {
+    fontSize: 14,
+  },
+}));

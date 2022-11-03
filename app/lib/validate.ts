@@ -6,8 +6,8 @@ import vc from '@digitalcredentials/vc';
 import { VerifiablePresentation, PresentationError } from '../types/presentation';
 import { Credential, CredentialError } from '../types/credential';
 
-import { securityLoader } from './documentLoader';
-import { registries } from './registry';
+import { securityLoader } from '@digitalcredentials/security-document-loader';
+import { registryCollections } from './registry';
 import { extractCredentialsFrom } from './verifiableObject';
 
 const documentLoader = securityLoader().build();
@@ -59,10 +59,10 @@ export async function verifyPresentation(
 
 export async function verifyCredential(credential: Credential): Promise<VerifyResponse> {
   const { issuer } = credential;
-
   const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
 
-  if (!registries.issuerDid.isInRegistry(issuerDid)) {
+  const isInRegistry = await registryCollections.issuerDid.isInRegistryCollection(issuerDid);
+  if (!isInRegistry) {
     throw new Error(CredentialError.DidNotInRegistry);
   }
 
@@ -76,9 +76,20 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
       checkStatus: hasRevocation ? checkStatus : undefined
     });
 
+    // This logic catches the case where the verify response does not contain a `log` value
+    if (result.results?.[0].log === undefined) {
+      throw result.error || new Error('Verify response does not a `log` value');
+    }
+
     return result;
   } catch (err) {
     console.warn(err);
+    console.log(JSON.stringify(err, removeStackReplacer, 2));
+
     throw new Error(CredentialError.CouldNotBeVerified);
   }
+}
+
+function removeStackReplacer(key: string, value: unknown) {
+  return key === 'stack' ? '...' : value;
 }

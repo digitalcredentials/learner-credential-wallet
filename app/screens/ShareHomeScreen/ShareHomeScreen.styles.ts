@@ -1,15 +1,12 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   container: {
-    paddingVertical: 16,
-    paddingHorizontal: 8,
-    // flex: 1,
-    // justifyContent: 'space-around',
+    flex: 1,
   },
-  scrollContainer: {
-    flexGrow: 1,
+  contentContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   credentialList: {
     borderRadius: theme.borderRadius,
@@ -23,4 +20,4 @@ export default StyleSheet.create({
   sendButton: {
     marginTop: 32,
   },
-});
+}));

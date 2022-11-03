@@ -10,4 +10,5 @@ export type StatusItemProps = {
   positiveText: string;
   negativeText: string;
   verified: boolean;
+  children?: React.ReactNode;
 };

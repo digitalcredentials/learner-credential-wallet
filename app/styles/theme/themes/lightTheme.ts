@@ -1,9 +1,10 @@
-import type { ThemeType } from './index.d';
-import { Color } from '../colors';
-import { FontFamily } from '../fonts';
-import { StatusBarStyle } from '../statusBarStyle';
+import type { ThemeType } from '..';
+import { Color } from '../../colors';
+import { FontFamily } from '../../fonts';
+import { StatusBarStyle } from '../../statusBarStyle';
 
 export const lightTheme: ThemeType = {
+  name: 'LightTheme',
   color: {
     linkColor: Color.Blue,
     backgroundPrimary: Color.Gray100,
@@ -14,8 +15,8 @@ export const lightTheme: ThemeType = {
     brightAccent: Color.Blue,
     textSecondary: Color.Gray700,
     textPrimaryDark: Color.White,
-    iconActive: Color.Gray600,
-    iconInactive: Color.Gray400,
+    iconActive: Color.Gray700,
+    iconInactive: Color.Gray500,
     inputInactive: Color.Gray600,
     buttonPrimary: Color.Blue,
     buttonSecondary: Color.Gray300,
@@ -27,6 +28,7 @@ export const lightTheme: ThemeType = {
     transparent: Color.Transparent,
     switchActive: Color.DarkCyan,
     modalBackground: Color.Gray400,
+    highlightAndroid: Color.TransparentBlue,
   },
   fontFamily: {
     regular: FontFamily.RubikRegular,
@@ -43,6 +45,7 @@ export const lightTheme: ThemeType = {
   },
   borderRadius: 5,
   iconSize: 24,
+  issuerIconSize: 40,
   statusBarStyle: StatusBarStyle.Dark,
   shadowOpacity: 0.1,
 };

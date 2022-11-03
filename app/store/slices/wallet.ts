@@ -1,17 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, getAllRecords } from '..';
 import { isBiometricsSupported } from '../../lib/biometrics';
 import { importWalletFrom } from '../../lib/import';
 import { db, INITIAL_PROFILE_NAME } from '../../model';
+import { loadThemeName, saveThemeName } from '../../styles';
 import { createProfile } from './profile';
-
-export type WalletState = {
-  isUnlocked: boolean | null;
-  isInitialized: boolean | null;
-  isBiometricsSupported: boolean | null,
-  isBiometricsEnabled: boolean,
-  needsRestart: boolean;
-}
 
 type InitializeParams = {
   passphrase: string;
@@ -19,6 +12,21 @@ type InitializeParams = {
   existingWallet?: string;
 }
 
+type GlobalErrorPayload = {
+  title: string;
+  message: string;
+  fatal?: boolean;
+}
+
+export type WalletState = {
+  isUnlocked: boolean | null;
+  isInitialized: boolean | null;
+  isBiometricsSupported: boolean | null,
+  isBiometricsEnabled: boolean,
+  needsRestart: boolean;
+  themeName: string | null;
+  globalError: GlobalErrorPayload | null;
+}
 
 const initialState: WalletState = {
   isUnlocked: null,
@@ -26,6 +34,8 @@ const initialState: WalletState = {
   isBiometricsSupported: null,
   isBiometricsEnabled: false,
   needsRestart: false,
+  themeName: null,
+  globalError: null,
 };
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
@@ -34,6 +44,7 @@ const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
     isInitialized: await db.isInitialized(),
     isBiometricsEnabled: await db.isBiometricsEnabled(),
     isBiometricsSupported: await isBiometricsSupported(),
+    themeName: await loadThemeName(),
   };
 });
 
@@ -101,10 +112,22 @@ const toggleBiometrics = createAsyncThunk('walletState/toggleBiometrics', async 
   await dispatch(pollWalletState());
 });
 
+const updateThemeName = createAsyncThunk('walletState/updateThemeName', async (themeName: string, { dispatch }) => {
+  await saveThemeName(themeName);
+  await dispatch(pollWalletState());
+});
+
 const walletSlice = createSlice({
   name: 'walletState',
   initialState,
-  reducers: {},
+  reducers: {
+    clearGlobalError(state) {
+      state.globalError = null;
+    },
+    displayGlobalError(state, action: PayloadAction<GlobalErrorPayload>) {
+      state.globalError = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(unlock.rejected, (_, action) => {
       throw action.error;
@@ -131,10 +154,16 @@ const walletSlice = createSlice({
       ...state,
       ...action.payload,
     }));
+
+    builder.addCase(pollWalletState.rejected, (_, action) => {
+      throw action.error;
+    });
   },
 });
 
 export default walletSlice.reducer;
+export const { displayGlobalError, clearGlobalError } = walletSlice.actions;
+
 export {
   unlock,
   unlockWithBiometrics,
@@ -142,7 +171,8 @@ export {
   initialize,
   reset,
   pollWalletState,
-  toggleBiometrics
+  toggleBiometrics,
+  updateThemeName,
 };
 
 export const selectWalletState = (state: RootState): WalletState => state.wallet;

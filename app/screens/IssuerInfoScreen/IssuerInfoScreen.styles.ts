@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { mixins, theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   bodyContainer: {
     flex: 1,
     padding: 16,
@@ -23,17 +22,12 @@ export default StyleSheet.create({
     color: theme.color.textSecondary,
     flex: 1,
   },
-  bulletListContainer: {
-    marginTop: -4,
-  },
-  bulletItem: {
-    ...mixins.paragraphText,
-    fontSize: theme.fontSize.regular,
-    marginBottom: -2,
-  },
   link: {
     fontFamily: theme.fontFamily.regular,
     color: theme.color.linkColor,
     textDecorationLine: 'underline',
   },
-});
+  bulletList: {
+    marginTop: -4,
+  },
+}));

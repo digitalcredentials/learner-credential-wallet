@@ -1,8 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-import { theme, mixins } from '../../styles';
-
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   container: {
     padding: 16,
   },
@@ -23,4 +21,4 @@ export default StyleSheet.create({
   exitButtonTitle: {
     color: theme.color.textHeader,
   },
-});
+}));

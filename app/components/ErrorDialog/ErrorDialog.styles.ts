@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   outerContainer: {
     width: '100%',
   },
@@ -21,4 +20,4 @@ export default StyleSheet.create({
     color: theme.color.backgroundSecondary,
     paddingHorizontal: 8,
   },
-});
+}));

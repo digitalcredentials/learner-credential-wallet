@@ -1,9 +1,10 @@
-import type { ThemeType } from './index.d';
-import { Color } from '../colors';
-import { FontFamily } from '../fonts';
-import { StatusBarStyle } from '../statusBarStyle';
+import type { ThemeType } from '..';
+import { Color } from '../../colors';
+import { FontFamily } from '../../fonts';
+import { StatusBarStyle } from '../../statusBarStyle';
 
 export const darkTheme: ThemeType = {
+  name: 'DarkTheme',
   color: {
     linkColor: Color.DarkCyan,
     backgroundPrimary: Color.Gray800,
@@ -27,6 +28,7 @@ export const darkTheme: ThemeType = {
     transparent: Color.Transparent,
     switchActive: Color.DarkCyan,
     modalBackground: Color.Gray900,
+    highlightAndroid: Color.TransparentCyan,
   },
   fontFamily: {
     regular: FontFamily.RubikRegular,
@@ -43,6 +45,7 @@ export const darkTheme: ThemeType = {
   },
   borderRadius: 5,
   iconSize: 24,
+  issuerIconSize: 40,
   statusBarStyle: StatusBarStyle.Light,
   shadowOpacity: 0.15,
 };

@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(() => ({
   checkmarkContainer: {
     position: 'absolute',
     height: '100%',
     alignSelf: 'center',
     justifyContent: 'center',
   },
-});
+}));

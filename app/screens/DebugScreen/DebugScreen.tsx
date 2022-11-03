@@ -3,12 +3,14 @@ import { Text, View, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { NavHeader } from '../../components';
-import styles from './DebugScreen.styles';
+import dynamicStyleSheet from './DebugScreen.styles';
 import { DebugScreenProps } from '../../navigation';
 import { makeSelectDidFromProfile } from '../../store/selectorFactories';
 import { useSelectorFactory } from '../../hooks/useSelectorFactory';
+import { useDynamicStyles } from '../../hooks';
 
 export default function DebugScreen({ navigation, route }: DebugScreenProps): JSX.Element {
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { rawCredentialRecord, rawProfileRecord } = route.params;
   const rawDidRecord = useSelectorFactory(makeSelectDidFromProfile, { rawProfileRecord });
 

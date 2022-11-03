@@ -3,20 +3,20 @@ import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-import { theme, mixins } from '../../styles';
 import { NavHeader, ImportFileModal } from '../../components';
 
-import styles from './AddExistingProfileScreen.styles';
+import dynamicStyleSheet from './AddExistingProfileScreen.styles';
 import { AddExistingProfileScreenProps } from './AddExistingProfileScreen.d';
 import { ProfileRecord } from '../../model';
 import { importProfileFrom, ReportDetails } from '../../lib/import';
 import { HumanReadableError } from '../../lib/error';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { getAllRecords } from '../../store';
 import type { ImportFileModalHandle } from '../../components';
 
 
 export default function AddExistingProfileScreen({ navigation }: AddExistingProfileScreenProps): JSX.Element {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const importModalRef = useRef<ImportFileModalHandle>(null);
 

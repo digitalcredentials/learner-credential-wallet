@@ -1,9 +1,14 @@
 export enum Color {
   Blue = '#0F7390',
+  TransparentBlue = 'rgba(15, 115, 144, 0.3)',
+
   LightCyan = '#67E8F9',
   DarkCyan = '#24D3EE',
+  TransparentCyan = 'rgba(103, 232, 249, 0.3)',
+
   Green = '#A3E534',
   DarkGreen = '#4D7C0F',
+
   Red = '#EF4444',
   LightRed = '#FF6565',
   DarkRed = '#B91C1C',

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, Linking, TextInput as RNTextInput } from 'react-native';
+import { View, ScrollView, Linking, TextInput as RNTextInput, Platform } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
@@ -7,14 +7,13 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import OutsidePressHandler from 'react-native-outside-press';
 
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
-import styles from './PublicLinkScreen.styles';
+import dynamicStyleSheet from './PublicLinkScreen.styles';
 import { ConfirmModal, NavHeader } from '../../components';
-import { mixins, theme } from '../../styles';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Cache, CacheKey } from '../../lib/cache';
 import credential from '../../mock/credential';
 import { shareToLinkedIn } from '../../lib/share';
-import { useShareCredentials } from '../../hooks';
+import { useDynamicStyles, useShareCredentials } from '../../hooks';
 
 export enum PublicLinkScreenMode {
   Default,
@@ -22,6 +21,8 @@ export enum PublicLinkScreenMode {
 }
 
 export default function PublicLinkScreen ({ navigation, route }: PublicLinkScreenProps): JSX.Element {
+  const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
+
   const share = useShareCredentials();
   const { rawCredentialRecord, screenMode = PublicLinkScreenMode.Default } = route.params;
   const [publicLink, setPublicLink] = useState<string | null>(null);
@@ -31,6 +32,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   const inputRef = useRef<RNTextInput | null>(null);
   const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
+  const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
   const screenTitle = {
     [PublicLinkScreenMode.Default]: 'Public Link (Beta)',
@@ -154,7 +156,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                       ref={inputRef}
                       style={{...mixins.input, ...styles.linkText}}
                       value={publicLink}
-                      selectionColor={theme.color.brightAccent}
+                      selectionColor={selectionColor}
                       theme={{ colors: {
                         placeholder: theme.color.textPrimary,
                         text: theme.color.textPrimary,

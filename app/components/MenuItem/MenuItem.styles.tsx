@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme }) => ({
   menuItemTitle: {
     color: theme.color.textPrimary,
   },
@@ -11,4 +10,4 @@ export default StyleSheet.create({
     borderBottomWidth: 2,
     padding: 20,
   },
-});
+}));

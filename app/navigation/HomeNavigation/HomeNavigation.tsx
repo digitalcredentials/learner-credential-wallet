@@ -4,27 +4,24 @@ import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { theme } from '../../styles';
-import styles from './HomeNavigation.styles';
+import dynamicStyleSheet from './HomeNavigation.styles';
 import {
   CredentialNavigation,
   ShareNavigation,
-  AddCredentialNavigation,
   SettingsNavigation,
   HomeNavigationParamList,
   TabIconProps,
+  AddNavigation,
 } from '../../navigation';
+import { useDynamicStyles } from '../../hooks';
 
 const Tab = createBottomTabNavigator<HomeNavigationParamList>();
-
-const HomeTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="home" color={color} size={theme.iconSize} />;
-const ShareTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="share" color={color} size={theme.iconSize} />;
-const AddTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="add-circle" color={color} size={theme.iconSize} />;
-const SettingsTabIcon = ({ color }: TabIconProps) => <MaterialIcons name="settings" color={color} size={theme.iconSize} />;
 
 const labelSuffix = Platform.OS === 'ios' ? ', tab' : '';
 
 export default function HomeNavigation(): JSX.Element {
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
+
   return (
     <Tab.Navigator
       screenOptions={{ 
@@ -46,7 +43,7 @@ export default function HomeNavigation(): JSX.Element {
         tabBarIcon: ShareTabIcon,
         tabBarAccessibilityLabel: `Share, (2 of 4)${labelSuffix}`,
       }}/>
-      <Tab.Screen name="AddCredentialNavigation" component={AddCredentialNavigation} options={{
+      <Tab.Screen name="AddNavigation" component={AddNavigation} options={{
         title: 'Add',
         tabBarIcon: AddTabIcon,
         tabBarAccessibilityLabel: `Add, (3 of 4)${labelSuffix}`,
@@ -59,3 +56,23 @@ export default function HomeNavigation(): JSX.Element {
     </Tab.Navigator>
   );
 }
+
+const HomeTabIcon = ({ color }: TabIconProps) => {
+  const { theme } = useDynamicStyles();
+  return <MaterialIcons name="home" color={color} size={theme.iconSize} />;
+};
+
+const ShareTabIcon = ({ color }: TabIconProps) => {
+  const { theme } = useDynamicStyles();
+  return <MaterialIcons name="share" color={color} size={theme.iconSize} />;
+};
+
+const AddTabIcon = ({ color }: TabIconProps) => {
+  const { theme } = useDynamicStyles();
+  return <MaterialIcons name="add-circle" color={color} size={theme.iconSize} />;
+};
+
+const SettingsTabIcon = ({ color }: TabIconProps) => {
+  const { theme } = useDynamicStyles();
+  return <MaterialIcons name="settings" color={color} size={theme.iconSize} />;
+};

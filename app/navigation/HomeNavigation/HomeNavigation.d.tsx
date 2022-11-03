@@ -3,7 +3,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { CredentialRecordRaw } from '../../model/credential';
 
 import type {
-  AddCredentialNavigationParamList,
+  AddNavigationParamList,
   CredentialNavigationParamList,
   SettingsNavigationParamList,
 } from '../';
@@ -12,7 +12,7 @@ import type {
 export type HomeNavigationParamList = {
   CredentialNavigation: NavigatorScreenParams<CredentialNavigationParamList>;
   ShareNavigation: undefined;
-  AddCredentialNavigation: NavigatorScreenParams<AddCredentialNavigationParamList>;
+  AddNavigation: NavigatorScreenParams<AddNavigationParamList>;
   SettingsNavigation: NavigatorScreenParams<SettingsNavigationParamList>;
   DebugScreen: {
     rawCredentialRecord: CredentialRecordRaw;
@@ -21,7 +21,7 @@ export type HomeNavigationParamList = {
 
 export type CredentialNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'CredentialNavigation'>;
 export type ShareNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'ShareNavigation'>;
-export type AddCredentialNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'AddCredentialNavigation'>;
+export type AddNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'AddNavigation'>;
 export type SettingsNavigationProps = BottomTabScreenProps<HomeNavigationParamList, 'SettingsNavigation'>;
 
 export type TabIconProps = {

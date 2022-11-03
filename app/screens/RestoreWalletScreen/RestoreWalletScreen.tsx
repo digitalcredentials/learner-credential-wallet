@@ -3,17 +3,16 @@ import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { theme, mixins } from '../../styles';
 import { NavHeader, ImportFileModal } from '../../components';
-
-import styles from './RestoreWalletScreen.styles';
+import dynamicStyleSheet from './RestoreWalletScreen.styles';
 import { RestoreWalletScreenProps } from './RestoreWalletScreen.d';
 import { importWalletFrom, ReportDetails } from '../../lib/import';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { getAllRecords } from '../../store';
 import type { ImportFileModalHandle } from '../../components';
 
 export default function RestoreWalletScreen({ navigation }: RestoreWalletScreenProps): JSX.Element {
+  const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const importModalRef = useRef<ImportFileModalHandle>(null);
   const dispatch = useAppDispatch();
 

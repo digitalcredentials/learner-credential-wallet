@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { theme, mixins, Color } from '../../styles';
+import { Color } from '../../styles';
+import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default StyleSheet.create({
+export default createDynamicStyleSheet(({ theme, mixins }) => ({
   container: {
     padding: 16,
   },
@@ -85,4 +85,4 @@ export default StyleSheet.create({
     color: theme.color.brightAccent,
     textDecorationLine: 'underline',
   },
-});
+}));

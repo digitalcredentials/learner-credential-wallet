@@ -20,5 +20,8 @@ export { default as LoadingIndicatorDots } from './LoadingIndicatorDots/LoadingI
 export { default as BackupItemModal } from './BackupItemModal/BackupItemModal';
 export { default as ImportFileModal } from './ImportFileModal/ImportFileModal';
 export { default as CredentialRequestHandler } from './CredentialRequestHandler/CredentialRequestHandler';
+export { default as ThemeProvider } from './ThemeProvider/ThemeProvider';
+export { default as GlobalErrorModal } from './GlobalErrorModal/GlobalErrorModal';
+export { default as BulletList } from './BulletList/BulletList';
 
 export * from './ImportFileModal/ImportFileModal.d';
