@@ -3,17 +3,14 @@ import * as RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
 
 import { ProfileRecord, ProfileRecordRaw } from '../model';
-import { encryptData } from './encrypt';
 import { exportWalletEncrypted } from './lockedWallet';
-
-export const LOCKED_PROFILE_PREFIX = 'locked_profile:';
 
 export async function exportProfile(rawProfileRecord: ProfileRecordRaw, encryptPassphrase?: string): Promise<void> {
   const fileName = 'Profile Backup';
 
   const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
   const exportedProfile = await ProfileRecord.exportProfileRecord(rawProfileRecord);
-  const exportedProfileString = JSON.stringify(exportedProfile, null, 2);
+  const exportedProfileString = JSON.stringify([exportedProfile], null, 2);
 
   const data = encryptPassphrase 
     ? await exportWalletEncrypted(exportedProfileString, encryptPassphrase)
