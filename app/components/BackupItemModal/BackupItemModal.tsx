@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text } from 'react-native';
 import {  CheckBox } from 'react-native-elements';
 import { ConfirmModal, LoadingIndicatorDots, PasswordForm } from '..';
 

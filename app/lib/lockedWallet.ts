@@ -1,60 +1,59 @@
 import * as MsrCrypto from '@microsoft/msrcrypto';
 import uuid from 'react-native-uuid';
 
-async function deriveKeyEncryptionKey(password, salt, iterations){
+async function deriveKeyEncryptionKey(password, salt, iterations) {
   const passphraseKey = Buffer.from(password);
-  var saltBuffer = Buffer.from(salt);
+  const saltBuffer = Buffer.from(salt);
 
-  var importedKey = await MsrCrypto.subtle.importKey(
-    "raw",
+  const importedKey = await MsrCrypto.subtle.importKey(
+    'raw',
     passphraseKey,
-    { name: "PBKDF2" },
+    { name: 'PBKDF2' },
     false,
-    ["deriveBits", "deriveKey"]
+    ['deriveBits', 'deriveKey']
   );
 
-  var keyEncryptionBits = await MsrCrypto.subtle.deriveBits(
+  const keyEncryptionBits = await MsrCrypto.subtle.deriveBits(
     {
-      name: "PBKDF2",
+      name: 'PBKDF2',
       salt: saltBuffer,
       iterations: iterations,
-      hash: {name: "SHA-512"}
+      hash: {name: 'SHA-512'}
     },
     importedKey,
     256
   );
 
-  var keyEncryptionKey = await MsrCrypto.subtle.importKey(
-    "raw",
+  // return keyEncryptionKey
+  return MsrCrypto.subtle.importKey(
+    'raw',
     keyEncryptionBits,
-    { name: "AES-KW", length: 256 },
+    { name: 'AES-KW', length: 256 },
     true,
-    ["wrapKey", "unwrapKey"]
+    ['wrapKey', 'unwrapKey']
   );
-
-  return keyEncryptionKey;
 }
 
 
 async function encrypt(data, password) {
-  var saltBuffer = Buffer.from(crypto.getRandomValues(new Uint8Array(16)))
+  const saltBuffer = Buffer.from(crypto.getRandomValues(new Uint8Array(16)));
   const iterations = 120000;
 
-  var keyEncryptionKey = await deriveKeyEncryptionKey(password, saltBuffer, iterations);
+  const keyEncryptionKey = await deriveKeyEncryptionKey(password, saltBuffer, iterations);
 
-  var contentEncryptionKey = await MsrCrypto.subtle.generateKey(
+  const contentEncryptionKey = await MsrCrypto.subtle.generateKey(
     {name: 'AES-GCM', length: 256},
     true,
     ['encrypt']
   );
 
-  var wrappedKey = await MsrCrypto.subtle.wrapKey(
-    'raw', contentEncryptionKey, keyEncryptionKey, { name: "AES-KW", length: 256 }
+  const wrappedKey = await MsrCrypto.subtle.wrapKey(
+    'raw', contentEncryptionKey, keyEncryptionKey, { name: 'AES-KW', length: 256 }
   );
 
   const iv = MsrCrypto.getRandomValues(new Uint8Array(12));
 
-  var msgToEncrypt = new TextEncoder().encode(JSON.stringify(data)); // probaby need to base64 this
+  const msgToEncrypt = new TextEncoder().encode(JSON.stringify(data)); // probably need to base64 this
   const additionalData = undefined;
 
   // encrypt data
@@ -67,22 +66,22 @@ async function encrypt(data, password) {
   const ciphertext = encrypted.subarray(0, encrypted.length - tagBytes);
   const tag = encrypted.subarray(encrypted.length - tagBytes);
 
-  let jwe = {
-    "recipients": [
+  const jwe = {
+    'recipients': [
       {
-        "header": {
-          alg:"PBES2-HS512+A256KW",
+        'header': {
+          alg:'PBES2-HS512+A256KW',
           p2s: saltBuffer.toString('base64'),
           p2c: iterations,
-          enc: "A256GCM",
+          enc: 'A256GCM',
         },
-        "encrypted_key": Buffer.from(wrappedKey).toString('base64')
+        'encrypted_key': Buffer.from(wrappedKey).toString('base64')
       },
     ],
-    "iv": Buffer.from(iv).toString('base64'),
-    "ciphertext": Buffer.from(ciphertext).toString('base64'),
-    "tag": Buffer.from(tag).toString('base64'),
-  }
+    'iv': Buffer.from(iv).toString('base64'),
+    'ciphertext': Buffer.from(ciphertext).toString('base64'),
+    'tag': Buffer.from(tag).toString('base64'),
+  };
   return jwe;
 }
 
@@ -97,22 +96,22 @@ async function decrypt(jwe, password){
   const tagLength = tagBytes * 8;
   const additionalData = undefined;
 
-  var keyEncryptionKey = await deriveKeyEncryptionKey(password, salt, iterations);
+  const keyEncryptionKey = await deriveKeyEncryptionKey(password, salt, iterations);
 
-  var contentEncryptionKey = await MsrCrypto.subtle.unwrapKey(
-    "raw",
+  const contentEncryptionKey = await MsrCrypto.subtle.unwrapKey(
+    'raw',
     Buffer.from(recipient.encrypted_key, 'base64'),
     keyEncryptionKey,
     {name: 'AES-KW', length: 256},
     {name: 'AES-GCM', length: 256},
     true,
-    ["encrypt", "decrypt"]
+    ['encrypt', 'decrypt']
   );
 
   const encrypted = new Uint8Array(ciphertext.length + tag.length);
   encrypted.set(ciphertext);
   encrypted.set(tag, ciphertext.length);
- 
+
   const decrypted = new Uint8Array (await MsrCrypto.subtle.decrypt(
     {name: 'AES-GCM', iv, tagLength, additionalData},
     contentEncryptionKey,
@@ -121,22 +120,22 @@ async function decrypt(jwe, password){
   return JSON.parse(new TextDecoder().decode(decrypted));
 }
 
-export async function exportWalletEncrypted(data: string, passphrase: string): Provise<void> {
+export async function exportWalletEncrypted(data: string, passphrase: string): Promise<string> {
   const walletData = JSON.parse(data);
   let walletId = walletData.id;
   if (!walletId && Array.isArray(walletData) && walletData.length > 0){
     walletId = walletData[0].id;
   }
 
-  let encryptedWallet = await encrypt(data, passphrase);
+  const encryptedWallet = await encrypt(data, passphrase);
 
-  let lockedWallet = {
-    "@context": [
-      "https://www.w3.org/2018/credentials/v1",
-      "http://w3id.org/wallet/v1"
+  const lockedWallet = {
+    '@context': [
+      'https://www.w3.org/2018/credentials/v1',
+      'http://w3id.org/wallet/v1'
     ],
     id: walletId,
-    type: ["VerifiableCredential", "EncryptedWallet"],
+    type: ['VerifiableCredential', 'EncryptedWallet'],
     issuer: 'did:web:lcw.app',
     issuanceDate: new Date().toISOString(),
     credentialSubject: {
@@ -148,7 +147,7 @@ export async function exportWalletEncrypted(data: string, passphrase: string): P
   return JSON.stringify(lockedWallet);
 }
 
-export async function importWalletEncrypted(data: string, passphrase: string){
+export async function importWalletEncrypted(data: string, passphrase: string) {
   const lockedWallet = JSON.parse(data);
   const jwe = lockedWallet.credentialSubject.jwe;
   return await decrypt(jwe, passphrase);
