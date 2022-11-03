@@ -11,3 +11,4 @@ declare module 'jsonld-document-loader';
 declare module '@interop/did-web-resolver';
 declare module 'json-canonicalize';
 declare module 'react-native-keychain';
+declare module '@microsoft/msrcrypto';
