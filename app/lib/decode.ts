@@ -9,38 +9,17 @@ import { VerifiablePresentation } from '../types/presentation';
 import { CredentialRequestParams } from './request';
 import { isCredentialRequestParams } from './request';
 import { HumanReadableError } from './error';
-import { isVerifiableCredential } from './verifiableObject';
+import { isVerifiableCredential, isVerifiablePresentation } from './verifiableObject';
 
 const documentLoader = securityLoader().build();
-const vpqrPattern = /^VP1-[A-Z|0-9]+/;
-const urlPattern = /^https?:\/\/.+/;
-
-export function isVpqr(text: string): boolean {
-  return vpqrPattern.test(text);
-}
-
-export function isUrl(text: string): boolean {
-  return urlPattern.test(text);
-}
+export const regexPattern = {
+  vpqr: /^VP1-[A-Z|0-9]+/,
+  url: /^https?:\/\/.+/,
+  json: /^{.*}$/s,
+};
 
 export function isDeepLink(text: string): boolean {
   return text.startsWith('dccrequest://request?') || text.startsWith('org.dcconsortium://request?');
-}
-
-export async function credentialsFromQrText(text: string): Promise<Credential[]> {
-  const { vp }: { vp: VerifiablePresentation } = await fromQrCode({ text, documentLoader });
-
-  // TODO: We need to separate verification of the presentation from the credentials inside.
-  // https://www.pivotaltracker.com/story/show/179830339
-  //const isVerified = await verifyPresentation(vp);
-
-  //if (!isVerified) {
-  //  throw new Error(PresentationError.IsNotVerified);
-  //}
-
-  const { verifiableCredential } = vp;
-
-  return ([] as Credential[]).concat(verifiableCredential);
 }
 
 export function credentialRequestParamsFromQrText(text: string): CredentialRequestParams {
@@ -59,15 +38,51 @@ export async function toQr(vp: VerifiablePresentation): Promise<string> {
   return result.payload;
 }
 
-export async function credentialsFrom(data: string): Promise<Credential[]> {
-  const items = isVpqr(data) 
-    ? await credentialsFromQrText(data)
-    : [JSON.parse(data)];
+function credentialsFromPresentation(vp: VerifiablePresentation): Credential[] {
+  const { verifiableCredential } = vp;
+  return ([] as Credential[]).concat(verifiableCredential);
+}
 
-  const credentials = items.filter(isVerifiableCredential);
-  if (credentials.length === 0) {
-    throw new Error('No credentials parsed from data');
+async function credentialsFromVpqr(text: string): Promise<Credential[]> {
+  const { vp }: { vp: VerifiablePresentation } = await fromQrCode({ text, documentLoader });
+  return credentialsFromPresentation(vp);
+}
+
+async function credentialsFromJson(text: string): Promise<Credential[]> {
+  const data = JSON.parse(text);
+  
+  if (isVerifiablePresentation(data)) {
+    return credentialsFromPresentation(data);
   }
 
-  return credentials;
+  if (isVerifiableCredential(data)) {
+    return [data];
+  }
+
+  throw new Error('Credential(s) could not be decoded from the JSON.');
+}
+
+/**
+ * A method for decoding credentials from a variety text formats.
+ * 
+ * @param text - A string containing a VPQR, URL, or JSON object.
+ * @returns {Promise<Credential[]>} - An array of credentials.
+ */
+export async function credentialsFrom(text: string): Promise<Credential[]> {
+  if (regexPattern.url.test(text)) {
+    const response = await fetch(text);
+    text = await response.text().then((t) => t.trim());
+  }
+
+  if (regexPattern.vpqr.test(text)) {
+    return credentialsFromVpqr(text);
+  }
+
+  console.log(text);
+
+  if (regexPattern.json.test(text)) {
+    return credentialsFromJson(text);
+  }
+
+  throw new Error('No credentials were resolved from the text');
 }

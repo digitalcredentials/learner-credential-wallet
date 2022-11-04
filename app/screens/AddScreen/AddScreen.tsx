@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { AccessibilityInfo, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import dynamicStyleSheet from './AddScreen.styles';
 import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { NavHeader } from '../../components';
-import { credentialRequestParamsFromQrText, credentialsFrom, credentialsFromQrText, isDeepLink, isUrl, isVpqr } from '../../lib/decode';
+import { credentialRequestParamsFromQrText, credentialsFrom, isDeepLink, regexPattern } from '../../lib/decode';
 import { PresentationError } from '../../types/presentation';
 import { errorMessageMatches, HumanReadableError } from '../../lib/error';
 import { navigationRef } from '../../navigation';
@@ -22,7 +22,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [fileUrl, setFileUrl] = useState('');
   const dispatch = useAppDispatch();
-  const urlIsValid = isUrl(fileUrl);
+  const urlIsValid = useMemo(() => regexPattern.url.test(fileUrl), [fileUrl]);
 
   function onPressQRScreen() {
     navigation.navigate('CredentialQRScreen', {
@@ -42,12 +42,16 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
     }
   }
 
-  async function addCredentialFromFile() {
+  async function addCredentialsFrom(text: string) {
+    const credentials = await credentialsFrom(text);
+    dispatch(stageCredentials(credentials));
+    goToChooseProfile();
+  }
+
+  async function addFromFile() {
     try {
-      const data = await pickAndReadFile();
-      const credentials = await credentialsFrom(data);
-      dispatch(stageCredentials(credentials));
-      goToChooseProfile();
+      const text = await pickAndReadFile();
+      await addCredentialsFrom(text);
     } catch (err) {
       if (errorMessageMatches(err, CANCEL_PICKER_MESSAGES)) return;
 
@@ -59,16 +63,10 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
     }
   }
 
-  async function addCredentialFromUrl() {
+  async function addFromUrl() {
     try {
-      const response = await fetch(fileUrl);
-      const data = await response.text();
-      const credentials = await credentialsFrom(data);
-      dispatch(stageCredentials(credentials));
-      goToChooseProfile();
+      await addCredentialsFrom(fileUrl);
     } catch (err) {
-      if (errorMessageMatches(err, CANCEL_PICKER_MESSAGES)) return;
-
       console.error(err);
       await dispatch(displayGlobalError({ 
         title: 'Unable to Add Credentials',
@@ -78,28 +76,23 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
   }
 
   async function onReadQRCode(text: string) {
+    AccessibilityInfo.announceForAccessibility('QR Code Scanned');
+
     if (isDeepLink(text)) {
-      console.log('Received deep link via QR code', text);
       const params = credentialRequestParamsFromQrText(text);
       goToChooseProfile(params);
-    } else if (isVpqr(text)) {
+    } else {
       try {
-        const credentials = await credentialsFromQrText(text);
-        AccessibilityInfo.announceForAccessibility('QR Code Scanned');
-        dispatch(stageCredentials(credentials));
-        goToChooseProfile();
+        await addCredentialsFrom(text);
       } catch (err) {
         console.warn(err);
-        const message = (err as Error).message;
 
-        if ((Object.values(PresentationError) as string[]).includes(message)) {
-          throw new HumanReadableError(message);
+        if (errorMessageMatches(err, Object.values(PresentationError))) {
+          throw new HumanReadableError(err.message);
         } else {
           throw new HumanReadableError('An error was encountered when parsing this QR code.');
         }
       }
-    } else {
-      throw new HumanReadableError('The QR code was read, but no credentials were found.');
     }
   }
 
@@ -132,7 +125,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
           containerStyle={[mixins.buttonIconContainer, mixins.noFlex]}
           titleStyle={mixins.buttonIconTitle}
           iconRight
-          onPress={addCredentialFromFile}
+          onPress={addFromFile}
           icon={
             <MaterialCommunityIcons
               name="file-upload"
@@ -165,7 +158,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
               buttonStyle={[mixins.buttonCompact, mixins.buttonPrimary, styles.actionButton]}
               containerStyle={[mixins.buttonContainer, styles.actionButtonContainer]}
               titleStyle={[mixins.buttonTitle, !urlIsValid && styles.actionButtonInactiveTitle]}
-              onPress={addCredentialFromUrl}
+              onPress={addFromUrl}
               disabled={!urlIsValid}
               disabledStyle={styles.actionButtonInactive}
             />
