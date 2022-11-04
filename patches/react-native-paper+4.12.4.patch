@@ -1,0 +1,37 @@
+diff --git a/node_modules/react-native-paper/src/components/TextInput/TextInputOutlined.tsx b/node_modules/react-native-paper/src/components/TextInput/TextInputOutlined.tsx
+index 710839f..d677704 100644
+--- a/node_modules/react-native-paper/src/components/TextInput/TextInputOutlined.tsx
++++ b/node_modules/react-native-paper/src/components/TextInput/TextInputOutlined.tsx
+@@ -84,6 +84,7 @@ const TextInputOutlined = ({
+     fontVariant,
+     lineHeight,
+     height,
++    minHeight: minHeightStyle,
+     backgroundColor = colors.background,
+     textAlign,
+     ...viewStyle
+@@ -139,7 +140,7 @@ const TextInputOutlined = ({
+ 
+   const topPosition = calculateLabelTopPosition(
+     labelHeight,
+-    inputHeight,
++    multiline ? Number(minHeightStyle) : inputHeight,
+     LABEL_PADDING_TOP
+   );
+ 
+@@ -268,7 +269,6 @@ const TextInputOutlined = ({
+       visible: parentState.labeled,
+     };
+   }
+-
+   return (
+     <View style={viewStyle}>
+       {/*
+@@ -322,6 +322,7 @@ const TextInputOutlined = ({
+                 ? { height: inputHeight }
+                 : {},
+               paddingOut,
++              multiline && { paddingTop: pad - 6 },
+               {
+                 ...font,
+                 fontSize,

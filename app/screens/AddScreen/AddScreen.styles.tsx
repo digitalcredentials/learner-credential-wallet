@@ -24,10 +24,11 @@ export default createDynamicStyleSheet(({ mixins, theme }) => ({
   input: {
     ...mixins.input,
     flex: 1,
-    height: 44,
+    height: 240,
+    minHeight: 44,
   },
   actionButton: {
-    paddingHorizontal: 22,
+    paddingHorizontal: 16,
   },
   actionButtonInactive: {
     backgroundColor: theme.color.foregroundPrimary,
@@ -36,9 +37,9 @@ export default createDynamicStyleSheet(({ mixins, theme }) => ({
     color: theme.color.textPrimary,
   },
   actionButtonContainer: {
-    marginTop: 5,
-    marginLeft: 8,
-    flex: 0,
+    bottom: 8,
+    right: 8,
+    position: 'absolute',
   },
   actionInputContainer: {
     flexDirection: 'row',
