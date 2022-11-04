@@ -12,7 +12,7 @@ export function isVerifiableCredential(obj: VerifiableObject): obj is Credential
   return obj.type?.includes('VerifiableCredential');
 }
 
-function isVerifiablePresentation(obj: VerifiableObject): obj is VerifiablePresentation {
+export function isVerifiablePresentation(obj: VerifiableObject): obj is VerifiablePresentation {
   return obj.type.includes('VerifiablePresentation');
 }
 

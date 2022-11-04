@@ -22,7 +22,7 @@ export function errorMessageFrom(err: unknown, fallback = FALLBACK_ERROR_MESSAGE
   }
 }
 
-export function errorMessageMatches(err: unknown, messages: string[]): boolean {
+export function errorMessageMatches(err: unknown, messages: string[]): err is Error {
   const errorMessage = (err as Error).message;
 
   for (const message of messages) {
