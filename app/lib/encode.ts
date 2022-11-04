@@ -15,3 +15,7 @@ export function encodeQueryParams (url: string): string {
     }
   });
 }
+
+export function cleanCopy<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj));
+}
