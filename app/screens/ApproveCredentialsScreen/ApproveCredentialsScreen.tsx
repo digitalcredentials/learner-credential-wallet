@@ -6,7 +6,6 @@ import { Button } from 'react-native-elements';
 import { navigationRef } from '../../navigation';
 import { acceptPendingCredentials, clearFoyer, selectPendingCredentials } from '../../store/slices/credentialFoyer';
 import { CredentialItem, NavHeader, CredentialRequestHandler, ApprovalControls, ConfirmModal } from '../../components';
-import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
 import dynamicStyleSheet from './ApproveCredentialsScreen.styles';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
@@ -63,10 +62,6 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
 
   function renderItem({ item: pendingCredential }: RenderItemProps) {
     const { credential } = pendingCredential;
-    const { issuer } = credential;
-    const { title } = credentialRenderInfo(credential);
-    const issuerName = (typeof issuer === 'string' ? '' : issuer?.name) ?? '';
-    const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
     const onSelect = () => navigation.navigate(
       'ApproveCredentialScreen',
       {
@@ -77,9 +72,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
 
     return (
       <CredentialItem
-        title={title}
-        subtitle={issuerName}
-        image={issuerImage}
+        credential={credential}
         onSelect={onSelect}
         bottomElement={<ApprovalControls pendingCredential={pendingCredential} profileRecordId={profileRecordId} />}
         chevron

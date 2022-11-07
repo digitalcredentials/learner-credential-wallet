@@ -1,10 +1,9 @@
 import { CredentialRecordRaw } from '../../model';
+import { Credential } from '../../types/credential';
 
 export type CredentialItemProps = {
-  title: string;
-  subtitle: string;
   onSelect: () => void;
-  image?: ImageSourcePropType;
+  credential: Credential;
   checkable?: boolean;
   selected?: boolean;
   chevron?: boolean;

@@ -3,7 +3,6 @@ import { View, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { CredentialItem, NavHeader } from '../../components';
-import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import dynamicStyleSheet from './PresentationPreviewScreen.styles';
 import type { PresentationPreviewScreenProps } from '../../navigation';
 import type { RenderItemProps } from './PresentationPreviewScreen.d';
@@ -19,20 +18,11 @@ export default function PresentationPreviewScreen({
 
   function renderItem({ item }: RenderItemProps) {
     const { credential } = item;
-    const { issuer } = credential;
-    const { title } = credentialRenderInfo(credential);
-    const subtitle =
-      typeof issuer !== 'string' && issuer.name !== undefined
-        ? issuer.name
-        : '';
     const onSelect = () => navigation.navigate('CredentialScreen', { rawCredentialRecord: item });
-    const issuerImage = typeof issuer === 'string' ? null : issuer.image;
 
     return (
       <CredentialItem
-        title={title}
-        subtitle={subtitle}
-        image={issuerImage}
+        credential={credential}
         onSelect={onSelect}
         chevron
       />

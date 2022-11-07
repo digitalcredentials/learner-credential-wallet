@@ -4,7 +4,6 @@ import { Text, Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
 import { ConfirmModal, CredentialItem, NavHeader } from '../../components';
-import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 import dynamicStyleSheet from './ShareSelectionScreen.styles';
 import type { RenderItemProps } from './ShareSelectionScreen.d';
 import type { ShareSelectionScreenProps } from '../../navigation';
@@ -48,14 +47,10 @@ export default function ShareSelectionScreen({
 
   function renderItem({ item, index }: RenderItemProps): JSX.Element {
     const { credential } = item;
-    const { issuer } = credential;
-    const { title } = credentialRenderInfo(credential);
-    const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
 
     return (
       <CredentialItem
-        title={title}
-        subtitle={issuerName}
+        credential={credential}
         onSelect={() => toggle(index)}
         selected={selected.includes(index)}
         checkable
@@ -65,18 +60,15 @@ export default function ShareSelectionScreen({
 
   function renderShareItem({item}: RenderItemProps): JSX.Element {
     const { credential } = item;
-    const { issuer } = credential;
-    const { title } = credentialRenderInfo(credential);
-    const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
+    const onSelect = () => {
+      setSingleSelectedCredential(item);
+      setModalOpen(true);
+    };
 
     return (
       <CredentialItem
-        title={title}
-        subtitle={issuerName}
-        onSelect={() => {
-          setSingleSelectedCredential(item);
-          setModalOpen(true);
-        }}
+        credential={credential}
+        onSelect={onSelect}
         hideLeft
         chevron
       />
