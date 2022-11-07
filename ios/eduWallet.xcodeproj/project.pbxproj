@@ -117,6 +117,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6C3B61202913615800ABEC10 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				6C834FA82788BC65005188A9 /* eduWalletShare.appex */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		6C834FA92788BC65005188A9 /* eduWalletShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +151,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
+				6C3B61202913615800ABEC10 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -450,7 +459,7 @@
 				CODE_SIGN_ENTITLEMENTS = eduwallet/wallet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_TEAM = A35W4MM59Y;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -460,7 +469,7 @@
 				INFOPLIST_FILE = eduwallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.14.0;
+				MARKETING_VERSION = 1.15.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -487,12 +496,12 @@
 				CODE_SIGN_ENTITLEMENTS = eduwallet/wallet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 39;
 				DEVELOPMENT_TEAM = A35W4MM59Y;
 				INFOPLIST_FILE = eduwallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.14.0;
+				MARKETING_VERSION = 1.15.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
