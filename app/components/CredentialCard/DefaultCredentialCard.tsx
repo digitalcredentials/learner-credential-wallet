@@ -36,8 +36,14 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
 
   const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
   const issuerUrl = (typeof issuer === 'string' ? null : issuer?.url) ?? NO_URL;
-  const issuerImage = typeof issuer === 'string' ? null : issuer?.image;
   const issuerId = typeof issuer === 'string' ? null : issuer?.id;
+  let issuerImage = null;
+  if(issuer && typeof issuer !== 'string') {
+    issuerImage = issuer.image;
+    if(typeof issuer.image !== 'string') {
+      issuerImage = issuer!.image!.id;
+    }
+  }
 
   function _onPressIssuer() {
     if (issuerId) {
@@ -64,9 +70,9 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
   return (
     <View style={styles.credentialContainer}>
       <View style={styles.dataContainer}>
-        <CredentialStatusBadges 
-          rawCredentialRecord={rawCredentialRecord} 
-          badgeBackgroundColor={theme.color.backgroundPrimary} 
+        <CredentialStatusBadges
+          rawCredentialRecord={rawCredentialRecord}
+          badgeBackgroundColor={theme.color.backgroundPrimary}
         />
         <Text style={styles.header} accessibilityRole="header">{title}</Text>
         <Text style={styles.dataLabel}>Issuer</Text>

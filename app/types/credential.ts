@@ -1,10 +1,16 @@
 export type IssuerURI = string;
+
+export type IssuerImage = {
+  readonly id: string;
+  readonly type: string;
+}
+
 export type IssuerObject = {
   readonly id: IssuerURI;
   readonly type?: string;
   readonly name?: string;
   readonly url?: string;
-  readonly image?: string;
+  readonly image?: string | IssuerImage;
 }
 export type Issuer = IssuerURI | IssuerObject;
 
