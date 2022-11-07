@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { View, Text, Image, Linking, ImageStyle, StyleProp } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
@@ -8,42 +7,27 @@ import type { CredentialCardProps } from './CredentialCard.d';
 import { CredentialStatusBadges } from '../';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDynamicStyles } from '../../hooks';
-
-const NO_URL = 'None';
-const DATE_FORMAT = 'MMM D, YYYY';
+import { credentialDetailsFrom } from '../../lib/credentialDetails';
 
 export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
-  const { credentialSubject, issuer, issuanceDate } = credential;
 
-  let achievement = credential.credentialSubject.hasCredential ??
-    credential.credentialSubject.achievement;
-  if (Array.isArray(achievement)) {
-    achievement = achievement[0];
-  }
-
-  const title = achievement?.name ?? '';
-  const description = achievement?.description ?? '';
-  const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
-  const subjectName = credentialSubject.name;
-  const numberOfCredits = achievement?.awardedOnCompletionOf?.numberOfCredits?.value ?? '';
-  const criteria = achievement?.criteria?.narrative ?? '';
-
-  const { startDate, endDate } = achievement?.awardedOnCompletionOf ?? {};
-  const startDateFmt = startDate && moment(startDate).format(DATE_FORMAT);
-  const endDateFmt = endDate && moment(endDate).format(DATE_FORMAT);
-
-  const issuerName = (typeof issuer === 'string' ? issuer : issuer?.name) ?? '';
-  const issuerUrl = (typeof issuer === 'string' ? null : issuer?.url) ?? NO_URL;
-  const issuerId = typeof issuer === 'string' ? null : issuer?.id;
-  let issuerImage = null;
-  if(issuer && typeof issuer !== 'string') {
-    issuerImage = issuer.image;
-    if(typeof issuer.image !== 'string') {
-      issuerImage = issuer!.image!.id;
-    }
-  }
+  const {
+    title,
+    description,
+    formattedIssuanceDate,
+    subjectName,
+    numberOfCredits,
+    criteria,
+    startDateFmt,
+    endDateFmt,
+    issuerName,
+    issuerUrl,
+    issuerId,
+    issuerImage
+  } = credentialDetailsFrom(credential);
+  
 
   function _onPressIssuer() {
     if (issuerId) {
@@ -52,7 +36,7 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
   }
 
   function IssuerLink(): JSX.Element {
-    if (issuerUrl === NO_URL) {
+    if (issuerUrl === null) {
       return <Text style={styles.dataValue}>{issuerUrl}</Text>;
     }
 
@@ -109,10 +93,12 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
         <Text style={styles.dataLabel}>Issuance Date</Text>
         <Text style={styles.dataValue}>{formattedIssuanceDate}</Text>
       </View>
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataLabel}>Subject Name</Text>
-        <Text style={styles.dataValue}>{subjectName}</Text>
-      </View>
+      {subjectName && (
+        <View style={styles.dataContainer}>
+          <Text style={styles.dataLabel}>Subject Name</Text>
+          <Text style={styles.dataValue}>{subjectName}</Text>
+        </View>
+      )}
       {numberOfCredits ? (
         <View style={styles.dataContainer}>
           <Text style={styles.dataLabel}>Number of Credits</Text>
@@ -120,13 +106,13 @@ export default function DefaultCredentialCard({ rawCredentialRecord, onPressIssu
         </View>
       ) : null}
       <View style={styles.flexRow}>
-        {startDate ? (
+        {startDateFmt ? (
           <View style={styles.dataContainer}>
             <Text style={styles.dataLabel}>Start Date</Text>
             <Text style={styles.dataValue}>{startDateFmt}</Text>
           </View>
         ) : null}
-        {endDate ? (
+        {endDateFmt ? (
           <View style={styles.dataContainer}>
             <Text style={styles.dataLabel}>End Date</Text>
             <Text style={styles.dataValue}>{endDateFmt}</Text>

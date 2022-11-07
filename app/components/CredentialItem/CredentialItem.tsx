@@ -7,11 +7,9 @@ import dynamicStyleSheet from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
 import { CredentialStatusBadges } from '../../components';
 import { useDynamicStyles, useVerifyCredential } from '../../hooks';
+import { credentialDetailsFrom } from '../../lib/credentialDetails';
 
 export default function CredentialItem({
-  title, // Should this info be passed in here, or determined by the CredentialItem?
-  subtitle,
-  image = null,
   onSelect,
   checkable = false,
   selected = false,
@@ -19,12 +17,15 @@ export default function CredentialItem({
   hideLeft = false,
   bottomElement,
   rawCredentialRecord,
+  credential,
   showStatusBadges = false,
 }: CredentialItemProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
 
   const verifyCredential = useVerifyCredential(rawCredentialRecord);
   const isNotVerified = useMemo(() => verifyCredential?.result.verified === false, [verifyCredential]);
+
+  const { title, issuerName, issuerImage } = credentialDetailsFrom(credential);
 
   /**
    * When the `bottomElement` param is provided, the root view must not be
@@ -33,7 +34,7 @@ export default function CredentialItem({
    */
   const hasBottomElement = bottomElement !== undefined;
   const accessibilityProps: ComponentProps<typeof View> = {
-    accessibilityLabel: `${title} Credential, from ${subtitle}`,
+    accessibilityLabel: `${title} Credential, from ${issuerName}`,
     accessibilityRole: checkable ? 'checkbox' : 'button',
     accessibilityState: { checked: checkable ? selected : undefined },
   };
@@ -65,10 +66,10 @@ export default function CredentialItem({
       );
     }
 
-    if (image) {
+    if (issuerImage) {
       return (
         <Image
-          source={{ uri: image }}
+          source={{ uri: issuerImage }}
           style={mixins.imageIcon as StyleProp<ImageStyle>}
         />
       );
@@ -114,7 +115,7 @@ export default function CredentialItem({
             )}
             <ListItem.Title style={styles.listItemTitle}>{title}</ListItem.Title>
             <ListItem.Subtitle style={styles.listItemSubtitle}>
-              {subtitle}
+              {issuerName}
             </ListItem.Subtitle>
           </View>
           {chevron && (
