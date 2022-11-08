@@ -26,7 +26,7 @@ export default function CardImage({ source, accessibilityLabel, defaultIcon = 'c
       <View style={[styles.imageContainer, containerStyle]}>
         <MaterialCommunityIcons
           name={defaultIcon}
-          size={size}
+          size={size-4}
           color={Color.Gray800}
         />
       </View>
@@ -59,5 +59,7 @@ const dynamicStyleSheet = createDynamicStyleSheet(({ theme }) => ({
     borderRadius: 3,
     marginRight: 12,
     padding: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
