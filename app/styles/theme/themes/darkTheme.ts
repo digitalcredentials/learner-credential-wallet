@@ -45,7 +45,7 @@ export const darkTheme: ThemeType = {
   },
   borderRadius: 5,
   iconSize: 24,
-  issuerIconSize: 40,
+  issuerIconSize: 48,
   statusBarStyle: ColorScheme.Light,
   keyboardAppearance: ColorScheme.Dark,
   shadowOpacity: 0.15,

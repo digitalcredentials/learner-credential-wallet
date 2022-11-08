@@ -1,6 +1,6 @@
 export type IssuerURI = string;
 
-export type IssuerImage = {
+export type ImageObject = {
   readonly id: string;
   readonly type: string;
 }
@@ -10,7 +10,7 @@ export type IssuerObject = {
   readonly type?: string;
   readonly name?: string;
   readonly url?: string;
-  readonly image?: string | IssuerImage;
+  readonly image?: string | ImageObject;
 }
 export type Issuer = IssuerURI | IssuerObject;
 
@@ -35,6 +35,7 @@ export type EducationalOperationalCredentialExtensions = {
     type: string;
     narrative: string;
   };
+  readonly image?: ImageObject;
 }
 
 // https://schema.org/EducationalOccupationalCredential (this doesn't really conform)

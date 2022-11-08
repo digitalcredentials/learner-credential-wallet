@@ -5,13 +5,13 @@ import { useAppDispatch, useDynamicStyles } from '../../hooks';
 
 import { MenuItem, NavHeader, ConfirmModal, AccessibleView, VerificationCard, CredentialCard } from '../../components';
 import { CredentialScreenProps, navigationRef } from '../../navigation';
-import { credentialRenderInfo } from '../../components/CredentialCard/CredentialCard';
 
 import dynamicStyleSheet from './CredentialScreen.styles';
 import { deleteCredential } from '../../store/slices/credential';
 import { makeSelectProfileFromCredential } from '../../store/selectorFactories';
 import { useSelectorFactory } from '../../hooks/useSelectorFactory';
 import { PublicLinkScreenMode } from '../../screens';
+import { credentialItemPropsFor } from '../../lib/credentialDisplay';
 
 export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
@@ -20,7 +20,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const { rawCredentialRecord, noShishKabob = false } = route.params;
-  const { title } = credentialRenderInfo(rawCredentialRecord.credential);
+  const { title } = credentialItemPropsFor(rawCredentialRecord.credential);
 
   const rawProfileRecord = useSelectorFactory(makeSelectProfileFromCredential, { rawCredentialRecord });
   const { profileName } = rawProfileRecord;

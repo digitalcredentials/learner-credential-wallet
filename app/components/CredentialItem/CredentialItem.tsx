@@ -1,5 +1,5 @@
 import React, { ComponentProps, useMemo } from 'react';
-import { Image, ImageStyle, StyleProp, View } from 'react-native';
+import { View } from 'react-native';
 import { ListItem, CheckBox } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -7,7 +7,8 @@ import dynamicStyleSheet from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
 import { CredentialStatusBadges } from '../../components';
 import { useDynamicStyles, useVerifyCredential } from '../../hooks';
-import { credentialDetailsFrom } from '../../lib/credentialDetails';
+import { credentialItemPropsFor } from '../../lib/credentialDisplay';
+import { CardImage } from '../../lib/credentialDisplay/shared';
 
 export default function CredentialItem({
   onSelect,
@@ -25,7 +26,7 @@ export default function CredentialItem({
   const verifyCredential = useVerifyCredential(rawCredentialRecord);
   const isNotVerified = useMemo(() => verifyCredential?.result.verified === false, [verifyCredential]);
 
-  const { title, issuerName, issuerImage } = credentialDetailsFrom(credential);
+  const { title, subtitle, image } = credentialItemPropsFor(credential);
 
   /**
    * When the `bottomElement` param is provided, the root view must not be
@@ -34,7 +35,7 @@ export default function CredentialItem({
    */
   const hasBottomElement = bottomElement !== undefined;
   const accessibilityProps: ComponentProps<typeof View> = {
-    accessibilityLabel: `${title} Credential, from ${issuerName}`,
+    accessibilityLabel: `${title} Credential, from ${subtitle}`,
     accessibilityRole: checkable ? 'checkbox' : 'button',
     accessibilityState: { checked: checkable ? selected : undefined },
   };
@@ -56,33 +57,38 @@ export default function CredentialItem({
 
     if (isNotVerified) {
       return (
-        <View style={mixins.imageIcon}>
+        <View style={styles.notVerifiedIcon}>
           <MaterialCommunityIcons
             name="close-circle"
-            size={theme.issuerIconSize}
+            size={theme.issuerIconSize - 8}
             color={theme.color.error}
           />
         </View>
       );
     }
 
-    if (issuerImage) {
-      return (
-        <Image
-          source={{ uri: issuerImage }}
-          style={mixins.imageIcon as StyleProp<ImageStyle>}
-        />
-      );
-    }
+    return <CardImage source={image} accessibilityLabel={subtitle} size={theme.issuerIconSize - 8} />;
+  }
+
+  function StatusBadges(): JSX.Element | null {
+    if (!showStatusBadges || !rawCredentialRecord) return null;
 
     return (
-      <View style={mixins.imageIcon}>
-        <MaterialCommunityIcons
-          name="certificate"
-          size={theme.issuerIconSize}
-          color={theme.color.iconActive}
-        />
-      </View>
+      <CredentialStatusBadges
+        rawCredentialRecord={rawCredentialRecord}
+        badgeBackgroundColor={theme.color.backgroundPrimary}
+      />
+    );
+  }
+
+  function Chevron(): JSX.Element | null {
+    if (!chevron) return null;
+
+    return (
+      <ListItem.Chevron
+        hasTVPreferredFocus={undefined}
+        tvParallaxProperties={undefined}
+      />
     );
   }
 
@@ -101,29 +107,16 @@ export default function CredentialItem({
         <View
           style={styles.listItemTopContent}
           accessible={hasBottomElement}
-          importantForAccessibility={
-            hasBottomElement ? 'yes' : 'no-hide-descendants'
-          }
+          importantForAccessibility={hasBottomElement ? 'yes' : 'no-hide-descendants'}
           {...accessibilityProps}
         >
           <LeftContent />
           <View style={styles.listItemTextContainer}>
-            {showStatusBadges && rawCredentialRecord && (
-              <CredentialStatusBadges 
-                rawCredentialRecord={rawCredentialRecord} 
-                badgeBackgroundColor={theme.color.backgroundPrimary} />
-            )}
+            <StatusBadges />
             <ListItem.Title style={styles.listItemTitle}>{title}</ListItem.Title>
-            <ListItem.Subtitle style={styles.listItemSubtitle}>
-              {issuerName}
-            </ListItem.Subtitle>
+            <ListItem.Subtitle style={styles.listItemSubtitle}>{subtitle}</ListItem.Subtitle>
           </View>
-          {chevron && (
-            <ListItem.Chevron
-              hasTVPreferredFocus={undefined}
-              tvParallaxProperties={undefined}
-            />
-          )}
+          <Chevron />
         </View>
         {bottomElement}
       </ListItem.Content>

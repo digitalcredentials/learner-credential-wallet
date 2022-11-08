@@ -29,4 +29,9 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     fontFamily: theme.fontFamily.regular,
     fontSize: 14,
   },
+  notVerifiedIcon: {
+    width: theme.issuerIconSize - 8,
+    height: theme.issuerIconSize - 8,
+    marginRight: 12,
+  },
 }));
