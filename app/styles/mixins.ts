@@ -20,13 +20,6 @@ const mixins = (theme: ThemeType) => {
       color: theme.color.textSecondary,
       lineHeight: 24,
     },
-    imageIcon: {
-      width: theme.issuerIconSize,
-      height: theme.issuerIconSize,
-      borderRadius: 3,
-      marginRight: 12,
-      resizeMode: 'contain',
-    },
   });
 
   return StyleSheet.create({

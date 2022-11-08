@@ -25,3 +25,4 @@ export { default as GlobalErrorModal } from './GlobalErrorModal/GlobalErrorModal
 export { default as BulletList } from './BulletList/BulletList';
 
 export * from './ImportFileModal/ImportFileModal.d';
+export * from './CredentialCard/CredentialCard.d';
