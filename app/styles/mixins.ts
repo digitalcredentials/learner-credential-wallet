@@ -184,13 +184,15 @@ const mixins = (theme: ThemeType) => {
       marginTop: 0,
       marginBottom: 0,
       marginLeft: 0,
+      marginRight: 12,
 
       paddingTop: 0,
       paddingRight: 0,
       paddingBottom: 0,
       paddingLeft: 5,
 
-      ...sharedMixins.imageIcon,
+      width: theme.issuerIconSize,
+      height: theme.issuerIconSize,
 
       justifyContent: 'center',
       alignItems: 'center',
