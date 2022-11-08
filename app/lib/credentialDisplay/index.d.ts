@@ -3,7 +3,7 @@ import { CredentialCardProps } from '../../components';
 
 export { CredentialCardProps };
 
-type ResolvedCredentialItemProps = {
+export type ResolvedCredentialItemProps = {
   title: string | null,
   subtitle: string | null,
   image: string | null,
