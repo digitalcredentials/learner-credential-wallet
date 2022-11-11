@@ -1,7 +1,8 @@
 import * as MsrCrypto from '@microsoft/msrcrypto';
 import uuid from 'react-native-uuid';
+import { JwePayload } from '../types/wallet';
 
-async function deriveKeyEncryptionKey(password, salt, iterations) {
+async function deriveKeyEncryptionKey(password: string, salt: Buffer, iterations: number | string) {
   const passphraseKey = Buffer.from(password);
   const saltBuffer = Buffer.from(salt);
 
@@ -35,7 +36,7 @@ async function deriveKeyEncryptionKey(password, salt, iterations) {
 }
 
 
-async function encrypt(data, password) {
+async function encrypt(data: unknown, password: string) {
   const saltBuffer = Buffer.from(crypto.getRandomValues(new Uint8Array(16)));
   const iterations = 120000;
 
@@ -85,7 +86,7 @@ async function encrypt(data, password) {
   return jwe;
 }
 
-async function decrypt(jwe, password){
+async function decrypt(jwe: JwePayload, password: string) {
   const recipient = jwe.recipients[0];
   const salt = Buffer.from(recipient.header.p2s, 'base64');
   const iterations = recipient.header.p2c;
@@ -147,8 +148,11 @@ export async function exportWalletEncrypted(data: string, passphrase: string): P
   return JSON.stringify(lockedWallet);
 }
 
-export async function importWalletEncrypted(data: string, passphrase: string) {
+export async function importWalletEncrypted(data: string, passphrase: string): Promise<string> {
   const lockedWallet = JSON.parse(data);
   const jwe = lockedWallet.credentialSubject.jwe;
-  return await decrypt(jwe, passphrase);
+  const wallet = await decrypt(jwe, passphrase);
+  const walletString = JSON.stringify(wallet);
+
+  return walletString;
 }

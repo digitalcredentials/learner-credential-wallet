@@ -60,7 +60,7 @@ export async function importProfileFrom(data: string): Promise<ReportDetails> {
   return reportDetails;
 }
 
-export async function importWalletFrom(data:string): Promise<ReportDetails> {
+export async function importWalletFrom(data: string): Promise<ReportDetails> {
   const items: unknown[] = JSON.parse(data);
 
   const reports = await Promise.all(items.map(async (item) => {
