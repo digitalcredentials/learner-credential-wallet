@@ -19,3 +19,18 @@ export type UnlockedWallet = {
   readonly status: string;
   readonly contents: WalletContent[];
 }
+
+export type JwePayload = {
+  recipients: JwePayloadRecipient[];
+  iv: string;
+  ciphertext: string;
+  tag: string;
+}
+
+type JwePayloadRecipient = {
+  encrypted_key: string;
+  header: {
+    p2s: string;
+    p2c: string;
+  };
+}
