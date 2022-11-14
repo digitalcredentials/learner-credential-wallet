@@ -8,6 +8,7 @@ import { NavHeader } from '../../components';
 import { useSelector } from 'react-redux';
 import { selectRawProfileRecords } from '../../store/slices/profile';
 import { useDynamicStyles, useSelectorFactory } from '../../hooks';
+
 import { makeSelectProfileForPendingCredentials } from '../../store/selectorFactories/makeSelectProfileForPendingCredentials';
 
 export default function ProfileSelectionScreen({ navigation, route }: ProfileSelectionScreenProps): JSX.Element {
@@ -25,10 +26,8 @@ export default function ProfileSelectionScreen({ navigation, route }: ProfileSel
 
   useEffect(() => {
     if (rawProfileRecords.length === 1) {
-      return onSelectProfile(rawProfileRecords[0]);
-    }
-
-    if (associatedProfile){
+      onSelectProfile(rawProfileRecords[0]);
+    } else if (associatedProfile){
       onSelectProfile(associatedProfile);
     }
   }, []);
