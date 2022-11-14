@@ -47,7 +47,7 @@ export default function RestoreWalletScreen({ navigation }: RestoreWalletScreenP
         </Text>
         <Button
           title="Choose a file"
-          buttonStyle={mixins.buttonIconCompact}
+          buttonStyle={mixins.buttonIcon}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           iconRight

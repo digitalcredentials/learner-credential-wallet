@@ -49,28 +49,28 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
       <View style={styles.container}>
         <Button
           title="Add mock credentials"
-          buttonStyle={mixins.buttonIconCompact}
+          buttonStyle={mixins.buttonIcon}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           onPress={addMockCredentials}
         />
         <Button
           title="Add revoked credential"
-          buttonStyle={mixins.buttonIconCompact}
+          buttonStyle={mixins.buttonIcon}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           onPress={addRevokedCredential}
         />
         <Button
           title="Receive credential through deep link"
-          buttonStyle={mixins.buttonIconCompact}
+          buttonStyle={mixins.buttonIcon}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           onPress={receiveCredentialThroughDeepLink}
         />
         <Button
           title="Clear verification cache"
-          buttonStyle={mixins.buttonIconCompact}
+          buttonStyle={mixins.buttonIcon}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           onPress={clearVerificationCache}

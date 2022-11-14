@@ -72,7 +72,7 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
         </Text>
         <Button
           title="Scan QR code"
-          buttonStyle={mixins.buttonIconCompact}
+          buttonStyle={mixins.buttonIcon}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           iconRight
@@ -87,7 +87,7 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
         />
         <Button
           title="Restore from a file"
-          buttonStyle={mixins.buttonIconCompact}
+          buttonStyle={mixins.buttonIcon}
           containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           iconRight
