@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { DebugScreen, VerificationStatusScreen } from '../../screens';
+import { DebugScreen, QRScreen, VerificationStatusScreen } from '../../screens';
 import {
   HomeNavigation,
   RootNavigationParamsList,
@@ -15,6 +15,7 @@ export default function RootNavigation(): JSX.Element {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
       <Stack.Screen name="DebugScreen" component={DebugScreen} />
+      <Stack.Screen name="QRScreen" component={QRScreen} />
       <Stack.Screen name="VerificationStatusScreen" component={VerificationStatusScreen} />
       <Stack.Screen name="AcceptCredentialsNavigation" component={AcceptCredentialsNavigation} />
     </Stack.Navigator>

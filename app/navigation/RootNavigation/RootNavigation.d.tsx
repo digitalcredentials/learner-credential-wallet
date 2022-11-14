@@ -5,6 +5,7 @@ import type { VerifyPayload } from '../../hooks';
 import type { HomeNavigationParamList, AcceptCredentialsNavigationParamList } from '../';
 import { Credential } from '../../types/credential';
 import { ProfileRecordRaw } from '../../model';
+import { QRScreenParams } from '../../screens';
 
 export type RootNavigationParamsList = {
   HomeNavigation: NavigatorScreenParams<HomeNavigationParamList>;
@@ -12,6 +13,7 @@ export type RootNavigationParamsList = {
     rawCredentialRecord: CredentialRecordRaw;
     rawProfileRecord: ProfileRecordRaw;
   };
+  QRScreen: QRScreenParams;
   VerificationStatusScreen: {
     credential: Credential;
     verifyPayload: VerifyPayload;
@@ -23,3 +25,4 @@ export type HomeNavigationProps = StackScreenProps<RootNavigationParamsList, 'Ho
 export type DebugScreenProps = StackScreenProps<RootNavigationParamsList, 'DebugScreen'>
 export type VerificationStatusScreenProps = StackScreenProps<RootNavigationParamsList, 'VerificationStatusScreen'>
 export type AcceptCredentialsNavigationProps = StackScreenProps<RootNavigationParamsList, 'AcceptCredentialsNavigation'>
+export type QRScreenProps = StackScreenProps<RootNavigationParamsList, 'QRScreen'>;

@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { ReactNode } from 'react';
-import { DetailsScreenParams, QRScreenParams } from '../../screens';
+import { DetailsScreenParams } from '../../screens';
 
 export type SettingsItemProps = {
   readonly title: string;
@@ -15,7 +15,6 @@ export type SettingsNavigationParamList = {
   About: undefined;
   ManageProfilesScreen: undefined;
   AddExistingProfileScreen: undefined;
-  ProfileQRScreen: QRScreenParams;
   DetailsScreen: DetailsScreenParams;
   ViewSourceScreen: {
     data: unknown;
@@ -30,5 +29,4 @@ export type ManageProfilesScreenProps = StackScreenProps<SettingsNavigationParam
 export type AddExistingProfileScreenProps = StackScreenProps<SettingsNavigationParamList, 'AddExistingProfileScreen'>;
 export type DetailsScreenSettingsProps = StackScreenProps<SettingsNavigationParamList, 'DetailsScreen'>;
 export type ViewSourceScreenProps = StackScreenProps<SettingsNavigationParamList, 'ViewSourceScreen'>;
-export type QRScreenProfileProps = StackScreenProps<SettingsNavigationParamList, 'ProfileQRScreen'>;
 export type DeveloperScreenProps = StackScreenProps<SettingsNavigationParamList, 'DeveloperScreen'>;

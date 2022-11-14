@@ -12,7 +12,7 @@ import { errorMessageFrom } from '../../lib/error';
 import { useDynamicStyles } from '../../hooks';
 
 export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Element {
-  const { styles } = useDynamicStyles(dynamicStyleSheet);
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { onReadQRCode, instructionText } = route.params;
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -45,7 +45,7 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
 
   return (
     <View style={styles.scannerBody}>
-      <NavHeader title="Scan QR" goBack={navigation.goBack} />
+      <NavHeader title="QR Code Scanner" goBack={navigation.goBack} />
       <QRCodeScanner
         ref={scannerRef}
         onRead={onRead}
@@ -54,8 +54,8 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
         bottomViewStyle={styles.emptyContainer}
         cameraStyle={styles.cameraStyle}
         markerStyle={[styles.markerStyle, {
-          width: width * 0.9,
-          height: width * 0.9,
+          width: width * 0.8,
+          height: width * 0.8,
         }]}
         cameraProps={{
           accessibilityLabel: 'QR Code Scanner, Camera Active',

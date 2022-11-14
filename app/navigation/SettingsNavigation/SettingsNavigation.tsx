@@ -16,7 +16,7 @@ import {
   AboutProps,
   SettingsNavigationParamList,
 } from './SettingsNavigation.d';
-import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, QRScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
+import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
 import { useAppDispatch, useDynamicStyles, useResetNavigationOnBlur, useThemeContext } from '../../hooks';
 import { SettingsNavigationProps } from '../';
 import { exportWallet } from '../../lib/export';
@@ -195,7 +195,6 @@ export default function SettingsNavigation({ navigation }: SettingsNavigationPro
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="ManageProfilesScreen" component={ManageProfilesScreen} />
       <Stack.Screen name="AddExistingProfileScreen" component={AddExistingProfileScreen} />
-      <Stack.Screen name="ProfileQRScreen" component={QRScreen} />
       <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
       <Stack.Screen name="ViewSourceScreen" component={ViewSourceScreen} />
       <Stack.Screen name="RestoreWalletScreen" component={RestoreWalletScreen} />

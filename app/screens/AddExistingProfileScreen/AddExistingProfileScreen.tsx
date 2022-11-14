@@ -13,6 +13,7 @@ import { HumanReadableError } from '../../lib/error';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { getAllRecords } from '../../store';
 import type { ImportFileModalHandle } from '../../components';
+import { navigationRef } from '../../navigation';
 
 
 export default function AddExistingProfileScreen({ navigation }: AddExistingProfileScreenProps): JSX.Element {
@@ -44,10 +45,12 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
   }
 
   function onPressScanQRCode() {
-    navigation.navigate('ProfileQRScreen', {
-      onReadQRCode,
-      instructionText: 'Scan a valid QR code to add an existing profile.',
-    });
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('QRScreen', {
+        onReadQRCode,
+        instructionText: 'Scan a valid QR code to add an existing profile.',
+      });
+    }
   }
 
   function onPressDetails(reportDetails: ReportDetails) {

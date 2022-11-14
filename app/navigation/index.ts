@@ -33,10 +33,6 @@ import { DetailsScreenSettingsProps } from './SettingsNavigation/SettingsNavigat
 import { DetailsScreenSetupProps } from './SetupNavigation/SetupNavigation.d';
 export type DetailsScreenProps = DetailsScreenSettingsProps | DetailsScreenSetupProps;
 
-import { QRScreenCredentialProps } from './AddNavigation/AddNavigation.d';
-import { QRScreenProfileProps } from './SettingsNavigation/SettingsNavigation.d';
-export type QRScreenProps = QRScreenCredentialProps | QRScreenProfileProps;
-
 import { PublicLinkScreenCredentialProps } from './CredentialNavigation/CredentialNavigation.d';
 import { PublicLinkScreenShareProps } from './ShareNavigation/ShareNavigation.d';
 export type PublicLinkScreenProps = PublicLinkScreenCredentialProps | PublicLinkScreenShareProps;
