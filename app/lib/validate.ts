@@ -7,7 +7,7 @@ import { VerifiablePresentation, PresentationError } from '../types/presentation
 import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
-import { registryCollections } from './registry';
+import { registryCollections } from '@digitalcredentials/issuer-registry-client';
 import { extractCredentialsFrom } from './verifiableObject';
 
 const documentLoader = securityLoader().build();

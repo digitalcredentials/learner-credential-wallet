@@ -4,7 +4,7 @@ import { Credential } from '../types/credential';
 import { DidRecordRaw } from '../model';
 
 import { createVerifiablePresentation } from './present';
-import { staticRegistries } from './registry';
+import { issuerAuthRegistry } from './issuerAuth';
 import { parseResponseBody } from './parseResponse';
 import { extractCredentialsFrom, verifyVerifiableObject, VerifiableObject } from './verifiableObject';
 
@@ -34,10 +34,10 @@ export async function requestCredential(credentialRequestParams: CredentialReque
 
   switch (auth_type) {
   case 'code': {
-    if (!staticRegistries.issuerAuth.isInRegistry(issuer)) {
+    if (!issuerAuthRegistry.isInRegistry(issuer)) {
       throw new Error(`Issuer "${issuer}" not found in registry.`);
     }
-    const oidcConfig = staticRegistries.issuerAuth.entryFor(issuer);
+    const oidcConfig = issuerAuthRegistry.entryFor(issuer);
     // There needs to be a delay before authenticating or the app errors out.
     await new Promise((res) => setTimeout(res, 1000));
     console.log('Launching OIDC auth:', oidcConfig);

@@ -15,7 +15,7 @@ import {
 } from '../store/slices/wallet';
 import { getAllRecords } from '../store';
 import { useAppDispatch } from './useAppDispatch';
-import { loadRegistryCollections } from '../lib/registry';
+import { loadRegistryCollections } from '@digitalcredentials/issuer-registry-client';
 
 export function useAppLoading(): boolean {
   const [loading, setLoading] = useState(true);
