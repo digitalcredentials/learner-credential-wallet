@@ -25,4 +25,16 @@ if (typeof localStorage !== 'undefined') {
 // crypto is loaded first, so it can populate global.crypto
 // require('crypto')
 
-if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
+const bi = require('big-integer');
+
+function patchedBigInt(value) {
+  if (typeof value === 'string') {
+    const match = value.match(/^0([xo])([0-9a-f]+)$/i);
+    if (match) {
+      return bi(match[2], match[1].toLowerCase() === 'x' ? 16 : 8);
+    }
+  }
+  return bi(value);
+}
+
+global.BigInt = patchedBigInt;

@@ -1,19 +1,19 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 import { ObjectID } from 'bson';
-import { CredentialRequestParams } from '../../lib/request';
+import { CredentialRequestParams, DidAuthRequestParams } from '../../lib/request';
 import { ProfileRecordRaw } from '../../model';
 import { IssuerInfoScreenParams } from '../../screens';
 
 export type AcceptCredentialsNavigationParamList = {
-  ChooseProfileScreen: CredentialRequestParams | undefined;
+  ChooseProfileScreen: CredentialRequestParams | DidAuthRequestParams | undefined;
   ApproveCredentialsScreen: {
-    rawProfileRecord: ProfileRecordRaw
+    rawProfileRecord: ProfileRecordRaw;
     credentialRequestParams?: CredentialRequestParams;
-  }
+  };
   ApproveCredentialScreen: {
     pendingCredentialId: string;
     profileRecordId: ObjectID;
-  }
+  };
   IssuerInfoScreen: IssuerInfoScreenParams;
 };
 

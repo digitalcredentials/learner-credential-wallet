@@ -8,6 +8,24 @@ import { staticRegistries } from './registry';
 import { parseResponseBody } from './parseResponse';
 import { extractCredentialsFrom, verifyVerifiableObject, VerifiableObject } from './verifiableObject';
 
+type VerifiablePresentationRequestService = {
+  type: string;
+  serviceEndpoint: string;
+}
+
+export type DidAuthRequestParams = {
+  did_auth_request: {
+    query: {
+      type: "DIDAuthentication";
+    };
+    interact?: {
+      service: VerifiablePresentationRequestService[];
+    };
+    challenge: string;
+    domain: string;
+  };
+};
+
 export type CredentialRequestParams = {
   auth_type?: string;
   issuer: string;
