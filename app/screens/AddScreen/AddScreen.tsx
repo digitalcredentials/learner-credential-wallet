@@ -5,7 +5,6 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 
 import dynamicStyleSheet from './AddScreen.styles';
-import { AddScreenProps } from './AddScreen.d';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { NavHeader } from '../../components';
 import { credentialRequestParamsFromQrText, credentialsFrom, isDeepLink } from '../../lib/decode';
@@ -20,17 +19,19 @@ import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { ScrollView } from 'react-native-gesture-handler';
 import { cleanCopy } from '../../lib/encode';
 
-export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
+export default function AddScreen(): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [inputValue, setInputValue] = useState('');
   const dispatch = useAppDispatch();
   const inputIsValid = inputValue !== '';
 
   function onPressQRScreen() {
-    navigation.navigate('CredentialQRScreen', {
-      instructionText: 'Scan a QR code from your issuer to request your credentials.',
-      onReadQRCode,
-    });
+    if (navigationRef.isReady()) {
+      navigationRef.navigate('QRScreen', {
+        instructionText: 'Scan a QR code from your issuer to request your credentials.',
+        onReadQRCode,
+      });
+    }
   }
 
   function goToChooseProfile(params?: CredentialRequestParams) {

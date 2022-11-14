@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { QRScreen, AddScreen } from '../../screens';
+import { AddScreen } from '../../screens';
 import { useResetNavigationOnBlur } from '../../hooks';
 import type { AddNavigationProps, AddNavigationParamList } from '..';
 
@@ -13,7 +13,6 @@ export default function AddNavigation({ navigation }: AddNavigationProps ): JSX.
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AddScreen" component={AddScreen} />
-      <Stack.Screen name="CredentialQRScreen" component={QRScreen} />
     </Stack.Navigator>
   );
 }

@@ -1,13 +1,19 @@
 import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
+import { Color } from '../../styles';
 
 export default createDynamicStyleSheet(({ theme, mixins }) => ({
   scannerBody: {
     flex: 1,
-    backgroundColor: theme.color.backgroundPrimary,
+    backgroundColor: Color.Black,
   },
   instructionContainer: {
-    height: 50,
     backgroundColor: theme.color.backgroundPrimary,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    paddingVertical: 16,
+    paddingHorizontal: 4,
     zIndex: 1,
   },
   instructionText: {
@@ -18,11 +24,12 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   cameraStyle: {
     flex: 1,
-    flexBasis: '80%',
     height: '100%',
   },
   markerStyle: {
-    borderColor: theme.color.textPrimary,
+    borderColor: Color.White,
+    borderRadius: 10,
+    borderWidth: 3,
   },
   emptyContainer: {
     height: 0,
