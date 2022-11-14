@@ -12,7 +12,7 @@ export type AcceptCredentialsNavigationParamList = {
   ApproveCredentialScreen: {
     pendingCredentialId: string;
     profileRecordId: ObjectID;
-  }
+  };
   IssuerInfoScreen: IssuerInfoScreenParams;
 };
 

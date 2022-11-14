@@ -9,7 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { RootNavigation, SetupNavigation, RootNavigationParamsList } from '../';
 import { RestartScreen, LoginScreen } from '../../screens';
-import { useAppLoading, useDynamicStyles } from '../../hooks';
+import { useAppLoading, useDynamicStyles, useLCWReceiveModule } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
 import { EventProvider } from 'react-native-outside-press';
 import { deepLinkConfig } from '../../lib/deepLink';
@@ -19,6 +19,7 @@ export const navigationRef = createNavigationContainerRef<RootNavigationParamsLi
 
 export default function AppNavigation(): JSX.Element | null {
   const { mixins, theme } = useDynamicStyles();
+  useLCWReceiveModule();
 
   const navigatorTheme = useMemo(() => ({
     ...DefaultTheme,
