@@ -6,7 +6,7 @@ import { BulletList, NavHeader } from '../../components';
 import dynamicStyleSheet from './IssuerInfoScreen.styles';
 import { IssuerInfoScreenProps } from './IssuerInfoScreen.d';
 import { useDynamicStyles } from '../../hooks';
-import { registryCollections } from '../../lib/registry';
+import { registryCollections } from '@digitalcredentials/issuer-registry-client';
 
 const NO_URL = 'None';
 

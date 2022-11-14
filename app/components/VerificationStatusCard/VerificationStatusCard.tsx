@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
+import { registryCollections } from '@digitalcredentials/issuer-registry-client';
 
 import { VerificationStatusCardProps, StatusItemProps } from './VerificationStatusCard.d';
 import dynamicStyleSheet from './VerificationStatusCard.styles';
 import { useDynamicStyles } from '../../hooks';
 import { BulletList } from '../../components';
-import { registryCollections } from '../../lib/registry';
 
 const DATE_FORMAT = 'MMM D, YYYY';
 
