@@ -16,7 +16,7 @@ type VerifiablePresentationRequestService = {
 export type DidAuthRequestParams = {
   did_auth_request: {
     query: {
-      type: "DIDAuthentication";
+      type: 'DIDAuthentication';
     };
     interact?: {
       service: VerifiablePresentationRequestService[];

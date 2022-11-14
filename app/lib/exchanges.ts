@@ -25,7 +25,7 @@ export const constructExchangeRequest = async ({
   const presentation = vc.createPresentation({ holder });
   if (credentials.length !== 0) {
     presentation.verifiableCredential = credentials;
-}
+  }
   let finalPresentation = presentation;
   if (signed) {
     const documentLoader = securityLoader().build();

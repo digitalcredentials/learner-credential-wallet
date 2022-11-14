@@ -9,7 +9,7 @@ import { ChooseProfileScreenProps, ProfileButtonProps } from './ChooseProfileScr
 import { NavHeader } from '../../components';
 import { useSelector } from 'react-redux';
 import { selectRawProfileRecords } from '../../store/slices/profile';
-import { CredentialRequestParams, DidAuthRequestParams } from '../../lib/request';
+import { DidAuthRequestParams } from '../../lib/request';
 import { useAppDispatch, useDynamicStyles, useSelectorFactory } from '../../hooks';
 import { constructExchangeRequest, handleVcApiExchange } from '../../lib/exchanges';
 import { makeSelectProfileForPendingCredentials } from '../../store/selectorFactories/makeSelectProfileForPendingCredentials';

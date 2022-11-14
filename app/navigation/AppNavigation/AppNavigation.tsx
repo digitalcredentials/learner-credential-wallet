@@ -13,7 +13,7 @@ import { useAppLoading, useDynamicStyles } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
 import { EventProvider } from 'react-native-outside-press';
 import { deepLinkConfig } from '../../lib/deepLink';
-import { ConfirmModal, GlobalErrorModal, LoadingIndicator, LoadingIndicatorDots, } from '../../components';
+import { ConfirmModal, GlobalErrorModal, LoadingIndicatorDots } from '../../components';
 import store from '../../store';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 
@@ -134,7 +134,7 @@ export default function AppNavigation(): JSX.Element | null {
       <GlobalErrorModal />
       <ConfirmModal
         open={Platform.OS === 'android' && dataLoading}
-        title={"Retrieving Credential"}
+        title={'Retrieving Credential'}
         confirmButton={false}
         cancelButton={false}
       >
