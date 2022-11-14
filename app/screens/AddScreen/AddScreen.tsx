@@ -109,7 +109,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
           </Text>
           <Button
             title="Scan QR code"
-            buttonStyle={mixins.buttonIconCompact}
+            buttonStyle={mixins.buttonIcon}
             containerStyle={[mixins.buttonIconContainer, mixins.noFlex]}
             titleStyle={mixins.buttonIconTitle}
             iconRight
@@ -124,7 +124,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
           />
           <Button
             title="Add from file"
-            buttonStyle={mixins.buttonIconCompact}
+            buttonStyle={mixins.buttonIcon}
             containerStyle={[mixins.buttonIconContainer, mixins.noFlex]}
             titleStyle={mixins.buttonIconTitle}
             iconRight
@@ -159,7 +159,7 @@ export default function AddScreen({ navigation }: AddScreenProps): JSX.Element {
               />
               <Button
                 title="Add"
-                buttonStyle={[mixins.buttonCompact, mixins.buttonPrimary, styles.actionButton]}
+                buttonStyle={[mixins.button, mixins.buttonPrimary, styles.actionButton]}
                 containerStyle={[mixins.buttonContainer, styles.actionButtonContainer]}
                 titleStyle={[mixins.buttonTitle]}
                 onPress={addFromUrl}

@@ -66,7 +66,7 @@ function ProfileButton({ rawProfileRecord, onPress }: ProfileButtonProps) {
   return (
     <Button
       title={rawProfileRecord.profileName}
-      buttonStyle={mixins.buttonIconCompact}
+      buttonStyle={mixins.buttonIcon}
       containerStyle={mixins.buttonContainerVertical}
       titleStyle={mixins.buttonIconTitle}
       iconRight

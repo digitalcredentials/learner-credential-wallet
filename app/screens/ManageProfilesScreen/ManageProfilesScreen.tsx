@@ -38,7 +38,7 @@ export default function ManageProfilesScreen({ navigation }: ManageProfilesScree
     <View>
       <Button
         title="Create New Profile"
-        buttonStyle={mixins.buttonIconCompact}
+        buttonStyle={mixins.buttonIcon}
         containerStyle={mixins.buttonContainerVertical}
         titleStyle={mixins.buttonIconTitle}
         iconRight
@@ -53,7 +53,7 @@ export default function ManageProfilesScreen({ navigation }: ManageProfilesScree
       />
       <Button
         title="Add Existing Profile"
-        buttonStyle={mixins.buttonIconCompact}
+        buttonStyle={mixins.buttonIcon}
         containerStyle={mixins.buttonContainerVertical}
         titleStyle={mixins.buttonIconTitle}
         iconRight

@@ -63,10 +63,7 @@ const mixins = (theme: ThemeType) => {
     /* Button mixins */
     button: {
       backgroundColor: theme.color.iconActive,
-      padding: 16,
       borderRadius: theme.borderRadius,
-    },
-    buttonCompact: {
       paddingVertical: 12,
       paddingHorizontal: 18,
       minHeight: 48,
@@ -110,21 +107,14 @@ const mixins = (theme: ThemeType) => {
       justifyContent: 'space-between',
       backgroundColor: theme.color.foregroundPrimary,
       borderRadius: theme.borderRadius,
-      paddingVertical: 16,
+      paddingVertical: 12,
       paddingHorizontal: 18,
+      minHeight: 48,
     },
     buttonIconContainer: {
       ...sharedMixins.shadow,
       marginVertical: 8,
       flex: 1,
-    },
-    buttonIconCompact: {
-      justifyContent: 'space-between',
-      backgroundColor: theme.color.foregroundPrimary,
-      borderRadius: theme.borderRadius,
-      paddingVertical: 12,
-      paddingHorizontal: 18,
-      minHeight: 48,
     },
     buttonContainerVertical: {
       ...sharedMixins.shadow,
