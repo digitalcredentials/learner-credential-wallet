@@ -168,6 +168,10 @@ const mixins = (theme: ThemeType) => {
       lineHeight: 24,
       marginVertical: 8,
     },
+    modalLinkText: {
+      color: theme.color.brightAccent,
+      textDecorationLine: 'underline',
+    },
 
     /* Checkbox mixins */
     checkboxContainer: {    

@@ -3,6 +3,7 @@ import { Modal, Text, View, TouchableWithoutFeedback, AccessibilityInfo } from '
 import { Button } from 'react-native-elements';
 
 import { useAccessibilityFocus, useDynamicStyles } from '../../hooks';
+import { ConfirmModalProps } from './ConfirmModal.d';
 
 import dynamicStyleSheet from './ConfirmModal.style';
 
@@ -12,24 +13,6 @@ import dynamicStyleSheet from './ConfirmModal.style';
  * this can be enabled. This disable flag is a temporary fix.
  */ 
 const ENABLE_ACCESSIBILITY_FOCUS = false;
-
-export type ConfirmModalProps = React.PropsWithChildren<{
-  open?: boolean;
-
-  onRequestClose?: () => void;
-  onConfirm?: () => void;
-  onCancel?: () => void;
-
-  confirmButtonDisabled?: boolean;
-  confirmButton?: boolean;
-  cancelButton?: boolean;
-  cancelOnBackgroundPress?: boolean;
-  accessibilityFocusContent?: boolean;
-
-  title?: string;
-  confirmText?: string;
-  cancelText?: string;
-}>
 
 export default function ConfirmModal({
   open = true,

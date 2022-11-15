@@ -26,3 +26,4 @@ export { default as BulletList } from './BulletList/BulletList';
 
 export * from './ImportFileModal/ImportFileModal.d';
 export * from './CredentialCard/CredentialCard.d';
+export * from './ConfirmModal/ConfirmModal.d';
