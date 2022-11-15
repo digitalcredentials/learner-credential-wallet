@@ -1,13 +1,11 @@
 import moment from 'moment';
-import { Linking } from 'react-native';
 import { CredentialRecordRaw } from '../model';
 import { IssuerObject } from '../types/credential';
 import { Cache, CacheKey } from './cache';
 
-export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw): Promise<void> {
+export async function linkedinUrlFrom(rawCredentialRecord: CredentialRecordRaw): Promise<string> {
   if (rawCredentialRecord.credential.id === undefined) {
-    console.error('Credential cannot be shared, `id` is not defined.');
-    return;
+    throw new Error('Credential cannot be shared, `id` is not defined.');
   }
 
   const publicLink = await Cache.getInstance().load(CacheKey.PublicLink, rawCredentialRecord.credential.id) as string;
@@ -20,8 +18,7 @@ export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw):
   }
   
   if (!achievement) {
-    console.log('No achievement/credential found, not sharing to LI.');
-    return;
+    throw new Error('No achievement/credential found, not sharing to LI.');
   }
 
   const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
@@ -39,6 +36,5 @@ export async function shareToLinkedIn(rawCredentialRecord: CredentialRecordRaw):
 
   const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
 
-  await Linking.canOpenURL(url);
-  Linking.openURL(url);
+  return url;
 }

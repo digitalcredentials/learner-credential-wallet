@@ -5,7 +5,7 @@ import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import { useAppDispatch, useDynamicStyles, useSelectorFactory } from '../../hooks';
-import { isCredentialRequestParams, requestCredential } from '../../lib/request';
+import { isCredentialRequestParams, requestCredential } from '../../lib/credentialRequest';
 import { ProfileRecordRaw } from '../../model';
 import { makeSelectDidFromProfile } from '../../store/selectorFactories';
 import dynamicStyleSheet from './CredentialRequestHandler.styles';

@@ -12,7 +12,7 @@ import { ConfirmModal, NavHeader } from '../../components';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Cache, CacheKey } from '../../lib/cache';
 import credential from '../../mock/credential';
-import { shareToLinkedIn } from '../../lib/share';
+import { linkedinUrlFrom } from '../../lib/url';
 import { useDynamicStyles, useShareCredentials } from '../../hooks';
 
 export enum PublicLinkScreenMode {
@@ -92,7 +92,9 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       await createPublicLink();
     }
 
-    await shareToLinkedIn(rawCredentialRecord);
+    const url = await linkedinUrlFrom(rawCredentialRecord);
+    await Linking.canOpenURL(url);
+    Linking.openURL(url);
   }
 
   function onFocusInput() {
