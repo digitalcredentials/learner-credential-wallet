@@ -1,6 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 import { ObjectID } from 'bson';
-import { CredentialRequestParams } from '../../lib/request';
+import { CredentialRequestParams } from '../../lib/credentialRequest';
 import { ProfileRecordRaw } from '../../model';
 import { IssuerInfoScreenParams } from '../../screens';
 

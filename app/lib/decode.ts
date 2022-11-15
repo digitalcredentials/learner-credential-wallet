@@ -6,8 +6,8 @@ import { securityLoader } from '@digitalcredentials/security-document-loader';
 import type { Credential } from '../types/credential';
 //import { VerifiablePresentation, PresentationError } from '../types/presentation';
 import { VerifiablePresentation } from '../types/presentation';
-import { CredentialRequestParams } from './request';
-import { isCredentialRequestParams } from './request';
+import { CredentialRequestParams } from './credentialRequest';
+import { isCredentialRequestParams } from './credentialRequest';
 import { HumanReadableError } from './error';
 import { isVerifiableCredential, isVerifiablePresentation } from './verifiableObject';
 

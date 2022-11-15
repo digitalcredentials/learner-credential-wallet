@@ -11,7 +11,7 @@ import { credentialRequestParamsFromQrText, credentialsFrom, isDeepLink } from '
 import { PresentationError } from '../../types/presentation';
 import { errorMessageMatches, HumanReadableError } from '../../lib/error';
 import { navigationRef } from '../../navigation';
-import { CredentialRequestParams } from '../../lib/request';
+import { CredentialRequestParams } from '../../lib/credentialRequest';
 import { pickAndReadFile } from '../../lib/import';
 import { displayGlobalError } from '../../store/slices/wallet';
 import { CANCEL_PICKER_MESSAGES } from '../../lib/constants';

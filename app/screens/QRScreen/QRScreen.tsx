@@ -12,7 +12,7 @@ import { errorMessageFrom } from '../../lib/error';
 import { useDynamicStyles } from '../../hooks';
 
 export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Element {
-  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { onReadQRCode, instructionText } = route.params;
 
   const [errorMessage, setErrorMessage] = useState('');
