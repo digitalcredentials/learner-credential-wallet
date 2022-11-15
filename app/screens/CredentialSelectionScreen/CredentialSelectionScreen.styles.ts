@@ -18,12 +18,4 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     ...mixins.buttonPrimary,
     marginTop: 16,
   },
-  modalText: {
-    ...mixins.paragraphText,
-    textAlign: 'center'
-  },
-  modalLink: {
-    color: theme.color.brightAccent,
-    textDecorationLine: 'underline',
-  },
 }));
