@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 if (typeof __dirname === 'undefined') global.__dirname = '/'
 if (typeof __filename === 'undefined') global.__filename = ''
 if (typeof process === 'undefined') {
@@ -37,4 +39,10 @@ function patchedBigInt(value) {
   return bi(value);
 }
 
-global.BigInt = patchedBigInt;
+if (typeof BigInt === 'undefined') {
+  if (Platform.OS === 'android') {
+    global.BigInt = patchedBigInt;
+  } else {
+    global.BigInt = bi;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { AppState, NativeEventEmitter, NativeModule, NativeModules, Platform, Text, View } from 'react-native';
+import { AppState, NativeEventEmitter, NativeModules, Platform, Text, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
