@@ -1,12 +1,12 @@
 import { createDynamicStyleSheet } from '../../lib/dynamicStyles';
 
-export default createDynamicStyleSheet(({ theme, mixins }) => ({
+export default createDynamicStyleSheet(({ mixins }) => ({
   container: {
     padding: 16,
+    paddingBottom: 0,
     flex: 1,
   },
   credentialList: {
-    borderRadius: theme.borderRadius,
     overflow: 'hidden',
   },
   paragraph: {
@@ -16,6 +16,6 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   shareButton: {
     ...mixins.buttonPrimary,
-    marginTop: 16,
+    marginVertical: 16,
   },
 }));
