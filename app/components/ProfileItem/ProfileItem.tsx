@@ -11,6 +11,7 @@ import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { deleteProfile, updateProfile } from '../../store/slices/profile';
 import { exportProfile } from '../../lib/export';
 import { errorMessageFrom } from '../../lib/error';
+import { fmtCredentialCount } from '../../lib/text';
 
 enum ActiveModal {
   Rename,
@@ -60,7 +61,7 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
         <View style={styles.textContainer}>
           <Text style={styles.titleText}>{rawProfileRecord.profileName}</Text>
           <Text style={styles.subtitleText}>
-            {rawProfileRecord.rawCredentialRecords.length} {credentialUnit(rawProfileRecord.rawCredentialRecords.length)}
+            {fmtCredentialCount(rawProfileRecord.rawCredentialRecords.length)}
           </Text>
         </View>
         <MoreMenuButton>
@@ -187,7 +188,7 @@ function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
       confirmText="Delete Profile"
     >
       <Text style={mixins.modalBodyText}>
-        Are you sure you want to delete {rawProfileRecord.profileName} and its {rawProfileRecord.rawCredentialRecords.length} {credentialUnit(rawProfileRecord.rawCredentialRecords.length)}?
+        Are you sure you want to delete {rawProfileRecord.profileName} and its {fmtCredentialCount(rawProfileRecord.rawCredentialRecords.length)}?
       </Text>
       <Button
         buttonStyle={mixins.buttonClear}
@@ -198,8 +199,4 @@ function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
       />
     </ConfirmModal>
   );
-}
-
-function credentialUnit(count: number,): string {
-  return count === 1 ? 'credential' : 'credentials';
 }
