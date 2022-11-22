@@ -5,7 +5,7 @@ import type { VerifyPayload } from '../../hooks';
 import type { HomeNavigationParamList, AcceptCredentialsNavigationParamList } from '../';
 import { Credential } from '../../types/credential';
 import { ProfileRecordRaw } from '../../model';
-import { QRScreenParams } from '../../screens';
+import { CredentialSelectionScreenParams, ProfileSelectionScreenParams, QRScreenParams } from '../../screens';
 
 export type RootNavigationParamsList = {
   HomeNavigation: NavigatorScreenParams<HomeNavigationParamList>;
@@ -19,6 +19,8 @@ export type RootNavigationParamsList = {
     verifyPayload: VerifyPayload;
   };
   AcceptCredentialsNavigation: NavigatorScreenParams<AcceptCredentialsNavigationParamList>;
+  ProfileSelectionScreen: ProfileSelectionScreenParams;
+  CredentialSelectionScreen: CredentialSelectionScreenParams;
 };
 
 export type HomeNavigationProps = StackScreenProps<RootNavigationParamsList, 'HomeNavigation'>
@@ -26,3 +28,5 @@ export type DebugScreenProps = StackScreenProps<RootNavigationParamsList, 'Debug
 export type VerificationStatusScreenProps = StackScreenProps<RootNavigationParamsList, 'VerificationStatusScreen'>
 export type AcceptCredentialsNavigationProps = StackScreenProps<RootNavigationParamsList, 'AcceptCredentialsNavigation'>
 export type QRScreenProps = StackScreenProps<RootNavigationParamsList, 'QRScreen'>;
+export type ProfileSelectionScreenProps = StackScreenProps<RootNavigationParamsList, 'ProfileSelectionScreen'>;
+export type CredentialSelectionScreenProps = StackScreenProps<RootNavigationParamsList, 'CredentialSelectionScreen'>;

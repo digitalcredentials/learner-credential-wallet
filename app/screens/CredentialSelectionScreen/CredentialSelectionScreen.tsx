@@ -15,14 +15,12 @@ export default function CredentialSelectionScreen({
   route
 }: CredentialSelectionScreenProps): JSX.Element {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
-  const { title, instructionText, onSelect, singleSelect, confirmModal } = route.params;
-
+  const { title, instructionText, onSelectCredentials, singleSelect, credentialFilter, goBack = navigation.goBack } = route.params;
+  
   const [selected, setSelected] = useState<number[]>([]);
-  const rawCredentialRecords = useSelector(selectRawCredentialRecords);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const selectedCredentials = useMemo(() => selected.map((i) => rawCredentialRecords[i]), [selected, rawCredentialRecords]);
-  const ConfirmModalComponent = useMemo(() => confirmModal, [confirmModal]);
+  const allItems = useSelector(selectRawCredentialRecords);
+  const filteredItems = useMemo(() => credentialFilter ? allItems.filter(credentialFilter) : allItems, [allItems]);
+  const selectedCredentials = useMemo(() => selected.map((i) => filteredItems[i]), [selected, filteredItems]);
 
   function toggleItem(credentialIndex: number): void {
     if (selected.includes(credentialIndex)) {
@@ -37,7 +35,7 @@ export default function CredentialSelectionScreen({
     
     const onSelectItem = () => {
       toggleItem(index);
-      if (singleSelect) onFinishSelection();
+      if (singleSelect) onSelectCredentials([item]);
     };
 
     return (
@@ -52,18 +50,6 @@ export default function CredentialSelectionScreen({
     );
   }
 
-  function onFinishSelection() {
-    if (ConfirmModalComponent) {
-      setModalOpen(true);
-    } else {
-      onConfirmSelection();
-    }
-  }
-
-  function onConfirmSelection() {
-    onSelect?.(selectedCredentials);
-  }
-
   
 
   function ShareButton(): JSX.Element | null {
@@ -76,7 +62,7 @@ export default function CredentialSelectionScreen({
         title="Send Selected Credentials"
         buttonStyle={styles.shareButton}
         titleStyle={mixins.buttonTitle}
-        onPress={onFinishSelection}
+        onPress={() => onSelectCredentials(selectedCredentials)}
       />
     );
   }
@@ -85,7 +71,7 @@ export default function CredentialSelectionScreen({
     <>
       <NavHeader
         title={title}
-        goBack={navigation.goBack}
+        goBack={goBack}
       />
       <View style={styles.container}>
         <Text style={styles.paragraph}>
@@ -94,20 +80,12 @@ export default function CredentialSelectionScreen({
         <FlatList
           indicatorStyle="white"
           style={styles.credentialList}
-          data={rawCredentialRecords}
+          data={filteredItems}
           renderItem={renderItem}
           keyExtractor={(item, index) => `${index}-${item.credential.id}`}
         />
         <ShareButton />
       </View>
-      {ConfirmModalComponent && (
-        <ConfirmModalComponent 
-          open={modalOpen}
-          onRequestClose={() => setModalOpen(false)} 
-          onConfirm={onConfirmSelection}
-          selectedCredentials={selectedCredentials}
-        />
-      )}
     </>
   );
 }

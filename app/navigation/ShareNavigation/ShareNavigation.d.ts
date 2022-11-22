@@ -1,10 +1,13 @@
 import type { StackScreenProps } from '@react-navigation/stack';
+import { ShareRequestParams } from '../../lib/shareRequest';
 
 import type { CredentialRecordRaw } from '../../model/credential';
-import { PublicLinkScreenParams, CredentialSelectionScreenParams } from '../../screens';
+import { PublicLinkScreenParams } from '../../screens';
 
 export type ShareNavigationParamsList = {
-  ShareHomeScreen: undefined;
+  ShareHomeScreen: {
+    shareRequestParams: ShareRequestParams
+  } | undefined;
   PresentationPreviewScreen: {
     selectedCredentials: CredentialRecordRaw[];
   };
@@ -12,12 +15,10 @@ export type ShareNavigationParamsList = {
     rawCredentialRecord: CredentialRecordRaw;
     noShishKabob?: boolean;
   };
-  CredentialSelectionScreen: CredentialSelectionScreenParams;
   PublicLinkScreen: PublicLinkScreenParams
 };
 
 export type ShareHomeScreenProps = StackScreenProps<ShareNavigationParamsList, 'ShareHomeScreen'>;
 export type PresentationPreviewScreenProps = StackScreenProps<ShareNavigationParamsList, 'PresentationPreviewScreen'>;
 export type CredentialScreenShareProps = StackScreenProps<ShareNavigationParamsList, 'CredentialScreen'>;
-export type CredentialSelectionScreenProps = StackScreenProps<ShareNavigationParamsList, 'CredentialSelectionScreen'>;
 export type PublicLinkScreenShareProps = StackScreenProps<ShareNavigationParamsList, 'PublicLinkScreen'>;

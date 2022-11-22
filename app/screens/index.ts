@@ -13,7 +13,7 @@ export { default as VerificationStatusScreen } from './VerificationStatusScreen/
 export { default as ManageProfilesScreen } from './ManageProfilesScreen/ManageProfilesScreen';
 export { default as DetailsScreen } from './DetailsScreen/DetailsScreen';
 export { default as ViewSourceScreen } from './ViewSourceScreen/ViewSourceScreen';
-export { default as ChooseProfileScreen } from './ChooseProfileScreen/ChooseProfileScreen';
+export { default as ProfileSelectionScreen } from './ProfileSelectionScreen/ProfileSelectionScreen';
 export { default as AddExistingProfileScreen } from './AddExistingProfileScreen/AddExistingProfileScreen';
 export { default as RestoreWalletScreen } from './RestoreWalletScreen/RestoreWalletScreen';
 export { default as DeveloperScreen } from './DeveloperScreen/DeveloperScreen';
@@ -27,6 +27,7 @@ export * from './QRScreen/QRScreen.d';
 export * from './PublicLinkScreen/PublicLinkScreen.d';
 export * from './IssuerInfoScreen/IssuerInfoScreen.d';
 export * from './CredentialSelectionScreen/CredentialSelectionScreen.d';
+export * from './ProfileSelectionScreen/ProfileSelectionScreen.d';
 
 // Enum Definitions
 export * from './PublicLinkScreen/PublicLinkScreen';

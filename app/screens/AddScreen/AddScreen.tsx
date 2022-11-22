@@ -13,11 +13,12 @@ import { errorMessageMatches, HumanReadableError } from '../../lib/error';
 import { navigationRef } from '../../navigation';
 import { CredentialRequestParams } from '../../lib/credentialRequest';
 import { pickAndReadFile } from '../../lib/import';
-import { displayGlobalError } from '../../store/slices/wallet';
+import { displayGlobalModal } from '../../lib/globalModal';
 import { CANCEL_PICKER_MESSAGES } from '../../lib/constants';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { ScrollView } from 'react-native-gesture-handler';
 import { cleanCopy } from '../../lib/encode';
+import { NavigationUtil } from '../../lib/navigationUtil';
 
 export default function AddScreen(): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
@@ -34,25 +35,25 @@ export default function AddScreen(): JSX.Element {
     }
   }
 
-  function goToChooseProfile(params?: CredentialRequestParams) {
-    if (navigationRef.isReady()) {
-      if (navigationRef.isReady()) {
-        navigationRef.navigate('AcceptCredentialsNavigation', { 
-          screen: 'ChooseProfileScreen',
-          params,
-        });
+  async function goToCredentialFoyer(credentialRequestParams?: CredentialRequestParams) {
+    const rawProfileRecord = await NavigationUtil.selectProfile();
+    navigationRef.navigate('AcceptCredentialsNavigation', {
+      screen: 'ApproveCredentialsScreen',
+      params: {
+        rawProfileRecord,
+        credentialRequestParams
       }
-    }
+    });
   }
 
   async function addCredentialsFrom(text: string) {
     if (isDeepLink(text)) {
       const params = credentialRequestParamsFromQrText(text);
-      goToChooseProfile(cleanCopy(params));
+      goToCredentialFoyer(cleanCopy(params));
     } else {
       const credentials = await credentialsFrom(text);
       dispatch(stageCredentials(credentials));
-      goToChooseProfile();
+      goToCredentialFoyer();
     }
   }
 

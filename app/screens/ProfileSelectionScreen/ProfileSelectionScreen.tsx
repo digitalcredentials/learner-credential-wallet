@@ -2,28 +2,26 @@ import React, { useEffect, useMemo } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 
-import dynamicStyleSheet from './ChooseProfileScreen.styles';
-import { ChooseProfileScreenProps, ProfileButtonProps } from './ChooseProfileScreen.d';
+import dynamicStyleSheet from './ProfileSelectionScreen.styles';
+import { ProfileSelectionScreenProps, ProfileButtonProps } from './ProfileSelectionScreen.d';
 import { NavHeader } from '../../components';
 import { useSelector } from 'react-redux';
 import { selectRawProfileRecords } from '../../store/slices/profile';
 import { useDynamicStyles, useSelectorFactory } from '../../hooks';
 import { makeSelectProfileForPendingCredentials } from '../../store/selectorFactories/makeSelectProfileForPendingCredentials';
-import { ProfileRecordRaw } from '../../model';
 
-export default function ChooseProfileScreen({ navigation, route }: ChooseProfileScreenProps): JSX.Element {
+export default function ProfileSelectionScreen({ navigation, route }: ProfileSelectionScreenProps): JSX.Element {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const rawProfileRecords = useSelector(selectRawProfileRecords);
   const associatedProfile = useSelectorFactory(makeSelectProfileForPendingCredentials);
 
-  const flatListData = useMemo(() => [...rawProfileRecords].reverse(), [rawProfileRecords]);
+  const { 
+    onSelectProfile,
+    instructionText = 'Issue the credential(s) to the selected profile.',
+    goBack = navigation.goBack,
+  } = route.params || {};
 
-  function onSelectProfile(rawProfileRecord: ProfileRecordRaw) {
-    navigation.navigate('ApproveCredentialsScreen', { 
-      rawProfileRecord, 
-      credentialRequestParams: route?.params,
-    });
-  }
+  const flatListData = useMemo(() => [...rawProfileRecords].reverse(), [rawProfileRecords]);
 
   useEffect(() => {
     if (rawProfileRecords.length === 1) {
@@ -37,13 +35,13 @@ export default function ChooseProfileScreen({ navigation, route }: ChooseProfile
 
   const ListHeader = (
     <View style={styles.listHeader}>
-      <Text style={mixins.paragraphText}>Issue the credential(s) to the selected profile.</Text>
+      <Text style={mixins.paragraphText}>{instructionText}</Text>
     </View>
   );
 
   return (
     <>
-      <NavHeader title="Choose Profile" goBack={navigation.goBack} />
+      <NavHeader title="Choose Profile" goBack={goBack} />
       <FlatList
         inverted
         ListFooterComponent={ListHeader}
