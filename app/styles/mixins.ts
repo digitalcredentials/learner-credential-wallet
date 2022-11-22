@@ -59,6 +59,9 @@ const mixins = (theme: ThemeType) => {
       color: theme.color.textHeader,
       fontSize: theme.fontSize.medium,
     },
+    boldText: {
+      fontFamily: theme.fontFamily.bold,
+    },
 
     /* Button mixins */
     button: {

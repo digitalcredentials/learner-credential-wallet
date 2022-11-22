@@ -108,7 +108,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
         <SafeAreaView style={styles.footerContainer} edges={['bottom']}>
           <Button
             containerStyle={mixins.buttonContainerVertical}
-            buttonStyle={[mixins.buttonPrimary, mixins.button, styles.acceptAllButton]}
+            buttonStyle={[mixins.button, mixins.buttonPrimary, styles.acceptAllButton]}
             titleStyle={[mixins.buttonTitle, styles.acceptAllButtonTitle]}
             title="Accept All"
             onPress={acceptAllCredentials}
