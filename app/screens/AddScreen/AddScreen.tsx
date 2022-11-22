@@ -64,10 +64,12 @@ export default function AddScreen(): JSX.Element {
       if (errorMessageMatches(err, CANCEL_PICKER_MESSAGES)) return;
 
       console.error(err);
-      await dispatch(displayGlobalError({ 
+      await displayGlobalModal({ 
         title: 'Unable to Add Credentials',
-        message: 'Ensure the file contains one or more credentials, and is a supported file type.' 
-      }));
+        body: 'Ensure the file contains one or more credentials, and is a supported file type.' ,
+        cancelButton: false,
+        confirmText: 'Close',
+      });
     }
   }
 
@@ -76,10 +78,12 @@ export default function AddScreen(): JSX.Element {
       await addCredentialsFrom(inputValue);
     } catch (err) {
       console.error(err);
-      await dispatch(displayGlobalError({ 
+      await displayGlobalModal({ 
         title: 'Unable to Add Credentials',
-        message: 'Ensure the URL references a file that contains one or more credentials.' 
-      }));
+        body: 'Ensure the URL references a file that contains one or more credentials.',
+        cancelButton: false,
+        confirmText: 'Close',
+      });
     }
   }
 

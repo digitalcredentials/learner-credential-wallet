@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, getAllRecords } from '..';
+import { GlobalModalPayload } from '../../components';
 import { isBiometricsSupported } from '../../lib/biometrics';
 import { importWalletFrom } from '../../lib/import';
 import { db, INITIAL_PROFILE_NAME } from '../../model';
@@ -12,12 +13,6 @@ type InitializeParams = {
   existingWallet?: string;
 }
 
-type GlobalErrorPayload = {
-  title: string;
-  message: string;
-  fatal?: boolean;
-}
-
 export type WalletState = {
   isUnlocked: boolean | null;
   isInitialized: boolean | null;
@@ -25,7 +20,7 @@ export type WalletState = {
   isBiometricsEnabled: boolean,
   needsRestart: boolean;
   themeName: string | null;
-  globalError: GlobalErrorPayload | null;
+  globalModal: GlobalModalPayload | null;
 }
 
 const initialState: WalletState = {
@@ -35,7 +30,7 @@ const initialState: WalletState = {
   isBiometricsEnabled: false,
   needsRestart: false,
   themeName: null,
-  globalError: null,
+  globalModal: null,
 };
 
 const pollWalletState = createAsyncThunk('walletState/pollState', async () => {
@@ -121,12 +116,9 @@ const walletSlice = createSlice({
   name: 'walletState',
   initialState,
   reducers: {
-    clearGlobalError(state) {
-      state.globalError = null;
+    setGlobalModal(state, action: PayloadAction<GlobalModalPayload | null>) {
+      state.globalModal = action.payload;
     },
-    displayGlobalError(state, action: PayloadAction<GlobalErrorPayload>) {
-      state.globalError = action.payload;
-    }
   },
   extraReducers: (builder) => {
     builder.addCase(unlock.rejected, (_, action) => {
@@ -162,7 +154,7 @@ const walletSlice = createSlice({
 });
 
 export default walletSlice.reducer;
-export const { displayGlobalError, clearGlobalError } = walletSlice.actions;
+export const { setGlobalModal } = walletSlice.actions;
 
 export {
   unlock,

@@ -1,19 +1,19 @@
-export type ConfirmModalProps = React.PropsWithChildren<{
-  open?: boolean;
-
-  onRequestClose?: () => void;
-  onConfirm?: () => void;
-  onCancel?: () => void;
-
+export type ConfirmModalDisplayProps = {
   confirmButtonDisabled?: boolean;
   confirmButton?: boolean;
   cancelButton?: boolean;
-  cancelOnBackgroundPress?: boolean;
-  accessibilityFocusContent?: boolean;
 
   title?: string;
   confirmText?: string;
   cancelText?: string;
-}>
+}
 
-export type ControlledConfirmModalProps = Pick<ConfirmModalProps, 'open' | 'onRequestClose' | 'onConfirm'>;
+export type ConfirmModalProps = React.PropsWithChildren<ConfirmModalDisplayProps & {
+  open?: boolean;
+  onRequestClose?: () => void;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+
+  cancelOnBackgroundPress?: boolean;
+  accessibilityFocusContent?: boolean;
+}>
