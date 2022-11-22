@@ -4,16 +4,16 @@ import { Text, View } from 'react-native';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
-import { useAppDispatch, useDynamicStyles, useSelectorFactory } from '../../hooks';
+import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { isCredentialRequestParams, requestCredential } from '../../lib/credentialRequest';
 import { ProfileRecordRaw } from '../../model';
-import { makeSelectDidFromProfile } from '../../store/selectorFactories';
+import { makeSelectDidFromProfile, selectWithFactory } from '../../store/selectorFactories';
 import dynamicStyleSheet from './CredentialRequestHandler.styles';
 import { Credential } from '../../types/credential';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 
 type CredentialRequestHandlerProps = {
-  credentialRequestParams?: Record<string, unknown>;
+  credentialRequestParams: Record<string, unknown> | undefined;
   rawProfileRecord: ProfileRecordRaw;
   onFailed: () => void;
 }
@@ -22,7 +22,6 @@ export default function CredentialRequestHandler({ credentialRequestParams, rawP
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const rawDidRecord = useSelectorFactory(makeSelectDidFromProfile, { rawProfileRecord });
 
   const credentialRequest = useAsyncCallback(requestCredential, { onSuccess: onFinish });
   const errorMessage = credentialRequest.error?.message;
@@ -42,6 +41,7 @@ export default function CredentialRequestHandler({ credentialRequestParams, rawP
   useEffect(() => {
     if (isCredentialRequestParams(credentialRequestParams)) {
       setModalIsOpen(true);
+      const rawDidRecord = selectWithFactory(makeSelectDidFromProfile, { rawProfileRecord });
       credentialRequest.execute(credentialRequestParams, rawDidRecord);
     }
   }, [credentialRequestParams, rawProfileRecord]);
