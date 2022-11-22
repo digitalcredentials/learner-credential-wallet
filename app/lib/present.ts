@@ -7,7 +7,6 @@ import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020
 import { Platform } from 'react-native';
 
 import type { VerifiablePresentation } from '../types/presentation';
-import type { CredentialRecordRaw } from '../model/credential';
 import type { DidRecordRaw } from '../model/did';
 import type { Credential } from '../types/credential';
 import { toQr } from '../lib/decode';
@@ -18,11 +17,11 @@ const documentLoader = securityLoader().build();
 
 /**
  * This method wraps the create & sign presentation flow and and allows a
- * challenge to be specified. If the challenge paramater is not included,
+ * challenge to be specified. If the challenge parameter is not included,
  * a UUID will be generated and used in it's place.
  */
 export async function createVerifiablePresentation(
-  credentials: Credential[] | undefined,
+  verifiableCredential: Credential[] | Credential | undefined,
   didRecord: DidRecordRaw,
   challenge = uuid.v4(),
 ): Promise<VerifiablePresentation> {
@@ -30,7 +29,7 @@ export async function createVerifiablePresentation(
   const suite = new Ed25519Signature2020({ key: verificationKeyPair });
 
   const holder = didRecord.didDocument.id;
-  const presentation = vc.createPresentation({ verifiableCredential: credentials, holder });
+  const presentation = vc.createPresentation({ verifiableCredential, holder });
 
   const verifiablePresentation: VerifiablePresentation = await vc.signPresentation({
     presentation,
@@ -42,15 +41,15 @@ export async function createVerifiablePresentation(
   return verifiablePresentation;
 }
 
-export async function sharePresentation(rawCredentialRecords: CredentialRecordRaw[], didRecord?: DidRecordRaw): Promise<void> {
-  const plurality = rawCredentialRecords.length > 1 ? 's' : '';
+export function createUnsignedPresentation(verifiableCredential: Credential[] | Credential): VerifiablePresentation {
+  return vc.createPresentation({ verifiableCredential });
+}
+
+export async function sharePresentation(verifiablePresentation: VerifiablePresentation): Promise<void> {
+  const { verifiableCredential } = verifiablePresentation;
+  const plurality = verifiableCredential instanceof Array && verifiableCredential.length > 1 ? 's' : '';
   const fileName = `SharedCredential${plurality}`;
   const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.txt`;
-  const credentials = rawCredentialRecords.map(({ credential }) => credential);
-
-  const verifiablePresentation = didRecord
-    ? await createVerifiablePresentation(credentials, didRecord)
-    : vc.createPresentation({ verifiableCredential: credentials });
 
   if (await RNFS.exists(filePath)) {
     await RNFS.unlink(filePath);
