@@ -29,9 +29,10 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   button: {
     ...mixins.button,
+    minHeight: undefined,
     backgroundColor: theme.color.buttonSecondary,
     height: 36,
-    padding: 10,
+    paddingVertical: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,8 +41,9 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   buttonPrimary: {
     ...mixins.button, 
     ...mixins.buttonPrimary,
+    minHeight: undefined,
     height: 36,
-    padding: 10,
+    paddingVertical: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
