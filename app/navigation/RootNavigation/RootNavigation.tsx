@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { DebugScreen, QRScreen, VerificationStatusScreen } from '../../screens';
+import { CredentialSelectionScreen, DebugScreen, ProfileSelectionScreen, QRScreen, VerificationStatusScreen } from '../../screens';
 import {
   HomeNavigation,
   RootNavigationParamsList,
@@ -18,6 +18,8 @@ export default function RootNavigation(): JSX.Element {
       <Stack.Screen name="QRScreen" component={QRScreen} />
       <Stack.Screen name="VerificationStatusScreen" component={VerificationStatusScreen} />
       <Stack.Screen name="AcceptCredentialsNavigation" component={AcceptCredentialsNavigation} />
+      <Stack.Screen name="ProfileSelectionScreen" component={ProfileSelectionScreen} />
+      <Stack.Screen name="CredentialSelectionScreen" component={CredentialSelectionScreen} />
     </Stack.Navigator>
   );
 }

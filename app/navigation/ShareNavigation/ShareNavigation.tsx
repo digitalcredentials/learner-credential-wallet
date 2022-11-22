@@ -1,22 +1,23 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { ShareNavigationParamsList } from '../';
+import { ShareNavigationParamsList, ShareNavigationProps } from '../';
 import {
   ShareHomeScreen,
   PresentationPreviewScreen,
   CredentialScreen,
-  CredentialSelectionScreen,
   PublicLinkScreen,
 } from '../../screens';
+import { useResetNavigationOnBlur } from '../../hooks';
 
 const Stack = createStackNavigator<ShareNavigationParamsList>();
 
-export default function ShareNavigation(): JSX.Element {
+export default function ShareNavigation({ navigation }: ShareNavigationProps): JSX.Element {
+  useResetNavigationOnBlur(navigation);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ShareHomeScreen" component={ShareHomeScreen} />
-      <Stack.Screen name="CredentialSelectionScreen" component={CredentialSelectionScreen} />
       <Stack.Screen name="PresentationPreviewScreen" component={PresentationPreviewScreen} />
       <Stack.Screen name="CredentialScreen" component={CredentialScreen} initialParams={{ noShishKabob: true }} />
       <Stack.Screen name="PublicLinkScreen" component={PublicLinkScreen} />

@@ -6,12 +6,13 @@ import type {
   AddNavigationParamList,
   CredentialNavigationParamList,
   SettingsNavigationParamList,
+  ShareNavigationParamsList
 } from '../';
 
 
 export type HomeNavigationParamList = {
   CredentialNavigation: NavigatorScreenParams<CredentialNavigationParamList>;
-  ShareNavigation: undefined;
+  ShareNavigation: NavigatorScreenParams<ShareNavigationParamsList>;
   AddNavigation: NavigatorScreenParams<AddNavigationParamList>;
   SettingsNavigation: NavigatorScreenParams<SettingsNavigationParamList>;
   DebugScreen: {
