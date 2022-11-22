@@ -6,9 +6,10 @@ import store from '../store';
 import { stageCredentials } from '../store/slices/credentialFoyer';
 import { Credential } from '../types/credential';
 import { navigationRef } from '../navigation';
-import { displayGlobalError } from '../store/slices/wallet';
+import { displayGlobalModal } from '../lib/globalModal';
 import { credentialsFrom } from './decode';
 import { readFile } from './import';
+import { NavigationUtil } from './navigationUtil';
 
 export async function onShareIntent(): Promise<void> {
   const files = await getReceivedFiles();
@@ -29,16 +30,22 @@ export async function onShareIntent(): Promise<void> {
   }));
 
   if (hasError) {
-    await store.dispatch(displayGlobalError({ 
+    displayGlobalModal({
       title: 'Unable to Add Credentials', 
-      message: 'Ensure the file contains one or more credentials, and is a supported file type.'
-    }));
+      body: 'Ensure the file contains one or more credentials, and is a supported file type.',
+      cancelButton: false,
+      confirmText: 'Close',
+    });
   } else {
-    await store.dispatch(stageCredentials(credentials));
+    store.dispatch(stageCredentials(credentials));
 
-    if (navigationRef.isReady()) {
-      navigationRef.navigate('AcceptCredentialsNavigation', { screen: 'ChooseProfileScreen' });
-    }
+    const rawProfileRecord = await NavigationUtil.selectProfile();
+    navigationRef.navigate('AcceptCredentialsNavigation', { 
+      screen: 'ApproveCredentialsScreen',
+      params: {
+        rawProfileRecord,
+      }
+    });
   }
 }
 

@@ -13,7 +13,7 @@ import { useAppLoading, useDynamicStyles } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
 import { EventProvider } from 'react-native-outside-press';
 import { deepLinkConfig } from '../../lib/deepLink';
-import { GlobalErrorModal } from '../../components';
+import { GlobalConfirmModal } from '../../components';
 
 export const navigationRef = createNavigationContainerRef<RootNavigationParamsList>();
 
@@ -54,14 +54,14 @@ export default function AppNavigation(): JSX.Element | null {
   }, []);
 
   if (loading) {
-    return <GlobalErrorModal />;
+    return <GlobalConfirmModal />;
   }
 
   return (
     <SafeAreaProvider>
       <View onLayout={SplashScreen.hideAsync} />
       <StatusBar style={theme.statusBarStyle} />
-      <GlobalErrorModal />
+      <GlobalConfirmModal />
       <EventProvider style={mixins.flex}>
         <NavigationContainer
           theme={navigatorTheme}

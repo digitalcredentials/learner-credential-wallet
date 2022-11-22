@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Text } from 'react-native';
 import { View, useWindowDimensions } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -6,23 +6,20 @@ import { BarCodeReadEvent, RNCameraProps } from 'react-native-camera';
 
 import { ConfirmModal } from '../../components';
 import { NavHeader } from '../../components';
-import { ConfirmResultCallback, ConfirmResultConfig, QRScreenProps } from './QRScreen.d';
+import { QRScreenProps } from './QRScreen.d';
 import dynamicStyleSheet from './QRScreen.styles';
 import { errorMessageFrom } from '../../lib/error';
 import { useDynamicStyles } from '../../hooks';
 
 export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Element {
-  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
+  const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { onReadQRCode, instructionText } = route.params;
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [confirmResultConfig, setConfirmResultConfig] = useState<ConfirmResultConfig>();
   const { width } = useWindowDimensions();
   const scannerRef = useRef<QRCodeScanner>(null);
-  const onConfirmResult = useRef<ConfirmResultCallback>();
 
   const errorModalOpen = errorMessage !== '';
-  const confirmModalOpen = confirmResultConfig !== undefined;
 
   function Instructions(): JSX.Element {
     return (
@@ -32,24 +29,9 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
     );
   }
 
-  async function confirmResult(config: ConfirmResultConfig): Promise<boolean> {
-    return new Promise<boolean>((resolve) => {
-      onConfirmResult.current = (response) => {
-        setConfirmResultConfig(undefined);
-        resolve(response);
-      };
-
-      setConfirmResultConfig(config);
-    });
-  }
-
-  const qrScreenMethods = useMemo(() => ({
-    confirmResult,
-  }), []);
-
   async function onRead({ data: text }: BarCodeReadEvent) {
     try {
-      await onReadQRCode(text, qrScreenMethods);
+      await onReadQRCode(text);
     } catch (err) {
       setErrorMessage(errorMessageFrom(err));
     }
@@ -58,7 +40,6 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
 
   function onRequestModalClose() {
     setErrorMessage('');
-    setConfirmResultConfig(undefined);
     setTimeout(() => scannerRef.current?.reactivate(), 1000);
   }
 
@@ -90,16 +71,6 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
         cancelOnBackgroundPress
         title={errorMessage}
       />
-      <ConfirmModal
-        open={confirmModalOpen}
-        onRequestClose={onRequestModalClose}
-        onConfirm={() => onConfirmResult.current?.(true)}
-        onCancel={() => onConfirmResult.current?.(false)}
-        confirmText="Continue"
-        title={confirmResultConfig?.title}
-      >
-        <Text style={mixins.modalBodyText}>{confirmResultConfig?.message}</Text>
-      </ConfirmModal>
     </View>
   );
 }
