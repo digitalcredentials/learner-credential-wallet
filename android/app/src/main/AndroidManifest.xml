@@ -27,6 +27,9 @@
         <data
           android:scheme="dccrequest"
           android:host="request"/>
+        <data
+          android:scheme="dccrequest"
+          android:host="present"/>
       </intent-filter>
     </activity>
     <activity android:name="net.openid.appauth.RedirectUriReceiverActivity"

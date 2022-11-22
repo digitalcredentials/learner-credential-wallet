@@ -22,6 +22,11 @@ export function isDeepLink(text: string): boolean {
   return text.startsWith('dccrequest://request?') || text.startsWith('org.dcconsortium://request?');
 }
 
+export function queryParamsFrom(url: string): Record<string, unknown> {
+  const { query } = qs.parseUrl(url);
+  return query;
+}
+
 export function credentialRequestParamsFromQrText(text: string): CredentialRequestParams {
   const params = qs.parse(text.split('?')[1]);
   const isValid = isCredentialRequestParams(params);
