@@ -25,4 +25,11 @@ if (typeof localStorage !== 'undefined') {
 // crypto is loaded first, so it can populate global.crypto
 // require('crypto')
 
-if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
+if (typeof BigInt === 'undefined') {
+  const BigInt = require('big-integer');
+
+  global.BigInt = (value) => {
+    if (typeof value === 'string' && value.startsWith('0x')) return BigInt(value.slice(2), 16);
+    return BigInt(value);
+  }
+}
