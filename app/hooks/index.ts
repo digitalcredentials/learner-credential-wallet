@@ -7,7 +7,6 @@ export * from './useAccessibilityFocus';
 export * from './useResetNavigationOnBlur';
 export * from './useAsyncValue';
 export * from './useSelectorFactory';
-export * from './useSelectorFactoryAsCallback';
 export * from './useAppDispatch';
 export * from './useThemeContext';
 export * from './useDynamicStyles';
