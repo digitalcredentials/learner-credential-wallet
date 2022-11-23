@@ -51,7 +51,9 @@ See [these notes](install-linux.md) on setting up the project on linux.
 
 ### Environment
 
-This project uses TypeScript and React Native. It would be best to use an editor that can hook into the TypeScript language server (VSCode does this with Intellisense, Vim does it with CoC). We also use eslint to catch common mistakes and formatting errors. Most editors should support dynamic linting support while editing. If your editor does not, you can manually lint by running `npm run lint` in the project root.
+This project uses **TypeScript and React Native**. It would be best to use an editor that can hook into the TypeScript language server (VSCode does this with Intellisense, Vim does it with CoC). We also use eslint to catch common mistakes and formatting errors. Most editors should support dynamic linting support while editing. If your editor does not, you can manually lint by running `npm run lint` in the project root.
+
+This project also uses **environment variables**. You'll need to make a copy of `.env.example`, rename it to `.env.local` and fill in the required values.
 
 ### Project Structure
 

@@ -14,6 +14,7 @@ import { Cache, CacheKey } from '../../lib/cache';
 import credential from '../../mock/credential';
 import { linkedinUrlFrom } from '../../lib/url';
 import { useDynamicStyles, useShareCredentials } from '../../hooks';
+import { postCredentialToVerifierPlus } from '../../lib/verifierPlus';
 
 export enum PublicLinkScreenMode {
   Default,
@@ -41,7 +42,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   async function createPublicLink() {
     // TODO go get the link from verifier +
-    const link = 'https://web-verifier-plus.vercel.app/vc/1';
+    const link = await postCredentialToVerifierPlus(rawCredentialRecord);
 
     // store link in cache for future use
     await Cache.getInstance().store(CacheKey.PublicLink, rawCredentialRecord.credential.id, link);
