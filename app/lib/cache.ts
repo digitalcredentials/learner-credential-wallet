@@ -2,7 +2,8 @@ import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export enum CacheKey {
-  PublicLink = 'publiclink',
+  // view, get, and unshare links
+  PublicLinks = 'publiclinks',
   VerificationResult = 'verificationResult',
 }
 

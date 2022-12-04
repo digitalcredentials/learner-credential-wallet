@@ -14,11 +14,12 @@ import { Cache, CacheKey } from '../../lib/cache';
 import credential from '../../mock/credential';
 import { linkedinUrlFrom } from '../../lib/url';
 import { useDynamicStyles, useShareCredentials } from '../../hooks';
-import { postCredentialToVerifierPlus } from '../../lib/verifierPlus';
+import * as verifierPlus from '../../lib/verifierPlus';
+import {StoreCredentialResult} from '../../lib/verifierPlus';
 
 export enum PublicLinkScreenMode {
   Default,
-  ShareCredential,
+  ShareCredential
 }
 
 export default function PublicLinkScreen ({ navigation, route }: PublicLinkScreenProps): JSX.Element {
@@ -41,19 +42,27 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }[screenMode];
 
   async function createPublicLink() {
-    // TODO go get the link from verifier +
-    const link = await postCredentialToVerifierPlus(rawCredentialRecord);
+    const links = await verifierPlus.postCredential(rawCredentialRecord);
 
-    // store link in cache for future use
-    await Cache.getInstance().store(CacheKey.PublicLink, rawCredentialRecord.credential.id, link);
-    setPublicLink(link);
+    // store links in cache for future use (for copying and pasting it to share, for un-sharing)
+    await Cache.getInstance().store(CacheKey.PublicLinks, rawCredentialRecord.credential.id, links);
+
+    setPublicLink(`${links.server}${links.url.view}`);
     setJustCreated(true);
   }
 
   async function unshareLink() {
-    await Cache.getInstance().remove(CacheKey.PublicLink, rawCredentialRecord.credential.id);
+    const vcId =  rawCredentialRecord.credential.id;
+    const publicLinks = await Cache.getInstance()
+      .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id) as StoreCredentialResult;
+    const unshareUrl = `${publicLinks.server}${publicLinks.url.unshare}`;
+
+    await Cache.getInstance().remove(CacheKey.PublicLinks, vcId);
+
     setPublicLink(null);
     setJustCreated(false);
+
+    await verifierPlus.deleteCredential(rawCredentialRecord, unshareUrl);
 
     if (screenMode === PublicLinkScreenMode.Default) {
       navigation.popToTop();
@@ -75,8 +84,11 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   async function loadShareUrl() {
     try {
-      const url = await Cache.getInstance().load(CacheKey.PublicLink, rawCredentialRecord.credential.id) as string;
-      setPublicLink(url);
+      const publicLinks = await Cache.getInstance()
+        .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id) as StoreCredentialResult;
+      const publicViewUrl = `${publicLinks.server}${publicLinks.url.view}`;
+
+      setPublicLink(publicViewUrl);
     } catch(e) {
       if ((e as Record<string, string>).name === 'NotFoundError') {
         if (screenMode === PublicLinkScreenMode.Default) {
@@ -118,10 +130,10 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       if (!publicLink) return 'Create a public link that anyone can use to view this credential, add to your LinkedIn profile, or send a json copy.';
       if (justCreated) return 'Public link created. Copy the link to share, add to your LinkedIn profile, or send a json copy.';
       return 'Public link already created. Copy the link to share, add to your LinkedIn profile, or send a json copy.';
-    }    
+    }
   }, [screenMode, publicLink, justCreated]);
 
-  function LinkInstructions() {    
+  function LinkInstructions() {
     return (
       <>
         {screenMode === PublicLinkScreenMode.Default && (
@@ -308,7 +320,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
         title="Are you sure?"
       >
         <Text style={mixins.modalBodyText}>
-          {publicLink !== null 
+          {publicLink !== null
             ? 'This will add the credential to your LinkedIn profile.'
             : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
           }
