@@ -15,16 +15,24 @@ import { securityLoader } from '@digitalcredentials/security-document-loader';
 
 const documentLoader = securityLoader().build();
 
+type SignPresentationParams = {
+  didRecord: DidRecordRaw;
+  verifiableCredential?: Credential[] | Credential;
+  challenge?: string;
+}
+
 /**
- * This method wraps the create & sign presentation flow and and allows a
- * challenge to be specified. If the challenge parameter is not included,
- * a UUID will be generated and used in it's place.
+ * Creates a Verifiable Presentation, signed with the provided DID record.
+ * If one or more VCs are provided, they're included in the presentation.
+ * (An "empty" VP, without any VCs, is used for DID Authentication.)
+ *
+ * A challenge (called a 'nonce' in some protocols) is optionally used when a
+ * Relying Party (RP/requester) is requesting one or more VCs, to prevent
+ * replay attacks.
  */
-export async function createVerifiablePresentation(
-  verifiableCredential: Credential[] | Credential | undefined,
-  didRecord: DidRecordRaw,
-  challenge = uuid.v4(),
-): Promise<VerifiablePresentation> {
+export async function createVerifiablePresentation({
+  didRecord, verifiableCredential, challenge = uuid.v4() as string,
+}: SignPresentationParams): Promise<VerifiablePresentation> {
   const verificationKeyPair = await Ed25519VerificationKey2020.from(didRecord.verificationKey);
   const suite = new Ed25519Signature2020({ key: verificationKeyPair });
 

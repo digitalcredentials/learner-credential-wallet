@@ -23,21 +23,21 @@ export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackg
   );
 
   const verifyBadge = verifyCredential?.loading ? (
-    <StatusBadge 
+    <StatusBadge
       backgroundColor={badgeBackgroundColor}
       color={theme.color.textSecondary}
       label="Verifying"
       icon="rotate-right"
     />
   ) : verifyCredential?.result?.verified ? (
-    <StatusBadge 
+    <StatusBadge
       backgroundColor={badgeBackgroundColor}
       color={theme.color.success}
       label="Verified"
       icon="check-circle"
     />
   ) : (
-    <StatusBadge 
+    <StatusBadge
       backgroundColor={badgeBackgroundColor}
       color={theme.color.errorLight}
       label="Not Verified"
@@ -48,8 +48,8 @@ export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackg
     <View style={styles.container}>
       {verifyBadge}
       {checkPublicLink.result && (
-        <StatusBadge 
-          label="Public" 
+        <StatusBadge
+          label="Public"
           color={theme.color.textSecondary}
           backgroundColor={badgeBackgroundColor}
         />
@@ -64,7 +64,7 @@ async function hasPublicLink(rawCredentialRecord: CredentialRecordRaw): Promise<
   }
 
   return Cache.getInstance()
-    .load(CacheKey.PublicLink, rawCredentialRecord.credential.id)
+    .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id)
     .then((s) => s !== undefined)
     .catch(() => false);
 }

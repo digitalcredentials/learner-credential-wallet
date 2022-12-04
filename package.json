@@ -6,8 +6,6 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
     "lint": "eslint --max-warnings 0 ./app ./App.tsx && tsc --noEmit && echo ✓ Passed lint check",
     "postinstall": "npx rn-nodeify --install process,stream,events,module,util --hack && npx patch-package"
   },
@@ -20,7 +18,7 @@
     "@digitalcredentials/ed25519-verification-key-2020": "^3.2.2",
     "@digitalcredentials/minimal-cipher": "git+https://git@github.com/digitalcredentials/minimal-cipher.git#react-native-updates",
     "@digitalcredentials/security-document-loader": "^1.0.0",
-    "@digitalcredentials/vc": "^4.1.1",
+    "@digitalcredentials/vc": "^5.0.0",
     "@digitalcredentials/vc-status-list": "^5.0.2",
     "@digitalcredentials/vpqr": "^2.2.1",
     "@expo-google-fonts/roboto": "^0.2.0",

@@ -10,8 +10,8 @@ export type ShareRequestParams = {
 
 export function isShareRequestParams(params?: Record<string, unknown>): params is ShareRequestParams {
   params = params || {} as ShareRequestParams;
-  return 'client_id' in params 
-    && 'nonce' in params 
+  return 'client_id' in params
+    && 'nonce' in params
     && 'redirect_uri' in params;
 }
 
@@ -21,7 +21,8 @@ export async function performShareRequest(params: ShareRequestParams, rawCredent
 
   const credentials = rawCredentialRecords.map(({ credential }) => credential);
   const rawDidRecord = selectWithFactory(makeSelectDidFromProfile, { rawProfileRecord });
-  const vp = await createVerifiablePresentation(credentials, rawDidRecord, nonce);
+  const vp = await createVerifiablePresentation({
+    didRecord: rawDidRecord, verifiableCredential: credentials, challenge: nonce});
 
   const request = {
     method: 'POST',

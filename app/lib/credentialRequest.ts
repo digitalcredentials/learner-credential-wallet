@@ -60,8 +60,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
     throw new Error(`Unsupported auth_type value: "${auth_type}".`);
   }
 
-  const requestBody = await createVerifiablePresentation(
-    undefined, didRecord, challenge);
+  const requestBody = await createVerifiablePresentation({didRecord, challenge});
 
   console.log(JSON.stringify(requestBody, null, 2));
 
