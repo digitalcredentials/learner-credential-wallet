@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Linking, ScrollView } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
+import { registryCollections } from '@digitalcredentials/issuer-registry-client';
 
 import { LoadingIndicatorDots, NavHeader } from '../../components';
 import dynamicStyleSheet from './ShareHomeScreen.styles';
@@ -11,7 +12,6 @@ import { queryParamsFrom } from '../../lib/decode';
 import { isShareRequestParams, performShareRequest, ShareRequestParams } from '../../lib/shareRequest';
 import { HumanReadableError } from '../../lib/error';
 import { fmtCredentialCount } from '../../lib/text';
-import { registryCollections } from '../../lib/registry';
 import { NavigationUtil } from '../../lib/navigationUtil';
 import { displayGlobalModal } from '../../lib/globalModal';
 
