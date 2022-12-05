@@ -47,10 +47,7 @@ function aggregateCredentialReports(reports: CredentialImportReport[]): Credenti
 }
 
 export async function importProfileFrom(data: string): Promise<ReportDetails> {
-  const items: unknown[] = JSON.parse(data);
-  if (items.length !== 1) throw new Error('More than one profile detected');
-  const rawProfile = JSON.stringify(items[0]);
-  const profileImportReport = await ProfileRecord.importProfileRecord(rawProfile);
+  const profileImportReport = await ProfileRecord.importProfileRecord(data);
   const userIdStatusText = `User ID ${profileImportReport.userIdImported ? 'successfully imported' : 'failed to import'}`;
   const reportDetails = {
     [userIdStatusText]: [],
@@ -73,4 +70,14 @@ export async function importWalletFrom(data: string): Promise<ReportDetails> {
   const reportDetails = credentialReportDetailsFrom(totalCredentialsReport);
 
   return reportDetails;
+}
+
+export async function importWalletOrProfileFrom(data: string): Promise<ReportDetails> {
+  const parsedData = JSON.parse(data);
+
+  if (parsedData instanceof Array) {
+    return importWalletFrom(data);
+  }
+
+  return importProfileFrom(data);
 }

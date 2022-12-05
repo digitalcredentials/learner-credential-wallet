@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, getAllRecords } from '..';
 import { GlobalModalPayload } from '../../components';
 import { isBiometricsSupported } from '../../lib/biometrics';
-import { importWalletFrom } from '../../lib/import';
+import { importWalletOrProfileFrom } from '../../lib/import';
 import { db, INITIAL_PROFILE_NAME } from '../../model';
 import { loadThemeName, saveThemeName } from '../../styles';
 import { createProfile } from './profile';
@@ -10,7 +10,7 @@ import { createProfile } from './profile';
 type InitializeParams = {
   passphrase: string;
   enableBiometrics: boolean;
-  existingWallet?: string;
+  existingData?: string;
 }
 
 export type WalletState = {
@@ -60,7 +60,7 @@ const unlockWithBiometrics = createAsyncThunk('walletState/unlockWithBiometrics'
   await dispatch(pollWalletState());
 });
 
-const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics, existingWallet }: InitializeParams, { dispatch }) => {
+const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics, existingData }: InitializeParams, { dispatch }) => {
   await db.initialize(passphrase);
   await db.unlock(passphrase);
   
@@ -74,9 +74,9 @@ const initialize = createAsyncThunk('walletState/initialize', async ({ passphras
 
   let reportDetails = undefined;
 
-  if (existingWallet) {
+  if (existingData) {
     try {
-      reportDetails = await importWalletFrom(existingWallet);
+      reportDetails = await importWalletOrProfileFrom(existingData);
     } catch (err) {
       await db.lock().then(db.reset);
       throw err;

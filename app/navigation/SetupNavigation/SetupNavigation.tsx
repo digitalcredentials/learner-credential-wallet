@@ -247,10 +247,14 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
   const importModalRef = useRef<ImportFileModalHandle>(null);
   const dispatch = useAppDispatch();
 
-  async function importWallet(data: string) {
-    const reportDetails = await dispatch(initialize({ passphrase: password, enableBiometrics, existingWallet: data })).unwrap();
-    setDone(true);
+  async function initializeWalletWithData(data: string) {
+    const reportDetails = await dispatch(initialize({ 
+      passphrase: password, 
+      enableBiometrics, 
+      existingData: data 
+    })).unwrap();
 
+    setDone(true);
     return reportDetails;
   }
 
@@ -328,7 +332,7 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
       <ImportFileModal
         ref={importModalRef}
         onPressDetails={onPressDetails}
-        importItem={importWallet}
+        importItem={initializeWalletWithData}
         onFinished={updateWalletState}
         textConfig={restoreWalletTextConfig}
       />
