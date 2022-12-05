@@ -16,6 +16,7 @@
     "@digitalcredentials/did-method-key": "^2.0.3",
     "@digitalcredentials/ed25519-signature-2020": "^3.0.1",
     "@digitalcredentials/ed25519-verification-key-2020": "^3.2.2",
+    "@digitalcredentials/issuer-registry-client": "^1.0.0",
     "@digitalcredentials/minimal-cipher": "git+https://git@github.com/digitalcredentials/minimal-cipher.git#react-native-updates",
     "@digitalcredentials/security-document-loader": "^1.0.0",
     "@digitalcredentials/vc": "^5.0.0",
