@@ -58,7 +58,7 @@ export default function ProfileSelectionScreen({ navigation, route }: ProfileSel
 }
 
 function ProfileButton({ rawProfileRecord, onPress }: ProfileButtonProps) {
-  const { mixins } = useDynamicStyles();
+  const { mixins, theme } = useDynamicStyles();
 
   return (
     <Button
@@ -72,6 +72,7 @@ function ProfileButton({ rawProfileRecord, onPress }: ProfileButtonProps) {
         <ListItem.Chevron 
           hasTVPreferredFocus={undefined}
           tvParallaxProperties={undefined}
+          color={theme.color.textSecondary}
         />
       }
     />

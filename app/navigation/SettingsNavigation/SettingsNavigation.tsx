@@ -25,12 +25,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const Stack = createStackNavigator<SettingsNavigationParamList>();
 
 function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItemProps): JSX.Element {
-  const { styles } = useDynamicStyles(dynamicStyleSheet);
+  const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   const _rightComponent = rightComponent || (
     <ListItem.Chevron
       hasTVPreferredFocus={undefined}
       tvParallaxProperties={undefined}
+      color={theme.color.textSecondary}
     />
   );
 

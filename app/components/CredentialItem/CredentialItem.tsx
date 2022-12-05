@@ -88,6 +88,7 @@ export default function CredentialItem({
       <ListItem.Chevron
         hasTVPreferredFocus={undefined}
         tvParallaxProperties={undefined}
+        color={theme.color.textSecondary}
       />
     );
   }
