@@ -56,8 +56,8 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
       <View style={styles.container}>
         <Text style={styles.headerText}>Issuer</Text>
         <StatusItem
-          positiveText="Is an institution registered in:"
-          negativeText="Is not a registered institution"
+          positiveText="Is verified in:"
+          negativeText="Is not verified in a registered institution"
           verified={details[LogId.IssuerDIDResolves]}
         >
           {registryList && <BulletList items={registryList} />}
