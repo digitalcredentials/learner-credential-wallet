@@ -64,7 +64,6 @@ async function verificationResultFor(rawCredentialRecord: CredentialRecordRaw, f
     if (cachedResult) return cachedResult;
   }
 
-  await new Promise((res) => setTimeout(res, 2000));
   let response, error;
   try {
     response = await verifyCredential(rawCredentialRecord.credential);
