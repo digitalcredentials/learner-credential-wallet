@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { ResultLog, verifyCredential } from '../lib/validate';
 import { CredentialError } from '../types/credential';
 import { Cache, CacheKey } from '../lib/cache';
