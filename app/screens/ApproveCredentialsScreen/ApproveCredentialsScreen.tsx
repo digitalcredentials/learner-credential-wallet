@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FlatList, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { navigationRef } from '../../navigation';
-import { acceptPendingCredentials, clearFoyer, selectPendingCredentials } from '../../store/slices/credentialFoyer';
+import { acceptPendingCredentials, ApprovalStatus, clearFoyer, selectPendingCredentials } from '../../store/slices/credentialFoyer';
 import { CredentialItem, NavHeader, CredentialRequestHandler, ApprovalControls, ConfirmModal } from '../../components';
 import { ApproveCredentialsScreenProps, RenderItemProps } from './ApproveCredentialsScreen.d';
 import dynamicStyleSheet from './ApproveCredentialsScreen.styles';
@@ -17,9 +17,18 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
   const dispatch = useAppDispatch();
   const { rawProfileRecord, credentialRequestParams } = route.params;
   const profileRecordId = rawProfileRecord._id;
-  const pendingCredentials = useSelector(selectPendingCredentials);
+
+  const displayedCredentials = useSelector(selectPendingCredentials);
+  const pendingCredentials = useMemo(
+    () => displayedCredentials.filter(({ status }) => 
+      status === ApprovalStatus.Pending 
+      || status === ApprovalStatus.PendingDuplicate
+    ), 
+    [displayedCredentials]
+  );
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [showAcceptAllButton, setShowAcceptAllButton] = useState(true);
+  const showAcceptAllButton = pendingCredentials.length > 0;
 
   async function goToHome() {
     await dispatch(clearFoyer());
@@ -40,11 +49,6 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
     } catch (err) {
       setModalIsOpen(true);
     }
-  }
-
-  function onModalRequestClose() {
-    setModalIsOpen(false);
-    setShowAcceptAllButton(false);
   }
 
   function Done(): JSX.Element {
@@ -99,7 +103,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
           style={styles.listContainer}
           contentContainerStyle={styles.listContentContainer}
           ListFooterComponent={ListFooter}
-          data={pendingCredentials}
+          data={displayedCredentials}
           renderItem={renderItem}
           keyExtractor={(_, index) => `credential-${index}`}
         />
@@ -117,7 +121,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
       <ConfirmModal
         open={modalIsOpen}
         title="Unable To Add Credentials"
-        onRequestClose={onModalRequestClose}
+        onRequestClose={() => setModalIsOpen(false)}
         confirmText="Close"
         cancelButton={false}
       >
