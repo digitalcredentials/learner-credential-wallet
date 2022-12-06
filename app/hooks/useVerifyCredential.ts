@@ -3,6 +3,7 @@ import { ResultLog, verifyCredential } from '../lib/validate';
 import { CredentialError } from '../types/credential';
 import { Cache, CacheKey } from '../lib/cache';
 import { CredentialRecordRaw } from '../model';
+import { useFocusEffect } from '@react-navigation/native';
 
 /* Verification expiration = 30 days */
 const VERIFICATION_EXPIRATION = 1000 * 60 * 60 * 24 * 30;
@@ -48,9 +49,9 @@ export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw, f
     setLoading(false);
   }, []);
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     verify();
-  }, [verify]);
+  }, [verify]));
 
   return { loading, error, result };
 }
@@ -63,6 +64,7 @@ async function verificationResultFor(rawCredentialRecord: CredentialRecordRaw, f
     if (cachedResult) return cachedResult;
   }
 
+  await new Promise((res) => setTimeout(res, 2000));
   let response, error;
   try {
     response = await verifyCredential(rawCredentialRecord.credential);
