@@ -2,14 +2,13 @@ import { fromQrCode, toQrCode } from '@digitalcredentials/vpqr';
 import qs from 'query-string';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
-//import { verifyPresentation } from '../lib/validate';
-import type { Credential } from '../types/credential';
-//import { VerifiablePresentation, PresentationError } from '../types/presentation';
+import type { Credential, EducationalOperationalCredential, Subject } from '../types/credential';
 import { VerifiablePresentation } from '../types/presentation';
 import { CredentialRequestParams } from './credentialRequest';
 import { isCredentialRequestParams } from './credentialRequest';
 import { HumanReadableError } from './error';
 import { isVerifiableCredential, isVerifiablePresentation } from './verifiableObject';
+import { CredentialRecordRaw } from '../model';
 
 const documentLoader = securityLoader().build();
 export const regexPattern = {
@@ -90,4 +89,24 @@ export async function credentialsFrom(text: string): Promise<Credential[]> {
   }
 
   throw new Error('No credentials were resolved from the text');
+}
+
+export function educationalOperationalCredentialFrom(credentialSubject: Subject): EducationalOperationalCredential | undefined {
+  let data = credentialSubject.hasCredential || credentialSubject.achievement;
+  if (Array.isArray(data)) {
+    data = data[0];
+  }
+
+  return data;
+}
+
+export function credentialIdFor(rawCredentialRecord: CredentialRecordRaw): string {
+  const eoc = educationalOperationalCredentialFrom(rawCredentialRecord.credential.credentialSubject);
+  const id = rawCredentialRecord.credential.id || eoc?.id;
+
+  if (!id) {
+    throw new Error('Credential ID could not be resolved.');
+  }
+
+  return id;
 }

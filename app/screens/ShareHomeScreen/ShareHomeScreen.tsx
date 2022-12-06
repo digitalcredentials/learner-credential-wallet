@@ -14,6 +14,7 @@ import { fmtCredentialCount } from '../../lib/text';
 import { registryCollections } from '../../lib/registry';
 import { NavigationUtil } from '../../lib/navigationUtil';
 import { displayGlobalModal } from '../../lib/globalModal';
+import { hasPublicLink } from '../../lib/publicLink';
 
 export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
@@ -128,24 +129,28 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
       singleSelect: true,
     });
 
-    const confirmedShare = await displayGlobalModal({
-      title: 'Are you sure?',
-      confirmText: 'Create Link',
-      body: (
-        <>
-          <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
-          <Button
-            buttonStyle={mixins.buttonClear}
-            titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
-            containerStyle={mixins.buttonClearContainer}
-            title="What does this mean?"
-            onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
-          />
-        </>
-      ),
-    });
+    const alreadyCreated = await hasPublicLink(rawCredentialRecord);    
+    if (!alreadyCreated) {
+      const confirmedShare = await displayGlobalModal({
+        title: 'Are you sure?',
+        confirmText: 'Create Link',
+        body: (
+          <>
+            <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
+            <Button
+              buttonStyle={mixins.buttonClear}
+              titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
+              containerStyle={mixins.buttonClearContainer}
+              title="What does this mean?"
+              onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
+            />
+          </>
+        ),
+      });
 
-    if (!confirmedShare) return goToShareHome();
+      if (!confirmedShare) return goToShareHome();
+    }
+
     navigation.navigate('PublicLinkScreen', { rawCredentialRecord });
   }
 

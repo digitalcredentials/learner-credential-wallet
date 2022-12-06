@@ -46,6 +46,8 @@ export default function CredentialSelectionScreen({
         checkable={!singleSelect}
         hideLeft={singleSelect}
         chevron={singleSelect}
+        rawCredentialRecord={item}
+        showStatusBadges
       />
     );
   }

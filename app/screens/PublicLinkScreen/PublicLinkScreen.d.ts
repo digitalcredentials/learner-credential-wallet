@@ -1,3 +1,4 @@
+import { CredentialRecordRaw } from '../../model';
 import { PublicLinkScreenMode } from './PublicLinkScreen';
 export { PublicLinkScreenProps } from '../../navigation';
 
