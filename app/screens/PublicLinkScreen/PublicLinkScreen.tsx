@@ -10,12 +10,10 @@ import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import dynamicStyleSheet from './PublicLinkScreen.styles';
 import { ConfirmModal, NavHeader } from '../../components';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { Cache, CacheKey } from '../../lib/cache';
 import credential from '../../mock/credential';
-import { linkedinUrlFrom } from '../../lib/url';
+import { createPublicLinkFor, getPublicLinkFor, linkedinUrlFrom, removePublicLinkFor } from '../../lib/publicLink';
 import { useDynamicStyles, useShareCredentials } from '../../hooks';
 import * as verifierPlus from '../../lib/verifierPlus';
-import {StoreCredentialResult} from '../../lib/verifierPlus';
 
 export enum PublicLinkScreenMode {
   Default,
@@ -43,6 +41,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   async function createPublicLink() {
     const links = await verifierPlus.postCredential(rawCredentialRecord);
+    // const url = await createPublicLinkFor(rawCredentialRecord);
 
     // store links in cache for future use (for copying and pasting it to share, for un-sharing)
     await Cache.getInstance().store(CacheKey.PublicLinks, rawCredentialRecord.credential.id, links);
@@ -52,6 +51,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }
 
   async function unshareLink() {
+    // TODO: inv removePublicLinkFor
     const vcId =  rawCredentialRecord.credential.id;
     const publicLinks = await Cache.getInstance()
       .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id) as StoreCredentialResult;
@@ -83,6 +83,14 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }
 
   async function loadShareUrl() {
+    // Seth:
+    // const url = await getPublicLinkFor(rawCredentialRecord);
+    // if (url === null && screenMode === PublicLinkScreenMode.Default) {
+    //   await createPublicLink();
+    // } else if (url !== null) {
+    //   setPublicLink(url);
+    // }
+
     try {
       const publicLinks = await Cache.getInstance()
         .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id) as StoreCredentialResult;

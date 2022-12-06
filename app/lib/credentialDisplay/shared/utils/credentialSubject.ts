@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { Subject } from '../../../../types/credential';
 import { DATE_FORMAT } from '../../../constants';
+import { educationalOperationalCredentialFrom } from '../../../decode';
 import { imageSourceFrom } from './image';
 
 type CredentialRenderInfo = {
@@ -14,15 +15,6 @@ type CredentialRenderInfo = {
   endDateFmt: string | null;
   numberOfCredits: string | null;
   achievementImage: string | null;
-}
-
-function educationalOperationalCredentialFrom(credentialSubject: Subject) {
-  let data = credentialSubject.hasCredential || credentialSubject.achievement;
-  if (Array.isArray(data)) {
-    data = data[0];
-  }
-
-  return data;
 }
 
 export function credentialSubjectRenderInfoFrom(credentialSubject: Subject): CredentialRenderInfo {

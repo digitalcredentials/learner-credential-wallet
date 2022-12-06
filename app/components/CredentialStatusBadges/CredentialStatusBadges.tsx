@@ -2,13 +2,12 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { CredentialStatusBadgesProps } from './CredentialStatusBadges.d';
-import { CredentialRecordRaw } from '../../model';
-import { Cache, CacheKey } from '../../lib/cache';
 import { StatusBadge } from '../';
 import dynamicStyleSheet from './CredentialStatusBadges.styles';
 import { useAsyncCallback } from 'react-async-hook';
 import { useDynamicStyles, useVerifyCredential } from '../../hooks';
 import { useFocusEffect } from '@react-navigation/native';
+import { hasPublicLink } from '../../lib/publicLink';
 
 
 export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackgroundColor }: CredentialStatusBadgesProps): JSX.Element {
@@ -56,15 +55,4 @@ export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackg
       )}
     </View>
   );
-}
-
-async function hasPublicLink(rawCredentialRecord: CredentialRecordRaw): Promise<boolean> {
-  if (rawCredentialRecord.credential.id === undefined) {
-    return false;
-  }
-
-  return Cache.getInstance()
-    .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id)
-    .then((s) => s !== undefined)
-    .catch(() => false);
 }

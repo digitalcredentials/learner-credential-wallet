@@ -38,8 +38,9 @@ export async function postCredential(rawCredentialRecord: CredentialRecordRaw): 
 
   const response = await fetch(url, request);
   if (!response.ok) {
-    console.log('Verifier Plus response:', JSON.stringify(response, null, 2));
-    throw new Error(`Failed to post credential to Verifier Plus: ${response.status} ${response.statusText}`);
+    console.log('Verifier Plus URL:', url);
+    console.log('Verifier Plus response:', await response.text());
+    throw new Error('Failed to post credential to Verifier Plus');
   }
 
   const result = await response.json() as StoreCredentialResult;
