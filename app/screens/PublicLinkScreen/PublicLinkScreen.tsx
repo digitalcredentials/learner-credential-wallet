@@ -11,9 +11,8 @@ import dynamicStyleSheet from './PublicLinkScreen.styles';
 import { ConfirmModal, NavHeader } from '../../components';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import credential from '../../mock/credential';
-import { createPublicLinkFor, getPublicLinkFor, linkedinUrlFrom, removePublicLinkFor } from '../../lib/publicLink';
+import { createPublicLinkFor, getPublicViewLink, linkedinUrlFrom, unshareCredential } from '../../lib/publicLink';
 import { useDynamicStyles, useShareCredentials } from '../../hooks';
-import * as verifierPlus from '../../lib/verifierPlus';
 
 export enum PublicLinkScreenMode {
   Default,
@@ -40,29 +39,21 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }[screenMode];
 
   async function createPublicLink() {
-    const links = await verifierPlus.postCredential(rawCredentialRecord);
-    // const url = await createPublicLinkFor(rawCredentialRecord);
+    const publicLink = await createPublicLinkFor(rawCredentialRecord);
 
-    // store links in cache for future use (for copying and pasting it to share, for un-sharing)
-    await Cache.getInstance().store(CacheKey.PublicLinks, rawCredentialRecord.credential.id, links);
-
-    setPublicLink(`${links.server}${links.url.view}`);
+    setPublicLink(publicLink);
     setJustCreated(true);
   }
 
   async function unshareLink() {
-    // TODO: inv removePublicLinkFor
-    const vcId =  rawCredentialRecord.credential.id;
-    const publicLinks = await Cache.getInstance()
-      .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id) as StoreCredentialResult;
-    const unshareUrl = `${publicLinks.server}${publicLinks.url.unshare}`;
-
-    await Cache.getInstance().remove(CacheKey.PublicLinks, vcId);
+    try {
+      await unshareCredential(rawCredentialRecord);
+    } catch (err) {
+      console.log('Error unsharing credential:', err);
+    }
 
     setPublicLink(null);
     setJustCreated(false);
-
-    await verifierPlus.deleteCredential(rawCredentialRecord, unshareUrl);
 
     if (screenMode === PublicLinkScreenMode.Default) {
       navigation.popToTop();
@@ -83,28 +74,11 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }
 
   async function loadShareUrl() {
-    // Seth:
-    // const url = await getPublicLinkFor(rawCredentialRecord);
-    // if (url === null && screenMode === PublicLinkScreenMode.Default) {
-    //   await createPublicLink();
-    // } else if (url !== null) {
-    //   setPublicLink(url);
-    // }
-
-    try {
-      const publicLinks = await Cache.getInstance()
-        .load(CacheKey.PublicLinks, rawCredentialRecord.credential.id) as StoreCredentialResult;
-      const publicViewUrl = `${publicLinks.server}${publicLinks.url.view}`;
-
-      setPublicLink(publicViewUrl);
-    } catch(e) {
-      if ((e as Record<string, string>).name === 'NotFoundError') {
-        if (screenMode === PublicLinkScreenMode.Default) {
-          await createPublicLink();
-        }
-      } else {
-        console.error(e);
-      }
+    const url = await getPublicViewLink(rawCredentialRecord);
+    if (url === null && screenMode === PublicLinkScreenMode.Default) {
+      await createPublicLink();
+    } else if (url !== null) {
+      setPublicLink(url);
     }
   }
 
