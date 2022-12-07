@@ -9,7 +9,6 @@ yarn-error.log
 *.mobileprovision
 *.orig.*
 web-build/
-config.ts
 
 # macOS
 .DS_Store
