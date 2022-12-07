@@ -69,8 +69,8 @@ and formatting errors. Most editors should support dynamic linting support while
 editing. If your editor does not, you can manually lint by running `npm run lint` 
 in the project root.
 
-This project also uses **environment variables**. You'll need to make a copy of 
-`config.ts.example`, rename it to `config.ts` and fill in the required values.
+This project also uses **environment variables**, which are stored in `config.ts`.
+These values can be overridden, but development values should not be committed to the repository.
 
 ### Project Structure
 
