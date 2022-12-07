@@ -3,27 +3,37 @@ import { CredentialRecordRaw } from '../model';
 import { IssuerObject } from '../types/credential';
 import { Cache, CacheKey } from './cache';
 import { credentialIdFor, educationalOperationalCredentialFrom } from './decode';
-import { postCredentialToVerifierPlus } from './verifierPlus';
+import * as verifierPlus from './verifierPlus';
+import { StoreCredentialResult } from './verifierPlus';
 
 export async function createPublicLinkFor(rawCredentialRecord: CredentialRecordRaw): Promise<string> {
   const id = credentialIdFor(rawCredentialRecord);
-  const url = await postCredentialToVerifierPlus(rawCredentialRecord);
-  
-  await Cache.getInstance().store(CacheKey.PublicLink, id, url);
-  return url;
+  const links = await verifierPlus.postCredential(rawCredentialRecord);
+
+  // store links in cache for future use (for copying and pasting it to share, for un-sharing)
+  await Cache.getInstance().store(CacheKey.PublicLinks, id, links);
+  return `${links.server}${links.url.view}`;
 }
 
-export async function removePublicLinkFor(rawCredentialRecord: CredentialRecordRaw): Promise<void> {
-  const id = credentialIdFor(rawCredentialRecord);
-  await Cache.getInstance().remove(CacheKey.PublicLink, id);
+export async function unshareCredential(rawCredentialRecord: CredentialRecordRaw): Promise<void> {
+  const vcId = credentialIdFor(rawCredentialRecord);
+
+  const publicLinks = await Cache.getInstance()
+    .load(CacheKey.PublicLinks, vcId) as StoreCredentialResult;
+  const unshareUrl = `${publicLinks.server}${publicLinks.url.unshare}`;
+
+  await Cache.getInstance().remove(CacheKey.PublicLinks, vcId);
+
+  await verifierPlus.deleteCredential(rawCredentialRecord, unshareUrl);
 }
 
-export async function getPublicLinkFor(rawCredentialRecord: CredentialRecordRaw): Promise<string | null> {
+export async function getPublicViewLink(rawCredentialRecord: CredentialRecordRaw): Promise<string | null> {
   const id = credentialIdFor(rawCredentialRecord);
 
   try {
-    const url = await Cache.getInstance().load(CacheKey.PublicLink, id) as string;
-    return url;
+    const publicLinks = await Cache.getInstance()
+      .load(CacheKey.PublicLinks, id) as StoreCredentialResult;
+    return `${publicLinks.server}${publicLinks.url.view}`;
   } catch (err) {
     if ((err as Error).name === 'NotFoundError') return null;
     throw err;
@@ -31,14 +41,14 @@ export async function getPublicLinkFor(rawCredentialRecord: CredentialRecordRaw)
 }
 
 export async function hasPublicLink(rawCredentialRecord: CredentialRecordRaw): Promise<boolean> {
-  const url = await getPublicLinkFor(rawCredentialRecord);
+  const url = await getPublicViewLink(rawCredentialRecord);
   return url !== null;
 }
 
 export async function linkedinUrlFrom(rawCredentialRecord: CredentialRecordRaw): Promise<string> {
-  const publicLink = await getPublicLinkFor(rawCredentialRecord);
+  const publicLink = await getPublicViewLink(rawCredentialRecord);
   const eoc = educationalOperationalCredentialFrom(rawCredentialRecord.credential.credentialSubject);
-  
+
   if (!eoc) {
     throw new Error('No achievement/credential found, not sharing to LI.');
   }
