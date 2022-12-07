@@ -70,7 +70,7 @@ editing. If your editor does not, you can manually lint by running `npm run lint
 in the project root.
 
 This project also uses **environment variables**. You'll need to make a copy of 
-`.env.example`, rename it to `.env.local` and fill in the required values.
+`config.ts.example`, rename it to `config.ts` and fill in the required values.
 
 ### Project Structure
 

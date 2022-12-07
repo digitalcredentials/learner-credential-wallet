@@ -1,0 +1,2 @@
+// The URL for Verifier Plus
+export const VERIFIER_PLUS_URL = '';

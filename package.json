@@ -65,7 +65,6 @@
     "react-native-crypto": "^2.2.0",
     "react-native-device-info": "^8.4.8",
     "react-native-document-picker": "^6.0.4",
-    "react-native-dotenv": "^3.4.2",
     "react-native-dropdown-picker": "^5.4.2",
     "react-native-elements": "^3.4.2",
     "react-native-exit-app": "^1.1.0",
