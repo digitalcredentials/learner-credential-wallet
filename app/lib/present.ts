@@ -9,6 +9,7 @@ import { Platform } from 'react-native';
 import type { VerifiablePresentation } from '../types/presentation';
 import type { DidRecordRaw } from '../model/did';
 import type { Credential } from '../types/credential';
+import { toQr } from '../lib/decode';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 
@@ -62,7 +63,8 @@ export async function sharePresentation(verifiablePresentation: VerifiablePresen
     await RNFS.unlink(filePath);
   }
 
-  const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
+  // const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
+  const verifiablePresentationString = await toQr(verifiablePresentation);
   await RNFS.writeFile(filePath, verifiablePresentationString, 'utf8');
 
   /**
