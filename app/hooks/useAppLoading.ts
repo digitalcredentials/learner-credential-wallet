@@ -6,7 +6,8 @@ import {
   Rubik_500Medium,
   Rubik_700Bold,
 } from '@expo-google-fonts/rubik';
-import { Roboto_400Regular } from '@expo-google-fonts/roboto';
+import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono';
+import { loadRegistryCollections } from '@digitalcredentials/issuer-registry-client';
 
 import {
   pollWalletState,
@@ -15,7 +16,6 @@ import {
 } from '../store/slices/wallet';
 import { getAllRecords } from '../store';
 import { useAppDispatch } from './useAppDispatch';
-import { loadRegistryCollections } from '@digitalcredentials/issuer-registry-client';
 
 export function useAppLoading(): boolean {
   const [loading, setLoading] = useState(true);
@@ -47,7 +47,7 @@ function useFontsLoaded() {
     Rubik_400Regular,
     Rubik_500Medium,
     Rubik_700Bold,
-    Roboto_400Regular,
+    RobotoMono_400Regular,
   });
 
   return fontsLoaded;

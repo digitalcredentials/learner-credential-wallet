@@ -23,6 +23,7 @@
     "@digitalcredentials/vc-status-list": "^5.0.2",
     "@digitalcredentials/vpqr": "^2.2.1",
     "@expo-google-fonts/roboto": "^0.2.0",
+    "@expo-google-fonts/roboto-mono": "^0.2.2",
     "@expo-google-fonts/rubik": "^0.2.0",
     "@expo/vector-icons": "^12.0.0",
     "@interop/did-web-resolver": "^2.2.1",
