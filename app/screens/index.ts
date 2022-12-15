@@ -28,6 +28,7 @@ export * from './PublicLinkScreen/PublicLinkScreen.d';
 export * from './IssuerInfoScreen/IssuerInfoScreen.d';
 export * from './CredentialSelectionScreen/CredentialSelectionScreen.d';
 export * from './ProfileSelectionScreen/ProfileSelectionScreen.d';
+export * from './ViewSourceScreen/ViewSourceScreen.d';
 
 // Enum Definitions
 export * from './PublicLinkScreen/PublicLinkScreen';

@@ -30,7 +30,7 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
         params: {
           screen: 'ViewSourceScreen',
           params: {
-            data: rawProfileRecord
+            data: JSON.stringify(rawProfileRecord, null, 2)
           },
         },
       });

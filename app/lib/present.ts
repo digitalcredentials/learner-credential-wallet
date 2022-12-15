@@ -1,4 +1,3 @@
-import * as RNFS from 'react-native-fs';
 import uuid from 'react-native-uuid';
 import vc from '@digitalcredentials/vc';
 import { Ed25519VerificationKey2020 } from '@digitalcredentials/ed25519-verification-key-2020';
