@@ -34,7 +34,7 @@ export const darkTheme: ThemeType = {
     regular: FontFamily.RubikRegular,
     medium: FontFamily.RubikMedium,
     bold: FontFamily.RubikBold,
-    mono: FontFamily.RobotoRegular,
+    mono: FontFamily.RobotoMonoRegular,
   },
   fontSize: {
     title: 36,
