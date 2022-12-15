@@ -1,14 +1,8 @@
-import Share from 'react-native-share';
-import * as RNFS from 'react-native-fs';
-import { Platform } from 'react-native';
-
 import { ProfileRecord, ProfileRecordRaw } from '../model';
 import { exportWalletEncrypted } from './lockedWallet';
+import { shareData } from './shareData';
 
 export async function exportProfile(rawProfileRecord: ProfileRecordRaw, encryptPassphrase?: string): Promise<void> {
-  const fileName = 'Profile Backup';
-
-  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
   const exportedProfile = await ProfileRecord.exportProfileRecord(rawProfileRecord);
   const exportedProfileString = JSON.stringify([exportedProfile], null, 2);
 
@@ -16,28 +10,10 @@ export async function exportProfile(rawProfileRecord: ProfileRecordRaw, encryptP
     ? await exportWalletEncrypted(exportedProfileString, encryptPassphrase)
     : exportedProfileString;
 
-  /**
-   * On Android, RNFS doesn't truncate the file before writing, 
-   * so we have to check if it already exists.
-   */
-  if (await RNFS.exists(filePath)) {
-    await RNFS.unlink(filePath);
-  }
-  await RNFS.writeFile(filePath, data, 'utf8');
-
-  await Share.open({
-    title: fileName,
-    url: `file://${filePath}`,
-    type: 'text/plain',
-    subject: fileName,
-    message: Platform.OS === 'ios' ? undefined : data,
-  });
+  await shareData('Profile Backup.json', data);
 }
 
 export async function exportWallet(encryptPassphrase?: string): Promise<void> {
-  const fileName = 'Wallet Backup';
-  const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
-
   const rawProfileRecords = await ProfileRecord.getAllProfileRecords();
   const exportedProfiles = await Promise.all(rawProfileRecords.map(ProfileRecord.exportProfileRecord));
   const exportedWalletString = JSON.stringify(exportedProfiles, null, 2);
@@ -46,20 +22,5 @@ export async function exportWallet(encryptPassphrase?: string): Promise<void> {
     ? await exportWalletEncrypted(exportedWalletString, encryptPassphrase)
     : exportedWalletString;
 
-  /**
-   * On Android, RNFS doesn't truncate the file before writing, 
-   * so we have to check if it already exists.
-   */
-  if (await RNFS.exists(filePath)) {
-    await RNFS.unlink(filePath);
-  }
-  await RNFS.writeFile(filePath, data, 'utf8');
-
-  await Share.open({
-    title: fileName,
-    url: `file://${filePath}`,
-    type: 'text/plain',
-    subject: fileName,
-    message: Platform.OS === 'ios' ? undefined : data,
-  });
+  await shareData('Wallet Backup.json', data);
 }
