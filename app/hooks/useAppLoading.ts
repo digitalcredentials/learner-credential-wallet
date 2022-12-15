@@ -8,6 +8,7 @@ import {
 } from '@expo-google-fonts/rubik';
 import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono';
 import { loadRegistryCollections } from '@digitalcredentials/issuer-registry-client';
+import { FileLogger, LogLevel, logLevelNames } from 'react-native-file-logger';
 
 import {
   pollWalletState,
@@ -34,6 +35,7 @@ export function useAppLoading(): boolean {
   async function runSecondaryTasks() {
     await Promise.all([
       loadRegistryCollections(),
+      initializeLogger(),
     ]);
 
     setLoading(false);
@@ -77,4 +79,13 @@ function useWalletStateInitialized() {
   }, [walletStateInitialized]);
 
   return walletStateInitialized;
+}
+
+async function initializeLogger() {
+  function formatter(level: LogLevel, msg: string) {
+    const levelName = logLevelNames[level];
+    return `> ${new Date().toISOString()} [${levelName}] ${msg}`;
+  }
+
+  await FileLogger.configure({ formatter, maximumNumberOfFiles: 1 });
 }

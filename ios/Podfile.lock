@@ -5,6 +5,9 @@ PODS:
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
   - boost (1.76.0)
+  - CocoaLumberjack (3.8.0):
+    - CocoaLumberjack/Core (= 3.8.0)
+  - CocoaLumberjack/Core (3.8.0)
   - DoubleConversion (1.1.6)
   - EXApplication (3.2.0):
     - UMCore
@@ -374,6 +377,9 @@ PODS:
     - React-Core
   - RNExitApp (1.1.0):
     - React
+  - RNFileLogger (0.4.0):
+    - CocoaLumberjack
+    - React
   - RNFS (2.20.0):
     - React-Core
   - RNGestureHandler (1.10.3):
@@ -466,6 +472,7 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNExitApp (from `../node_modules/react-native-exit-app`)
+  - RNFileLogger (from `../node_modules/react-native-file-logger`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
@@ -484,6 +491,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - CocoaLumberjack
     - fmt
     - GCDWebServer
 
@@ -608,6 +616,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNExitApp:
     :path: "../node_modules/react-native-exit-app"
+  RNFileLogger:
+    :path: "../node_modules/react-native-file-logger"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
@@ -640,6 +650,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   boost: a7c83b31436843459a1961bfd74b96033dc77234
+  CocoaLumberjack: 78abfb691154e2a9df8ded4350d504ee19d90732
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
   EXConstants: 4cb52b6d8f636c767104a44bf7db3873e9c01a6f
@@ -701,6 +712,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
+  RNFileLogger: 87fc2a50db74403f9a97b4b6731a0177dd8a631a
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333

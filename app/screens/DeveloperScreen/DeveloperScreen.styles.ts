@@ -12,5 +12,12 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   underline: {
     textDecorationLine: 'underline',
+  },
+  header: {
+    marginVertical: 8,
+    ...mixins.headerText,
+  },
+  spacer: {
+    height: 24,
   }
 }));
