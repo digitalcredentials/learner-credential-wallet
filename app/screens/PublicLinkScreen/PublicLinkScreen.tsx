@@ -13,6 +13,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import credential from '../../mock/credential';
 import { createPublicLinkFor, getPublicViewLink, linkedinUrlFrom, unshareCredential } from '../../lib/publicLink';
 import { useDynamicStyles, useShareCredentials } from '../../hooks';
+import { displayGlobalModal } from '../../lib/globalModal';
 
 export enum PublicLinkScreenMode {
   Default,
@@ -26,8 +27,6 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const { rawCredentialRecord, screenMode = PublicLinkScreenMode.Default } = route.params;
   const [publicLink, setPublicLink] = useState<string | null>(null);
   const [justCreated, setJustCreated] = useState(false);
-  const [linkedInConfirmModalOpen, setLinkedInConfirmModalOpen] = useState(false);
-  const [createLinkConfirmModalOpen, setCreateLinkConfirmModalOpen] = useState(false);
 
   const inputRef = useRef<RNTextInput | null>(null);
   const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
@@ -43,6 +42,28 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
     setPublicLink(publicLink);
     setJustCreated(true);
+  }
+
+  async function confirmCreatePublicLink() {
+    const confirmed = await displayGlobalModal({
+      title: 'Are you sure?',
+      confirmText: 'Create Link',
+      body: (
+        <>
+          <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
+          <Button
+            buttonStyle={mixins.buttonClear}
+            titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+            containerStyle={mixins.buttonClearContainer}
+            title="What does this mean?"
+            onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
+          />
+        </>
+      )
+    });
+
+    if (!confirmed) return;
+    await createPublicLink();
   }
 
   async function unshareLink() {
@@ -82,7 +103,31 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     }
   }
 
-  async function _shareToLinkedIn() {
+  async function shareToLinkedIn() {
+    const confirmed = await displayGlobalModal({
+      title: 'Are you sure?',
+      confirmText: 'Add to LinkedIn',
+      cancelOnBackgroundPress: true,
+      body: (
+        <>
+          <Text style={mixins.modalBodyText}>
+            {publicLink !== null
+              ? 'This will add the credential to your LinkedIn profile.'
+              : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
+            }
+          </Text>
+          <Button
+            buttonStyle={mixins.buttonClear}
+            titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+            containerStyle={mixins.buttonClearContainer}
+            title="What does this mean?"
+            onPress={() => Linking.openURL('https://lcw.app/faq.html#add-to-linkedin')}
+          />
+        </>
+      )
+    });
+
+    if (!confirmed) return;
     if (!publicLink) {
       await createPublicLink();
     }
@@ -216,7 +261,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                 containerStyle={{...mixins.buttonIconContainer, ...styles.createLinkButtonContainer}}
                 titleStyle={mixins.buttonTitle}
                 iconRight
-                onPress={() => setCreateLinkConfirmModalOpen(true)}
+                onPress={confirmCreatePublicLink}
                 icon={
                   <MaterialIcons
                     name="link"
@@ -234,7 +279,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                 containerStyle={mixins.buttonIconContainer}
                 titleStyle={mixins.buttonIconTitle}
                 iconRight
-                onPress={() => setLinkedInConfirmModalOpen(true)}
+                onPress={shareToLinkedIn}
                 icon={
                   <Ionicons
                     name="logo-linkedin"
@@ -276,45 +321,6 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
           </View>
         </ScrollView>
       </View>
-      <ConfirmModal
-        open={createLinkConfirmModalOpen}
-        onRequestClose={() => setCreateLinkConfirmModalOpen(false)}
-        cancelOnBackgroundPress
-        onConfirm={createPublicLink}
-        confirmText="Create Link"
-        title="Are you sure?"
-      >
-        <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
-        <Button
-          buttonStyle={mixins.buttonClear}
-          titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
-          containerStyle={mixins.buttonClearContainer}
-          title="What does this mean?"
-          onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
-        />
-      </ConfirmModal>
-      <ConfirmModal
-        open={linkedInConfirmModalOpen}
-        onRequestClose={() => setLinkedInConfirmModalOpen(false)}
-        cancelOnBackgroundPress
-        onConfirm={_shareToLinkedIn}
-        confirmText="Add to LinkedIn"
-        title="Are you sure?"
-      >
-        <Text style={mixins.modalBodyText}>
-          {publicLink !== null
-            ? 'This will add the credential to your LinkedIn profile.'
-            : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
-          }
-        </Text>
-        <Button
-          buttonStyle={mixins.buttonClear}
-          titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
-          containerStyle={mixins.buttonClearContainer}
-          title="What does this mean?"
-          onPress={() => Linking.openURL('https://lcw.app/faq.html#add-to-linkedin')}
-        />
-      </ConfirmModal>
     </>
   );
 }
