@@ -6,6 +6,9 @@ export type ConfirmModalDisplayProps = {
   title?: string;
   confirmText?: string;
   cancelText?: string;
+
+  cancelOnBackgroundPress?: boolean;
+  accessibilityFocusContent?: boolean;
 }
 
 export type ConfirmModalProps = React.PropsWithChildren<ConfirmModalDisplayProps & {
@@ -13,7 +16,4 @@ export type ConfirmModalProps = React.PropsWithChildren<ConfirmModalDisplayProps
   onRequestClose?: () => void;
   onConfirm?: () => void;
   onCancel?: () => void;
-
-  cancelOnBackgroundPress?: boolean;
-  accessibilityFocusContent?: boolean;
 }>
