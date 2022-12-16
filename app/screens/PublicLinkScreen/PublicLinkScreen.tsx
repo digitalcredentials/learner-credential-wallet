@@ -67,6 +67,25 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }
 
   async function unshareLink() {
+    const confirmed = await displayGlobalModal({
+      title: 'Are you sure?',
+      confirmText: 'Unshare Link',
+      body: (
+        <>
+          <Text style={mixins.modalBodyText}>Unsharing a public link will remove the ability of others to view the credential. If you share the same credential in the future it will have a different public link.</Text>
+          <Button
+            buttonStyle={mixins.buttonClear}
+            titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+            containerStyle={mixins.buttonClearContainer}
+            title="What does this mean?"
+            onPress={() => Linking.openURL('https://lcw.app/faq.html#unsharepubliclink')}
+          />
+        </>
+      )
+    });
+
+    if (!confirmed) return;
+
     try {
       await unshareCredential(rawCredentialRecord);
     } catch (err) {
