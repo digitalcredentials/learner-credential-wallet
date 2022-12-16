@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View, TextInput, StyleProp, ViewStyle } from 'react-native';
 import { useDynamicStyles } from '../../hooks';
-import { Color, mixins } from '../../styles';
+import { Color } from '../../styles';
 import ErrorDialog from '../ErrorDialog/ErrorDialog';
 
 import PasswordInput from '../PasswordInput/PasswordInput';
@@ -17,7 +17,7 @@ type PasswordFormProps = {
 const PASSWORD_LENGTH_REQUIREMENT = 6;
 
 export default function PasswordForm({ focusOnMount, onChangePassword, style, textInputBackgroundColor }: PasswordFormProps): JSX.Element {
-  const { styles } = useDynamicStyles(dynamicStyleSheet);
+  const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorText, setErrorText] = useState('');
