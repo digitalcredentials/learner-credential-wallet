@@ -7,7 +7,7 @@ import { registryCollections } from '@digitalcredentials/issuer-registry-client'
 import { LoadingIndicatorDots, NavHeader } from '../../components';
 import dynamicStyleSheet from './ShareHomeScreen.styles';
 import { ShareHomeScreenProps } from '../../navigation';
-import { useDynamicStyles } from '../../hooks';
+import { useDynamicStyles, verificationResultFor } from '../../hooks';
 import { queryParamsFrom } from '../../lib/decode';
 import { isShareRequestParams, performShareRequest, ShareRequestParams } from '../../lib/shareRequest';
 import { HumanReadableError } from '../../lib/error';
@@ -128,6 +128,19 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
       instructionText: 'Select which credential you want to create a public link to.',
       singleSelect: true,
     });
+
+    const notVerified = await verificationResultFor(rawCredentialRecord).then(({ verified }) => !verified);
+    if (notVerified) {
+      await displayGlobalModal({
+        title: 'Unable to Create Link',
+        cancelButton: false,
+        confirmText: 'Close',
+        cancelOnBackgroundPress: true,
+        body: 'You can only create a public link for a verified credential. Please ensure the credential is verified before trying again.',
+      });
+
+      return goToLinkSelect();
+    }
 
     const alreadyCreated = await hasPublicLink(rawCredentialRecord);    
     if (!alreadyCreated) {

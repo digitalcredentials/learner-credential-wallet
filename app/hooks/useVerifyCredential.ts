@@ -56,7 +56,7 @@ export function useVerifyCredential(rawCredentialRecord?: CredentialRecordRaw, f
   return { loading, error, result };
 }
 
-async function verificationResultFor(rawCredentialRecord: CredentialRecordRaw, forceFresh: boolean): Promise<VerificationResult> {
+export async function verificationResultFor(rawCredentialRecord: CredentialRecordRaw, forceFresh = false): Promise<VerificationResult> {
   const cachedRecordId = String(rawCredentialRecord._id);
 
   if (!forceFresh) {
