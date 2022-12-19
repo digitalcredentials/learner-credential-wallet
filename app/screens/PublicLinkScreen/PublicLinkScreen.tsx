@@ -8,7 +8,7 @@ import OutsidePressHandler from 'react-native-outside-press';
 
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import dynamicStyleSheet from './PublicLinkScreen.styles';
-import { ConfirmModal, NavHeader } from '../../components';
+import { NavHeader } from '../../components';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import credential from '../../mock/credential';
 import { createPublicLinkFor, getPublicViewLink, linkedinUrlFrom, unshareCredential } from '../../lib/publicLink';
