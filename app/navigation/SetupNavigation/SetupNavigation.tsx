@@ -266,6 +266,7 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
     navigation.navigate('DetailsScreen', {
       header: 'Restored Wallet Details',
       details: reportDetails,
+      goBack: updateWalletState
     });
   }
 
