@@ -26,7 +26,7 @@ export const lightTheme: ThemeType = {
     error: Color.Red,
     errorLight: Color.DarkRed,
     transparent: Color.Transparent,
-    switchActive: Color.DarkCyan,
+    switchActive: Color.Blue,
     modalBackground: Color.Gray400,
     highlightAndroid: Color.TransparentBlue,
   },
