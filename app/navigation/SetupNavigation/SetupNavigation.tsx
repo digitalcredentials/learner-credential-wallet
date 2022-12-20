@@ -285,10 +285,10 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
         Custom
       </Text>
       <Text style={styles.paragraphRegular}>To add an existing profile, scan a valid QR code or upload a profile file (.json) from your device.</Text>
-      <View style={mixins.buttonGroup}>
+      <View style={mixins.flex}>
         <Button
           buttonStyle={[mixins.button, mixins.buttonIcon]}
-          containerStyle={mixins.buttonIconContainer}
+          containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           title="Scan QR code"
           onPress={() => {}}
@@ -301,11 +301,9 @@ function CustomMethodStep({ navigation, route }: CustomMethodStepProps) {
             />
           }
         />
-      </View>
-      <View style={mixins.buttonContainer}>
         <Button
           buttonStyle={[mixins.button, mixins.buttonIcon]}
-          containerStyle={mixins.buttonIconContainer}
+          containerStyle={mixins.buttonContainerVertical}
           titleStyle={mixins.buttonIconTitle}
           title="Restore from a file"
           onPress={onPressRestoreFromFile}
