@@ -5,6 +5,7 @@ import { Ed25519VerificationKey2020 } from '@digitalcredentials/ed25519-verifica
 import { constructExchangeRequest, handleVcApiExchange } from './exchanges';
 import store from '../store';
 import { stageCredentials } from '../store/slices/credentialFoyer';
+import { Credential } from '../types/credential';
 import { extractCredentialsFrom } from './verifiableObject';
 
 type VerifiablePresentationRequestService = {
@@ -23,7 +24,7 @@ export type DidAuthRequestParams = {
   domain: string;
 };
 
-export async function performDidAuthRequest(params: DidAuthRequestParams, rawProfileRecord: ProfileRecordRaw): Promise<void> {
+export async function performDidAuthRequest(params: DidAuthRequestParams, rawProfileRecord: ProfileRecordRaw): Promise<Credential[]> {
   const didRecord = selectWithFactory(makeSelectDidFromProfile, { rawProfileRecord });
   const { challenge, domain, interact } = params;
 
@@ -44,5 +45,8 @@ export async function performDidAuthRequest(params: DidAuthRequestParams, rawPro
 
   if (credentials) {
     await store.dispatch(stageCredentials(credentials));
+    return credentials;
   }
+
+  return [];
 }

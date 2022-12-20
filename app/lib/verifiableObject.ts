@@ -1,3 +1,4 @@
+import { ChapiCredentialResponse, ChapiDidAuthRequest } from '../types/chapi';
 import { Credential } from '../types/credential';
 import { VerifiablePresentation } from '../types/presentation';
 import { verifyCredential, verifyPresentation } from './validate';
@@ -13,7 +14,15 @@ export function isVerifiableCredential(obj: VerifiableObject): obj is Credential
 }
 
 export function isVerifiablePresentation(obj: VerifiableObject): obj is VerifiablePresentation {
-  return obj.type.includes('VerifiablePresentation');
+  return obj.type?.includes('VerifiablePresentation');
+}
+
+export function isChapiCredentialResponse(obj: ChapiCredentialResponse): obj is ChapiCredentialResponse {
+  return obj.credential?.type === 'web';
+}
+
+export function isChapiDidAuthRequest(obj: ChapiDidAuthRequest): obj is ChapiDidAuthRequest {
+  return obj.credentialRequestOptions?.web?.VerifiablePresentation?.query?.type === 'DIDAuthentication';
 }
 
 export async function verifyVerifiableObject(obj: VerifiableObject): Promise<boolean> {

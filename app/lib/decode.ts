@@ -2,13 +2,16 @@ import { fromQrCode, toQrCode } from '@digitalcredentials/vpqr';
 import qs from 'query-string';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
+import { ChapiCredentialResponse, ChapiDidAuthRequest } from '../types/chapi';
 import type { Credential, EducationalOperationalCredential, Subject } from '../types/credential';
 import { VerifiablePresentation } from '../types/presentation';
 import { CredentialRequestParams } from './credentialRequest';
 import { isCredentialRequestParams } from './credentialRequest';
 import { HumanReadableError } from './error';
-import { isVerifiableCredential, isVerifiablePresentation } from './verifiableObject';
+import { isChapiCredentialResponse, isChapiDidAuthRequest, isVerifiableCredential, isVerifiablePresentation } from './verifiableObject';
 import { CredentialRecordRaw } from '../model';
+import { NavigationUtil } from './navigationUtil';
+import { DidAuthRequestParams, performDidAuthRequest } from './didAuthRequest';
 
 const documentLoader = securityLoader().build();
 export const regexPattern = {
@@ -47,6 +50,25 @@ function credentialsFromPresentation(vp: VerifiablePresentation): Credential[] {
   return ([] as Credential[]).concat(verifiableCredential);
 }
 
+function credentialsFromChapiCredentialResponse(chapiCredentialResponse: ChapiCredentialResponse): Credential[] {
+  const { credential } = chapiCredentialResponse;
+  const dataType = credential?.dataType;
+  switch (dataType) {
+    case "VerifiableCredential":
+      return [credential?.data as Credential];
+    case "VerifiablePresentation":
+      return credentialsFromPresentation(credential?.data as VerifiablePresentation);
+    default:
+      return [];
+  }
+}
+
+async function credentialsFromChapiDidAuthRequest(chapiDidAuthRequest: ChapiDidAuthRequest): Promise<Credential[]> {
+  const didAuthRequest = chapiDidAuthRequest.credentialRequestOptions?.web?.VerifiablePresentation as DidAuthRequestParams;
+  const rawProfileRecord = await NavigationUtil.selectProfile();
+  return performDidAuthRequest(didAuthRequest, rawProfileRecord);
+}
+
 async function credentialsFromVpqr(text: string): Promise<Credential[]> {
   const { vp }: { vp: VerifiablePresentation } = await fromQrCode({ text, documentLoader });
   return credentialsFromPresentation(vp);
@@ -54,13 +76,21 @@ async function credentialsFromVpqr(text: string): Promise<Credential[]> {
 
 async function credentialsFromJson(text: string): Promise<Credential[]> {
   const data = JSON.parse(text);
-  
+
   if (isVerifiablePresentation(data)) {
     return credentialsFromPresentation(data);
   }
 
   if (isVerifiableCredential(data)) {
     return [data];
+  }
+
+  if (isChapiCredentialResponse(data)) {
+    return credentialsFromChapiCredentialResponse(data);
+  }
+
+  if (isChapiDidAuthRequest(data)) {
+    return credentialsFromChapiDidAuthRequest(data);
   }
 
   throw new Error('Credential(s) could not be decoded from the JSON.');
@@ -81,8 +111,6 @@ export async function credentialsFrom(text: string): Promise<Credential[]> {
   if (regexPattern.vpqr.test(text)) {
     return credentialsFromVpqr(text);
   }
-
-  console.log(text);
 
   if (regexPattern.json.test(text)) {
     return credentialsFromJson(text);
