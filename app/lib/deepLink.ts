@@ -1,4 +1,4 @@
-import { LinkingOptions, NavigationState, PartialState } from '@react-navigation/native';
+import { getStateFromPath, LinkingOptions, NavigationState, PartialState } from '@react-navigation/native';
 import { Linking } from 'react-native';
 import qs from 'query-string';
 
@@ -81,8 +81,11 @@ function deepLinkConfigFor({ schemes, paths, onDeepLink }: DeepLinkConfigOptions
     },
     getStateFromPath: (path) => {
       const { url, query } = qs.parseUrl(path);
+      if (url.includes('ReceiveSharingIntent')) {
+        return getStateFromPath(path);
+      }
       const state = paths[url](query);
-  
+
       return state;
     }
   };
