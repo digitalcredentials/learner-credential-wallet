@@ -54,12 +54,12 @@ function credentialsFromChapiCredentialResponse(chapiCredentialResponse: ChapiCr
   const { credential } = chapiCredentialResponse;
   const dataType = credential?.dataType;
   switch (dataType) {
-    case "VerifiableCredential":
-      return [credential?.data as Credential];
-    case "VerifiablePresentation":
-      return credentialsFromPresentation(credential?.data as VerifiablePresentation);
-    default:
-      return [];
+  case 'VerifiableCredential':
+    return [credential?.data as Credential];
+  case 'VerifiablePresentation':
+    return credentialsFromPresentation(credential?.data as VerifiablePresentation);
+  default:
+    return [];
   }
 }
 

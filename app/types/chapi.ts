@@ -5,8 +5,8 @@ import { VerifiablePresentation } from './presentation';
 export type ChapiCredentialResponse = {
   readonly credentialRequestOrigin?: string;
   readonly credential?: {
-    readonly type: "web";
-    readonly dataType: "VerifiableCredential" | "VerifiablePresentation";
+    readonly type: 'web';
+    readonly dataType: 'VerifiableCredential' | 'VerifiablePresentation';
     readonly data: Credential | VerifiablePresentation;
   };
   readonly options?: {
