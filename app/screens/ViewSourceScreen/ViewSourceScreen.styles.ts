@@ -17,6 +17,9 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   scrollViewHorizontalInner: {
     padding: 16,
+    flex: 1,
+  },
+  noWrap: {
     flexGrow: 1,
   },
   codeBlock: {

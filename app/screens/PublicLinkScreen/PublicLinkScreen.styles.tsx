@@ -81,8 +81,4 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     color: theme.color.textPrimary,
     marginBottom: 16
   },
-  modalLink: {
-    color: theme.color.brightAccent,
-    textDecorationLine: 'underline',
-  },
 }));

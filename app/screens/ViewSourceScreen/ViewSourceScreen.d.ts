@@ -5,4 +5,5 @@ export type ViewSourceScreenParams = {
   buttonTitle?: string;
   onPressButton?: () => void;
   screenTitle?: string;
+  noWrap?: boolean;
 }

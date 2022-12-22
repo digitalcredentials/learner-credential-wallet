@@ -22,8 +22,12 @@ export function errorMessageFrom(err: unknown, fallback = FALLBACK_ERROR_MESSAGE
   }
 }
 
-export function errorMessageMatches(err: unknown, messages: string[]): err is Error {
+export function errorMessageMatches(err: unknown, messages: string[] | string): err is Error {
   const errorMessage = (err as Error).message;
+
+  if (!(messages instanceof Array)) {
+    messages = [messages];
+  }
 
   for (const message of messages) {
     if (errorMessage.includes(message)) return true;

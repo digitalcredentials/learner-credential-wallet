@@ -4,6 +4,7 @@ import { Text, ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import DeviceInfo from 'react-native-device-info';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import appConfig from '../../../app.json';
 import walletImage from '../../assets/wallet.png';
@@ -16,11 +17,10 @@ import {
   AboutProps,
   SettingsNavigationParamList,
 } from './SettingsNavigation.d';
-import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, RestoreWalletScreen, ViewSourceScreen } from '../../screens';
+import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfilesScreen, RestoreWalletScreen } from '../../screens';
 import { useAppDispatch, useDynamicStyles, useResetNavigationOnBlur, useThemeContext } from '../../hooks';
 import { SettingsNavigationProps } from '../';
 import { exportWallet } from '../../lib/export';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator<SettingsNavigationParamList>();
 
@@ -197,7 +197,6 @@ export default function SettingsNavigation({ navigation }: SettingsNavigationPro
       <Stack.Screen name="ManageProfilesScreen" component={ManageProfilesScreen} />
       <Stack.Screen name="AddExistingProfileScreen" component={AddExistingProfileScreen} />
       <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
-      <Stack.Screen name="ViewSourceScreen" component={ViewSourceScreen} />
       <Stack.Screen name="RestoreWalletScreen" component={RestoreWalletScreen} />
       <Stack.Screen name="About" component={About} />
       <Stack.Screen name="DeveloperScreen" component={DeveloperScreen} />

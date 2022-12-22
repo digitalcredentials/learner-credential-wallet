@@ -67,11 +67,12 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
       await shareData(fileName, logData);
     }
 
-    navigation.navigate('ViewSourceScreen', { 
+    navigationRef.navigate('ViewSourceScreen', {
       screenTitle: 'Developer Logs',
       data: logData,
       buttonTitle: 'Send',
       onPressButton: onPressShare,
+      noWrap: true,
     });
   }
 

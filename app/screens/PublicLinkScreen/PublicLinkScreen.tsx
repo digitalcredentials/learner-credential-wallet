@@ -8,12 +8,13 @@ import OutsidePressHandler from 'react-native-outside-press';
 
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import dynamicStyleSheet from './PublicLinkScreen.styles';
-import { NavHeader } from '../../components';
+import { LoadingIndicatorDots, NavHeader } from '../../components';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import credential from '../../mock/credential';
 import { createPublicLinkFor, getPublicViewLink, linkedinUrlFrom, unshareCredential } from '../../lib/publicLink';
 import { useDynamicStyles, useShareCredentials } from '../../hooks';
-import { displayGlobalModal } from '../../lib/globalModal';
+import { clearGlobalModal, displayGlobalModal } from '../../lib/globalModal';
+import { navigationRef } from '../../navigation';
 
 export enum PublicLinkScreenMode {
   Default,
@@ -37,23 +38,68 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     [PublicLinkScreenMode.ShareCredential]: 'Share Credential (Beta)',
   }[screenMode];
 
-  async function createPublicLink() {
-    const publicLink = await createPublicLinkFor(rawCredentialRecord);
+  function displayLoadingModal() {
+    displayGlobalModal({
+      title: 'Sending Credential(s)',
+      confirmButton: false,
+      cancelButton: false,
+      body: <LoadingIndicatorDots />
+    });
+  }
 
-    setPublicLink(publicLink);
-    setJustCreated(true);
+  function displayErrorModal(err: Error) {
+    function goToErrorSource() {
+      clearGlobalModal();
+      navigationRef.navigate('ViewSourceScreen', {
+        screenTitle: 'Public Link Error',
+        data: String(err),
+      });
+    }
+
+    displayGlobalModal({
+      title: 'Unable to Create Public LInk',
+      cancelOnBackgroundPress: true,
+      cancelButton: false,
+      confirmText: 'Close',
+      body: (
+        <>
+          <Text style={mixins.modalBodyText}>An error ocurred while creating the Public Link for this credential.</Text>
+          <Button
+            buttonStyle={mixins.buttonClear}
+            titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
+            containerStyle={mixins.buttonClearContainer}
+            title="Details"
+            onPress={goToErrorSource}
+          />
+        </>
+      )
+    });
+  }
+
+  async function createPublicLink() {
+    try {
+      displayLoadingModal();
+      const publicLink = await createPublicLinkFor(rawCredentialRecord);
+      clearGlobalModal();
+
+      setPublicLink(publicLink);
+      setJustCreated(true);
+    } catch (err) {
+      displayErrorModal(err as Error);
+    }
   }
 
   async function confirmCreatePublicLink() {
     const confirmed = await displayGlobalModal({
       title: 'Are you sure?',
       confirmText: 'Create Link',
+      onRequestClose: undefined,
       body: (
         <>
           <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
           <Button
             buttonStyle={mixins.buttonClear}
-            titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+            titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
             containerStyle={mixins.buttonClearContainer}
             title="What does this mean?"
             onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
@@ -62,7 +108,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       )
     });
 
-    if (!confirmed) return;
+    if (!confirmed) return clearGlobalModal();
     await createPublicLink();
   }
 
@@ -75,7 +121,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
           <Text style={mixins.modalBodyText}>Unsharing a public link will remove the ability of others to view the credential. If you share the same credential in the future it will have a different public link.</Text>
           <Button
             buttonStyle={mixins.buttonClear}
-            titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+            titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
             containerStyle={mixins.buttonClearContainer}
             title="What does this mean?"
             onPress={() => Linking.openURL('https://lcw.app/faq.html#unsharepubliclink')}
@@ -137,7 +183,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
           </Text>
           <Button
             buttonStyle={mixins.buttonClear}
-            titleStyle={[mixins.buttonClearTitle, styles.modalLink]}
+            titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
             containerStyle={mixins.buttonClearContainer}
             title="What does this mean?"
             onPress={() => Linking.openURL('https://lcw.app/faq.html#add-to-linkedin')}
