@@ -1,8 +1,8 @@
-import { ConfirmModalProps, ConfirmModalDisplayProps } from '..';
+import { ConfirmModalProps } from '..';
 
 type GlobalModalProps = {
   body?: string | React.ReactNode;
 };
 
-export type DisplayGlobalModalPayload = ConfirmModalDisplayProps & GlobalModalProps;
+export type DisplayGlobalModalPayload = ConfirmModalProps & GlobalModalProps;
 export type GlobalModalPayload = ConfirmModalProps & GlobalModalProps;

@@ -25,14 +25,8 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
 
   function goToSource() {
     if (navigationRef.isReady()) {
-      navigationRef.navigate('HomeNavigation', {
-        screen: 'SettingsNavigation',
-        params: {
-          screen: 'ViewSourceScreen',
-          params: {
-            data: JSON.stringify(rawProfileRecord, null, 2)
-          },
-        },
+      navigationRef.navigate('ViewSourceScreen', {
+        data: JSON.stringify(rawProfileRecord, null, 2)
       });
 
       setActiveModal(null);

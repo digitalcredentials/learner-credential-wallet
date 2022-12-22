@@ -9,7 +9,7 @@ import { Button } from 'react-native-elements';
 
 export default function ViewSourceScreen({ navigation, route }: ViewSourceScreenProps): JSX.Element {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
-  const { data, screenTitle = 'View Source', onPressButton, buttonTitle } = route.params;
+  const { data, screenTitle = 'View Source', onPressButton, buttonTitle, noWrap } = route.params;
   const scrollRef = useRef<ScrollView>(null);
   
   function BottomButton(): JSX.Element | null {
@@ -38,7 +38,7 @@ export default function ViewSourceScreen({ navigation, route }: ViewSourceScreen
           style={styles.scrollView} 
           contentContainerStyle={styles.scrollViewInner}
         >
-          <ScrollView horizontal contentContainerStyle={styles.scrollViewHorizontalInner}>
+          <ScrollView horizontal contentContainerStyle={[styles.scrollViewHorizontalInner, noWrap && styles.noWrap]}>
             <Text style={styles.codeBlock} selectable>
               {data}
             </Text>

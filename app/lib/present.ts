@@ -6,7 +6,6 @@ import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020
 import type { VerifiablePresentation } from '../types/presentation';
 import type { DidRecordRaw } from '../model/did';
 import type { Credential } from '../types/credential';
-import { toQr } from '../lib/decode';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { shareData } from './shareData';
@@ -55,8 +54,7 @@ export async function sharePresentation(verifiablePresentation: VerifiablePresen
   const { verifiableCredential } = verifiablePresentation;
   const plurality = verifiableCredential instanceof Array && verifiableCredential.length > 1 ? 's' : '';
 
-  // const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
-  const verifiablePresentationString = await toQr(verifiablePresentation);
+  const verifiablePresentationString = JSON.stringify(verifiablePresentation, null, 2);
 
   await shareData(`SharedCredential${plurality}.txt`, verifiablePresentationString);
 }
