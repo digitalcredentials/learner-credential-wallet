@@ -33,6 +33,10 @@ export class Cache {
     return this.storage.clearMapForKey(key);
   }
 
+  async clear(): Promise<void> {
+    return this.storage.clearMap();
+  }
+
   static getInstance(): Cache {
     if (this.instance === undefined) {
       this.instance = new Cache();

@@ -6,6 +6,7 @@ import { importWalletOrProfileFrom } from '../../lib/import';
 import { db, INITIAL_PROFILE_NAME } from '../../model';
 import { loadThemeName, saveThemeName } from '../../styles';
 import { createProfile } from './profile';
+import { Cache } from '../../lib/cache';
 
 type InitializeParams = {
   passphrase: string;
@@ -92,6 +93,7 @@ const initialize = createAsyncThunk('walletState/initialize', async ({ passphras
 const reset = createAsyncThunk('walletState/reset', async () => {
   await db.lock();
   await db.reset();
+  await Cache.getInstance().clear();
 });
 
 const toggleBiometrics = createAsyncThunk('walletState/toggleBiometrics', async (_, { getState, dispatch }) => {
