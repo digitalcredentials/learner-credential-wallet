@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { RootState, getAllRecords } from '..';
 import { GlobalModalPayload } from '../../components';
 import { isBiometricsSupported } from '../../lib/biometrics';
@@ -94,6 +96,12 @@ const reset = createAsyncThunk('walletState/reset', async () => {
   await db.lock();
   await db.reset();
   await Cache.getInstance().clear();
+
+  /** For now, we are leaving the cached theme name intact on wallet reset. */
+  const themeName = await loadThemeName();
+  await AsyncStorage.clear();
+  if (themeName) await saveThemeName(themeName);
+
 });
 
 const toggleBiometrics = createAsyncThunk('walletState/toggleBiometrics', async (_, { getState, dispatch }) => {
