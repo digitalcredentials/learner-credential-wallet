@@ -45,7 +45,7 @@
       </intent-filter>
     </activity>
     <activity android:name="net.openid.appauth.RedirectUriReceiverActivity"
-    tools:node="replace" android:exported="false">
+    tools:node="replace" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
