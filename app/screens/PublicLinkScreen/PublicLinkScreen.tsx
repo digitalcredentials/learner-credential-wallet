@@ -12,7 +12,7 @@ import { LoadingIndicatorDots, NavHeader } from '../../components';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import credential from '../../mock/credential';
 import { createPublicLinkFor, getPublicViewLink, linkedinUrlFrom, unshareCredential } from '../../lib/publicLink';
-import { useDynamicStyles, useShareCredentials } from '../../hooks';
+import { useDynamicStyles, useShareCredentials, useVerifyCredential } from '../../hooks';
 import { clearGlobalModal, displayGlobalModal } from '../../lib/globalModal';
 import { navigationRef } from '../../navigation';
 
@@ -28,6 +28,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const { rawCredentialRecord, screenMode = PublicLinkScreenMode.Default } = route.params;
   const [publicLink, setPublicLink] = useState<string | null>(null);
   const [justCreated, setJustCreated] = useState(false);
+  const isVerified = useVerifyCredential(rawCredentialRecord)?.result.verified;
 
   const inputRef = useRef<RNTextInput | null>(null);
   const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
@@ -57,7 +58,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     }
 
     displayGlobalModal({
-      title: 'Unable to Create Public LInk',
+      title: 'Unable to Create Public Link',
       cancelOnBackgroundPress: true,
       cancelButton: false,
       confirmText: 'Close',
@@ -76,6 +77,16 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     });
   }
 
+  function displayNotVerifiedModal() {
+    return displayGlobalModal({
+      title: 'Unable to Share Credential',
+      body: 'Only verified credentials can be shared.',
+      confirmText: 'Close',
+      cancelButton: false,
+      cancelOnBackgroundPress: true,
+    });
+  }
+
   async function createPublicLink() {
     try {
       displayLoadingModal();
@@ -90,6 +101,10 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }
 
   async function confirmCreatePublicLink() {
+    if (!isVerified) {
+      return displayNotVerifiedModal();
+    }
+
     const confirmed = await displayGlobalModal({
       title: 'Are you sure?',
       confirmText: 'Create Link',
@@ -169,6 +184,10 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   }
 
   async function shareToLinkedIn() {
+    if (!isVerified) {
+      return displayNotVerifiedModal();
+    }
+
     const confirmed = await displayGlobalModal({
       title: 'Are you sure?',
       confirmText: 'Add to LinkedIn',
