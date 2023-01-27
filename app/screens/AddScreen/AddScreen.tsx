@@ -47,6 +47,8 @@ export default function AddScreen(): JSX.Element {
   }
 
   async function addCredentialsFrom(text: string) {
+    text = text.trim();
+
     if (isDeepLink(text)) {
       const params = credentialRequestParamsFromQrText(text);
       goToCredentialFoyer(cleanCopy(params));
@@ -146,6 +148,7 @@ export default function AddScreen(): JSX.Element {
           <View style={styles.sectionContainer}>
             <View style={styles.actionInputContainer}>
               <TextInput
+                autoCapitalize="none"
                 multiline
                 value={inputValue}
                 onChangeText={setInputValue}
