@@ -32,6 +32,7 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     flex: 1,
   },
   spaceBetween: {
+    flex: 1,
     justifyContent: 'space-between',
   },
   flexRow: {

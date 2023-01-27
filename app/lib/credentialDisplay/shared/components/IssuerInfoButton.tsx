@@ -23,17 +23,19 @@ export default function IssuerInfoButton({ issuerId, issuerName, onPress }: Issu
 
   return (
     <TouchableOpacity onPress={_onPress} disabled={!issuerId}>
-      <View style={[styles.flexRow, styles.alignCenter]}>
+      <Text style={styles.container}>
         <Text style={styles.issuerValue}>{issuerName}</Text>
-        {issuerId && <MaterialIcons name="info-outline" size={19} color={theme.color.textPrimary} style={styles.infoIcon} />}
-      </View>
+        {' '}
+        {issuerId && <View style={styles.infoIcon}><MaterialIcons name="info-outline" size={19} color={theme.color.textPrimary} style={styles.infoIcon} /></View>}
+      </Text>
     </TouchableOpacity> 
   );
 }
 
 const dynamicStyleSheet = createDynamicStyleSheet(({ theme }) => ({
-  alignCenter: {
-    alignItems: 'center',
+  container: {
+    marginBottom: 8,
+    lineHeight: 22,
   },
   issuerValue: {
     fontFamily: theme.fontFamily.regular,
@@ -41,9 +43,7 @@ const dynamicStyleSheet = createDynamicStyleSheet(({ theme }) => ({
     color: theme.color.textPrimary,
   },
   infoIcon: {
-    marginLeft: 8,
-  },
-  flexRow: {
-    flexDirection: 'row',
+    top: 2,
+    left: 2,
   },
 }));
