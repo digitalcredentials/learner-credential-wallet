@@ -111,7 +111,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       onRequestClose: undefined,
       body: (
         <>
-          <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential.</Text>
+          <Text style={mixins.modalBodyText}>Creating a public link will allow anyone with the link to view the credential. The link will automatically expire 1 year after creation.</Text>
           <Button
             buttonStyle={mixins.buttonClear}
             titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
