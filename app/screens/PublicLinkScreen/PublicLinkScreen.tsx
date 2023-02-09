@@ -197,7 +197,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
           <Text style={mixins.modalBodyText}>
             {publicLink !== null
               ? 'This will add the credential to your LinkedIn profile.'
-              : 'This will add the credential to your LinkedIn profile and make it publicly visible.'
+              : 'This will add the credential to your LinkedIn profile after creating a public link. The link will automatically expire 1 year after creation.'
             }
           </Text>
           <Button
