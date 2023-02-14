@@ -24,8 +24,10 @@ export default function VerificationStatusScreen({
         <VerificationCard verifyPayload={verifyPayload} showDetails/>
         <VerificationStatusCard credential={credential} verifyPayload={verifyPayload} />
         <Text style={styles.footerText}>
-          Please contact your issuing organization if you have any problems with
-          the verification status.
+         The Learner Credential Wallet will periodically check the verification status of 
+         your credential. Please make sure you’ve connected to a network recently to 
+         ensure your credential can be verified. If you’re still having problems, 
+         please contact your issuing organization.
         </Text>
       </ScrollView>
     </>
