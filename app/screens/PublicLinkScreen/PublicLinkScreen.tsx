@@ -41,7 +41,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   function displayLoadingModal() {
     displayGlobalModal({
-      title: 'Sending Credential(s)',
+      title: 'Creating Public Link',
       confirmButton: false,
       cancelButton: false,
       body: <LoadingIndicatorDots />
@@ -90,7 +90,13 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   async function createPublicLink() {
     try {
       displayLoadingModal();
-      const publicLink = await createPublicLinkFor(rawCredentialRecord);
+
+      // Ensure load time is not less than one second (to prevent modal flashing)
+      const [publicLink] = await Promise.all([
+        createPublicLinkFor(rawCredentialRecord),
+        new Promise((res) => setTimeout(res, 1000))
+      ]);
+
       clearGlobalModal();
 
       setPublicLink(publicLink);
@@ -177,6 +183,8 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   async function loadShareUrl() {
     const url = await getPublicViewLink(rawCredentialRecord);
     if (url === null && screenMode === PublicLinkScreenMode.Default) {
+      // Wait for screen transition to finish
+      await new Promise((res) => setTimeout(res, 1000));
       await createPublicLink();
     } else if (url !== null) {
       setPublicLink(url);
