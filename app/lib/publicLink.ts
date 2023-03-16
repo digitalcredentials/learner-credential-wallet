@@ -55,14 +55,17 @@ export async function linkedinUrlFrom(rawCredentialRecord: CredentialRecordRaw):
 
   const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
   const title = eoc?.name ?? 'Verifiable Credential';
-  const issuanceDate = moment(rawCredentialRecord.credential.issuanceDate);
+  const issuanceDate = rawCredentialRecord.credential.issuanceDate &&
+    new Date(rawCredentialRecord.credential.issuanceDate);
   const vcId = rawCredentialRecord.credential.id || eoc.id;
-  const expirationDate = moment(rawCredentialRecord.credential.expirationDate);
-  const hasExpirationDate = rawCredentialRecord.credential.expirationDate !== undefined;
+  const expirationDate = rawCredentialRecord.credential.expirationDate &&
+    new Date(rawCredentialRecord.credential.expirationDate);
 
   const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
-  const issuance = `&issueYear=${issuanceDate.year()}&issueMonth=${issuanceDate.month()}`;
-  const expiration = hasExpirationDate ? `&expirationYear=${expirationDate.year()}&expirationMonth=${expirationDate.month()}` : '';
+  const issuance = issuanceDate ? `&issueYear=${issuanceDate.toLocaleDateString('en-us', { year: 'numeric' })}` +
+    `&issueMonth=${issuanceDate.toLocaleDateString('en-us', { month: 'numeric' })}` : '';
+  const expiration = expirationDate ? `&expirationYear=${expirationDate.toLocaleDateString('en-us', { year: 'numeric' })}` +
+    `&expirationMonth=${expirationDate.toLocaleDateString('en-us', { month: 'numeric' })}` : '';
   const certUrl = publicLink ? `&certUrl=${publicLink}` : '';
   const certId = vcId ? `&certId=${vcId}` : '';
 

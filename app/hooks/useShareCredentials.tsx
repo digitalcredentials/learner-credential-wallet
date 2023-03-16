@@ -21,7 +21,7 @@ export function useShareCredentials(): (credentials: CredentialRecordRaw[]) => P
       body: <LoadingIndicatorDots />
     });
   }
-  
+
   function displayErrorModal(err: Error) {
     function goToErrorSource() {
       clearGlobalModal();
@@ -38,7 +38,7 @@ export function useShareCredentials(): (credentials: CredentialRecordRaw[]) => P
       confirmText: 'Close',
       body: (
         <>
-          <Text style={mixins.modalBodyText}>An error ocurred while sending credential(s).</Text>
+          <Text style={mixins.modalBodyText}>An error occurred while sending credential(s).</Text>
           <Button
             buttonStyle={mixins.buttonClear}
             titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
@@ -81,7 +81,7 @@ export function useShareCredentials(): (credentials: CredentialRecordRaw[]) => P
 
 // function verifyMatchingProfiles(credentials: CredentialRecordRaw[]): boolean {
 //   const { profileRecordId } = credentials[0];
-//   return credentials.every((credential) => 
+//   return credentials.every((credential) =>
 //     credential.profileRecordId.equals(profileRecordId)
 //   );
 // }
