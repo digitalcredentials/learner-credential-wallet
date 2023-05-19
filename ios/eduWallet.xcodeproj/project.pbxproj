@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		50A7A2AD1B971AF1CA465CD1 /* libPods-eduWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9C8DAF5C804AD9E48CDAC5 /* libPods-eduWallet.a */; };
+		6C7A555B2A0969DB0024B193 /* libRNPermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C7A555A2A0969AA0024B193 /* libRNPermissions.a */; };
 		6C834FAB2788BC65005188A9 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C834FAA2788BC65005188A9 /* ShareViewController.swift */; };
 		6C834FAE2788BC65005188A9 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C834FAC2788BC65005188A9 /* MainInterface.storyboard */; };
 		6C834FB22788BC65005188A9 /* eduWalletShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C834FA82788BC65005188A9 /* eduWalletShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -21,6 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6C7A55592A0969AA0024B193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6C7A55552A0969AA0024B193 /* RNPermissions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNPermissions;
+		};
 		6C834FB02788BC65005188A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -55,6 +63,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = eduwallet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = eduwallet/main.m; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-eduwallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eduwallet.debug.xcconfig"; path = "Target Support Files/Pods-eduwallet/Pods-eduwallet.debug.xcconfig"; sourceTree = "<group>"; };
+		6C7A55552A0969AA0024B193 /* RNPermissions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/RNPermissions.xcodeproj"; sourceTree = "<group>"; };
 		6C834FA82788BC65005188A9 /* eduWalletShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = eduWalletShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C834FAA2788BC65005188A9 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		6C834FAD2788BC65005188A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -75,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C7A555B2A0969DB0024B193 /* libRNPermissions.a in Frameworks */,
 				50A7A2AD1B971AF1CA465CD1 /* libPods-eduWallet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +135,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		6C7A55562A0969AA0024B193 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6C7A555A2A0969AA0024B193 /* libRNPermissions.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		6C834FA92788BC65005188A9 /* eduWalletShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +163,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6C7A55552A0969AA0024B193 /* RNPermissions.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* eduwallet */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				6C834FA92788BC65005188A9 /* eduWalletShare */,
@@ -261,6 +280,12 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6C7A55562A0969AA0024B193 /* Products */;
+					ProjectRef = 6C7A55552A0969AA0024B193 /* RNPermissions.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* eduWallet */,
@@ -268,6 +293,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6C7A555A2A0969AA0024B193 /* libRNPermissions.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNPermissions.a;
+			remoteRef = 6C7A55592A0969AA0024B193 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
