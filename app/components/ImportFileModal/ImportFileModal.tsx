@@ -9,7 +9,7 @@ import dynamicStyleSheet from './ImportFileModal.styles';
 import { ImportFileModalProps, ImportFileModalHandle, SubmitPasswordCallback } from './ImportFileModal.d';
 import { pickAndReadFile, ReportDetails } from '../../lib/import';
 import { errorMessageFrom, errorMessageMatches } from '../../lib/error';
-import { decryptData, isLocked } from '../../lib/encrypt';
+// import { decryptData, isLocked } from '../../lib/encrypt';
 import { useDynamicStyles } from '../../hooks';
 import { CANCEL_PICKER_MESSAGES } from '../../lib/constants';
 
@@ -30,7 +30,7 @@ function ImportFileModal({
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
 
   const [password, setPassword] = useState('');
-  const [modalState, setModalState] = useState(RestoreModalState.Hidden);  
+  const [modalState, setModalState] = useState(RestoreModalState.Hidden);
   const [reportDetails, setReportDetails] = useState<ReportDetails>();
   const [errorMessage, setErrorMessage] = useState<string>();
 
@@ -40,15 +40,15 @@ function ImportFileModal({
   useImperativeHandle(ref, () => ({
     doImport,
   }));
-  
+
   async function doImport() {
     try {
       let data = await pickAndReadFile();
 
-      if (isLocked(data)) {
-        const passphrase = await _requestPassword();
-        data = await decryptData(data, passphrase);
-      }
+      // if (isLocked(data)) {
+      //   const passphrase = await _requestPassword();
+      //   data = await decryptData(data, passphrase);
+      // }
 
       const reportDetails = await importItem(data);
 
@@ -74,10 +74,10 @@ function ImportFileModal({
     if (reportDetails === undefined) {
       throw new Error('No import report details');
     }
-    
+
     onPressDetails(reportDetails);
   }
-  
+
 
   function _requestPassword() {
     return new Promise<string>((resolve) => {
@@ -96,7 +96,7 @@ function ImportFileModal({
   switch (modalState) {
   case RestoreModalState.Loading:
     return (
-      <ConfirmModal 
+      <ConfirmModal
         title={textConfig.loadingTitle}
         confirmButton={false}
         cancelButton={false}
