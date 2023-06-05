@@ -10,7 +10,7 @@ import type { Credential } from '../types/credential';
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { shareData } from './shareData';
 
-const documentLoader = securityLoader().build();
+const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
 
 type SignPresentationParams = {
   didRecord: DidRecordRaw;
