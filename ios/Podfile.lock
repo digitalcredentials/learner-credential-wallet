@@ -384,7 +384,7 @@ PODS:
     - React-Core
   - RNKeychain (8.1.1):
     - React-Core
-  - RNPermissions (3.8.0):
+  - RNPermissions (3.3.1):
     - React-Core
   - RNScreens (3.4.0):
     - React-Core
@@ -710,7 +710,7 @@ SPEC CHECKSUMS:
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
-  RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
+  RNPermissions: 34d678157c800b25b22a488e4d8babb57456e796
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNShare: a5dc3b9c53ddc73e155b8cd9a94c70c91913c43c
@@ -724,4 +724,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9bd1873048a9ab14ee3c7ef825eaf5ff33d13529
 
-COCOAPODS: 1.11.0
+COCOAPODS: 1.12.1
