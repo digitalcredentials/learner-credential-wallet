@@ -13,7 +13,7 @@ import { CredentialRecordRaw } from '../model';
 import { NavigationUtil } from './navigationUtil';
 import { DidAuthRequestParams, performDidAuthRequest } from './didAuthRequest';
 
-const documentLoader = securityLoader().build();
+const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
 export const regexPattern = {
   vpqr: /^VP1-[A-Z|0-9]+/,
   url: /^https?:\/\/.+/,

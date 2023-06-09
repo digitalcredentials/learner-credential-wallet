@@ -10,10 +10,9 @@ import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { registryCollections } from '@digitalcredentials/issuer-registry-client';
 import { extractCredentialsFrom } from './verifiableObject';
 
-const documentLoader = securityLoader().build();
+const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
 const suite = new Ed25519Signature2020();
 const presentationPurpose = new purposes.AssertionProofPurpose();
-
 
 export type ResultLog = {
   id: string,
@@ -48,7 +47,9 @@ export async function verifyPresentation(
       checkStatus: hasRevocation ? checkStatus : undefined
     });
 
-    console.log(JSON.stringify(result));
+    if (!result.verified) {
+      console.warn('VP not verified:', JSON.stringify(result, null, 2));
+    }
     return result;
   } catch (err) {
     console.warn(err);
@@ -67,18 +68,22 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
   }
 
   try {
-    const hasRevocation = extractCredentialsFrom(credential)?.find(vc => vc.credentialStatus);
+    const hasStatusProperty = extractCredentialsFrom(credential)?.find(vc => vc.credentialStatus);
     const result = await vc.verifyCredential({
       credential,
       suite,
       documentLoader,
       // Only check revocation status if VC has a 'credentialStatus' property
-      checkStatus: hasRevocation ? checkStatus : undefined
+      checkStatus: hasStatusProperty ? checkStatus : undefined
     });
 
     // This logic catches the case where the verify response does not contain a `log` value
     if (result.results?.[0].log === undefined) {
       throw result.error || new Error('Verify response does not a `log` value');
+    }
+
+    if (!result.verified) {
+      console.warn('VC not verified:', JSON.stringify(result, null, 2));
     }
 
     return result;

@@ -27,10 +27,14 @@ export function isChapiDidAuthRequest(obj: ChapiDidAuthRequest): obj is ChapiDid
 
 export async function verifyVerifiableObject(obj: VerifiableObject): Promise<boolean> {
   try {
-    if (isVerifiableCredential(obj)) return (await verifyCredential(obj)).verified;
-    if (isVerifiablePresentation(obj)) return (await verifyPresentation(obj)).verified;
+    if (isVerifiableCredential(obj)) {
+      return (await verifyCredential(obj)).verified;
+    }
+    if (isVerifiablePresentation(obj)) {
+      return (await verifyPresentation(obj)).verified;
+    }
   } catch (err) {
-    console.warn(err);
+    console.warn('Error while verifying:', err);
   }
 
   return false;

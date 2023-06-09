@@ -35,7 +35,7 @@ export const constructExchangeRequest = async ({
   }
   let finalPresentation = presentation;
   if (signed) {
-    const documentLoader = securityLoader().build();
+    const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
     finalPresentation = await vc.signPresentation({
       presentation,
       challenge,
