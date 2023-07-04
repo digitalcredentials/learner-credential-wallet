@@ -140,5 +140,8 @@
     "_stream_passthrough": "readable-stream/passthrough",
     "stream": "stream-browserify",
     "crypto": "react-native-crypto"
+  },
+  "overrides": {
+    "react-native-permissions": "3.3.1"
   }
 }
