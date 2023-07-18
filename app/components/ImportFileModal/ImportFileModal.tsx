@@ -78,90 +78,79 @@ function ImportFileModal({
     onPressDetails(reportDetails);
   }
 
-
-  function _requestPassword() {
-    return new Promise<string>((resolve) => {
-      onSubmitPassword.current = (password) => {
-        setModalState(RestoreModalState.Loading);
-        resolve(password);
-      };
-      setModalState(RestoreModalState.Password);
-    });
-  }
-
   function _onRequestClose() {
     setModalState(RestoreModalState.Hidden);
   }
 
   switch (modalState) {
-  case RestoreModalState.Loading:
-    return (
-      <ConfirmModal
-        title={textConfig.loadingTitle}
-        confirmButton={false}
-        cancelButton={false}
-      >
-        <>
+    case RestoreModalState.Loading:
+      return (
+        <ConfirmModal
+          title={textConfig.loadingTitle}
+          confirmButton={false}
+          cancelButton={false}
+        >
+          <>
+            <Text style={mixins.modalBodyText}>
+              This will only take a moment.
+            </Text>
+            <LoadingIndicatorDots />
+          </>
+        </ConfirmModal>
+      );
+    case RestoreModalState.Password:
+      return (
+        <ConfirmModal
+          onConfirm={_onSubmitPassword}
+          title={textConfig.lockedTitle}
+          cancelButton={false}
+          confirmText="Submit"
+        >
           <Text style={mixins.modalBodyText}>
-            This will only take a moment.
+            {textConfig.lockedBody}
           </Text>
-          <LoadingIndicatorDots />
-        </>
-      </ConfirmModal>
-    );
-  case RestoreModalState.Password:
-    return (
-      <ConfirmModal
-        onConfirm={_onSubmitPassword}
-        title={textConfig.lockedTitle}
-        cancelButton={false}
-        confirmText="Submit"
-      >
-        <Text style={mixins.modalBodyText}>
-          {textConfig.lockedBody}
-        </Text>
-        <PasswordInput
-          label="Password"
-          value={password}
-          onChangeText={setPassword}
-          style={styles.password}
-        />
-      </ConfirmModal>
-    );
-  case RestoreModalState.Details:
-    return (
-      <ConfirmModal
-        title={textConfig.finishedTitle}
-        cancelButton={false}
-        confirmText={textConfig.finishedButton}
-        onConfirm={onFinished}
-        onRequestClose={_onRequestClose}
-        cancelOnBackgroundPress
-      >
-        <Text style={mixins.modalBodyText}>{reportSummary}</Text>
-        <Button
-          buttonStyle={mixins.buttonClear}
-          titleStyle={[mixins.buttonClearTitle, styles.underline]}
-          containerStyle={mixins.buttonClearContainer}
-          title="Details"
-          onPress={_onPressDetails}
-        />
-      </ConfirmModal>
-    );
-  case RestoreModalState.Error:
-    return (
-      <ConfirmModal
-        title={errorMessage}
-        cancelButton={false}
-        confirmText="Close"
-        onRequestClose={_onRequestClose}
-        cancelOnBackgroundPress
-      >
-        <Text style={mixins.modalBodyText}>{textConfig.errorBody}</Text>
-      </ConfirmModal>
-    );
-  case RestoreModalState.Hidden: return null;
-  default: return null;
+          <PasswordInput
+            label="Password"
+            value={password}
+            onChangeText={setPassword}
+            style={styles.password}
+          />
+        </ConfirmModal>
+      );
+    case RestoreModalState.Details:
+      return (
+        <ConfirmModal
+          title={textConfig.finishedTitle}
+          cancelButton={false}
+          confirmText={textConfig.finishedButton}
+          onConfirm={onFinished}
+          onRequestClose={_onRequestClose}
+          cancelOnBackgroundPress
+        >
+          <Text style={mixins.modalBodyText}>{reportSummary}</Text>
+          <Button
+            buttonStyle={mixins.buttonClear}
+            titleStyle={[mixins.buttonClearTitle, styles.underline]}
+            containerStyle={mixins.buttonClearContainer}
+            title="Details"
+            onPress={_onPressDetails}
+          />
+        </ConfirmModal>
+      );
+    case RestoreModalState.Error:
+      return (
+        <ConfirmModal
+          title={errorMessage}
+          cancelButton={false}
+          confirmText="Close"
+          onRequestClose={_onRequestClose}
+          cancelOnBackgroundPress
+        >
+          <Text style={mixins.modalBodyText}>{textConfig.errorBody}</Text>
+        </ConfirmModal>
+      );
+    case RestoreModalState.Hidden: return null;
+    default: return null;
   }
 }
 
