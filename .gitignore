@@ -9,6 +9,7 @@ yarn-error.log
 *.mobileprovision
 *.orig.*
 web-build/
+yarn.lock
 
 # macOS
 .DS_Store
