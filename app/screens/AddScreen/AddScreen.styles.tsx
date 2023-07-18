@@ -26,6 +26,7 @@ export default createDynamicStyleSheet(({ mixins, theme }) => ({
     flex: 1,
     height: 240,
     minHeight: 44,
+    zIndex: -1,
   },
   actionButton: {
     paddingHorizontal: 16,
