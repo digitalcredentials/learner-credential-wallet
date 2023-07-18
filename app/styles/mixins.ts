@@ -15,7 +15,7 @@ const mixins = (theme: ThemeType) => {
       },
     },
     paragraphText: {
-      fontFamily: theme.fontFamily.regular,
+      fontFamily: theme.fontFamily.bold,
       fontSize: theme.fontSize.regular,
       color: theme.color.textSecondary,
       lineHeight: 24,
@@ -177,7 +177,7 @@ const mixins = (theme: ThemeType) => {
     },
 
     /* Checkbox mixins */
-    checkboxContainer: {    
+    checkboxContainer: {
       marginTop: 0,
       marginBottom: 0,
       marginLeft: 0,
