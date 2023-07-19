@@ -53,7 +53,7 @@ export default function PasswordForm({ focusOnMount, onChangePassword, style, te
       if (password.length < PASSWORD_LENGTH_REQUIREMENT)
         setErrorText(`Password must contain at least ${PASSWORD_LENGTH_REQUIREMENT} characters`);
       else if (password !== passwordConfirm)
-        setErrorText(`Password must match and be at least ${PASSWORD_LENGTH_REQUIREMENT} characters`);
+        setErrorText(`Passwords must match and be at least ${PASSWORD_LENGTH_REQUIREMENT} characters`);
       else setErrorText('');
     }
   }
