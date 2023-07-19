@@ -23,10 +23,10 @@ export default function PasswordForm({ focusOnMount, onChangePassword, style, te
   const [errorText, setErrorText] = useState('');
   const passwordRef = useRef<TextInput>(null);
 
-  const isPasswordValid = useMemo(() => 
-    password.length >= PASSWORD_LENGTH_REQUIREMENT 
+  const isPasswordValid = useMemo(() =>
+    password.length >= PASSWORD_LENGTH_REQUIREMENT
     && password === passwordConfirm
-  , [password, passwordConfirm]);
+    , [password, passwordConfirm]);
 
   const textInputStyle = textInputBackgroundColor ? {
     ...mixins.input,
@@ -53,7 +53,7 @@ export default function PasswordForm({ focusOnMount, onChangePassword, style, te
       if (password.length < PASSWORD_LENGTH_REQUIREMENT)
         setErrorText(`Password must contain at least ${PASSWORD_LENGTH_REQUIREMENT} characters`);
       else if (password !== passwordConfirm)
-        setErrorText('Passwords must match');
+        setErrorText(`Password must match and be at least ${PASSWORD_LENGTH_REQUIREMENT} characters`);
       else setErrorText('');
     }
   }
