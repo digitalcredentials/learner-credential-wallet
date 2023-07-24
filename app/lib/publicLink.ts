@@ -60,12 +60,11 @@ export async function linkedinUrlFrom(rawCredentialRecord: CredentialRecordRaw):
   const vcId = rawCredentialRecord.credential.id || eoc.id;
   const expirationDate = rawCredentialRecord.credential.expirationDate &&
     new Date(rawCredentialRecord.credential.expirationDate);
-
   const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
-  const issuance = issuanceDate ? `&issueYear=${issuanceDate.toLocaleDateString('en-us', { year: 'numeric' })}` +
-    `&issueMonth=${issuanceDate.toLocaleDateString('en-us', { month: 'numeric' })}` : '';
-  const expiration = expirationDate ? `&expirationYear=${expirationDate.toLocaleDateString('en-us', { year: 'numeric' })}` +
-    `&expirationMonth=${expirationDate.toLocaleDateString('en-us', { month: 'numeric' })}` : '';
+  const issuance = issuanceDate ? `&issueYear=${issuanceDate.getFullYear()}` +
+    `&issueMonth=${new Date(issuanceDate).getMonth() + 1}` : '';
+  const expiration = expirationDate ? `&expirationYear=${expirationDate.getFullYear()}` +
+    `&expirationMonth=${new Date(expirationDate).getMonth() + 1}` : '';
   const certUrl = publicLink ? `&certUrl=${publicLink}` : '';
   const certId = vcId ? `&certId=${vcId}` : '';
 
