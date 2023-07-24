@@ -24,6 +24,5 @@ target 'eduWallet' do
   # end
 
 
-  pod 'react-native-receive-sharing-intent', :path => '../node_modules/react-native-receive-sharing-intent'
 
 end
