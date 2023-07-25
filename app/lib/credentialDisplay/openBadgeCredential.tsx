@@ -1,6 +1,8 @@
 import moment from 'moment';
 import React from 'react';
 import { View, Text } from 'react-native';
+const showdown = require('showdown');
+const sanitizeHtml = require('sanitize-html');
 
 import { CredentialStatusBadges } from '../../components';
 import { useDynamicStyles } from '../../hooks';
@@ -30,10 +32,10 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
 
   const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
 
-  const { 
+  const {
     title,
     description,
-    criteria,
+    // criteria,
     subjectName,
     numberOfCredits,
     startDateFmt,
@@ -41,12 +43,26 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
     achievementImage
   } = credentialSubjectRenderInfoFrom(credentialSubject);
 
+  let criteria = '# #hello, ~*world*~!'; // EXAMPLE FOR DRAFT PR (run me and comment out line 38)
+
   const {
     issuerName,
     issuerUrl,
     issuerId,
     issuerImage,
   } = issuerRenderInfoFrom(issuer);
+  // convert to HTML
+  const converter = new showdown.Converter();
+  const criteriaConverted = converter.makeHtml(`${criteria}`);
+
+  // Sanitize the HTML converted
+  const cleanedCriteriaHTML = sanitizeHtml(criteriaConverted, {
+    // allowedTags: ['strong'],
+    allowedAttributes: {
+      'a': ['href']
+    },
+    allowedIframeHostnames: ['']
+  })
 
   return (
     <View style={styles.cardContainer}>
@@ -76,7 +92,7 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
         <CardDetail label="End Date" value={endDateFmt} />
       </View>
       <CardDetail label="Description" value={description} />
-      <CardDetail label="Criteria" value={criteria} />
+      <CardDetail label="Criteria" value={cleanedCriteriaHTML} isHTML={true} />
     </View>
   );
 }
