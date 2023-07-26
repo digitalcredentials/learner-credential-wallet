@@ -47,6 +47,7 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
     issuerId,
     issuerImage,
   } = issuerRenderInfoFrom(issuer);
+  // const criteria = 'im **bold** and im *italics* but im # big'; // can be used for testing
 
   return (
     <View style={styles.cardContainer}>
@@ -76,7 +77,7 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
         <CardDetail label="End Date" value={endDateFmt} />
       </View>
       <CardDetail label="Description" value={description} />
-      <CardDetail label="Criteria" value={criteria} />
+      <CardDetail label="Criteria" value={criteria} isMarkdown={true}/>
     </View>
   );
 }
