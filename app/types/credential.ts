@@ -92,6 +92,7 @@ export type Credential = {
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
   readonly credentialStatus?: CredentialStatus;
   readonly proof?: Proof;                // https://w3c.github.io/vc-data-model/#proofs-signatures
+  readonly name?: String;
 }
 
 // https://w3c-ccg.github.io/vc-status-list-2021

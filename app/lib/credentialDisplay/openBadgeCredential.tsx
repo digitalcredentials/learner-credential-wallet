@@ -26,19 +26,20 @@ export const openBadgeCredentialDisplayConfig: CredentialDisplayConfig = {
 function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
-  const { credentialSubject, issuer, issuanceDate } = credential;
+  const { credentialSubject, issuer, issuanceDate, expirationDate, name } = credential;
 
   const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
+  const formattedExpirationDate = expirationDate ? moment(expirationDate).format(DATE_FORMAT) : null;
 
   const { 
-    title,
     description,
     criteria,
     subjectName,
     numberOfCredits,
     startDateFmt,
     endDateFmt,
-    achievementImage
+    achievementImage,
+    achievementType
   } = credentialSubjectRenderInfoFrom(credentialSubject);
 
   const {
@@ -57,7 +58,7 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
         />
         <View style={[styles.flexRow, styles.dataContainer]}>
           {achievementImage && <CardImage source={achievementImage} accessibilityLabel={issuerName} />}
-          <Text style={styles.header} accessibilityRole="header">{title}</Text>
+          <Text style={styles.header} accessibilityRole="header">{name}</Text>
         </View>
         <Text style={styles.dataLabel}>Issuer</Text>
         <View style={styles.flexRow}>
@@ -69,6 +70,8 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
         </View>
       </View>
       <CardDetail label="Issuance Date" value={formattedIssuanceDate} />
+      <CardDetail label="Expiration Date" value={formattedExpirationDate} />
+      <CardDetail label="Achievement Type" value={achievementType} />
       <CardDetail label="Subject Name" value={subjectName} />
       <CardDetail label="Number of Credits" value={numberOfCredits} />
       <View style={styles.flexRow}>

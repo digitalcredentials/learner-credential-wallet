@@ -17,7 +17,8 @@ const credentialDisplayConfigs: CredentialDisplayConfig[] = [
 ];
 
 export function credentialDisplayConfigFor(credential: Credential): CredentialDisplayConfig {
-  const config = credentialDisplayConfigs.find(({ credentialType }) => credential.type.includes(credentialType));
+  let config = credentialDisplayConfigs.find(({ credentialType }) => credential.type.includes(credentialType));
+  if (!config && credential.type.includes("AchievementCredential")) config = openBadgeCredentialDisplayConfig;
   if (!config) throw new Error('Unrecognized credential type');
 
   const { credentialType, cardComponent, itemPropsResolver } = config;
