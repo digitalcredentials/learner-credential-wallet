@@ -47,7 +47,6 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
     issuerId,
     issuerImage,
   } = issuerRenderInfoFrom(issuer);
-  // const criteria = 'im **bold** and im *italics* but im # big'; // can be used for testing
 
   return (
     <View style={styles.cardContainer}>

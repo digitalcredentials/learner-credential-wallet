@@ -16,7 +16,9 @@ export default function CardDetail({ label, value, isMarkdown = false}: Credenti
 
   const markdownStyles = {
     paragraph: {
-      ...styles.dataValue,
+      fontSize: styles.dataValue.fontSize,
+      color: styles.dataValue.color,
+      flex: 1,
       marginBottom: 0,
       marginTop: 0,
     }
