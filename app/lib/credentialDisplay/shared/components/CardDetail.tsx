@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { useDynamicStyles } from '../../../../hooks';
+import { useDynamicStyles, useThemeContext } from '../../../../hooks';
 import { dynamicStyleSheet } from '..';
 
 import Markdown from 'react-native-markdown-display';
@@ -13,6 +13,7 @@ type CredentialDetailProps = {
 
 export default function CardDetail({ label, value, isMarkdown = false}: CredentialDetailProps): JSX.Element | null {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
+  const { isDarkTheme } = useThemeContext();
 
   const markdownStyles = {
     paragraph: {
@@ -21,6 +22,12 @@ export default function CardDetail({ label, value, isMarkdown = false}: Credenti
       flex: 1,
       marginBottom: 0,
       marginTop: 0,
+    },
+    bullet_list: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
+    },
+    ordered_list: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
     }
   };
 
