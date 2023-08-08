@@ -61,6 +61,7 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   paragraphCenter: {
     ...mixins.paragraphText,
+    fontFamily: theme.fontFamily.bold,
     fontSize: theme.fontSize.medium,
     textAlign: 'center',
     marginTop: 30,
