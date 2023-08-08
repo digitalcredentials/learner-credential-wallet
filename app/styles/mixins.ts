@@ -88,7 +88,7 @@ const mixins = (theme: ThemeType) => {
     },
     buttonContainer: {
       ...sharedMixins.shadow,
-      flexGrow: 1,
+      flex: 1,
     },
     buttonGroup: {
       flexDirection: 'row',
