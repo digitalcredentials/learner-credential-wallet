@@ -15,7 +15,7 @@ const mixins = (theme: ThemeType) => {
       },
     },
     paragraphText: {
-      fontFamily: theme.fontFamily.bold,
+      fontFamily: theme.fontFamily.regular,
       fontSize: theme.fontSize.regular,
       color: theme.color.textSecondary,
       lineHeight: 24,
