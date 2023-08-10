@@ -1,7 +1,5 @@
 {
-  "eslintConfig": {
-    "ignorePatterns": ["**/node_modules/", "node_modules/*", "node_modules/"]
-  },
+  "ignorePatterns": ["**/node_modules/", "node_modules/*", "node_modules/"],
   "env": {
     "browser": true,
     "es2021": true
