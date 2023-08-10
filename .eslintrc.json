@@ -32,6 +32,5 @@
     "react-native/sort-styles": "off",
     "react-native/no-raw-text": "off",
     "@typescript-eslint/no-empty-function": "off"
-  },
-  "ignorePatterns": ["node_modules/"]
+  }
 }
