@@ -26,7 +26,7 @@ export default function PasswordForm({ focusOnMount, onChangePassword, style, te
   const isPasswordValid = useMemo(() =>
     password.length >= PASSWORD_LENGTH_REQUIREMENT
     && password === passwordConfirm
-    , [password, passwordConfirm]);
+  , [password, passwordConfirm]);
 
   const textInputStyle = textInputBackgroundColor ? {
     ...mixins.input,
