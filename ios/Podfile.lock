@@ -367,7 +367,7 @@ PODS:
   - RealmJS (10.24.0):
     - GCDWebServer
     - React
-  - RNCAsyncStorage (1.19.1):
+  - RNCAsyncStorage (1.19.0):
     - React-Core
   - RNCClipboard (1.11.2):
     - React-Core
@@ -707,7 +707,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 18932e685b4893be88d1efc18f5f8ca1c9cd39d8
   ReactCommon: 29bb6fad3242e30e9d049bc9d592736fa3da9e50
   RealmJS: 2e45ca6ed4c3732be369219b41816e890ce51024
-  RNCAsyncStorage: f47fe18526970a69c34b548883e1aeceb115e3e1
+  RNCAsyncStorage: 4b98ac3c64efa4e35c1197cb0c5ca5e9f5d4c666
   RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
