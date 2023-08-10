@@ -23,5 +23,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Clear npm cache
+      run: npm cache clean --force
     - run: npm i --legacy-peer-deps
     - run: npm run lint
