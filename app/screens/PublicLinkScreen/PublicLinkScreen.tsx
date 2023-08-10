@@ -145,7 +145,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
             containerStyle={mixins.buttonClearContainer}
             title="What does this mean?"
-            onPress={() => Linking.openURL('https://lcw.app/faq.html#unsharepubliclink')}
+            onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link-unshare')}
           />
         </>
       )
