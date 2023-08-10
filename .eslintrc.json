@@ -33,7 +33,5 @@
     "react-native/no-raw-text": "off",
     "@typescript-eslint/no-empty-function": "off"
   },
-  "linterOptions": {
-    "exclude": ["node_modules/"]
-  }
+  "ignorePatterns": ["node_modules/"]
 }
