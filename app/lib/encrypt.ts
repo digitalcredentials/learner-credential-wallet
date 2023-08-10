@@ -1,6 +1,4 @@
 import CryptoJS from 'crypto-js';
-import { HumanReadableError } from './error';
-// import { importWalletEncrypted } from './lockedWallet';
 
 const LOCKED_PREFIX = 'LOCKED:';
 
@@ -15,14 +13,6 @@ export function isLocked(data: string): boolean  {
   }
   return false;
 }
-
-// export async function decryptData(data: string, passphrase: string): Promise<string> {
-//   try {
-//     return await importWalletEncrypted(data, passphrase);
-//   } catch (err) {
-//     throw new HumanReadableError('Invalid password');
-//   }
-// }
 
 export async function encryptData(data: string, passphrase: string): Promise<string> {
   const encryptedFile = CryptoJS.AES.encrypt(data, passphrase);

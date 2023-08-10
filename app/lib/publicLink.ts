@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { CredentialRecordRaw } from '../model';
 import { IssuerObject } from '../types/credential';
 import { Cache, CacheKey } from './cache';
