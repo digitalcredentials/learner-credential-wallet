@@ -28,7 +28,25 @@ export default function CardDetail({ label, value, isMarkdown = false}: Credenti
     },
     ordered_list: {
       color: isDarkTheme ? '#ffffff' : '#000000'
-    }
+    },
+    heading1: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
+    },
+    heading2: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
+    },
+    heading3: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
+    },
+    heading4: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
+    },
+    heading5: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
+    },
+    heading6: {
+      color: isDarkTheme ? '#ffffff' : '#000000'
+    },
   };
 
   if (value === null) {
