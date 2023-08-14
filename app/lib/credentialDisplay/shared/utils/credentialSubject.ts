@@ -32,7 +32,7 @@ export function credentialSubjectRenderInfoFrom(credentialSubject: Subject): Cre
 
   const achievementImage = imageSourceFrom(eoc?.image);
 
-  const achievementType = eoc && eoc.type && eoc.type.length > 0 ? eoc.type[0] : null;
+  const achievementType = eoc && eoc.achievementType ? eoc.achievementType : null;
 
   const { startDate, endDate } = eoc?.awardedOnCompletionOf || {};
   const startDateFmt = startDate ? moment(startDate).format(DATE_FORMAT) : null;
