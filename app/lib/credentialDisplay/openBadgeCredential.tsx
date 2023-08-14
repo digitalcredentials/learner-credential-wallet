@@ -11,12 +11,12 @@ import { CardLink, CardDetail, dynamicStyleSheet, IssuerInfoButton, CardImage, i
 export const openBadgeCredentialDisplayConfig: CredentialDisplayConfig = {
   credentialType: 'OpenBadgeCredential',
   cardComponent: OpenBadgeCredentialCard,
-  itemPropsResolver: ({ credentialSubject, issuer }) => {
+  itemPropsResolver: ({ credentialSubject, issuer, name }) => {
     const { title, achievementImage } = credentialSubjectRenderInfoFrom(credentialSubject);
     const { issuerName, issuerImage } = issuerRenderInfoFrom(issuer);
 
     return {
-      title,
+      title: name ? name.toString() : title,
       subtitle: issuerName,
       image: achievementImage || issuerImage,
     };
