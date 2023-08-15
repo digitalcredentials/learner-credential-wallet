@@ -6,7 +6,7 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint ./app ./App.tsx",
+    "lint": "eslint ./app ./App.tsx && npm run compile",
     "compile": "tsc --noEmit -p tsconfig.json && echo ✓ Passed lint check",
     "postinstall": "npx rn-nodeify --install process,stream,events,module,util --hack && npx patch-package"
   },
