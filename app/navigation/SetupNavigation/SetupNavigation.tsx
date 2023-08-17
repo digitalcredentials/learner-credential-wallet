@@ -206,12 +206,6 @@ function ChapiStep({ navigation, route }: ChapiStepProps) {
       <View style={[styles.body, styles.buttonGroupCenterContainer]}>
         <Button 
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
-          title = "Skip"
-          onPress={_goToNextStep}
-        />
-        <View style={mixins.buttonSeparator} />
-        <Button 
-          buttonStyle={[mixins.button, mixins.buttonPrimary]}
           title = "Go to Register Wallet"
           onPress={registerWallet}
         />
@@ -230,7 +224,7 @@ function ChapiStep({ navigation, route }: ChapiStepProps) {
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
           containerStyle={mixins.buttonContainer}
           titleStyle={mixins.buttonTitle}
-          title="Next"
+          title="Next/Skip"
           onPress={_goToNextStep}
           disabledStyle={mixins.buttonDisabled}
           disabledTitleStyle={mixins.buttonTitle}
