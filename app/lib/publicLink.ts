@@ -65,9 +65,8 @@ export async function linkedinUrlFrom(rawCredentialRecord: CredentialRecordRaw):
   const expiration = expirationDate ? `&expirationYear=${expirationDate.getFullYear()}` +
     `&expirationMonth=${new Date(expirationDate).getMonth() + 1}` : '';
   const certUrl = publicLink ? `&certUrl=${publicLink}` : '';
-  const certId = vcId ? `&certId=${vcId}` : '';
 
-  const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}${certId}`;
+  const url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME${organizationInfo}${issuance}${expiration}${certUrl}`;
 
   return url;
 }
