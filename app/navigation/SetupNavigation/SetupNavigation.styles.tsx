@@ -30,6 +30,10 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  buttonGroupCenterContainer: {
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
   stepText: {
     color: theme.color.iconInactive,
     fontSize: theme.fontSize.small,

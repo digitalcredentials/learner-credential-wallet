@@ -203,16 +203,15 @@ function ChapiStep({ navigation, route }: ChapiStepProps) {
         Register your wallet for easy credential adding in the future.
       </Text>
 
-      <View style={styles.body}>
+      <View style={[styles.body, styles.buttonGroupCenterContainer]}>
         <Button 
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
-          containerStyle={mixins.buttonContainer}
           title = "Skip"
           onPress={_goToNextStep}
         />
+        <View style={mixins.buttonSeparator} />
         <Button 
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
-          containerStyle={mixins.buttonContainer}
           title = "Go to Register Wallet"
           onPress={registerWallet}
         />
