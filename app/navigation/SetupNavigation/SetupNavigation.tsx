@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Image, AccessibilityInfo, ImageStyle } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Text, View, Image, AccessibilityInfo, ImageStyle, Linking } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, CheckBox } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
 
 import appConfig from '../../../app.json';
 import { initialize, pollWalletState, selectWalletState } from '../../store/slices/wallet';
@@ -17,12 +18,14 @@ import type {
   StartStepProps,
   CreateStepProps,
   PasswordStepProps,
+  ChapiStepProps,
   ForFadeType,
   SetupNavigationParamList,
 } from './SetupNavigation.d';
 
 import { DetailsScreen } from '../../screens';
 import { useSelector } from 'react-redux';
+import { registerWallet } from '../../lib/registerWallet';
 
 const Stack = createStackNavigator<SetupNavigationParamList>();
 
@@ -39,7 +42,7 @@ export default function SetupNavigation(): JSX.Element {
     >
       <Stack.Screen name="StartStep" component={StartStep} />
       <Stack.Screen name="PasswordStep" component={PasswordStep} />
-      {/* <Stack.Screen name="CustomMethodStep" component={CustomMethodStep} /> */}
+      <Stack.Screen name="ChapiStep" component={ChapiStep} />
       <Stack.Screen
         name="CreateStep"
         component={CreateStep}
@@ -93,7 +96,7 @@ function PasswordStep({ navigation }: PasswordStepProps) {
 
   function _goToNextStep() {
     if (password !== undefined) {
-      navigation.navigate('CreateStep', {
+      navigation.navigate('ChapiStep', {
         password,
         enableBiometrics,
       });
@@ -106,10 +109,12 @@ function PasswordStep({ navigation }: PasswordStepProps) {
 
   return (
     <SafeScreenView style={styles.container}>
-      <AccessibleView style={styles.stepContainer} label="Step 1 of 2">
+      <AccessibleView style={styles.stepContainer} label="Step 1 of 3">
         <Text style={[styles.stepText, styles.stepTextActive]}>Step 1</Text>
         <View style={styles.stepDivider} />
         <Text style={styles.stepText}>2</Text>
+        <View style={styles.stepDivider} />
+        <Text style={styles.stepText}>3</Text>
       </AccessibleView>
       <Text
         style={styles.header}
@@ -172,6 +177,79 @@ function PasswordStep({ navigation }: PasswordStepProps) {
   );
 }
 
+function ChapiStep({ navigation, route }: ChapiStepProps) {
+  const { theme, mixins, styles } = useDynamicStyles(dynamicStyleSheet);
+
+  function _goToNextStep() {
+    navigation.navigate('CreateStep', route.params);
+  }
+
+  return (
+    <SafeScreenView style={styles.container}>
+      <AccessibleView style={styles.stepContainer} label="Step 2 of 3">
+        <Text style={styles.stepText}>1</Text>
+        <View style={styles.stepDivider} />
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
+        <View style={styles.stepDivider} />
+        <Text style={styles.stepText}>3</Text>
+      </AccessibleView>
+      <Text
+        style={styles.header}
+        accessibilityRole="header"
+      >
+        Register Wallet
+      </Text>
+      <Text style={styles.paragraphRegular}>
+        Register your wallet for easy credential adding in the future.
+      </Text>
+
+      <View style={styles.body}>
+        <Button 
+          buttonStyle={[mixins.button, mixins.buttonPrimary]}
+          containerStyle={mixins.buttonContainer}
+          title = "Skip"
+          onPress={_goToNextStep}
+        />
+        <Button 
+          buttonStyle={[mixins.button, mixins.buttonPrimary]}
+          containerStyle={mixins.buttonContainer}
+          title = "Go to Register Wallet"
+          onPress={registerWallet}
+        />
+      </View>
+
+      <View style={mixins.buttonGroup}>
+        <Button
+          buttonStyle={[mixins.button, styles.buttonClear]}
+          containerStyle={styles.buttonClearContainer}
+          titleStyle={[mixins.buttonTitle, styles.buttonClearTitle]}
+          title="Cancel"
+          onPress={() => navigation.navigate('StartStep')}
+        />
+        <View style={mixins.buttonSeparator} />
+        <Button
+          buttonStyle={[mixins.button, mixins.buttonPrimary]}
+          containerStyle={mixins.buttonContainer}
+          titleStyle={mixins.buttonTitle}
+          title="Next"
+          onPress={_goToNextStep}
+          disabledStyle={mixins.buttonDisabled}
+          disabledTitleStyle={mixins.buttonTitle}
+          iconRight
+          icon={
+            <MaterialIcons
+              style={styles.arrowIcon}
+              name="arrow-forward"
+              color={theme.color.backgroundSecondary}
+              size={theme.iconSize}
+            />
+          }
+        />
+      </View>
+    </SafeScreenView>
+  );
+}
+
 function CreateStep({ route }: CreateStepProps) {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
 
@@ -197,10 +275,12 @@ function CreateStep({ route }: CreateStepProps) {
 
   return (
     <SafeScreenView style={styles.container}>
-      <AccessibleView style={styles.stepContainer} label="Step 2 of 2">
+      <AccessibleView style={styles.stepContainer} label="Step 3 of 3">
         <Text style={styles.stepText}>1</Text>
         <View style={styles.stepDivider} />
-        <Text style={[styles.stepText, styles.stepTextActive]}>Step 2</Text>
+        <Text style={styles.stepText}>2</Text>
+        <View style={styles.stepDivider} />
+        <Text style={[styles.stepText, styles.stepTextActive]}>Step 3</Text>
       </AccessibleView>
       <Text style={styles.header} ref={titleRef} accessibilityRole="header">
         Creating Wallet

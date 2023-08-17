@@ -21,6 +21,7 @@ import { AddExistingProfileScreen, DetailsScreen, DeveloperScreen, ManageProfile
 import { useAppDispatch, useDynamicStyles, useResetNavigationOnBlur, useThemeContext } from '../../hooks';
 import { SettingsNavigationProps } from '../';
 import { exportWallet } from '../../lib/export';
+import { registerWallet } from '../../lib/registerWallet';
 
 const Stack = createStackNavigator<SettingsNavigationParamList>();
 
@@ -116,6 +117,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         <SettingsItem title="Use biometrics to unlock" onPress={onToggleBiometrics} rightComponent={biometricSwitch} disabled={!isBiometricsSupported} />
         <SettingsItem title="Dark mode" onPress={toggleTheme} rightComponent={themeSwitch} />
         <SettingsItem title="Manage profiles" onPress={() => navigation.navigate('ManageProfilesScreen')} />
+        <SettingsItem title="Register wallet" onPress={registerWallet} />
         <SettingsItem title="Restore wallet" onPress={() => navigation.navigate('RestoreWalletScreen')} />
         <SettingsItem title="Backup wallet" onPress={() => setBackupModalOpen(true)} />
         <SettingsItem title="Reset wallet" onPress={() => setResetModalOpen(true)} />
