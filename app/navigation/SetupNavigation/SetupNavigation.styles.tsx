@@ -31,7 +31,7 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     alignItems: 'center',
   },
   buttonGroupCenterContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center'
   },
   stepText: {
@@ -149,5 +149,6 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   body: {
     flex: 1,
     width: '100%',
+    justifyContent: 'center',
   }
 }));
