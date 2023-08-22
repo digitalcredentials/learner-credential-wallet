@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, Image, AccessibilityInfo, ImageStyle, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, Image, AccessibilityInfo, ImageStyle } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, CheckBox } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
