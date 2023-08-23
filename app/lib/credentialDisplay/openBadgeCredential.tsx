@@ -62,10 +62,10 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
           </View>
           <View style={styles.flexColumn}>
             <View>
-              <Text style={styles.header} accessibilityRole="header">{name}</Text>
+              <Text style={styles.headerInRow} accessibilityRole="header">{name}</Text>
             </View>
             <View>
-              <CardDetail label="Achievement Type" value={achievementType} />
+              <CardDetail label="Achievement Type" value={achievementType} inRow={true}/>
             </View>
           </View>
         </View>
