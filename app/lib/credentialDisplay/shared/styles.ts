@@ -15,6 +15,14 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     marginBottom: 8,
     flex: 1,
   },
+  headerInRow: {
+    ...mixins.headerText,
+    color: theme.color.textPrimary,
+    fontSize: theme.fontSize.header,
+    lineHeight: 30,
+    marginBottom: -8,
+    flex: 1,
+  },
   dataContainer: {
     flexGrow: 1,
     marginVertical: 12,
