@@ -45,5 +45,8 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   },
   imageBackground: {
     backgroundColor: theme.color.foregroundPrimary,
+  },
+  dateStyles: {
+    flexDirection: 'row',
   }
 }));
