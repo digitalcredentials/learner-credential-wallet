@@ -57,8 +57,17 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
           badgeBackgroundColor={theme.color.backgroundPrimary}
         />
         <View style={[styles.flexRow, styles.dataContainer]}>
-          {achievementImage && <CardImage source={achievementImage} accessibilityLabel={issuerName} />}
-          <Text style={styles.header} accessibilityRole="header">{name}</Text>
+          <View>
+            {achievementImage && <CardImage source={achievementImage} accessibilityLabel={issuerName} />}
+          </View>
+          <View style={styles.flexColumn}>
+            <View>
+              <Text style={styles.header} accessibilityRole="header">{name}</Text>
+            </View>
+            <View>
+              <CardDetail label="Achievement Type" value={achievementType} />
+            </View>
+          </View>
         </View>
         <Text style={styles.dataLabel}>Issuer</Text>
         <View style={styles.flexRow}>

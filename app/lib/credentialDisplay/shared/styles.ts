@@ -38,6 +38,9 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
   flexRow: {
     flexDirection: 'row',
   },
+  flexColumn: {
+    flexDirection: 'column',
+  },
   fullWidthImage: {
     width: '100%',
     aspectRatio: 1,
