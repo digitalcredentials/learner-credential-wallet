@@ -25,6 +25,8 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   const share = useShareCredentials();
   const { rawCredentialRecord, screenMode = PublicLinkScreenMode.Default } = route.params;
+  const { credential } = rawCredentialRecord;
+  const { name } = credential;
   const [publicLink, setPublicLink] = useState<string | null>(null);
   const [justCreated, setJustCreated] = useState(false);
   const isVerified = useVerifyCredential(rawCredentialRecord)?.result.verified;
@@ -256,7 +258,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       <>
         {screenMode === PublicLinkScreenMode.Default && (
           <Text style={styles.title}>
-            {rawCredentialRecord?.credential?.name || 'Credential'}
+            {name || 'Credential'}
           </Text>
         )}
         <Text style={styles.instructions}>{instructionsText}</Text>
