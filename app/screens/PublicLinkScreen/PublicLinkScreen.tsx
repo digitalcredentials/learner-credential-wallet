@@ -10,7 +10,6 @@ import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import dynamicStyleSheet from './PublicLinkScreen.styles';
 import { LoadingIndicatorDots, NavHeader } from '../../components';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import credential from '../../mock/credential';
 import { createPublicLinkFor, getPublicViewLink, linkedinUrlFrom, unshareCredential } from '../../lib/publicLink';
 import { useDynamicStyles, useShareCredentials, useVerifyCredential } from '../../hooks';
 import { clearGlobalModal, displayGlobalModal } from '../../lib/globalModal';
@@ -257,7 +256,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       <>
         {screenMode === PublicLinkScreenMode.Default && (
           <Text style={styles.title}>
-            {rawCredentialRecord.credential.name || 'Credential'}
+            {rawCredentialRecord?.credential?.name || 'Credential'}
           </Text>
         )}
         <Text style={styles.instructions}>{instructionsText}</Text>
