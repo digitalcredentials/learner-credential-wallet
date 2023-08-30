@@ -257,7 +257,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       <>
         {screenMode === PublicLinkScreenMode.Default && (
           <Text style={styles.title}>
-            {credential.credentialSubject?.hasCredential?.name || 'Credential'}
+            {rawCredentialRecord.credential.name || 'Credential'}
           </Text>
         )}
         <Text style={styles.instructions}>{instructionsText}</Text>
