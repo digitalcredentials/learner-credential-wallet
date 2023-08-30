@@ -43,6 +43,10 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
     setTimeout(() => scannerRef.current?.reactivate(), 1000);
   }
 
+  function navGoBack() {
+    navigation.goBack();
+  }
+
   function NoCameraPermission(): JSX.Element {
     return (
       <View>
@@ -52,10 +56,8 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
             'Please go into your camera settings and enable access for this app',
             [
               {
-                text: 'OK',
-                onPress: () => {
-                  navigation.goBack();
-                }
+                text: 'Go Back',
+                onPress: navGoBack
               }
             ])
         }
@@ -81,6 +83,7 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
         cameraProps={{
           accessibilityLabel: 'QR Code Scanner, Camera Active',
           accessible: true,
+          notAuthorizedView: <NoCameraPermission />
         } as RNCameraProps}
         showMarker
       />
