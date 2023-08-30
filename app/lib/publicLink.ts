@@ -56,7 +56,6 @@ export async function linkedinUrlFrom(rawCredentialRecord: CredentialRecordRaw):
   const title = eoc?.name ?? 'Verifiable Credential';
   const issuanceDate = rawCredentialRecord.credential.issuanceDate &&
     new Date(rawCredentialRecord.credential.issuanceDate);
-  const vcId = rawCredentialRecord.credential.id || eoc.id;
   const expirationDate = rawCredentialRecord.credential.expirationDate &&
     new Date(rawCredentialRecord.credential.expirationDate);
   const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
