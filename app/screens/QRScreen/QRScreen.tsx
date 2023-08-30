@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Text } from 'react-native';
+import { Alert, Text } from 'react-native';
 import { View, useWindowDimensions } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent, RNCameraProps } from 'react-native-camera';
@@ -43,6 +43,26 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
     setTimeout(() => scannerRef.current?.reactivate(), 1000);
   }
 
+  function NoCameraPermission(): JSX.Element {
+    return (
+      <View>
+        { 
+          Alert.alert(
+            'Camera Access is Off', 
+            'Please go into your camera settings and enable access for this app',
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  navigation.goBack();
+                }
+              }
+            ])
+        }
+      </View>
+    );
+  }
+
   return (
     <View style={styles.scannerBody}>
       <NavHeader title="QR Code Scanner" goBack={navigation.goBack} />
@@ -57,6 +77,7 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
           width: width * 0.8,
           height: width * 0.8,
         }]}
+        notAuthorizedView={<NoCameraPermission />}
         cameraProps={{
           accessibilityLabel: 'QR Code Scanner, Camera Active',
           accessible: true,
