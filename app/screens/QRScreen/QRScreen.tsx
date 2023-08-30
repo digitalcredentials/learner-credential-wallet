@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Alert, Text } from 'react-native';
+import { Alert, Text, Linking } from 'react-native';
 import { View, useWindowDimensions } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { BarCodeReadEvent, RNCameraProps } from 'react-native-camera';
@@ -43,6 +43,10 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
     setTimeout(() => scannerRef.current?.reactivate(), 1000);
   }
 
+  function goToSettings() {
+    Linking.openSettings();
+  }
+
   function navGoBack() {
     navigation.goBack();
   }
@@ -58,6 +62,10 @@ export default function QRScreen({ navigation, route }: QRScreenProps): JSX.Elem
               {
                 text: 'Go Back',
                 onPress: navGoBack
+              },
+              {
+                text: 'Settings',
+                onPress: goToSettings
               }
             ])
         }
