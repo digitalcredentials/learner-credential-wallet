@@ -159,7 +159,7 @@ function About({ navigation }: AboutProps): JSX.Element {
           accessible
           accessibilityLabel={`${appConfig.displayName} Logo`}
         />
-        <Text style={styles.paragraphCenter}>{appConfig.displayName}</Text>
+        <Text style={styles.aboutTitleBolded}>{appConfig.displayName}</Text>
         <Text style={styles.paragraphCenter}>
           This mobile wallet was developed by the Digital Credentials Consortium, a network of leading international universities designing an open infrastructure for academic credentials.
         </Text>
