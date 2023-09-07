@@ -1,13 +1,14 @@
 import { useState, useCallback } from 'react';
 import { ResultLog, verifyCredential } from '../lib/validate';
 import { CredentialError } from '../types/credential';
-import { Cache, CacheKey } from '../lib/cache';
 import { CredentialRecordRaw } from '../model';
 import { useFocusEffect } from '@react-navigation/native';
+import { LruCache } from '@digitalcredentials/lru-memoize';
 
 /* Verification expiration = 30 days */
 const VERIFICATION_EXPIRATION = 1000 * 60 * 60 * 24 * 30;
 const DEFAULT_ERROR_MESSAGE = 'An error was encountered while verifying this credential.';
+const lruCache = new LruCache({ maxAge: VERIFICATION_EXPIRATION });
 
 export type VerificationResult = {
   timestamp: number | null;
@@ -60,8 +61,11 @@ export async function verificationResultFor(rawCredentialRecord: CredentialRecor
   const cachedRecordId = String(rawCredentialRecord._id);
 
   if (!forceFresh) {
-    const cachedResult = await Cache.getInstance().load(CacheKey.VerificationResult, cachedRecordId).catch(() => null) as VerificationResult;
-    if (cachedResult) return cachedResult;
+    const cachedResult = await lruCache.memoize({
+      key: cachedRecordId,
+      fn: () => { return verifyCredential(rawCredentialRecord.credential); }
+    }) as VerificationResult;
+    return cachedResult;
   }
 
   let response, error;
@@ -77,13 +81,6 @@ export async function verificationResultFor(rawCredentialRecord: CredentialRecor
     timestamp: Date.now(),
     error,
   };
-
-  await Cache.getInstance().store(
-    CacheKey.VerificationResult,
-    cachedRecordId,
-    result,
-    VERIFICATION_EXPIRATION
-  );
 
   return result;
 }
