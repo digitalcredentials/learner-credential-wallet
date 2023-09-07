@@ -4,6 +4,7 @@ import { CredentialError } from '../types/credential';
 import { Cache, CacheKey } from '../lib/cache';
 import { CredentialRecordRaw } from '../model';
 import { useFocusEffect } from '@react-navigation/native';
+import { LruCache } from '@digitalcredentials/lru-memoize';
 
 /* Verification expiration = 30 days */
 const VERIFICATION_EXPIRATION = 1000 * 60 * 60 * 24 * 30;
@@ -21,6 +22,8 @@ export type VerifyPayload = {
   error: string | null;
   result: VerificationResult;
 }
+
+const myCache = new LruCache({ maxAge: 5000 })
 
 const initialResult = { timestamp: null, log: [], verified: null };
 

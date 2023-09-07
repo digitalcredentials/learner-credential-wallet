@@ -18,6 +18,7 @@
     "@digitalcredentials/ed25519-signature-2020": "^3.0.1",
     "@digitalcredentials/ed25519-verification-key-2020": "^4.0.0",
     "@digitalcredentials/issuer-registry-client": "^1.0.0",
+    "@digitalcredentials/lru-memoize": "^2.1.1",
     "@digitalcredentials/minimal-cipher": "^5.1.2",
     "@digitalcredentials/security-document-loader": "^3.1.0",
     "@digitalcredentials/vc": "^6.0.0",
