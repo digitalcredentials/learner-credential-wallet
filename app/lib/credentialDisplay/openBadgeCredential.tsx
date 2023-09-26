@@ -31,7 +31,7 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
   const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
   const formattedExpirationDate = expirationDate ? moment(expirationDate).format(DATE_FORMAT) : null;
 
-  const { 
+  const {
     description,
     criteria,
     subjectName,
@@ -82,7 +82,7 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
         <CardDetail label="Issuance Date" value={formattedIssuanceDate} />
         <CardDetail label="Expiration Date" value={formattedExpirationDate} />
       </View>
-      <CardDetail label="Subject Name" value={subjectName} />
+      <CardDetail label="Issued To" value={subjectName} />
       <CardDetail label="Number of Credits" value={numberOfCredits} />
       <View style={styles.flexRow}>
         <CardDetail label="Start Date" value={startDateFmt} />
