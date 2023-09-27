@@ -6,7 +6,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { LruCache } from '@digitalcredentials/lru-memoize';
 
 /* Verification expiration = 30 days */
-const VERIFICATION_EXPIRATION = 1000 * 60 * 60 * 24 * 30;
+const VERIFICATION_EXPIRATION = 1000 * 30;
 const DEFAULT_ERROR_MESSAGE = 'An error was encountered while verifying this credential.';
 const lruCache = new LruCache({ maxAge: VERIFICATION_EXPIRATION });
 
