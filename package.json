@@ -106,7 +106,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@digitalcredentials/lru-memoize": "github:digitalcredentials/lru-memoize",
+    "@digitalcredentials/lru-memoize": "^2.1.4",
     "@types/crypto-js": "^4.1.1",
     "@types/react": "~17.0.2",
     "@types/react-native": "~0.67.8",
