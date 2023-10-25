@@ -5,6 +5,9 @@ import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 import OutsidePressHandler from 'react-native-outside-press';
+import Handlebars from 'handlebars';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import Share from 'react-native-share';
 
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import dynamicStyleSheet from './PublicLinkScreen.styles';
@@ -48,6 +51,45 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       body: <LoadingIndicatorDots />
     });
   }
+
+
+  const handleShareAsPdf = async() => {
+    // templateURL = svg template from id of renderMethod in Credential
+    const templateURL = credential.renderMethod?.[0].id; // might want to sort if there are more than one renderMethod
+    let source = '';
+    if (templateURL) {
+      await fetch(templateURL)
+        .then(response => {
+          return response.text();
+        }).then(data => {
+          source = data;
+        }).catch(error => {
+          console.error('An error occurred fetching the SVG Template:', error);
+        });
+    }
+
+    const template = Handlebars.compile(source);
+    let achievement = credential.credentialSubject.hasCredential ??
+    credential.credentialSubject.achievement;
+    if (Array.isArray(achievement)) {
+      achievement = achievement[0];
+    }
+    const credentialName = achievement?.name ?? 'Unknown Credential';
+    const data = { 
+      'credentialSubject': { 'name': credentialName },
+      'credential': { 'name': credential.name },
+      'issuanceDate': credential.issuanceDate
+    };
+    const svg = template(data);
+
+    const options = {
+      html: svg,
+      fileName: `${credential.name} Credential`,
+      base64: false,
+    };
+    const pdf = await RNHTMLtoPDF.convert(options);
+    Share.open({url: `file://${pdf.filePath}`});
+  };
 
   function displayErrorModal(err: Error) {
     function goToErrorSource() {
@@ -366,6 +408,21 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             )
             }
             <View style={styles.otherOptionsContainer}>
+              {credential.renderMethod && <Button
+                title="Export To PDF"
+                buttonStyle={mixins.buttonIcon}
+                containerStyle={mixins.buttonIconContainer}
+                titleStyle={mixins.buttonIconTitle}
+                iconRight
+                onPress={handleShareAsPdf}
+                icon={
+                  <Ionicons
+                    name="document-text"
+                    size={theme.iconSize}
+                    color={theme.color.iconInactive}
+                  />
+                }
+              />}
               <Button
                 title="Add to LinkedIn Profile"
                 buttonStyle={mixins.buttonIcon}

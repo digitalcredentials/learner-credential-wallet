@@ -82,6 +82,13 @@ export type Proof = {
   jws?: string;
 }
 
+export type RenderMethod = {
+  id: string;
+  type: string;
+  name: string;
+  css3MediaQuery: string;
+}
+
 // https://digitalcredentials.github.io/dcc/v1/dcc-context-v1.json
 export type Credential = {
   readonly '@context': string[];         // https://w3c.github.io/vc-data-model/#contexts
@@ -94,6 +101,7 @@ export type Credential = {
   readonly credentialStatus?: CredentialStatus;
   readonly proof?: Proof;                // https://w3c.github.io/vc-data-model/#proofs-signatures
   readonly name?: string;
+  readonly renderMethod?: RenderMethod[];
 }
 
 // https://w3c-ccg.github.io/vc-status-list-2021
