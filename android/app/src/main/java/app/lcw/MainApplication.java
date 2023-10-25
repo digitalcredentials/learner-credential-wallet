@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.christopherdro.htmltopdf.RNHTMLtoPDFPackage;
 import com.reactnativereceivesharingintent.ReceiveSharingIntentPackage;
 import io.realm.react.RealmReactPackage;
 import com.facebook.react.ReactInstanceManager;
