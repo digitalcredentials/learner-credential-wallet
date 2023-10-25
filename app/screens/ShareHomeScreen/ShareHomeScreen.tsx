@@ -124,7 +124,7 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
 
   async function goToLinkSelect(): Promise<void> {
     const [rawCredentialRecord] = await NavigationUtil.selectCredentials({
-      title: 'Create Public Link (Beta)',
+      title: 'Create Public Link',
       instructionText: 'Select which credential you want to create a public link to.',
       singleSelect: true,
     });
@@ -202,7 +202,7 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
           }
         />
         <Text style={styles.paragraph}>
-            Allows publicly sharing one credential at a time. (Beta)
+            Allows publicly sharing one credential at a time.
         </Text>
         <Button
           title="Send a credential"
