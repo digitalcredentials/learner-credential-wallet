@@ -43,7 +43,6 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
       ),
     });
     if (!confirmedShare) return goToShareHome();
-
     const rawCredentialRecords = await NavigationUtil.selectCredentials({
       title: 'Share Credentials',
       instructionText: `Select the credential(s) you want to share with ${issuerName}.`,
