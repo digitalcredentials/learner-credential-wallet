@@ -36,8 +36,8 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
   const screenTitle = {
-    [PublicLinkScreenMode.Default]: 'Public Link (Beta)',
-    [PublicLinkScreenMode.ShareCredential]: 'Share Credential (Beta)',
+    [PublicLinkScreenMode.Default]: 'Public Link',
+    [PublicLinkScreenMode.ShareCredential]: 'Share Credential',
   }[screenMode];
 
   function displayLoadingModal() {
