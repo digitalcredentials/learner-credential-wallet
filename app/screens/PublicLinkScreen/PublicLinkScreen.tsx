@@ -55,6 +55,10 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   const handleShareAsPdf = async() => {
     // templateURL = svg template from id of renderMethod in Credential
+    // short-circuit exit if no render method
+    if(!credential['renderMethod']) {
+       return;
+    }
     const templateURL = credential.renderMethod?.[0].id; // might want to sort if there are more than one renderMethod
     let source = '';
     if (templateURL) {
