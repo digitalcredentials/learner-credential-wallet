@@ -18,6 +18,9 @@ import { useDynamicStyles, useShareCredentials, useVerifyCredential } from '../.
 import { clearGlobalModal, displayGlobalModal } from '../../lib/globalModal';
 import { navigationRef } from '../../navigation';
 
+import { convertSVGtoPDF } from '../../lib/svgToPdf';
+import { PDF } from '../../types/pdf';
+
 export enum PublicLinkScreenMode {
   Default,
   ShareCredential
@@ -32,19 +35,28 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const { name } = credential;
   const [publicLink, setPublicLink] = useState<string | null>(null);
   const [justCreated, setJustCreated] = useState(false);
-  const isVerified = useVerifyCredential(rawCredentialRecord)?.result.verified;
+  const [pdf, setPdf] = useState<PDF | null>(null);
+  const [showExportToPdfButton, setShowExportToPdfButton] = useState(false);
 
+  const isVerified = useVerifyCredential(rawCredentialRecord)?.result.verified;
   const inputRef = useRef<RNTextInput | null>(null);
   const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
   const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
-  const [showExportToPdfButton, setShowExportToPdfButton] = useState(false);
   useEffect(() => {
-    // check if there is a render method
-    if (credential.renderMethod) {
-      // fetch the url if there is and see if it is readable
-      
-    }
+    const fetchData = async () => {
+      const raw_pdf = await convertSVGtoPDF(credential);
+      setPdf(raw_pdf);
+      console.log('---------');
+      console.log(raw_pdf);
+      console.log(typeof(raw_pdf));
+      console.log('---------');
+      if (raw_pdf !== null) {
+        setShowExportToPdfButton(true);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const screenTitle = {
@@ -60,39 +72,8 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       body: <LoadingIndicatorDots />
     });
   }
-
-
+  
   const handleShareAsPdf = async() => {
-    // templateURL = svg template from id of renderMethod in Credential
-    // short-circuit exit if no render method
-    if(!credential['renderMethod']) {
-      return;
-    }
-    const templateURL = credential.renderMethod?.[0].id; // might want to sort if there are more than one renderMethod
-    let source = '';
-    if (templateURL) {
-      try {
-        const response = await fetch(templateURL);
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-        source = await response.text();
-      } catch (e) {
-        console.log('Error fetching template:', e);
-      }
-    }
-
-    const template = Handlebars.compile(source);
-
-    const data = {'credential': credential };
-    const svg = template(data);
-
-    const options = {
-      html: svg,
-      fileName: `${name} Credential`,
-      base64: false,
-    };
-    const pdf = await RNHTMLtoPDF.convert(options);
     Share.open({url: `file://${pdf.filePath}`});
   };
 
@@ -413,7 +394,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             )
             }
             <View style={styles.otherOptionsContainer}>
-              {credential.renderMethod && <Button
+              {showExportToPdfButton && <Button
                 title="Export To PDF"
                 buttonStyle={mixins.buttonIcon}
                 containerStyle={mixins.buttonIconContainer}
