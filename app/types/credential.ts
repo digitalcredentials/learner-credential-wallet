@@ -86,7 +86,7 @@ export type RenderMethod = {
   id?: string;
   type: string;
   name?: string;
-  css3MediaQuery: string;
+  css3MediaQuery?: string;
 }
 
 // https://digitalcredentials.github.io/dcc/v1/dcc-context-v1.json
