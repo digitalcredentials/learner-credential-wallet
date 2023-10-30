@@ -62,14 +62,16 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     const templateURL = credential.renderMethod?.[0].id; // might want to sort if there are more than one renderMethod
     let source = '';
     if (templateURL) {
-      await fetch(templateURL)
-        .then(response => {
-          return response.text();
-        }).then(data => {
-          source = data;
-        }).catch(error => {
-          console.error('An error occurred fetching the SVG Template:', error);
-        });
+      let source;
+      try {
+        const response = await fetch(templateURL);
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+        source = await response.json();
+      } catch (e) {
+        console.log('Error fetching template:', e);
+      }
     }
 
     const template = Handlebars.compile(source);
