@@ -83,9 +83,9 @@ export type Proof = {
 }
 
 export type RenderMethod = {
-  id: string;
+  id?: string;
   type: string;
-  name: string;
+  name?: string;
   css3MediaQuery: string;
 }
 
