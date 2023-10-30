@@ -38,6 +38,15 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
   const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
+  const [showExportToPdfButton, setShowExportToPdfButton] = useState(false);
+  useEffect(() => {
+    // check if there is a render method
+    if (credential.renderMethod) {
+      // fetch the url if there is and see if it is readable
+      
+    }
+  }, []);
+
   const screenTitle = {
     [PublicLinkScreenMode.Default]: 'Public Link',
     [PublicLinkScreenMode.ShareCredential]: 'Share Credential',
@@ -57,40 +66,30 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     // templateURL = svg template from id of renderMethod in Credential
     // short-circuit exit if no render method
     if(!credential['renderMethod']) {
-       return;
+      return;
     }
     const templateURL = credential.renderMethod?.[0].id; // might want to sort if there are more than one renderMethod
     let source = '';
     if (templateURL) {
-      let source;
       try {
         const response = await fetch(templateURL);
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
-        source = await response.json();
+        source = await response.text();
       } catch (e) {
         console.log('Error fetching template:', e);
       }
     }
 
     const template = Handlebars.compile(source);
-    let achievement = credential.credentialSubject.hasCredential ??
-    credential.credentialSubject.achievement;
-    if (Array.isArray(achievement)) {
-      achievement = achievement[0];
-    }
-    const credentialName = achievement?.name ?? 'Unknown Credential';
-    const data = { 
-      'credentialSubject': { 'name': credentialName },
-      'credential': { 'name': credential.name },
-      'issuanceDate': credential.issuanceDate
-    };
+
+    const data = {'credential': credential };
     const svg = template(data);
 
     const options = {
       html: svg,
-      fileName: `${credential.name} Credential`,
+      fileName: `${name} Credential`,
       base64: false,
     };
     const pdf = await RNHTMLtoPDF.convert(options);
