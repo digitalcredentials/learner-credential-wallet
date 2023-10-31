@@ -62,7 +62,8 @@
 
             <data
                 android:scheme="http"
-                android:host="lcw.app" />
+                android:host="lcw.app"
+                android:pathPrefix="/mobile" />
       </intent-filter>
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>

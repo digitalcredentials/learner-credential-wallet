@@ -11,7 +11,7 @@ import { onShareIntent } from './shareIntent';
  * specific to the scheme `dccrequest` and path `request`. If new paths are
  * added here, they must also be added to `android/app/src/main/AndroidManifest.xml`.
  */
-const DEEP_LINK_SCHEMES = ['dccrequest://', 'org.dcconsortium://'];
+const DEEP_LINK_SCHEMES = ['https://lcw.app/mobile', 'dccrequest://', 'org.dcconsortium://'];
 const DEEP_LINK_PATHS: DeepLinkPaths = {
   request: (credentialRequestParams) => deepLinkNavigate('ProfileSelectionScreen', { 
     onSelectProfile: (rawProfileRecord) => navigationRef.navigate('AcceptCredentialsNavigation', {
