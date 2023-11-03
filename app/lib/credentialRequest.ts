@@ -1,5 +1,6 @@
 import { authorize } from 'react-native-app-auth';
 
+import { ChapiCredentialRequest, ChapiCredentialRequestParams } from '../types/chapi';
 import { Credential } from '../types/credential';
 import { DidRecordRaw } from '../model';
 
@@ -18,6 +19,38 @@ export type CredentialRequestParams = {
 export function isCredentialRequestParams(params?: Record<string, unknown>): params is CredentialRequestParams {
   const { issuer, vc_request_url } = (params || {} as CredentialRequestParams);
   return issuer !== undefined && vc_request_url !== undefined;
+}
+
+export function getChapiCredentialRequest(params: Record<string, unknown>): ChapiCredentialRequest {
+  const { request: requestString } = (params as ChapiCredentialRequestParams);
+  if (!requestString) {
+    throw new Error('[getChapiCredentialRequest] The credential request was malformed.');
+  }
+  return JSON.parse(requestString);
+}
+
+export function isChapiCredentialRequestParams(params: Record<string, unknown>): params is ChapiCredentialRequestParams {
+  const request = getChapiCredentialRequest(params);
+  return isChapiCredentialRequest(request);
+}
+
+export function isChapiCredentialRequest(request: any): request is ChapiCredentialRequest {
+  const { credentialRequestOrigin, protocols } = (request || {} as ChapiCredentialRequest);
+
+  const hasChapiCredentialRequestFields = credentialRequestOrigin !== undefined && protocols !== undefined;
+  if (!hasChapiCredentialRequestFields) {
+    return false;
+  }
+
+  const hasChapiCredentialRequestProtocolFields = [
+    'OID4VCI',
+    'OID4VP',
+    'vcapi'
+  ].some((field: string) => {
+    return !!protocols[field];
+  });
+
+  return hasChapiCredentialRequestProtocolFields;
 }
 
 export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential[]> {

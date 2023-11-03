@@ -3,6 +3,7 @@ import { Linking } from 'react-native';
 import qs from 'query-string';
 
 import { navigationRef, RootNavigationParamsList } from '../navigation';
+import { credentialRequestFromChapiUrl } from './decode';
 import { encodeQueryParams } from './encode';
 import { onShareIntent } from './shareIntent';
 
@@ -59,11 +60,22 @@ function transformDeepLink(url: string): string {
   return encodeQueryParams(url);
 }
 
+const redirectRequestRoute = (url: string) => {
+  const request = credentialRequestFromChapiUrl(url);
+  navigationRef.navigate('ExchangeCredentialsNavigation', {
+    screen: 'ExchangeCredentials',
+    params: { request }
+  });
+};
+
 function deepLinkConfigFor({ schemes, paths, onDeepLink }: DeepLinkConfigOptions): LinkingOptions<RootNavigationParamsList> {
   return {
     prefixes: schemes,
     subscribe: (listener: (url: string) => void) => {
       const onReceiveURL = ({ url }: { url: string }) => {
+        if (url.includes('request=')) {
+          redirectRequestRoute(url);
+        }
         onDeepLink?.(url);
         return listener(transformDeepLink(url));
       };
@@ -76,7 +88,7 @@ function deepLinkConfigFor({ schemes, paths, onDeepLink }: DeepLinkConfigOptions
       if (url !== null) {
         await new Promise((res) => setTimeout(res, 100));
         onDeepLink?.(url);
-        return transformDeepLink(url);  
+        return transformDeepLink(url);
       }
     },
     getStateFromPath: (path) => {

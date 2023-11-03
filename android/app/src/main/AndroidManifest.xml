@@ -31,6 +31,15 @@
           android:scheme="dccrequest"
           android:host="present"/>
       </intent-filter>
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data
+            android:scheme="https"
+            android:host="lcw.app"
+            android:pathPrefix="/mobile" />
+      </intent-filter>
       <!--TODO: Add this filter, if you want to support sharing text into your app-->
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
@@ -45,7 +54,8 @@
       </intent-filter>
     </activity>
     <activity android:name="net.openid.appauth.RedirectUriReceiverActivity"
-    tools:node="replace" android:exported="true">
+              tools:node="replace"
+              android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
@@ -53,17 +63,6 @@
         <data
           android:scheme="dccrequest"
           android:host="oauth" />
-      </intent-filter>
-      <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-
-            <data
-                android:scheme="http"
-                android:host="lcw.app"
-                android:pathPrefix="/mobile" />
       </intent-filter>
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>

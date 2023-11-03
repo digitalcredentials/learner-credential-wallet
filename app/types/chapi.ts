@@ -22,3 +22,16 @@ export type ChapiDidAuthRequest = {
     };
   };
 }
+
+export type ChapiCredentialRequestParams = {
+  request: string;
+}
+
+export type ChapiCredentialRequest = {
+  readonly credentialRequestOrigin: string;
+  readonly protocols: {
+    readonly OID4VCI?: string;
+    readonly OID4VP?: string;
+    readonly vcapi?: string;
+  };
+}
