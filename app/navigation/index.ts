@@ -8,6 +8,7 @@ export { default as HomeNavigation } from './HomeNavigation/HomeNavigation';
 export { default as SettingsNavigation } from './SettingsNavigation/SettingsNavigation';
 export { default as SetupNavigation } from './SetupNavigation/SetupNavigation';
 export { default as ShareNavigation } from './ShareNavigation/ShareNavigation';
+export { default as ExchangeCredentialsNavigation } from './ExchangeCredentialsNavigation/ExchangeCredentialsNavigation';
 
 // Type Definitions
 export * from './RootNavigation/RootNavigation.d';
@@ -18,6 +19,7 @@ export * from './AddNavigation/AddNavigation.d';
 export * from './AcceptCredentialsNavigation/AcceptCredentialsNavigation.d';
 export * from './CredentialNavigation/CredentialNavigation.d';
 export * from './ShareNavigation/ShareNavigation.d';
+export * from './ExchangeCredentialsNavigation/ExchangeCredentialsNavigation.d';
 
 export { navigationRef } from './AppNavigation/AppNavigation';
 

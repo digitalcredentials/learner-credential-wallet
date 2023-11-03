@@ -2,7 +2,7 @@ import { ProfileRecordRaw } from '../model';
 import { makeSelectDidFromProfile, selectWithFactory } from '../store/selectorFactories';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { Ed25519VerificationKey2020 } from '@digitalcredentials/ed25519-verification-key-2020';
-import { constructExchangeRequest, handleVcApiExchange } from './exchanges';
+import { constructExchangeRequest, handleVcApiExchangeSimple } from './exchanges';
 import store from '../store';
 import { stageCredentials } from '../store/slices/credentialFoyer';
 import { Credential } from '../types/credential';
@@ -40,7 +40,7 @@ export async function performDidAuthRequest(params: DidAuthRequestParams, rawPro
     suite
   });
 
-  const { verifiablePresentation } = await handleVcApiExchange({ url, request });
+  const { verifiablePresentation } = await handleVcApiExchangeSimple({ url, request });
   const credentials = extractCredentialsFrom(verifiablePresentation);
 
   if (credentials) {

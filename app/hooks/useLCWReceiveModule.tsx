@@ -6,8 +6,7 @@ import { clearGlobalModal, displayGlobalModal } from '../lib/globalModal';
 import { NavigationUtil } from '../lib/navigationUtil';
 import { navigationRef } from '../navigation';
 import { stageCredentials } from '../store/slices/credentialFoyer';
-import { useAppDispatch } from './useAppDispatch';
-import { useDynamicStyles } from './useDynamicStyles';
+import { useAppDispatch, useDynamicStyles } from '.';
 
 type LCWReceiveModule = NativeModule & {
   getConstants: () => LCWReceiveModuleConstants;
@@ -69,7 +68,7 @@ export function useLCWReceiveModule(): void {
       navigationRef.navigate('AcceptCredentialsNavigation', { 
         screen: 'ApproveCredentialsScreen',
         params: {
-          rawProfileRecord,
+          rawProfileRecord
         }
       });
     }
@@ -85,10 +84,10 @@ export function useLCWReceiveModule(): void {
       const rawProfileRecord = await NavigationUtil.selectProfile();
       await performDidAuthRequest(didAuthRequest, rawProfileRecord);
 
-      navigationRef.navigate('AcceptCredentialsNavigation',{
+      navigationRef.navigate('AcceptCredentialsNavigation', {
         screen: 'ApproveCredentialsScreen',
         params: {  
-          rawProfileRecord,
+          rawProfileRecord
         }
       });
     }

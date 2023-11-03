@@ -2,7 +2,7 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { CredentialRecordRaw } from '../../model/credential';
 import type { VerifyPayload } from '../../hooks';
-import type { HomeNavigationParamList, AcceptCredentialsNavigationParamList } from '../';
+import type { HomeNavigationParamList, AcceptCredentialsNavigationParamList, ExchangeCredentialsNavigationParamList } from '..';
 import { Credential } from '../../types/credential';
 import { ProfileRecordRaw } from '../../model';
 import { CredentialSelectionScreenParams, ProfileSelectionScreenParams, QRScreenParams, ViewSourceScreenParams } from '../../screens';
@@ -19,6 +19,7 @@ export type RootNavigationParamsList = {
     verifyPayload: VerifyPayload;
   };
   AcceptCredentialsNavigation: NavigatorScreenParams<AcceptCredentialsNavigationParamList>;
+  ExchangeCredentialsNavigation: NavigatorScreenParams<ExchangeCredentialsNavigationParamList>;
   ProfileSelectionScreen: ProfileSelectionScreenParams;
   CredentialSelectionScreen: CredentialSelectionScreenParams;
   ViewSourceScreen: ViewSourceScreenParams;

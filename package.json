@@ -50,6 +50,7 @@
     "expo-updates": "0.8.5",
     "html-entities": "^2.3.2",
     "json-canonicalize": "^1.0.4",
+    "jsonpath-plus": "^7.2.0",
     "moment": "^2.29.1",
     "patch-package": "^6.4.7",
     "process": "^0.11.10",
@@ -102,7 +103,8 @@
     "rn-nodeify": "git+https://git@github.com/tradle/rn-nodeify.git",
     "stream-browserify": "^1.0.0",
     "text-encoding": "^0.7.0",
-    "util": "^0.10.4"
+    "util": "^0.10.4",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
