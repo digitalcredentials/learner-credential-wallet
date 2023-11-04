@@ -69,7 +69,6 @@ export default function ExchangeCredentials({ route }: ExchangeCredentialsProps)
     } else {
       displayGlobalModal(dataLoadingSuccessModalState);
       navigationRef.goBack();
-      navigationRef.goBack();
     }
   };
 
