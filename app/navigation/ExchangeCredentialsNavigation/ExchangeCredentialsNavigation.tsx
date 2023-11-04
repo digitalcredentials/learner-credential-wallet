@@ -5,12 +5,10 @@ import { ExchangeCredentialsNavigationParamList } from '..';
 
 const Stack = createStackNavigator<ExchangeCredentialsNavigationParamList>();
 
-function ExchangeCredentialsNavigation() {
+export default function ExchangeCredentialsNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="ExchangeCredentials" component={ExchangeCredentials} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
-
-export default ExchangeCredentialsNavigation;

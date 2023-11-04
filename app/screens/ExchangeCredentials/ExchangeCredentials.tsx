@@ -2,17 +2,19 @@ import React from 'react';
 import { Text } from 'react-native-elements';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { Ed25519VerificationKey2020 } from '@digitalcredentials/ed25519-verification-key-2020';
-import { ConfirmModal, LoadingIndicatorDots } from '../../components';
+import { ConfirmModal } from '../../components';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { navigationRef } from '../../navigation';
 import { makeSelectDidFromProfile, selectWithFactory } from '../../store/selectorFactories';
 import { stageCredentials } from '../../store/slices/credentialFoyer';
 import { handleVcApiExchangeComplete } from '../../lib/exchanges';
 import { clearGlobalModal, displayGlobalModal } from '../../lib/globalModal';
+import GlobalModalBody from '../../lib/globalModalBody';
 import { NavigationUtil } from '../../lib/navigationUtil';
+import { delay } from '../../lib/time';
 import { ExchangeCredentialsProps } from './ExchangeCredentials.d';
 
-export default function ExchangeCredentials({ route }: ExchangeCredentialsProps) {
+export default function ExchangeCredentials({ route }: ExchangeCredentialsProps): JSX.Element {
   const { params } = route;
   const { request } = params;
 
@@ -23,27 +25,15 @@ export default function ExchangeCredentials({ route }: ExchangeCredentialsProps)
     title: 'Retrieving Credential',
     confirmButton: false,
     cancelButton: false,
-    body: (
-      <>
-        <Text style={mixins.modalBodyText}>
-          This will only take a moment.
-        </Text>
-        <LoadingIndicatorDots />
-      </>
-    )
+    body: <GlobalModalBody message='This will only take a moment.' loading={true} />
   };
 
   const dataLoadingSuccessModalState = {
     title: 'Success',
     confirmButton: true,
     confirmText: 'OK',
-    body: (
-      <>
-        <Text style={mixins.modalBodyText}>
-          You have successfully delivered credentials to the organization.
-        </Text>
-      </>
-    )
+    cancelButton: false,
+    body: <GlobalModalBody message='You have successfully delivered credentials to the organization.' />
   };
 
   const acceptExchange = async () => {
@@ -69,6 +59,7 @@ export default function ExchangeCredentials({ route }: ExchangeCredentialsProps)
     if (credentialAvailable && navigationRef.isReady()) {
       const credential = credentialField[0];
       await dispatch(stageCredentials([credential]));
+      await delay(500);
       navigationRef.navigate('AcceptCredentialsNavigation', { 
         screen: 'ApproveCredentialsScreen',
         params: {
