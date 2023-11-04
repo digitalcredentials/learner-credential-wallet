@@ -15,5 +15,6 @@ declare module 'jsonld-document-loader';
 declare module '@interop/did-web-resolver';
 declare module 'json-canonicalize';
 declare module 'react-native-keychain';
+declare module 'react-hooks-outside';
 declare module 'validator';
 declare module '@microsoft/msrcrypto';

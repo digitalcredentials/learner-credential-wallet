@@ -3,6 +3,7 @@ import { Linking } from 'react-native';
 import qs from 'query-string';
 
 import { navigationRef, RootNavigationParamsList } from '../navigation';
+import { ChapiCredentialRequest } from '../types/chapi';
 import { credentialRequestFromChapiUrl } from './decode';
 import { encodeQueryParams } from './encode';
 import { onShareIntent } from './shareIntent';
@@ -34,7 +35,6 @@ const DEEP_LINK_PATHS: DeepLinkPaths = {
   })
 };
 
-
 function checkForSharingIntent(url: string): void {
   if (url.includes('ReceiveSharingIntent')) {
     onShareIntent();
@@ -46,13 +46,6 @@ export const deepLinkConfig = deepLinkConfigFor({
   paths: DEEP_LINK_PATHS,
   onDeepLink: checkForSharingIntent,
 });
-
-
-
-
-
-
-
 
 /* =========== Start Deep Link Boilerplate ================ */
 
@@ -95,6 +88,14 @@ function deepLinkConfigFor({ schemes, paths, onDeepLink }: DeepLinkConfigOptions
       const { url, query } = qs.parseUrl(path);
       if (url.includes('ReceiveSharingIntent')) {
         return getStateFromPath(path);
+      } else if ('request' in query) {
+        const { request: requestString } = query;
+        const request = JSON.parse(requestString as string);
+        const stateForExchangeCredentials = (request: ChapiCredentialRequest) => deepLinkNavigate('ExchangeCredentialsNavigation', {
+          screen: 'ExchangeCredentials',
+          params: { request }
+        });
+        return stateForExchangeCredentials(request);
       }
       const state = paths[url](query);
 
@@ -111,7 +112,6 @@ type DeepLinkConfigOptions = {
   paths: DeepLinkPaths;
   onDeepLink?: (url: string) => void;
 }
-
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const deepLinkNavigate: typeof navigationRef.navigate = (...args: any[]): ResultState => {  

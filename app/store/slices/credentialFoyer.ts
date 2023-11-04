@@ -2,7 +2,7 @@ import uuid from 'react-native-uuid';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import {canonicalize as jcsCanonicalize} from 'json-canonicalize';
 
-import { CredentialRecord } from '../../model';
+import { CredentialRecord, CredentialRecordRaw } from '../../model';
 import type { Credential } from '../../types/credential';
 import { RootState } from '..';
 import { addCredential } from './credential';
@@ -43,6 +43,7 @@ export class PendingCredential {
 
 export type CredentialFoyerState = {
   pendingCredentials: PendingCredential[];
+  selectedExchangeCredentials: CredentialRecordRaw[];
 };
 
 type AcceptPendingCredentialsParams = {
@@ -52,6 +53,7 @@ type AcceptPendingCredentialsParams = {
 
 const initialState: CredentialFoyerState = {
   pendingCredentials: [],
+  selectedExchangeCredentials: []
 };
 
 function comparableStringFor(credential: Credential): string {
@@ -112,6 +114,7 @@ const credentialFoyer = createSlice({
   reducers: {
     clearFoyer(state = initialState) {
       state.pendingCredentials = initialState.pendingCredentials;
+      state.selectedExchangeCredentials = initialState.selectedExchangeCredentials;
     },
     setCredentialApproval(state = initialState, action: PayloadAction<PendingCredential>) {
       const isSubject = ({ id: given }: PendingCredential) => given === action.payload.id;
@@ -135,6 +138,12 @@ const credentialFoyer = createSlice({
         ),
       };
     },
+    selectExchangeCredentials: (state: CredentialFoyerState, action: PayloadAction<CredentialRecordRaw[]>) => {
+      state.selectedExchangeCredentials = action.payload;
+    },
+    clearSelectedExchangeCredentials: (state: CredentialFoyerState) => {
+      state.selectedExchangeCredentials = [];
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(stageCredentials.fulfilled, (state, action) => ({
@@ -149,7 +158,8 @@ const credentialFoyer = createSlice({
 });
 
 export default credentialFoyer.reducer;
-export const { clearFoyer, setCredentialApproval } = credentialFoyer.actions;
+export const { clearFoyer, setCredentialApproval, selectExchangeCredentials, clearSelectedExchangeCredentials } = credentialFoyer.actions;
 export { stageCredentials, acceptPendingCredentials };
 
 export const selectPendingCredentials = (state: RootState): PendingCredential[] => (state.credentialFoyer || initialState).pendingCredentials;
+export const selectSelectedExchangeCredentials = (state: RootState): CredentialRecordRaw[] => (state.credentialFoyer || initialState).selectedExchangeCredentials;
