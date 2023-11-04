@@ -200,10 +200,11 @@ export const constructExchangeRequest = async ({
   if (credentials.length !== 0) {
     presentationOptions.verifiableCredential = credentials;
   }
-  let presentation = vc.createPresentation({ holder });
+  const presentation = vc.createPresentation(presentationOptions);
+  let finalPresentation = presentation;
   if (signed) {
     const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
-    presentation = await vc.signPresentation({
+    finalPresentation = await vc.signPresentation({
       presentation,
       challenge,
       domain,
@@ -211,7 +212,7 @@ export const constructExchangeRequest = async ({
       documentLoader
     });
   }
-  return { verifiablePresentation: presentation };
+  return { verifiablePresentation: finalPresentation };
 };
 
 // Determine if any additional VC-API exchange interactions are required
