@@ -23,6 +23,6 @@ export default function GlobalModalBody({
   );
 }
 
-export const getGlobalModalBody = (message: string, loading?: boolean) => {
+export const getGlobalModalBody = (message: string, loading?: boolean): JSX.Element => {
   return <GlobalModalBody message={message} loading={loading} />;
 };
