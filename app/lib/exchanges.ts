@@ -40,7 +40,7 @@ const interactExchange = async (url: string, request={}): Promise<any> => {
 
 // Extend JSON path of credential by a literal value
 const extendPath = (path: string, extension: string): string => {
-  const jsonPathResCharsRegex = /[$@*()\[\].:?]/g;
+  const jsonPathResCharsRegex = /[$@*()[\].:?]/g;
   if (jsonPathResCharsRegex.test(extension)) {
     // In order to escape reserved characters in a JSONPath in jsonpath-plus,
     // you must prefix each occurrence thereof with a tick symbol (`)
@@ -52,7 +52,7 @@ const extendPath = (path: string, extension: string): string => {
 // Check if credential record matches QueryByExample VPR
 const credentialMatchesVprExampleQuery = async (vprExample: any, credentialRecord: CredentialRecordRaw, credentialRecordPath='$.credential'): Promise<boolean> => {
   const credentialRecordMatches = [];
-  for (let [vprExampleKey, vprExampleValue] of Object.entries(vprExample)) {
+  for (const [vprExampleKey, vprExampleValue] of Object.entries(vprExample)) {
     const newCredentialRecordPath = extendPath(credentialRecordPath, vprExampleKey);
     // The result is always dumped into a single-element array
     const [credentialRecordScope] = JSONPath({ path: newCredentialRecordPath, json: credentialRecord });
@@ -87,23 +87,24 @@ const queryCredentialRecordsByType = async (query: any): Promise<CredentialRecor
   const credentialRecords = await CredentialRecord.getAllCredentialRecords();
   let matchedCredentialRecords: CredentialRecordRaw[];
   switch (query.type) {
-    case QueryType.Example:
-      const example = query.credentialQuery?.example;
-      if (!example) {
-        // This is an error with the exchanger, as the request is malformed
-        return [];
-      }
-      const credentialRecordMatches = await Promise.all(credentialRecords.map((c: CredentialRecordRaw) => credentialMatchesVprExampleQuery(example, c)));
-      matchedCredentialRecords = credentialRecords.filter((c: CredentialRecordRaw, i: number) => credentialRecordMatches[i]);
-      break;
-    case QueryType.Frame:
-    case QueryType.DidAuth:
-    case QueryType.DidAuthLegacy:
-      matchedCredentialRecords = [];
-      break;
-    default:
-      matchedCredentialRecords = [];
-      break;
+  case QueryType.Example: {
+    const example = query.credentialQuery?.example;
+    if (!example) {
+      // This is an error with the exchanger, as the request is malformed
+      return [];
+    }
+    const credentialRecordMatches = await Promise.all(credentialRecords.map((c: CredentialRecordRaw) => credentialMatchesVprExampleQuery(example, c)));
+    matchedCredentialRecords = credentialRecords.filter((c: CredentialRecordRaw, i: number) => credentialRecordMatches[i]);
+    break;
+  }
+  case QueryType.Frame:
+  case QueryType.DidAuth:
+  case QueryType.DidAuthLegacy:
+    matchedCredentialRecords = [];
+    break;
+  default:
+    matchedCredentialRecords = [];
+    break;
   }
   return matchedCredentialRecords;
 };
@@ -113,6 +114,7 @@ const selectCredentials = async (credentialRecords: CredentialRecordRaw[]): Prom
   // ensure that the selected credentials have been cleared
   // before subscribing to redux store updates below
   store.dispatch(clearSelectedExchangeCredentials());
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const selectedExchangeCredentials: CredentialRecordRaw[] = getHook('selectedExchangeCredentials');
     if (selectedExchangeCredentials.length === 0) {
@@ -278,17 +280,18 @@ export const handleVcApiExchangeComplete = async ({
   if (!Array.isArray(queries)) {
     queries = [query];
   }
-  for (let query of queries) {
+  for (const query of queries) {
     switch (query.type) {
-      case QueryType.DidAuthLegacy:
-      case QueryType.DidAuth:
-        signed = true;
-        break;
-      default:
-        const filteredCredentialRecordsGroup: CredentialRecordRaw[] = await queryCredentialRecordsByType(query);
-        filteredCredentialRecords = filteredCredentialRecords.concat(filteredCredentialRecordsGroup);
-        const filteredCredentials = filteredCredentialRecords.map((r) => r.credential);
-        credentials = credentials.concat(filteredCredentials);
+    case QueryType.DidAuthLegacy:
+    case QueryType.DidAuth:
+      signed = true;
+      break;
+    default: {
+      const filteredCredentialRecordsGroup: CredentialRecordRaw[] = await queryCredentialRecordsByType(query);
+      filteredCredentialRecords = filteredCredentialRecords.concat(filteredCredentialRecordsGroup);
+      const filteredCredentials = filteredCredentialRecords.map((r) => r.credential);
+      credentials = credentials.concat(filteredCredentials);
+    }
     }
   }
 
