@@ -289,6 +289,8 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.9.0):
     - React-Core
+  - react-native-html-to-pdf (0.12.0):
+    - React-Core
   - react-native-netinfo (9.5.0):
     - React-Core
   - react-native-randombytes (3.6.1):
@@ -367,7 +369,7 @@ PODS:
   - RealmJS (10.24.0):
     - GCDWebServer
     - React
-  - RNCAsyncStorage (1.19.4):
+  - RNCAsyncStorage (1.19.5):
     - React-Core
   - RNCClipboard (1.12.1):
     - React-Core
@@ -449,6 +451,7 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - react-native-html-to-pdf (from `../node_modules/react-native-html-to-pdf`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-receive-sharing-intent (from `../node_modules/react-native-receive-sharing-intent`)
@@ -570,6 +573,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-document-picker"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-html-to-pdf:
+    :path: "../node_modules/react-native-html-to-pdf"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-randombytes:
@@ -689,6 +694,7 @@ SPEC CHECKSUMS:
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-document-picker: b95a0f0a22fd37d56cea697f84bc3893b2141d15
   react-native-get-random-values: dee677497c6a740b71e5612e8dbd83e7539ed5bb
+  react-native-html-to-pdf: 4c5c6e26819fe202971061594058877aa9b25265
   react-native-netinfo: 48c5f79a84fbc3ba1d28a8b0d04adeda72885fa8
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-receive-sharing-intent: 62ab28c50e6ae56d32b9e841d7452091312a0bc7
@@ -707,7 +713,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 18932e685b4893be88d1efc18f5f8ca1c9cd39d8
   ReactCommon: 29bb6fad3242e30e9d049bc9d592736fa3da9e50
   RealmJS: 2e45ca6ed4c3732be369219b41816e890ce51024
-  RNCAsyncStorage: 3a8f7145d17cdd9f88e7b77666c94a09e4f759c8
+  RNCAsyncStorage: f2974eca860c16a3e56eea5771fda8d12e2d2057
   RNCClipboard: d77213bfa269013bf4b857b7a9ca37ee062d8ef1
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
@@ -728,6 +734,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: 0bc4b37c3b8a345336ff601e2cf7d9704bab7e93
 
-PODFILE CHECKSUM: c8a68f98ebfaf47ad9eae004b6a091859243eac1
+PODFILE CHECKSUM: fdd666d8cc882e6bdde657edd92cb85cf1799cb1
 
 COCOAPODS: 1.12.1
