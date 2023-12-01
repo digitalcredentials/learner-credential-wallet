@@ -5,8 +5,6 @@ import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
 import Clipboard from '@react-native-clipboard/clipboard';
 import OutsidePressHandler from 'react-native-outside-press';
-import Handlebars from 'handlebars';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
