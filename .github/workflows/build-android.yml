@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js v16
+    - name: Use Node.js v18
       uses: actions/setup-node@v1
       with:
         node-version: 18.x
