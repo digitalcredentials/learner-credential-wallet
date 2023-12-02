@@ -34,6 +34,8 @@ universities to [pilot test](https://lcw.app/pilot.html) the wallet.
 
 ### Dependencies
 
+**If you encouter any issues, visit the [Troubleshooting Page](https://github.com/digitalcredentials/learner-credential-wallet/wiki/Troubleshooting)**
+
 Prerequisite peer dependencies:
 * [Node.js](https://nodejs.org/en/)
 * [Cocoapods](https://cocoapods.org/)
@@ -41,9 +43,15 @@ Prerequisite peer dependencies:
 * [Android Studio](https://developer.android.com/studio)
 
 Optionally, if you use the `asdf` version manager run `asdf install` to install 
-the correct version of Node. Clone down this repository, run `npm i` to install 
-the React Native dependencies and also `npx pod-install` to install iOS 
-Cocoapods. You can start the project with `npm run ios` or `npm run android`.
+the correct version of Node. Clone down this repository, run `npm i --legacy-peer-deps` to install 
+the React Native dependencies and also `npx pod-install` (in the `ios/` directory) to install iOS Cocoapods. 
+
+You can start up the project by doing the following:
+* Run `yarn start` first
+* In another terminal window run `yarn android` 
+  * see the troubleshooting page for more information
+* In another terminal window run `yarn ios [args]` where `[args]` depends on where you want to run the device 
+  * see the troubleshooting page for more information
 
 This project was started with Expo, but had to be ejected because some libraries 
 did not support it. Do not develop using Expo, even if it might still launch. 
