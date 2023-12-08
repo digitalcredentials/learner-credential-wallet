@@ -62,6 +62,10 @@ export async function verifyCredential(credential: Credential): Promise<VerifyRe
   const { issuer } = credential;
   const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
 
+  if (credential?.proof?.type === 'DataIntegrityProof') {
+    throw new Error(`Proof type not supported: DataIntegrityProof (cryptosuite: ${credential.proof.cryptosuite}).`)
+  }
+
   const isInRegistry = await registryCollections.issuerDid.isInRegistryCollection(issuerDid);
   if (!isInRegistry) {
     throw new Error(CredentialError.DidNotInRegistry);

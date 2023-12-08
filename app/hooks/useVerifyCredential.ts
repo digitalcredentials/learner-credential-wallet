@@ -63,7 +63,7 @@ export async function verificationResultFor(rawCredentialRecord: CredentialRecor
   if (!forceFresh) {
     const cachedResult = await lruCache.memoize({
       key: cachedRecordId,
-      fn: () => { return verifyCredential(rawCredentialRecord.credential); }
+      fn: async () => { return verifyCredential(rawCredentialRecord.credential); }
     }) as VerificationResult;
     return cachedResult;
   }
