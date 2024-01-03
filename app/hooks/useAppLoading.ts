@@ -1,22 +1,24 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+ import { useSelector } from 'react-redux';
 import {
-  useFonts,
   Rubik_400Regular,
   Rubik_500Medium,
   Rubik_700Bold,
+  useFonts
 } from '@expo-google-fonts/rubik';
 import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono';
-import { loadRegistryCollections } from '@digitalcredentials/issuer-registry-client';
-import { FileLogger, LogLevel, logLevelNames } from 'react-native-file-logger';
+import {
+  loadRegistryCollections
+} from '@digitalcredentials/issuer-registry-client';
 
 import {
-  pollWalletState,
   lock,
+  pollWalletState,
   selectWalletState,
 } from '../store/slices/wallet';
 import { getAllRecords } from '../store';
 import { useAppDispatch } from './useAppDispatch';
+import { initializeLogger } from '../init/logger';
 
 export function useAppLoading(): boolean {
   const [loading, setLoading] = useState(true);
@@ -28,14 +30,14 @@ export function useAppLoading(): boolean {
 
   const primaryTasksFinished = useMemo(() => primaryTasks.every(t => t), primaryTasks);
 
-  useEffect(() => { 
+  useEffect(() => {
     if (primaryTasksFinished) runSecondaryTasks();
   }, [primaryTasksFinished]);
 
   async function runSecondaryTasks() {
     await Promise.all([
-      loadRegistryCollections(),
       initializeLogger(),
+      loadRegistryCollections()
     ]);
 
     setLoading(false);
@@ -66,7 +68,7 @@ function useWalletStateInitialized() {
       dispatch(pollWalletState());
     } else {
       /**
-       * SecureStore items aren't removed when the app is deleted, so if the 
+       * SecureStore items aren't removed when the app is deleted, so if the
        * database status is unlocked but not initialized, we need to update the
        * status to locked.
        */
@@ -79,13 +81,4 @@ function useWalletStateInitialized() {
   }, [walletStateInitialized]);
 
   return walletStateInitialized;
-}
-
-async function initializeLogger() {
-  function formatter(level: LogLevel, msg: string) {
-    const levelName = logLevelNames[level];
-    return `> ${new Date().toISOString()} [${levelName}] ${msg}`;
-  }
-
-  await FileLogger.configure({ formatter, maximumNumberOfFiles: 1 });
 }
