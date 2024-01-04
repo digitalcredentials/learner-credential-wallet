@@ -7,15 +7,17 @@ import { ChapiCredentialRequest } from '../types/chapi';
 import { credentialRequestFromChapiUrl } from './decode';
 import { encodeQueryParams } from './encode';
 import { onShareIntent } from './shareIntent';
+import { DeepLinkConfig } from '../config';
 
 /**
  * In order to support OAuth redirects, the Android intent filter was set
  * specific to the scheme `dccrequest` and path `request`. If new paths are
  * added here, they must also be added to `android/app/src/main/AndroidManifest.xml`.
  */
-const DEEP_LINK_SCHEMES = ['https://lcw.app/mobile', 'dccrequest://', 'org.dcconsortium://'];
+const DEEP_LINK_SCHEMES = DeepLinkConfig.schemes.customProtocol
+  .concat(DeepLinkConfig.schemes.universalAppLink);
 const DEEP_LINK_PATHS: DeepLinkPaths = {
-  request: (credentialRequestParams) => deepLinkNavigate('ProfileSelectionScreen', { 
+  request: (credentialRequestParams) => deepLinkNavigate('ProfileSelectionScreen', {
     onSelectProfile: (rawProfileRecord) => navigationRef.navigate('AcceptCredentialsNavigation', {
       screen: 'ApproveCredentialsScreen',
       params: {
@@ -72,7 +74,7 @@ function deepLinkConfigFor({ schemes, paths, onDeepLink }: DeepLinkConfigOptions
         onDeepLink?.(url);
         return listener(transformDeepLink(url));
       };
-  
+
       const subscription = Linking.addEventListener('url', onReceiveURL);
       return () => subscription.remove();
     },
@@ -114,7 +116,7 @@ type DeepLinkConfigOptions = {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const deepLinkNavigate: typeof navigationRef.navigate = (...args: any[]): ResultState => {  
+const deepLinkNavigate: typeof navigationRef.navigate = (...args: any[]): ResultState => {
   function stateFor(screen: string, params?: Record<string, unknown>): ResultState {
     const hasParams = params !== undefined;
     const paramsAreNestedScreen = params !== undefined && 'screen' in params && 'params' in params;
