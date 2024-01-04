@@ -1,13 +1,11 @@
-import { authorize } from 'react-native-app-auth';
-
 import { ChapiCredentialRequest, ChapiCredentialRequestParams } from '../types/chapi';
 import { Credential } from '../types/credential';
 import { DidRecordRaw } from '../model';
 
 import { createVerifiablePresentation } from './present';
-import { issuerAuthRegistry } from './issuerAuth';
 import { parseResponseBody } from './parseResponse';
 import { extractCredentialsFrom, verifyVerifiableObject, VerifiableObject } from './verifiableObject';
+import { RegistryClient } from '@digitalcredentials/issuer-registry-client';
 
 export type CredentialRequestParams = {
   auth_type?: string;
@@ -53,10 +51,11 @@ export function isChapiCredentialRequest(request: any): request is ChapiCredenti
   return hasChapiCredentialRequestProtocolFields;
 }
 
-export async function requestCredential(credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw): Promise<Credential[]> {
+export async function requestCredential(
+  credentialRequestParams: CredentialRequestParams, didRecord: DidRecordRaw, registries: RegistryClient
+): Promise<Credential[]> {
   const {
     auth_type = 'code',
-    issuer,
     vc_request_url,
     challenge,
   } = credentialRequestParams;
@@ -66,26 +65,6 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   let accessToken;
 
   switch (auth_type) {
-  case 'code': {
-    if (!issuerAuthRegistry.isInRegistry(issuer)) {
-      throw new Error(`Issuer "${issuer}" not found in registry.`);
-    }
-    const oidcConfig = issuerAuthRegistry.entryFor(issuer);
-    // There needs to be a delay before authenticating or the app errors out.
-    await new Promise((res) => setTimeout(res, 1000));
-    console.log('Launching OIDC auth:', oidcConfig);
-
-    try {
-      console.log('authorize() called with:', oidcConfig);
-      ({accessToken} = await authorize(oidcConfig));
-      console.log('Received access token, requesting credential.');
-    } catch (err) {
-      console.error(err);
-      throw new Error(
-        'Unable to receive credential: Authorization with the issuer failed');
-    }
-    break;
-  }
   case 'bearer':
     // Bearer token - do nothing. The 'challenge' param will be passed in the VP
     break;
@@ -121,7 +100,7 @@ export async function requestCredential(credentialRequestParams: CredentialReque
   const responseBody = await parseResponseBody(response);
   const verifiableObject = responseBody as VerifiableObject;
 
-  const verified = await verifyVerifiableObject(verifiableObject);
+  const verified = await verifyVerifiableObject(verifiableObject, registries);
   if (!verified) {
     console.warn('Response was received, but could not be verified');
   }

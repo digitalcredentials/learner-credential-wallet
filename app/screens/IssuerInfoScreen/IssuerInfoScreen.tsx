@@ -1,29 +1,31 @@
-import React, { useMemo } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { BulletList, NavHeader } from '../../components';
 
+import { BulletList, NavHeader } from '../../components';
 import dynamicStyleSheet from './IssuerInfoScreen.styles';
 import { IssuerInfoScreenProps } from './IssuerInfoScreen.d';
 import { useDynamicStyles } from '../../hooks';
-import { registryCollections } from '@digitalcredentials/issuer-registry-client';
+import { DidRegistryContext } from '../../init/registries';
+import { issuerInRegistries } from '../../lib/verifiableObject';
 
 const NO_URL = 'None';
 
-export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreenProps): JSX.Element | null {
+export default function IssuerInfoScreen({
+  navigation, route
+}: IssuerInfoScreenProps): JSX.Element | null {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { issuerId } = route.params;
+  const registries = useContext(DidRegistryContext);
 
-  const resolvedRegistryConfigs = useMemo(() => registryCollections.issuerDid.registriesFor(issuerId), [issuerId]);
+  const issuerInfo = registries.didEntry(issuerId);
+  const registryNames = issuerInRegistries({ issuer: issuerId, registries }) || [];
 
-  const registryList = resolvedRegistryConfigs.map(({ name }) => name);
-  const firstIssuerEntry = resolvedRegistryConfigs[0].entryFor(issuerId);
-
-  const { name, url, location } = firstIssuerEntry;
+  const { name, url, location } = issuerInfo || {};
 
   function IssuerLink(): JSX.Element {
-    if (url === NO_URL) {
-      return <Text style={styles.dataValue}>{url}</Text>;
+    if (!url || url === NO_URL) {
+      return <Text style={styles.dataValue}>{NO_URL}</Text>;
     }
 
     return (
@@ -55,7 +57,7 @@ export default function IssuerInfoScreen({ navigation, route }: IssuerInfoScreen
         </View>
         <View style={styles.dataContainer}>
           <Text style={styles.dataLabel}>Registries</Text>
-          <BulletList items={registryList} style={styles.bulletList} />
+          <BulletList items={registryNames} style={styles.bulletList} />
         </View>
       </ScrollView>
     </>

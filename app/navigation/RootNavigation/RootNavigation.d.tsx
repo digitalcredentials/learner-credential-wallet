@@ -1,7 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { CredentialRecordRaw } from '../../model/credential';
-import type { VerifyPayload } from '../../hooks';
+import type { VerifyPayload } from '../../lib/verifiableObject';
 import type { HomeNavigationParamList, AcceptCredentialsNavigationParamList, ExchangeCredentialsNavigationParamList } from '..';
 import { Credential } from '../../types/credential';
 import { ProfileRecordRaw } from '../../model';

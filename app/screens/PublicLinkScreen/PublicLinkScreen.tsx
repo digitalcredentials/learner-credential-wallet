@@ -70,9 +70,11 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       body: <LoadingIndicatorDots />
     });
   }
-  
+
   const handleShareAsPdf = async() => {
-    Share.open({url: `file://${pdf.filePath}`});
+    if (pdf) {
+      Share.open({url: `file://${pdf.filepath}`});
+    }
   };
 
   function displayErrorModal(err: Error) {
