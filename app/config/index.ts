@@ -16,3 +16,10 @@ export const KnownDidRegistries = [
     'url': 'https://digitalcredentials.github.io/dcc-registry/registry.json'
   }
 ];
+
+export const DeepLinkConfig = {
+  schemes: {
+    customProtocol: ['dccrequest://', 'org.dcconsortium://'],
+    universalAppLink: 'https://lcw.app/mobile'
+  }
+};
