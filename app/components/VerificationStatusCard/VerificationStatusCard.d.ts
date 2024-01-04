@@ -1,4 +1,4 @@
-import type { VerifyPayload } from '../../hooks';
+import type { VerifyPayload } from '../../lib/verifiableObject';
 import { Credential } from '../../types/credential';
 
 export type VerificationStatusCardProps = {

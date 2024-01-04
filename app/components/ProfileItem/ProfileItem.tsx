@@ -36,7 +36,7 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
   const modalContent = useMemo(() => {
     if (activeModal === null) return null;
 
-    const actionProps = { 
+    const actionProps = {
       rawProfileRecord,
       onRequestClose: () => setActiveModal(null)
     };
@@ -45,7 +45,7 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
       [ActiveModal.Rename]: <RenameModal {...actionProps} />,
       [ActiveModal.Backup]: <BackupModal {...actionProps} />,
       [ActiveModal.Delete]: <DeleteModal {...actionProps} />,
-      
+
     }[activeModal];
   }, [activeModal]);
 
@@ -110,12 +110,11 @@ function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
 }
 
 function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
-  const backupProfile = (password: string | undefined) =>
-    exportProfile(rawProfileRecord, password);
+  const backupProfile = () => exportProfile(rawProfileRecord);
 
   return (
     <BackupItemModal
-      onRequestClose={onRequestClose} 
+      onRequestClose={onRequestClose}
       onBackup={backupProfile}
       backupItemName="Profile"
       backupModalText="This will backup your profile and its contents into a file for you to download."

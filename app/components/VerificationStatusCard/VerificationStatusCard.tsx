@@ -1,13 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
-import { registryCollections } from '@digitalcredentials/issuer-registry-client';
 
 import { VerificationStatusCardProps, StatusItemProps } from './VerificationStatusCard.d';
 import dynamicStyleSheet from './VerificationStatusCard.styles';
 import { useDynamicStyles } from '../../hooks';
 import { BulletList } from '../../components';
+import { DidRegistryContext } from '../../init/registries';
+import { issuerInRegistries } from '../../lib/verifiableObject';
 
 const DATE_FORMAT = 'MMM D, YYYY';
 
@@ -20,10 +21,11 @@ enum LogId {
 
 export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): JSX.Element {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
+  const registries = useContext(DidRegistryContext);
+
   const { expirationDate, issuer } = credential;
 
-  const issuerId = typeof issuer === 'string' ? null : issuer?.id;
-  const registryList = useMemo(() => issuerId ? registryCollections.issuerDid.registriesFor(issuerId).map(({ name }) => name) : null, [issuerId]);
+  const registryNames = issuerInRegistries({ issuer, registries });
 
   const details = verifyPayload.result.log?.reduce<Record<string, boolean>>((acc, log) => {
     acc[log.id] = log.valid;
@@ -60,7 +62,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
           negativeText="Is not verified in a registered institution"
           verified={details[LogId.IssuerDIDResolves]}
         >
-          {registryList && <BulletList items={registryList} />}
+          {registryNames && <BulletList items={registryNames} />}
         </StatusItem>
       </View>
       <View style={styles.container}>

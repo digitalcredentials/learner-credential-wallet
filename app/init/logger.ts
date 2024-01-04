@@ -1,4 +1,4 @@
-import {FileLogger, LogLevel, logLevelNames} from 'react-native-file-logger';
+import { FileLogger, LogLevel, logLevelNames } from 'react-native-file-logger';
 
 export async function initializeLogger() {
   function formatter(level: LogLevel, msg: string) {

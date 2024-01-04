@@ -7,8 +7,8 @@ import { VerifiablePresentation, PresentationError } from '../types/presentation
 import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
-import { registryCollections } from '@digitalcredentials/issuer-registry-client';
-import { extractCredentialsFrom } from './verifiableObject';
+import { RegistryClient } from '@digitalcredentials/issuer-registry-client';
+import { extractCredentialsFrom, issuerInRegistries } from './verifiableObject';
 
 const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
 const suite = new Ed25519Signature2020();
@@ -36,7 +36,8 @@ export async function verifyPresentation(
   unsignedPresentation = true,
 ): Promise<VerifyResponse> {
   try {
-    const hasRevocation = extractCredentialsFrom(presentation)?.find(vc => vc.credentialStatus);
+    const hasRevocation = extractCredentialsFrom(presentation)?.find(
+      vc => vc.credentialStatus);
     const result = await vc.verify({
       presentation,
       presentationPurpose,
@@ -58,23 +59,22 @@ export async function verifyPresentation(
   }
 }
 
-export async function verifyCredential(credential: Credential): Promise<VerifyResponse> {
+export async function verifyCredential(credential: Credential, registries: RegistryClient): Promise<VerifyResponse> {
   const { issuer } = credential;
-  const issuerDid = typeof issuer === 'string' ? issuer : issuer.id;
-
-  const isInRegistry = await registryCollections.issuerDid.isInRegistryCollection(issuerDid);
+  const isInRegistry = issuerInRegistries({ issuer, registries });
   if (!isInRegistry) {
     throw new Error(CredentialError.DidNotInRegistry);
   }
 
   try {
-    const hasStatusProperty = extractCredentialsFrom(credential)?.find(vc => vc.credentialStatus);
+    const hasStatusProperty = extractCredentialsFrom(credential)?.find(
+      vc => vc.credentialStatus);
     const result = await vc.verifyCredential({
       credential,
       suite,
       documentLoader,
       // Only check revocation status if VC has a 'credentialStatus' property
-      checkStatus: hasStatusProperty ? checkStatus : undefined
+      checkStatus: hasStatusProperty ? checkStatus : undefined,
     });
 
     // This logic catches the case where the verify response does not contain a `log` value

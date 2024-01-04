@@ -3,7 +3,8 @@ import moment from 'moment';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-import { useDynamicStyles, useVerifyCredential, VerifyPayload } from '../../hooks';
+import { useDynamicStyles, useVerifyCredential } from '../../hooks';
+import { VerifyPayload } from '../../lib/verifiableObject';
 import dynamicStyleSheet from './VerificationCard.styles';
 import { navigationRef } from '../../navigation';
 import { CredentialRecordRaw } from '../../model';

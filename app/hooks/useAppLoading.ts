@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
- import { useSelector } from 'react-redux';
+import { useEffect, useMemo, useState, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Rubik_400Regular,
   Rubik_500Medium,
@@ -7,10 +7,8 @@ import {
   useFonts
 } from '@expo-google-fonts/rubik';
 import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono';
-import {
-  loadRegistryCollections
-} from '@digitalcredentials/issuer-registry-client';
 
+import { DidRegistryContext, loadKnownDidRegistries } from '../init/registries';
 import {
   lock,
   pollWalletState,
@@ -22,6 +20,8 @@ import { initializeLogger } from '../init/logger';
 
 export function useAppLoading(): boolean {
   const [loading, setLoading] = useState(true);
+
+  const didRegistries = useContext(DidRegistryContext);
 
   const primaryTasks = [
     useFontsLoaded(),
@@ -37,7 +37,7 @@ export function useAppLoading(): boolean {
   async function runSecondaryTasks() {
     await Promise.all([
       initializeLogger(),
-      loadRegistryCollections()
+      loadKnownDidRegistries({ client: didRegistries })
     ]);
 
     setLoading(false);

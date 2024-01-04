@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Linking, ScrollView } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
-import { registryCollections } from '@digitalcredentials/issuer-registry-client';
 
 import { LoadingIndicatorDots, NavHeader } from '../../components';
 import dynamicStyleSheet from './ShareHomeScreen.styles';
 import { ShareHomeScreenProps } from '../../navigation';
-import { useDynamicStyles, verificationResultFor } from '../../hooks';
+import { useDynamicStyles } from '../../hooks';
 import { queryParamsFrom } from '../../lib/decode';
 import { isShareRequestParams, performShareRequest, ShareRequestParams } from '../../lib/shareRequest';
 import { HumanReadableError } from '../../lib/error';
@@ -15,10 +14,13 @@ import { fmtCredentialCount } from '../../lib/text';
 import { NavigationUtil } from '../../lib/navigationUtil';
 import { displayGlobalModal } from '../../lib/globalModal';
 import { hasPublicLink } from '../../lib/publicLink';
+import { verificationResultFor } from '../../lib/verifiableObject';
+import { DidRegistryContext } from '../../init/registries';
 
 export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const { shareRequestParams } = route.params || {};
+  const registries = useContext(DidRegistryContext);
 
   useEffect(() => {
     if (isShareRequestParams(shareRequestParams)) {
@@ -27,7 +29,8 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
   }, [shareRequestParams]);
 
   async function startShareRequest(params: ShareRequestParams) {
-    const issuerName = issuerNameFor(params.client_id);
+    const issuerName = registries.didEntry(params.client_id)?.name ||
+      'Unknown Issuer';
 
     const confirmedShare = await displayGlobalModal({
       title: 'Share Credentials?',
@@ -128,8 +131,8 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
       singleSelect: true,
     });
 
-    const notVerified = await verificationResultFor(rawCredentialRecord).then(({ verified }) => !verified);
-    if (notVerified) {
+    const verified = await verificationResultFor({rawCredentialRecord, registries});
+    if (!verified) {
       await displayGlobalModal({
         title: 'Unable to Create Link',
         cancelButton: false,
@@ -141,7 +144,7 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
       return goToLinkSelect();
     }
 
-    const alreadyCreated = await hasPublicLink(rawCredentialRecord);    
+    const alreadyCreated = await hasPublicLink(rawCredentialRecord);
     if (!alreadyCreated) {
       const confirmedShare = await displayGlobalModal({
         title: 'Are you sure?',
@@ -239,8 +242,4 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
       </ScrollView>
     </>
   );
-}
-
-function issuerNameFor(did: string) {
-  return registryCollections.issuerDid.registriesFor(did)[0].entryFor(did).name;
 }
