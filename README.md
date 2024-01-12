@@ -71,7 +71,7 @@ The following build commands failed:
 Then check your version of cocoa pods.  If it is 1.9.3, try upgrading it to 
 something newer, like 1.11.2_1
 
-See [Installing LCW on Linux](install-linux.md) on setting up the project on Linux.
+See [Installing on Linux](install-linux.md) on setting up the project on Linux.
 
 ### Environment
 

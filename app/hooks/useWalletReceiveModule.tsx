@@ -8,36 +8,36 @@ import { navigationRef } from '../navigation';
 import { stageCredentials } from '../store/slices/credentialFoyer';
 import { useAppDispatch, useDynamicStyles } from '.';
 
-type LCWReceiveModule = NativeModule & {
-  getConstants: () => LCWReceiveModuleConstants;
+type WalletReceiveModule = NativeModule & {
+  getConstants: () => WalletReceiveModuleConstants;
   getData: () => void;
 }
 
-type LCWReceiveModuleConstants = {
+type WalletReceiveModuleConstants = {
   CREDENTIAL_RECEIVED_EVENT: string;
   DID_AUTH_RECEIVED_EVENT: string;
   CREDENTIAL: string;
   DID_AUTH: string;
 }
 
-type LCWReceiveModuleEvent = Record<string, string>;
+type ReceiveModuleEventType = Record<string, string>;
 
-let LCWReceiveModule: LCWReceiveModule;
+let WalletReceiveModule: WalletReceiveModule;
 let CREDENTIAL_RECEIVED_EVENT: string;
 let DID_AUTH_RECEIVED_EVENT: string;
 let CREDENTIAL: string;
 let DID_AUTH: string;
 
 if (Platform.OS === 'android') {
-  LCWReceiveModule = NativeModules.LCWReceiveModule;
-  const constants = LCWReceiveModule.getConstants();
+  WalletReceiveModule = NativeModules.WalletReceiveModule;
+  const constants = WalletReceiveModule.getConstants();
   CREDENTIAL_RECEIVED_EVENT = constants.CREDENTIAL_RECEIVED_EVENT;
   DID_AUTH_RECEIVED_EVENT = constants.DID_AUTH_RECEIVED_EVENT;
   CREDENTIAL = constants.CREDENTIAL;
   DID_AUTH = constants.DID_AUTH;
 }
 
-export function useLCWReceiveModule(): void {
+export function useWalletReceiveModule(): void {
   const dispatch = useAppDispatch();
   const { mixins } = useDynamicStyles();
 
@@ -55,7 +55,7 @@ export function useLCWReceiveModule(): void {
     )
   };
 
-  const onCredentialReceived = async (event: LCWReceiveModuleEvent) => {
+  const onCredentialReceived = async (event: ReceiveModuleEventType) => {
     displayGlobalModal(dataLoadingModalState);
     const credentialString = event[CREDENTIAL];
     const credential = JSON.parse(credentialString);
@@ -65,7 +65,7 @@ export function useLCWReceiveModule(): void {
     const rawProfileRecord = await NavigationUtil.selectProfile();
 
     if (navigationRef.isReady()) {
-      navigationRef.navigate('AcceptCredentialsNavigation', { 
+      navigationRef.navigate('AcceptCredentialsNavigation', {
         screen: 'ApproveCredentialsScreen',
         params: {
           rawProfileRecord
@@ -74,7 +74,7 @@ export function useLCWReceiveModule(): void {
     }
   };
 
-  const onDidAuthReceived = async (event: LCWReceiveModuleEvent) => {
+  const onDidAuthReceived = async (event: ReceiveModuleEventType) => {
     displayGlobalModal(dataLoadingModalState);
     const didAuthString = event[DID_AUTH];
     const didAuthRequest = JSON.parse(didAuthString);
@@ -86,7 +86,7 @@ export function useLCWReceiveModule(): void {
 
       navigationRef.navigate('AcceptCredentialsNavigation', {
         screen: 'ApproveCredentialsScreen',
-        params: {  
+        params: {
           rawProfileRecord
         }
       });
@@ -95,7 +95,7 @@ export function useLCWReceiveModule(): void {
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      const eventEmitter = new NativeEventEmitter(LCWReceiveModule);
+      const eventEmitter = new NativeEventEmitter(WalletReceiveModule);
       const credentialSubscription = eventEmitter.addListener(
         CREDENTIAL_RECEIVED_EVENT,
         onCredentialReceived
@@ -104,12 +104,12 @@ export function useLCWReceiveModule(): void {
         DID_AUTH_RECEIVED_EVENT,
         onDidAuthReceived
       );
-    
+
       const appStateSubscription = AppState.addEventListener(
         'change',
         (state) => {
           if (state === 'active') {
-            LCWReceiveModule.getData();
+            WalletReceiveModule.getData();
           }
         }
       );
