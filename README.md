@@ -105,6 +105,16 @@ These values can be overridden, but development values should not be committed t
 └── ios ← Same as android, except it also uses Cocoapods for dependency management
 ```
 
+#### Configuration
+
+Overridable configuration lives in two places:
+
+1. [`app.json`](./app.json) - created by Expo, contains app name, icon, splash
+   page color, etc.
+2. [`app/config/index.ts`](./app/config/index.ts) - contains everything else,
+   including a list of Known DID Registries, deep link schemes, app website URLs,
+   and so on.
+
 ### Adding new credential display
 
 A custom display can be created for different credentials, to do so:

@@ -16,6 +16,7 @@ import { displayGlobalModal } from '../../lib/globalModal';
 import { hasPublicLink } from '../../lib/publicLink';
 import { verificationResultFor } from '../../lib/verifiableObject';
 import { DidRegistryContext } from '../../init/registries';
+import { LinkConfig } from '../../config';
 
 export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
@@ -157,7 +158,7 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
               titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
               containerStyle={mixins.buttonClearContainer}
               title="What does this mean?"
-              onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
+              onPress={() => Linking.openURL(`${LinkConfig.appWebsite.faq}#public-link`)}
             />
           </>
         ),

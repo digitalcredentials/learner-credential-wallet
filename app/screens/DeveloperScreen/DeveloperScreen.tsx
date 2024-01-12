@@ -30,7 +30,7 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
   async function goToApproveCredentials() {
     if (navigationRef.isReady()) {
       const rawProfileRecord = await NavigationUtil.selectProfile();
-      navigationRef.navigate('AcceptCredentialsNavigation', { 
+      navigationRef.navigate('AcceptCredentialsNavigation', {
         screen: 'ApproveCredentialsScreen',
         params: {
           rawProfileRecord,
@@ -62,7 +62,7 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
 
     async function onPressShare() {
       const date = new Date().valueOf();
-      const fileName = `lcw-${date}.log`;
+      const fileName = `wallet-${date}.log`;
 
       await shareData(fileName, logData);
     }

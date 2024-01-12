@@ -7,15 +7,15 @@ import { ChapiCredentialRequest } from '../types/chapi';
 import { credentialRequestFromChapiUrl } from './decode';
 import { encodeQueryParams } from './encode';
 import { onShareIntent } from './shareIntent';
-import { DeepLinkConfig } from '../config';
+import { LinkConfig } from '../config';
 
 /**
  * In order to support OAuth redirects, the Android intent filter was set
  * specific to the scheme `dccrequest` and path `request`. If new paths are
  * added here, they must also be added to `android/app/src/main/AndroidManifest.xml`.
  */
-const DEEP_LINK_SCHEMES = DeepLinkConfig.schemes.customProtocol
-  .concat(DeepLinkConfig.schemes.universalAppLink);
+const DEEP_LINK_SCHEMES = LinkConfig.schemes.customProtocol
+  .concat(LinkConfig.schemes.universalAppLink);
 const DEEP_LINK_PATHS: DeepLinkPaths = {
   request: (credentialRequestParams) => deepLinkNavigate('ProfileSelectionScreen', {
     onSelectProfile: (rawProfileRecord) => navigationRef.navigate('AcceptCredentialsNavigation', {

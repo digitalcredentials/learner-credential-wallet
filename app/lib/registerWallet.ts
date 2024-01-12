@@ -1,9 +1,10 @@
-import {Linking} from 'react-native';
+import { Linking } from 'react-native';
+import { LinkConfig } from '../config';
 
 export function registerWallet(): void {
-  Linking.canOpenURL('https://lcw.app/register-wallet.html').then(supported => {
+  Linking.canOpenURL(LinkConfig.registerWalletUrl).then(supported => {
     if (supported) {
-      Linking.openURL('https://lcw.app/register-wallet.html');
+      Linking.openURL(LinkConfig.registerWalletUrl);
     } else {
       console.log('Unable to register wallet! Failed URL');
     }

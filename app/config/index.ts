@@ -17,9 +17,16 @@ export const KnownDidRegistries = [
   }
 ];
 
-export const DeepLinkConfig = {
+export const LinkConfig = {
   schemes: {
     customProtocol: ['dccrequest://', 'org.dcconsortium://'],
     universalAppLink: 'https://lcw.app/mobile'
+  },
+  registerWalletUrl: 'https://lcw.app/register-wallet.html',
+  appWebsite: {
+    home: 'https://lcw.app',
+    // FAQ page assumes #public-link,
+    //   #public-link-unshare, and #add-to-linkedin sections
+    faq: 'https://lcw.app/faq.html'
   }
 };
