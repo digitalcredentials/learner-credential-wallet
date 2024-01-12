@@ -7,6 +7,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import OutsidePressHandler from 'react-native-outside-press';
 import Share from 'react-native-share';
 
+import { LinkConfig } from '../../config';
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import dynamicStyleSheet from './PublicLinkScreen.styles';
 import { LoadingIndicatorDots, NavHeader } from '../../components';
@@ -152,7 +153,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
             containerStyle={mixins.buttonClearContainer}
             title="What does this mean?"
-            onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link')}
+            onPress={() => Linking.openURL(`${LinkConfig.appWebsite.faq}#public-link`)}
           />
         </>
       )
@@ -174,7 +175,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
             containerStyle={mixins.buttonClearContainer}
             title="What does this mean?"
-            onPress={() => Linking.openURL('https://lcw.app/faq.html#public-link-unshare')}
+            onPress={() => Linking.openURL(`${LinkConfig.appWebsite.faq}#public-link-unshare`)}
           />
         </>
       )
@@ -242,7 +243,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
             titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
             containerStyle={mixins.buttonClearContainer}
             title="What does this mean?"
-            onPress={() => Linking.openURL('https://lcw.app/faq.html#add-to-linkedin')}
+            onPress={() => Linking.openURL(`${LinkConfig.appWebsite.faq}#add-to-linkedin`)}
           />
         </>
       )

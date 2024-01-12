@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DeviceInfo from 'react-native-device-info';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { LinkConfig } from '../../config';
 import appConfig from '../../../app.json';
 import walletImage from '../../assets/wallet.png';
 import dynamicStyleSheet from './SettingsNavigation.styles';
@@ -166,9 +167,9 @@ function About({ navigation }: AboutProps): JSX.Element {
           More information at&nbsp;
           <Text
             style={styles.link}
-            onPress={() => Linking.openURL('https://lcw.app')}
+            onPress={() => Linking.openURL(LinkConfig.appWebsite.home)}
           >
-            https://lcw.app
+            {LinkConfig.appWebsite.home}
           </Text>.
         </Text>
         <Text style={styles.paragraphCenter}>
