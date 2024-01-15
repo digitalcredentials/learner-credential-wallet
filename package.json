@@ -7,6 +7,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint ./app ./App.tsx && npm run compile",
+    "test": "jest",
     "compile": "tsc --noEmit -p tsconfig.json && echo ✓ Passed lint check",
     "postinstall": "npx rn-nodeify --install process,stream,events,module,util --hack && npx patch-package"
   },
@@ -112,6 +113,8 @@
     "@digitalcredentials/lru-memoize": "^2.1.4",
     "@types/crypto-js": "^4.1.1",
     "@types/react": "~17.0.2",
+    "jest": "^29.6.3",
+    "@types/jest": "^29.5.5",
     "@types/react-native": "~0.67.8",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
@@ -149,5 +152,8 @@
   },
   "overrides": {
     "react-native-permissions": "3.3.1"
+  },
+  "jest": {
+    "preset": "react-native"
   }
 }
