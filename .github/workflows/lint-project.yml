@@ -27,3 +27,4 @@ jobs:
       run: npm cache clean --force
     - run: npm i --legacy-peer-deps
     - run: npm run lint
+    - run: npm run test
