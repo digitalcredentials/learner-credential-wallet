@@ -14,11 +14,6 @@ export function encodeQueryParams (url: string): string {
     }
   });
 }
-export function encodeQueryParams2 (url: string): string {
-  return url.replace(PARAM_REGEX, (_, value) => {
-    return `=${encodeURIComponent(value)}`;
-  });
-}
 
 export function cleanCopy<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
