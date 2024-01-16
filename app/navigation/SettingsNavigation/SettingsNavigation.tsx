@@ -31,15 +31,12 @@ function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItem
   const _rightComponent = rightComponent || (
     <ListItem.Chevron
       hasTVPreferredFocus={undefined}
-      tvParallaxProperties={undefined}
       color={theme.color.textSecondary}
     />
   );
 
   return (
     <ListItem
-      hasTVPreferredFocus={undefined}
-      tvParallaxProperties={undefined}
       containerStyle={styles.listItemContainer}
       onPress={onPress}
       disabled={disabled}
@@ -91,7 +88,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     <Switch
       style={styles.switch}
       thumbColor={isBiometricsEnabled ? theme.color.backgroundSecondary : theme.color.backgroundPrimary}
-      trackColor={{ true: theme.color.switchActive, false: theme.color.iconInactive }} 
+      trackColor={{ true: theme.color.switchActive, false: theme.color.iconInactive }}
       ios_backgroundColor={theme.color.iconInactive}
       value={isBiometricsEnabled}
       onValueChange={onToggleBiometrics}
@@ -103,7 +100,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
     <Switch
       style={styles.switch}
       thumbColor={isDarkTheme ? theme.color.backgroundSecondary : theme.color.backgroundPrimary}
-      trackColor={{ true: theme.color.switchActive, false: theme.color.iconInactive }} 
+      trackColor={{ true: theme.color.switchActive, false: theme.color.iconInactive }}
       ios_backgroundColor={theme.color.iconInactive}
       value={isDarkTheme}
       onValueChange={toggleTheme}
@@ -131,9 +128,9 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
         confirmText="Yes"
         title="Are you sure you would like to reset your wallet?"
       />
-      <BackupItemModal 
+      <BackupItemModal
         open={backupModalOpen}
-        onRequestClose={() => setBackupModalOpen(false)} 
+        onRequestClose={() => setBackupModalOpen(false)}
         onBackup={exportWallet}
         backupItemName="Wallet"
         backupModalText="This will backup your wallet contents into a file for you to download."

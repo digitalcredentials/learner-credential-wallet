@@ -13,8 +13,6 @@ export default function MenuItem({ icon, title, onPress }: MenuItemProps): JSX.E
     <ListItem
       containerStyle={styles.menuItemContainer}
       onPress={onPress}
-      hasTVPreferredFocus={undefined}
-      tvParallaxProperties={undefined}
     >
       { icon && (
         <MaterialIcons

@@ -16,7 +16,7 @@ export default function ProfileSelectionScreen({ navigation, route }: ProfileSel
   const rawProfileRecords = useSelector(selectRawProfileRecords);
   const associatedProfile = useSelectorFactory(makeSelectProfileForPendingCredentials);
 
-  const { 
+  const {
     onSelectProfile,
     instructionText = 'Issue the credential(s) to the selected profile.',
     goBack = navigation.goBack,
@@ -46,8 +46,8 @@ export default function ProfileSelectionScreen({ navigation, route }: ProfileSel
         ListFooterComponent={ListHeader}
         style={styles.container}
         data={flatListData}
-        renderItem={({ item }) => 
-          <ProfileButton 
+        renderItem={({ item }) =>
+          <ProfileButton
             rawProfileRecord={item}
             onPress={() => onSelectProfile(item)}
           />
@@ -69,9 +69,8 @@ function ProfileButton({ rawProfileRecord, onPress }: ProfileButtonProps) {
       iconRight
       onPress={(onPress)}
       icon={
-        <ListItem.Chevron 
+        <ListItem.Chevron
           hasTVPreferredFocus={undefined}
-          tvParallaxProperties={undefined}
           color={theme.color.textSecondary}
         />
       }
