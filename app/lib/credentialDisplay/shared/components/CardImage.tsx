@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { ComponentProps } from 'react';
-import { Image, ImageStyle, StyleProp, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { useDynamicStyles } from '../../../../hooks';
 import { Color } from '../../../../styles';
 import { createDynamicStyleSheet } from '../../../dynamicStyles';
@@ -14,7 +14,7 @@ type CardImageProps = {
 
 export default function CardImage({ source, accessibilityLabel, defaultIcon = 'certificate', size }: CardImageProps): JSX.Element | null {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
-  
+
   if (size === undefined) {
     size = theme.issuerIconSize;
   }
@@ -37,7 +37,7 @@ export default function CardImage({ source, accessibilityLabel, defaultIcon = 'c
     <View style={[styles.imageContainer, containerStyle]}>
       <Image
         source={{ uri: source }}
-        style={styles.image as StyleProp<ImageStyle>}
+        style={styles.image}
         accessible={true}
         accessibilityLabel={accessibilityLabel || 'issuer'}
         accessibilityRole="image"
@@ -55,7 +55,7 @@ const dynamicStyleSheet = createDynamicStyleSheet(({ theme }) => ({
   imageContainer: {
     width: theme.issuerIconSize,
     height: theme.issuerIconSize,
-    backgroundColor: Color.White, 
+    backgroundColor: Color.White,
     borderRadius: 3,
     marginRight: 12,
     padding: 2,

@@ -8,7 +8,7 @@ export type DynamicStyles = {
   mixins: Mixins;
 }
 
-export type DynamicStyleSheet<T> = (dynamicStyles: DynamicStyles) => StyleSheet.NamedStyles<T>;
+export type DynamicStyleSheet<T> = (dynamicStyles: DynamicStyles) => T;
 
 type StyleObjectsResolver = (dynamicStyles: DynamicStyles) => Record<string, StyleObject>;
 

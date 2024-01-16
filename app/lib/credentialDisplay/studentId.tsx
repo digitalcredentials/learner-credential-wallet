@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleProp, ImageStyle } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 import { useDynamicStyles } from '../../hooks';
 import { CredentialCardProps, CredentialDisplayConfig } from '.';
@@ -31,10 +31,10 @@ function StudentIdCard({ rawCredentialRecord }: CredentialCardProps) : JSX.Eleme
       <View style={styles.dataContainer}>
         <Text style={styles.header} accessibilityRole="header">Student ID</Text>
       </View>
-      <Image 
-        source={{ uri: studentId?.image }} 
-        style={styles.fullWidthImage as StyleProp<ImageStyle>}
-      /> 
+      <Image
+        source={{ uri: studentId?.image }}
+        style={styles.fullWidthImage}
+      />
     </View>
   );
 }

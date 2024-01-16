@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, AccessibilityInfo, ImageStyle } from 'react-native';
+import { Text, View, Image, AccessibilityInfo } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, CheckBox } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -59,7 +59,7 @@ function StartStep({ navigation }: StartStepProps) {
   return (
     <SafeScreenView style={[styles.container, styles.containerMiddle]}>
       <Image
-        style={styles.image as ImageStyle}
+        style={styles.image}
         source={walletImage}
         accessible
         accessibilityLabel={`${appConfig.displayName} Logo`}
@@ -204,7 +204,7 @@ function ChapiStep({ navigation, route }: ChapiStepProps) {
       </Text>
 
       <View style={[styles.body, styles.buttonGroupCenterContainer]}>
-        <Button 
+        <Button
           buttonStyle={[mixins.button, mixins.buttonPrimary]}
           title = "Go to Register Wallet"
           onPress={registerWallet}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Image, Linking, AccessibilityInfo, Switch, ImageStyle } from 'react-native';
+import { ScrollView, Image, Linking, AccessibilityInfo, Switch } from 'react-native';
 import { Text, ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -153,7 +153,7 @@ function About({ navigation }: AboutProps): JSX.Element {
       <NavHeader goBack={() => navigation.navigate('Settings')} title="About" />
       <ScrollView contentContainerStyle={styles.bodyContainerCenter}>
         <Image
-          style={styles.image as ImageStyle}
+          style={styles.image}
           source={walletImage}
           accessible
           accessibilityLabel={`${appConfig.displayName} Logo`}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, ImageStyle } from 'react-native';
+import { Text, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import RNExitApp from 'react-native-exit-app';
 
@@ -11,15 +11,15 @@ import { useDynamicStyles } from '../../hooks';
 
 export default function RestartScreen(): JSX.Element {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
-  
+
   function exit() {
     RNExitApp.exitApp();
   }
 
   return (
     <SafeScreenView style={styles.container}>
-      <Image 
-        style={styles.image as ImageStyle}
+      <Image
+        style={styles.image}
         source={walletImage}
         accessible
         accessibilityLabel={`${appConfig.displayName} Logo`} />
