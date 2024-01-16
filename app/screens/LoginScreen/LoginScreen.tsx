@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, AccessibilityInfo, View, ImageStyle } from 'react-native';
+import { Text, Image, AccessibilityInfo, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 
@@ -57,7 +57,7 @@ export default function LoginScreen(): JSX.Element {
   return (
     <SafeScreenView style={styles.container}>
       <Image
-        style={styles.image as ImageStyle}
+        style={styles.image}
         source={walletImage}
         accessible
         accessibilityLabel={`${appConfig.displayName} Logo`}

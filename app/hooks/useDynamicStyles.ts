@@ -1,11 +1,9 @@
-import { StyleSheet } from 'react-native';
-
 import { DynamicStyleSheet } from '../lib/dynamicStyles';
 import { ThemeType, dynamicMixins, Mixins } from '../styles';
 import { useThemeContext } from './useThemeContext';
 
 type UseDynamicStylesPayload<T extends DynamicStyleSheet<unknown>> = {
-  styles: StyleSheet.NamedStyles<ReturnType<T>>,
+  styles: ReturnType<T>,
   theme: ThemeType,
   mixins: Mixins,
 }
