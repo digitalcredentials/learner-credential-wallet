@@ -22,7 +22,7 @@
     "@digitalcredentials/minimal-cipher": "^5.1.2",
     "@digitalcredentials/security-document-loader": "^3.1.0",
     "@digitalcredentials/vc": "^6.0.0",
-    "@digitalcredentials/vc-status-list": "^5.0.2",
+    "@digitalcredentials/vc-status-list": "^7.2.0",
     "@digitalcredentials/vpqr": "^2.2.1",
     "@expo-google-fonts/roboto": "^0.2.0",
     "@expo-google-fonts/roboto-mono": "^0.2.2",
