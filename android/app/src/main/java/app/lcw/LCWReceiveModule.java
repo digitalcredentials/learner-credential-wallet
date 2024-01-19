@@ -20,7 +20,7 @@ import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-public class WalletEventReceiveModule extends ReactContextBaseJavaModule {
+public class LCWReceiveModule extends ReactContextBaseJavaModule {
   // Events
   private final String CredentialReceivedEventKey = "CREDENTIAL_RECEIVED_EVENT";
   private final String CredentialReceivedEventValue = "credential_received";
@@ -36,14 +36,14 @@ public class WalletEventReceiveModule extends ReactContextBaseJavaModule {
   // React
   private final ReactApplicationContext reactContext;
 
-  WalletEventReceiveModule(ReactApplicationContext context) {
+  LCWReceiveModule(ReactApplicationContext context) {
     super(context);
     this.reactContext = context;
   }
 
   @Override
   public String getName() {
-    return "WalletEventReceiveModule";
+    return "LCWReceiveModule";
   }
 
   @Override
@@ -87,7 +87,7 @@ public class WalletEventReceiveModule extends ReactContextBaseJavaModule {
             .emit(DidAuthReceivedEventValue, payload);
       }
     } catch (JsonException | IllegalStateException | ClassCastException e) {
-      Log.e("WalletEventReceiveModule.processData.error", e.getMessage());
+      Log.e("LCWReceiveModule.processData.error", e.getMessage());
       return;
     }
   }
@@ -121,7 +121,7 @@ public class WalletEventReceiveModule extends ReactContextBaseJavaModule {
       intent.setAction(null)
                .setType(null);
     } catch (IOException e) {
-      Log.e("WalletEventReceiveModule.getData.error", e.getMessage());
+      Log.e("LCWReceiveModule.getData.error", e.getMessage());
       return;
     }
   }
