@@ -10,5 +10,5 @@ export * from './useSelectorFactory';
 export * from './useAppDispatch';
 export * from './useThemeContext';
 export * from './useDynamicStyles';
-export * from './useWalletReceiveModule';
+export * from './useLCWReceiveModule';
 export * from './useSelectedExchangeCredentials';
