@@ -223,7 +223,7 @@ export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenPr
           }
         />
         <Text style={styles.paragraph}>
-            Allows sending one or more credentials
+            Allows sending one or more credentials as a JSON file
         </Text>
         <Button
           title="Scan a shared QR code"
