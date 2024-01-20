@@ -30,48 +30,47 @@ or to apply for jobs with employers—in an interoperable manner.
 The Digital Credentials Consortium is working with a number of colleges and 
 universities to [pilot test](https://lcw.app/pilot.html) the wallet.
 
+
 ## Development Setup
 
 ### Dependencies
 
 **If you encouter any issues, visit the [Troubleshooting Page](https://github.com/digitalcredentials/learner-credential-wallet/wiki/Troubleshooting)**
 
-Prerequisite peer dependencies:
+Prerequisites:
+* [Java](https://www.java.com/en/download/manual.jsp)
+* [nvm](https://collabnix.com/how-to-install-and-configure-nvm-on-mac-os/) or [asdf](https://asdf-vm.com/guide/getting-started.html#getting-started)
+* [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) or [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * [Node.js](https://nodejs.org/en/)
 * [Cocoapods](https://cocoapods.org/)
 * [XCode](https://developer.apple.com/xcode/)
 * [Android Studio](https://developer.android.com/studio)
 
-Optionally, if you use the `asdf` version manager run `asdf install` to install 
-the correct version of Node. Clone down this repository, run `npm i --legacy-peer-deps` to install 
-the React Native dependencies and also `npx pod-install` (in the `ios/` directory) to install iOS Cocoapods. 
-
-You can start up the project by doing the following:
-* Run `yarn start` first
-* In another terminal window run `yarn android` 
-  * see the troubleshooting page for more information
-* In another terminal window run `yarn ios [args]` where `[args]` depends on where you want to run the device 
-  * see the troubleshooting page for more information
-
-This project was started with Expo, but had to be ejected because some libraries 
-did not support it. Do not develop using Expo, even if it might still launch. 
-That being said, we are still using [unimodules](https://github.com/unimodules/react-native-unimodules), 
-so feel free to install and use packages from the Expo community.
-
-If you get cryptic errors like the following:
-
-```
-** BUILD FAILED **
-
-The following build commands failed:
-	CompileC /Users/jc/Library/Developer/Xcode/DerivedData/eduwallet-cikpfctcsrnvkqflqlievgbjvnfr/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/RealmJS.build/Objects-normal/x86_64/RealmReact.o /Users/jc/gitlab\ github/digitalcredentials/learner-credential-wallet/node_modules/realm/react-native/ios/RealmReact/RealmReact.mm normal x86_64 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler (in target 'RealmJS' from project 'Pods')
-(1 failure)
-```
-
-Then check your version of cocoa pods.  If it is 1.9.3, try upgrading it to 
-something newer, like 1.11.2_1
-
 See [Installing on Linux](install-linux.md) on setting up the project on Linux.
+
+### Setup of the LCW App
+1. Clone this repository or `git pull`
+2. In root of project, run `npm i --legacy-peer-deps` to install the React Native dependencies.
+   * Note: The app will crash if you try to use just `npm i` or `yarn` for example
+   * (Optionally, if you use the `asdf` version manager run `asdf install` to install - more info in asdf section below)
+4. For ios, run `cd ios/ && npx pod-install` to install iOS Cocoapods. 
+
+#### *If using asdf*
+* Run `asdf install` to install the proper versions of the technologies used listed in the `.tool-versions` file
+  * If you need to install anything, run `asdf plugin add [plugin-name]` to add it to your local machine
+  * Here is a link if you need it to the [asdf installation documentation](https://asdf-vm.com/guide/getting-started.html#getting-started) _(homebrew is the easiest)_
+
+### Running the LCW App
+1) Run `yarn start` in one terminal
+2) In another terminal run `yarn android`
+  * When running on android, open Android Studio and make sure the device you want to run on is selected (whether that is an emulator or a real device). 
+  * Note: You might need to hit the play button in Android Studio for it to fully register which device to set to be used from the command line.
+3) In another terminal yarn `yarn ios [args]` where `[args]` depends on where you want to run the device 
+  * To run on an iOS simulator, you'll need to use the args `--simulator [name-of-device]`. The name of the device you want to use must be an accessible simulator setup in XCode.
+    * Example `yarn ios --simulator "iPhone 15 Pro Max"`
+  * To run on a real iOS device you'll need to use the args `--device [name-of-plugged-in-device]` (you'll be prompted to install the tools needed if you don't have them in the error output)
+    * The name of the device can be found in Settings -> General -> About -> `Name`
+    * Example: `yarn ios --device "iPhone 15"` (where `iPhone 15` is the name listed in the settings)
 
 ### Environment
 
