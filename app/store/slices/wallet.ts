@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { RootState, getAllRecords } from '..';
+import { type RootState } from '..';
 import { GlobalModalPayload } from '../../components';
 import { isBiometricsSupported } from '../../lib/biometrics';
 import { importWalletOrProfileFrom } from '../../lib/import';
@@ -9,6 +9,7 @@ import { db, INITIAL_PROFILE_NAME } from '../../model';
 import { loadThemeName, saveThemeName } from '../../styles';
 import { createProfile } from './profile';
 import { Cache } from '../../lib/cache';
+import {getAllRecords} from '../getAllRecords';
 
 type InitializeParams = {
   passphrase: string;
@@ -66,7 +67,7 @@ const unlockWithBiometrics = createAsyncThunk('walletState/unlockWithBiometrics'
 const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics, existingData }: InitializeParams, { dispatch }) => {
   await db.initialize(passphrase);
   await db.unlock(passphrase);
-  
+
   if (enableBiometrics) {
     try {
       await db.enableBiometrics();
@@ -107,7 +108,7 @@ const reset = createAsyncThunk('walletState/reset', async () => {
 const toggleBiometrics = createAsyncThunk('walletState/toggleBiometrics', async (_, { getState, dispatch }) => {
   const state = await getState() as RootState;
   const { isBiometricsEnabled } = state.wallet;
-  
+
   if (isBiometricsEnabled) {
     await db.disableBiometrics();
   } else {

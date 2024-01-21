@@ -15,6 +15,6 @@ type StyleObjectsResolver = (dynamicStyles: DynamicStyles) => Record<string, Sty
 export function createDynamicStyleSheet<R extends StyleObjectsResolver, S extends ReturnType<R>>(styleObjectsResolver: R): DynamicStyleSheet<S> {
   return (dynamicStyles: DynamicStyles) => {
     const styleObjects = styleObjectsResolver(dynamicStyles);
-    return StyleSheet.create(styleObjects) as S;
+    return StyleSheet.create(styleObjects as any) as S;
   };
 }

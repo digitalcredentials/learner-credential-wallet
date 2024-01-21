@@ -69,7 +69,7 @@ buck-out/
 *.jsbundle
 
 # CocoaPods
-/ios/Pods/
+/ios_old/Pods/
 
 # Expo
 .expo/
@@ -77,4 +77,4 @@ web-build/
 
 # @end expo-cli
 
-android/app/release/
+android_old/app/release/

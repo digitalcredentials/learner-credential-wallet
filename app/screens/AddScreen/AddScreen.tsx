@@ -67,7 +67,7 @@ export default function AddScreen(): JSX.Element {
       if (errorMessageMatches(err, CANCEL_PICKER_MESSAGES)) return;
 
       console.error(err);
-      await displayGlobalModal({ 
+      await displayGlobalModal({
         title: 'Unable to Add Credentials',
         body: 'Ensure the file contains one or more credentials, and is a supported file type.' ,
         cancelButton: false,
@@ -81,7 +81,7 @@ export default function AddScreen(): JSX.Element {
       await addCredentialsFrom(inputValue);
     } catch (err) {
       console.error(err);
-      await displayGlobalModal({ 
+      await displayGlobalModal({
         title: 'Unable to Add Credentials',
         body: 'Ensure the URL references a file that contains one or more credentials.',
         cancelButton: false,

@@ -1,8 +1,8 @@
 import Realm from 'realm';
 import { ObjectID} from 'bson';
 
-import { db } from './';
 import { DidKey, DidDocument } from '../types/did';
+import {db} from './DatabaseAccess';
 
 export type DidRecordRaw = {
   readonly _id: ObjectID;
@@ -16,7 +16,7 @@ export type DidRecordRaw = {
   readonly keyAgreementKey: DidKey;
 };
 
-export class DidRecord implements DidRecordRaw {
+export class DidRecord extends Realm.Object<DidRecord> implements DidRecordRaw {
   readonly _id!: ObjectID;
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
@@ -63,7 +63,7 @@ export class DidRecord implements DidRecordRaw {
     };
   }
 
-  static async addDidRecord({ didDocument, verificationKey, keyAgreementKey }: AddDidRecordParams ): Promise<DidRecordRaw> { 
+  static async addDidRecord({ didDocument, verificationKey, keyAgreementKey }: AddDidRecordParams ): Promise<DidRecordRaw> {
     const rawDidRecord: DidRecordRaw = {
       _id: new ObjectID(),
       createdAt: new Date(),
@@ -76,8 +76,8 @@ export class DidRecord implements DidRecordRaw {
       keyAgreementKey,
     };
 
-    return db.withInstance((instance) => 
-      instance.write(() => 
+    return db.withInstance((instance) =>
+      instance.write(() =>
         instance.create<DidRecord>(DidRecord.schema.name, rawDidRecord).asRaw(),
       ),
     );

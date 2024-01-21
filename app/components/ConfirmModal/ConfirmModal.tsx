@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Text, View, TouchableWithoutFeedback, AccessibilityInfo } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { useAccessibilityFocus, useDynamicStyles } from '../../hooks';
+import { useDynamicStyles } from '../../hooks/useDynamicStyles';
+import { useAccessibilityFocus } from '../../hooks/useAccessibilityFocus';
 import { ConfirmModalProps } from './ConfirmModal.d';
 
 import dynamicStyleSheet from './ConfirmModal.style';
 
-/** 
- * TODO: Right now the accessibility focus throws errors on Android 
+/**
+ * TODO: Right now the accessibility focus throws errors on Android
  * when returning from the share UI. Those errors must be resolved before
  * this can be enabled. This disable flag is a temporary fix.
- */ 
+ */
 const ENABLE_ACCESSIBILITY_FOCUS = false;
 
 export default function ConfirmModal({
@@ -68,7 +69,7 @@ export default function ConfirmModal({
           <View style={styles.modalBackground} />
         </TouchableWithoutFeedback>
         <View style={styles.modalContainer}>
-          <Text 
+          <Text
             style={styles.modalTitle}
             ref={titleRef}
             accessibilityRole="header"

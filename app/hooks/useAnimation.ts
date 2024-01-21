@@ -2,8 +2,8 @@ import { useRef } from 'react';
 import { Animated, Easing } from 'react-native';
 
 type InterpolateRange = [number, number] | [string, string];
-type UseAnimationType = Animated.CompositeAnimation & { 
-  readonly value: Animated.AnimatedInterpolation 
+type UseAnimationType = Animated.CompositeAnimation & {
+  readonly value: Animated.AnimatedInterpolation<number | string>
 };
 
 export function useAnimation(
@@ -18,7 +18,7 @@ export function useAnimation(
     ...config,
   })).current;
 
-  /* This method replaces the Animated library 
+  /* This method replaces the Animated library
    * reset() method that doesn't work.
    */
   const reset = () => animationValue.setValue(0);

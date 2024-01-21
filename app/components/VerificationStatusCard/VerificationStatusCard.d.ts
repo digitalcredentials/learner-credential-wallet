@@ -1,5 +1,5 @@
-import type { VerifyPayload } from '../../lib/verifiableObject';
 import { Credential } from '../../types/credential';
+import type {VerifyPayload} from '../../lib/verificationResultFor';
 
 export type VerificationStatusCardProps = {
   credential: Credential;

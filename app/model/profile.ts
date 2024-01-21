@@ -2,12 +2,15 @@ import Realm from 'realm';
 import { ObjectID} from 'bson';
 import uuid from 'react-native-uuid';
 
-import { db, DidRecord, CredentialRecordRaw, CredentialRecord, DidRecordRaw } from './';
+import {db} from './DatabaseAccess';
+
 import { mintDid } from '../lib/did';
 import { UnlockedWallet } from '../types/wallet';
 import { ProfileImportReport, ProfileMetadata } from '../types/profile';
 import { parseWalletContents } from '../lib/parseWallet';
 import { HumanReadableError } from '../lib/error';
+import {CredentialRecord, CredentialRecordRaw} from './credential';
+import {DidRecord, DidRecordRaw} from './did';
 
 const UNTITLED_PROFILE_NAME = 'Untitled Profile';
 export const INITIAL_PROFILE_NAME = 'Default';
@@ -24,7 +27,7 @@ export type ProfileWithCredentialRecords = ProfileRecordRaw & {
   rawCredentialRecords: CredentialRecordRaw[];
 }
 
-export class ProfileRecord implements ProfileRecordRaw {
+export class ProfileRecord extends Realm.Object<ProfileRecord> implements ProfileRecordRaw {
   readonly _id!: ObjectID;
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
@@ -63,7 +66,7 @@ export class ProfileRecord implements ProfileRecordRaw {
     };
   }
 
-  public static async addProfileRecord({ profileName, rawDidRecord }: AddProfileRecordParams): Promise<ProfileRecordRaw> { 
+  public static async addProfileRecord({ profileName, rawDidRecord }: AddProfileRecordParams): Promise<ProfileRecordRaw> {
     if (rawDidRecord === undefined) {
       const didPayload = await mintDid();
       rawDidRecord = await DidRecord.addDidRecord(didPayload);
@@ -71,8 +74,8 @@ export class ProfileRecord implements ProfileRecordRaw {
 
     const rawProfileRecord = ProfileRecord.rawFrom({ profileName, rawDidRecord });
 
-    return db.withInstance((instance) => 
-      instance.write(() => 
+    return db.withInstance((instance) =>
+      instance.write(() =>
         instance.create<ProfileRecord>(ProfileRecord.schema.name, rawProfileRecord).asRaw(),
       ),
     );
@@ -86,8 +89,8 @@ export class ProfileRecord implements ProfileRecordRaw {
   }
 
   public static async updateProfileRecord(rawProfileRecord: ProfileRecordRaw): Promise<ProfileRecordRaw> {
-    return db.withInstance((instance) => 
-      instance.write(() => 
+    return db.withInstance((instance) =>
+      instance.write(() =>
         instance.create<ProfileRecord>(ProfileRecord.schema.name, rawProfileRecord, Realm.UpdateMode.Modified).asRaw(),
       ),
     );
@@ -101,7 +104,7 @@ export class ProfileRecord implements ProfileRecordRaw {
 
     await db.withInstance(async (instance) => {
       const profileRecord = instance.objectForPrimaryKey<ProfileRecord>(ProfileRecord.schema.name, new ObjectID(rawProfileRecord._id));
-      if (profileRecord === undefined) throw new Error('Profile not found');
+      if (profileRecord == null) throw new Error('Profile not found');
 
       const didRecord = instance.objectForPrimaryKey<DidRecord>(DidRecord.schema.name, new ObjectID(profileRecord.didRecordId));
       const credentialRecordIds = (await CredentialRecord.getAllCredentialRecords()).filter(({ profileRecordId }) => profileRecordId.equals(rawProfileRecord._id) );
@@ -187,7 +190,7 @@ export class ProfileRecord implements ProfileRecordRaw {
 
     try {
       const { profileName = UNTITLED_PROFILE_NAME } = profileMetadata?.data ?? {};
-    
+
       const rawDidRecord = await DidRecord.addDidRecord({ didDocument, verificationKey, keyAgreementKey });
       const rawProfileRecord = await ProfileRecord.addProfileRecord({ profileName, rawDidRecord });
       const profileRecordId = rawProfileRecord._id;

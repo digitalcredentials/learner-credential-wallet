@@ -3,10 +3,7 @@ import { CredentialError } from '../types/credential';
 import { CredentialRecordRaw } from '../model';
 import { useFocusEffect } from '@react-navigation/native';
 import { DidRegistryContext } from '../init/registries';
-import {
-  VerifyPayload,
-  verificationResultFor
-} from '../lib/verifiableObject';
+import {verificationResultFor, VerifyPayload} from '../lib/verificationResultFor';
 
 const DEFAULT_ERROR_MESSAGE = 'An error was encountered while verifying this credential.';
 

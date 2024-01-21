@@ -14,9 +14,9 @@ import { fmtCredentialCount } from '../../lib/text';
 import { NavigationUtil } from '../../lib/navigationUtil';
 import { displayGlobalModal } from '../../lib/globalModal';
 import { hasPublicLink } from '../../lib/publicLink';
-import { verificationResultFor } from '../../lib/verifiableObject';
 import { DidRegistryContext } from '../../init/registries';
 import { LinkConfig } from '../../config';
+import {verificationResultFor} from '../../lib/verificationResultFor';
 
 export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenProps): JSX.Element {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);

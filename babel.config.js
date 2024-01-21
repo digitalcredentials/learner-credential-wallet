@@ -10,6 +10,7 @@ module.exports = function (api) {
           alias: {
             'crypto': 'react-native-quick-crypto',
             'stream': 'stream-browserify',
+            'whatwg-url': 'react-native-url-polyfill',
             'buffer': '@craftzdog/react-native-buffer',
           },
         },
