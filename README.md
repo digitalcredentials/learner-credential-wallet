@@ -114,6 +114,10 @@ Overridable configuration lives in two places:
    including a list of Known DID Registries, deep link schemes, app website URLs,
    and so on.
 
+### Issuing new credential
+
+[Instructions for issuing a credential](https://github.com/digitalcredentials/docs/edit/main/credential/issue_credential.md). 
+
 ### Adding new credential display
 
 A custom display can be created for different credentials, to do so:
