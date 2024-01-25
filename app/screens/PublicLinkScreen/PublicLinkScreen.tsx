@@ -445,7 +445,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                   <Text style={styles.paragraph}>
                     Allows sending one or more credentials as a JSON file
                   </Text>
-              </View>
+                </View>
               )}
               {publicLink !== null && (
                 <View style={styles.bottomSection}>
