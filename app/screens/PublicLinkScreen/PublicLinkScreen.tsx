@@ -426,21 +426,26 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                 }
               />
               {screenMode === PublicLinkScreenMode.ShareCredential && (
-                <Button
-                  title="Send Credential"
-                  buttonStyle={mixins.buttonIcon}
-                  containerStyle={mixins.buttonIconContainer}
-                  titleStyle={mixins.buttonIconTitle}
-                  iconRight
-                  onPress={() => share([rawCredentialRecord])}
-                  icon={
-                    <MaterialIcons
-                      name="input"
-                      size={theme.iconSize}
-                      color={theme.color.iconInactive}
-                    />
-                  }
-                />
+                <View>
+                  <Button
+                    title="Send Credential"
+                    buttonStyle={mixins.buttonIcon}
+                    containerStyle={mixins.buttonIconContainer}
+                    titleStyle={mixins.buttonIconTitle}
+                    iconRight
+                    onPress={() => share([rawCredentialRecord])}
+                    icon={
+                      <MaterialIcons
+                        name="input"
+                        size={theme.iconSize}
+                        color={theme.color.iconInactive}
+                      />
+                    }
+                  />
+                  <Text style={styles.paragraph}>
+                    Allows sending one or more credentials as a JSON file
+                  </Text>
+              </View>
               )}
               {publicLink !== null && (
                 <View style={styles.bottomSection}>
