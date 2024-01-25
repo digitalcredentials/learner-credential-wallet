@@ -81,4 +81,9 @@ export default createDynamicStyleSheet(({ theme, mixins }) => ({
     color: theme.color.textPrimary,
     marginBottom: 16
   },
+  paragraph: {
+    fontSize: 14,
+    color: theme.color.textPrimary,
+    marginTop: 8
+  },
 }));
