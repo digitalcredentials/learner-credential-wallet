@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
-import { View } from 'react-native';
+import React, { useMemo } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -20,6 +19,7 @@ export const navigationRef = createNavigationContainerRef<RootNavigationParamsLi
 
 // Enable global access to hooks
 setHook('selectedExchangeCredentials', useSelectedExchangeCredentials);
+SplashScreen.preventAutoHideAsync();
 
 export default function AppNavigation(): JSX.Element | null {
   const { mixins, theme } = useDynamicStyles();
@@ -54,21 +54,17 @@ export default function AppNavigation(): JSX.Element | null {
     }
   }
 
-  useEffect(() => {
-    SplashScreen.preventAutoHideAsync();
-  }, []);
-
   if (loading) {
     return <GlobalConfirmModal />;
   }
 
   return (
     <SafeAreaProvider>
-      <View onLayout={SplashScreen.hideAsync} />
       <StatusBar style={theme.statusBarStyle} />
       <GlobalConfirmModal />
       <EventProvider style={mixins.flex}>
         <NavigationContainer
+          onReady={SplashScreen.hideAsync}
           theme={navigatorTheme}
           ref={navigationRef}
           linking={deepLinkConfig}

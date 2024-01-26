@@ -65,8 +65,13 @@ const unlockWithBiometrics = createAsyncThunk('walletState/unlockWithBiometrics'
 });
 
 const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics, existingData }: InitializeParams, { dispatch }) => {
-  await db.initialize(passphrase);
-  await db.unlock(passphrase);
+  try {
+    await db.initialize(passphrase);
+    await db.unlock(passphrase);
+  } catch(err) {
+    console.error('Wallet initialization failed:', err);
+    return;
+  }
 
   if (enableBiometrics) {
     try {

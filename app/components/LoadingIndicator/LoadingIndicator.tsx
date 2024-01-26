@@ -5,14 +5,14 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 import { useAnimation, useDynamicStyles } from '../../hooks';
 import dynamicStyleSheet from './LoadingIndicator.styles';
-import type { AnimatedPathComponent, LoadingIndicatorProps } from './LoadingIndicator.d';
+import type { LoadingIndicatorProps } from './LoadingIndicator.d';
 import AccessibleView from '../AccessibleView/AccessibleView';
 
-/** 
+/**
  * react-native-svg has a typescript error where the Path props type is not
  * recognized when it becomes an animated component.
  */
-const AnimatedPath = (Animated.createAnimatedComponent(Path) as unknown) as AnimatedPathComponent;
+const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 export default function LoadingIndicator({ loading }: LoadingIndicatorProps): JSX.Element {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
@@ -52,8 +52,9 @@ export default function LoadingIndicator({ loading }: LoadingIndicatorProps): JS
         />
       </Animated.View>
       <View style={styles.checkmarkContainer}>
-        <Svg width="52" height="40">
+        <Svg width="52" height="40" >
           <AnimatedPath
+            fill="none"
             stroke={theme.color.success}
             strokeWidth={2}
             strokeLinecap="round"

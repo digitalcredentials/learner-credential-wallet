@@ -1,6 +1,7 @@
 {
   "displayName": "Learner Credential Wallet",
   "expo": {
+    "runtimeVersion": "1.0.0",
     "name": "Learner Credential Wallet",
     "slug": "learner-credential-wallet",
     "version": "1.0.0",
@@ -33,6 +34,23 @@
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#1F2937"
       },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": false,
+          "data": [
+            {
+              "scheme": "dccrequest",
+              "host": "request"
+            },
+            {
+              "scheme": "dccrequest",
+              "host": "present"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "package": "edu.wallet"
     },
     "web": {

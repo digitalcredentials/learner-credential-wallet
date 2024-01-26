@@ -69,7 +69,7 @@ buck-out/
 *.jsbundle
 
 # CocoaPods
-/ios_old/Pods/
+/ios/Pods/
 
 # Expo
 .expo/
@@ -77,4 +77,10 @@ web-build/
 
 # @end expo-cli
 
-android_old/app/release/
+android/app/release/
+android_old
+ios_old
+
+# generate the native folders by expo prebuild command
+ios
+android

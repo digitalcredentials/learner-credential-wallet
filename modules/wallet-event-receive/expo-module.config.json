@@ -1,0 +1,9 @@
+{
+  "platforms": ["android"],
+  "apple": {
+    "modules": ["WalletEventReceiveModule"]
+  },
+  "android": {
+    "modules": ["app.lcw.WalletEventReceiveModule"]
+  }
+}

@@ -1,6 +1,6 @@
-import React, { useState,  } from 'react';
-import {  Text, Linking } from 'react-native';
-import { View, useWindowDimensions, StyleSheet } from 'react-native';
+import React, {useEffect, useRef, useState,} from 'react';
+import {Text, Linking, useWindowDimensions} from 'react-native';
+import { View,  StyleSheet } from 'react-native';
 
 import { ConfirmModal } from '../../components';
 import { NavHeader } from '../../components';
@@ -9,18 +9,34 @@ import dynamicStyleSheet from './QRScreen.styles';
 import { errorMessageFrom } from '../../lib/error';
 import { useDynamicStyles } from '../../hooks';
 import {Camera, CodeType, useCameraDevice, useCameraFormat, useCodeScanner} from 'react-native-vision-camera';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {useAppState} from '@react-native-community/hooks';
 import {Code} from 'react-native-vision-camera/src/CodeScanner';
+import {useCameraPermissionStatus} from './useCameraPermissionStatus';
 const codeTypes: CodeType[] = ['qr'];
 export default function QRScreen({ navigation, route }: QRScreenProps)  {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { onReadQRCode, instructionText } = route.params;
-
+  const isActivated = useRef(true);
+  const deactivate = () => {
+    isActivated.current = false;
+  };
+  const activate = () => {
+    isActivated.current = true;
+  };
   const [errorMessage, setErrorMessage] = useState('');
   const { width } = useWindowDimensions();
 
   const errorModalOpen = errorMessage !== '';
+
+  const {status, requestPermission} = useCameraPermissionStatus();
+
+  useEffect(() => {
+    if (status === 'undetermined') {
+      requestPermission();
+    }
+  }, [status, requestPermission]);
+
 
   function Instructions(): JSX.Element {
     return (
@@ -30,9 +46,25 @@ export default function QRScreen({ navigation, route }: QRScreenProps)  {
     );
   }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      activate();
+
+      return deactivate;
+    }, []),
+  );
+
   async function onRead(codes: Code[]) {
+    const code = codes[0];
+    if (!code || !code.value) {
+      return;
+    }
+    if (!isActivated.current) {
+      return;
+    }
+    deactivate();
     try {
-      // await onReadQRCode(text);
+      await onReadQRCode(code.value);
     } catch (err) {
       setErrorMessage(errorMessageFrom(err));
     }
@@ -44,13 +76,13 @@ export default function QRScreen({ navigation, route }: QRScreenProps)  {
     // setTimeout(() => scannerRef.current?.reactivate(), 1000);
   }
 
-  function goToSettings() {
-    Linking.openSettings();
-  }
-
-  function navGoBack() {
-    navigation.goBack();
-  }
+  // function goToSettings() {
+  //   Linking.openSettings();
+  // }
+  //
+  // function navGoBack() {
+  //   navigation.goBack();
+  // }
 
   // function NoCameraPermission(): JSX.Element {
   //   return (
@@ -98,12 +130,13 @@ export default function QRScreen({ navigation, route }: QRScreenProps)  {
   return (
     <View style={styles.scannerBody}>
       <NavHeader title="QR Code Scanner" goBack={navigation.goBack} />
+      <Instructions />
       <Camera
         isActive={isActive}
         device={device}
         format={format}
         codeScanner={codeScanner}
-        style={StyleSheet.absoluteFill}
+        style={styles.cameraStyle}
         // onError={logger.error}
         photoHdr={false}
         orientation="portrait"
@@ -111,25 +144,19 @@ export default function QRScreen({ navigation, route }: QRScreenProps)  {
         video={false}
         audio={false}
       />
-      {/*<QRCodeScanner*/}
-      {/*  ref={scannerRef}*/}
-      {/*  onRead={onRead}*/}
-      {/*  topContent={<Instructions />}*/}
-      {/*  topViewStyle={styles.instructionContainer}*/}
-      {/*  bottomViewStyle={styles.emptyContainer}*/}
-      {/*  cameraStyle={styles.cameraStyle}*/}
-      {/*  markerStyle={[styles.markerStyle, {*/}
-      {/*    width: width * 0.8,*/}
-      {/*    height: width * 0.8,*/}
-      {/*  }]}*/}
-      {/*  notAuthorizedView={<NoCameraPermission />}*/}
-      {/*  cameraProps={{*/}
-      {/*    accessibilityLabel: 'QR Code Scanner, Camera Active',*/}
-      {/*    accessible: true,*/}
-      {/*    notAuthorizedView: <NoCameraPermission />*/}
-      {/*  } as RNCameraProps}*/}
-      {/*  showMarker*/}
-      {/*/>*/}
+      <View style={stylez.rectangleContainer}>
+        <View
+          style={[
+            stylez.rectangle,
+            styles.markerStyle,
+            {
+              width: width * 0.8,
+              height: width * 0.8,
+            }
+          ]}
+        />
+      </View>
+
       <ConfirmModal
         open={errorModalOpen}
         onRequestClose={onRequestModalClose}
@@ -141,3 +168,18 @@ export default function QRScreen({ navigation, route }: QRScreenProps)  {
     </View>
   );
 }
+
+const stylez = StyleSheet.create({
+  rectangleContainer: {
+    ...StyleSheet.absoluteFillObject,
+    top: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rectangle: {
+    height: 250,
+    width: 250,
+    borderWidth: 2,
+    backgroundColor: 'transparent',
+  },
+});

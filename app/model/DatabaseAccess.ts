@@ -109,9 +109,9 @@ class DatabaseAccess {
       passphrase,
       await DatabaseAccess.salt(),
       PBKDF2_ITERATIONS,
-      256,
+      32,
     );
-
+    // each byte is 2 hex characters, reaching the necessary 64 characters
     const keyString = key.toString('hex');
     await Promise.all([
       SecureStore.setItemAsync(PRIVILEGED_KEY_STATUS_ID, UNLOCKED),

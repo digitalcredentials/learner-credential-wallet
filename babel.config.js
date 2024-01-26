@@ -10,12 +10,12 @@ module.exports = function (api) {
           alias: {
             'crypto': 'react-native-quick-crypto',
             'stream': 'stream-browserify',
-            'whatwg-url': 'react-native-url-polyfill',
             'buffer': '@craftzdog/react-native-buffer',
+            // TODO use Url from expo? https://docs.expo.dev/versions/unversioned/sdk/url/
+            'whatwg-url': 'react-native-url-polyfill',
           },
         },
       ],
-      'react-native-reanimated/plugin',
     ],
   };
 };
