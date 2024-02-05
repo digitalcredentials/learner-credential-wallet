@@ -9,7 +9,7 @@ import { ReactHooksWrapper, setHook } from 'react-hooks-outside';
 
 import { RootNavigation, SetupNavigation, RootNavigationParamsList } from '../';
 import { RestartScreen, LoginScreen } from '../../screens';
-import { useAppLoading, useDynamicStyles, useLCWReceiveModule, useSelectedExchangeCredentials } from '../../hooks';
+import { useAppLoading, useDynamicStyles, useSelectedExchangeCredentials } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
 import { EventProvider } from 'react-native-outside-press';
 import { deepLinkConfig } from '../../lib/deepLink';
@@ -23,7 +23,6 @@ SplashScreen.preventAutoHideAsync();
 
 export default function AppNavigation(): JSX.Element | null {
   const { mixins, theme } = useDynamicStyles();
-  useLCWReceiveModule();
 
   const navigatorTheme = useMemo(() => ({
     ...DefaultTheme,
