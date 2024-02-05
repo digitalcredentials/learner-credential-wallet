@@ -11,6 +11,7 @@ jobs:
   build:
     runs-on: macos-14
     steps:
+    - run: xcode-select -p
     - uses: actions/checkout@v4
     - name: Use Node.js LTS
       uses: actions/setup-node@v4
@@ -20,7 +21,6 @@ jobs:
     # for some reason, ios prebuild fails if we don't run prebuild:android first
     - run: npm run prebuild:android
     - run: npm run prebuild:ios
-    - run: xcode-select -p
     - name: Build iOS (debug)
       run: "xcodebuild \
         -workspace ios/LearnerCredentialWallet.xcworkspace \
