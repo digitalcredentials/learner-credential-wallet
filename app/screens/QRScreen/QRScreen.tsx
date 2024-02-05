@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState,} from 'react';
-import {Text, Linking, useWindowDimensions} from 'react-native';
+import {Text,  useWindowDimensions} from 'react-native';
 import { View,  StyleSheet } from 'react-native';
 
 import { ConfirmModal } from '../../components';
@@ -176,6 +176,7 @@ const stylez = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  // eslint-disable-next-line react-native/no-color-literals
   rectangle: {
     height: 250,
     width: 250,
