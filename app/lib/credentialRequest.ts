@@ -4,9 +4,8 @@ import { DidRecordRaw } from '../model';
 
 import { createVerifiablePresentation } from './present';
 import { parseResponseBody } from './parseResponse';
-import { extractCredentialsFrom, VerifiableObject } from './verifiableObject';
+import { extractCredentialsFrom, verifyVerifiableObject, VerifiableObject } from './verifiableObject';
 import { RegistryClient } from '@digitalcredentials/issuer-registry-client';
-import {verifyVerifiableObject} from './verifyVerifiableObject';
 
 export type CredentialRequestParams = {
   auth_type?: string;

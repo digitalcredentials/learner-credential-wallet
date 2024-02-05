@@ -8,7 +8,7 @@ import dynamicStyleSheet from './VerificationStatusCard.styles';
 import { useDynamicStyles } from '../../hooks';
 import { BulletList } from '../../components';
 import { DidRegistryContext } from '../../init/registries';
-import { issuerInRegistries } from '../../lib/issuerInRegistries';
+import { issuerInRegistries } from '../../lib/verifiableObject';
 
 const DATE_FORMAT = 'MMM D, YYYY';
 

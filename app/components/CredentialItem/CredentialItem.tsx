@@ -5,11 +5,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import dynamicStyleSheet from './CredentialItem.styles';
 import type { CredentialItemProps } from './CredentialItem.d';
-import { useDynamicStyles } from '../../hooks/useDynamicStyles';
-import { useVerifyCredential } from '../../hooks/useVerifyCredential';
+import { CredentialStatusBadges } from '../../components';
+import { useDynamicStyles, useVerifyCredential } from '../../hooks';
 import { credentialItemPropsFor } from '../../lib/credentialDisplay';
 import { CardImage } from '../../lib/credentialDisplay/shared';
-import CredentialStatusBadges from '../CredentialStatusBadges/CredentialStatusBadges';
 
 export default function CredentialItem({
   onSelect,

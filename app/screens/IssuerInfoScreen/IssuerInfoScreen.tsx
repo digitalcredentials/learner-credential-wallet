@@ -7,7 +7,7 @@ import dynamicStyleSheet from './IssuerInfoScreen.styles';
 import { IssuerInfoScreenProps } from './IssuerInfoScreen.d';
 import { useDynamicStyles } from '../../hooks';
 import { DidRegistryContext } from '../../init/registries';
-import { issuerInRegistries } from '../../lib/issuerInRegistries';
+import { issuerInRegistries } from '../../lib/verifiableObject';
 
 const NO_URL = 'None';
 

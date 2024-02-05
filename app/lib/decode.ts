@@ -4,6 +4,7 @@ import qs from 'query-string';
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { ChapiCredentialRequest, ChapiCredentialResponse, ChapiDidAuthRequest } from '../types/chapi';
 import type { Credential, EducationalOperationalCredential, Subject } from '../types/credential';
+import { VerifiablePresentation } from '../types/presentation';
 import { CredentialRequestParams, getChapiCredentialRequest, isChapiCredentialRequestParams } from './credentialRequest';
 import { isCredentialRequestParams } from './credentialRequest';
 import { HumanReadableError } from './error';
@@ -11,7 +12,6 @@ import { isChapiCredentialResponse, isChapiDidAuthRequest, isVerifiableCredentia
 import { CredentialRecordRaw } from '../model';
 import { NavigationUtil } from './navigationUtil';
 import { DidAuthRequestParams, performDidAuthRequest } from './didAuthRequest';
-import {VerifiablePresentation} from '../types/presentation';
 
 const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
 export const regexPattern = {
@@ -109,7 +109,7 @@ async function credentialsFromJson(text: string): Promise<Credential[]> {
 
 /**
  * A method for decoding credentials from a variety text formats.
- *
+ * 
  * @param text - A string containing a VPQR, URL, or JSON object.
  * @returns {Promise<Credential[]>} - An array of credentials.
  */
