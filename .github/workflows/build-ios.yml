@@ -4,23 +4,23 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v4
+    - name: Use Node.js LTS
+      uses: actions/setup-node@v4
       with:
-        node-version: 18.x
+        node-version: 'lts'
     - run: npm i --legacy-peer-deps
+    # for some reason, ios prebuild fails if we don't run prebuild:android first
+    - run: npm run prebuild:android
+    - run: npm run prebuild:ios
     - run: xcode-select -p
-    - run: pod install
-      working-directory: ios
-      name: Install pod dependencies
     - name: Build iOS (debug)
       run: "xcodebuild \
-        -workspace ios/eduWallet.xcworkspace \
-        -scheme eduWallet \
+        -workspace ios/LearnerCredentialWallet.xcworkspace \
+        -scheme LearnerCredentialWallet \
         clean archive \
         -sdk iphoneos \
         -configuration Debug \
-        -UseModernBuildSystem=NO \
+        -UseModernBuildSystem=YES \
         -archivePath $PWD/eduWallet \
         CODE_SIGNING_ALLOWED=NO"
