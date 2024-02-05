@@ -16,7 +16,7 @@ jobs:
     - uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '21'
+        java-version: '17'
     - name: Use Node.js LTS
       uses: actions/setup-node@v4
       with:
