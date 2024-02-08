@@ -1,4 +1,5 @@
 import uuid from 'react-native-uuid';
+// import '@digitalcredentials/data-integrity-rn';
 import vc from '@digitalcredentials/vc';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { securityLoader } from '@digitalcredentials/security-document-loader';

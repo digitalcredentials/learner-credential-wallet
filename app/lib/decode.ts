@@ -1,3 +1,4 @@
+// import '@digitalcredentials/data-integrity-rn';
 import { fromQrCode, toQrCode } from '@digitalcredentials/vpqr';
 import qs from 'query-string';
 
@@ -109,7 +110,7 @@ async function credentialsFromJson(text: string): Promise<Credential[]> {
 
 /**
  * A method for decoding credentials from a variety text formats.
- * 
+ *
  * @param text - A string containing a VPQR, URL, or JSON object.
  * @returns {Promise<Credential[]>} - An array of credentials.
  */
