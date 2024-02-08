@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native-elements';
+// import '@digitalcredentials/data-integrity-rn';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { Ed25519VerificationKey2020 } from '@digitalcredentials/ed25519-verification-key-2020';
 import { ConfirmModal } from '../../components';
@@ -60,7 +61,7 @@ export default function ExchangeCredentials({ route }: ExchangeCredentialsProps)
       const credential = credentialField[0];
       await dispatch(stageCredentials([credential]));
       await delay(500);
-      navigationRef.navigate('AcceptCredentialsNavigation', { 
+      navigationRef.navigate('AcceptCredentialsNavigation', {
         screen: 'ApproveCredentialsScreen',
         params: {
           rawProfileRecord
