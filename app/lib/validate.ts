@@ -1,3 +1,4 @@
+// import '@digitalcredentials/data-integrity-rn';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { purposes } from '@digitalcredentials/jsonld-signatures';
 import { checkStatus } from '@digitalcredentials/vc-status-list';

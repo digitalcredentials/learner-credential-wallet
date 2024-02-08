@@ -1,3 +1,4 @@
+// import '@digitalcredentials/data-integrity-rn';
 import { ProfileRecordRaw } from '../model';
 import { makeSelectDidFromProfile, selectWithFactory } from '../store/selectorFactories';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';

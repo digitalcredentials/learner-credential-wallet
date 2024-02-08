@@ -1,3 +1,4 @@
+// import '@digitalcredentials/data-integrity-rn';
 import * as DidMethodKey from '@digitalcredentials/did-method-key';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { AddDidRecordParams } from '../model';
