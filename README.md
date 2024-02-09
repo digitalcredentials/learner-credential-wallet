@@ -35,7 +35,7 @@ universities to [pilot test](https://lcw.app/pilot.html) the wallet.
 
 ### Dependencies
 
-**If you encouter any issues, visit the [Troubleshooting Page](https://github.com/digitalcredentials/learner-credential-wallet/wiki/Troubleshooting)**
+**If you encounter any issues, visit the [Troubleshooting Page](https://github.com/digitalcredentials/learner-credential-wallet/wiki/Troubleshooting)**
 
 Prerequisites:
 * [Java](https://www.java.com/en/download/manual.jsp)
@@ -53,7 +53,7 @@ See [Installing on Linux](install-linux.md) on setting up the project on Linux.
 2. In root of project, run `npm i --legacy-peer-deps` to install the React Native dependencies.
    * Note: The app will crash if you try to use just `npm i` or `yarn` for example
    * (Optionally, if you use the `asdf` version manager run `asdf install` to install - more info in asdf section below)
-4. For ios, run `cd ios/ && npx pod-install` to install iOS Cocoapods. 
+4. Run `npm run prebuild:ios` and `npm run prebuild:android` to set up the `ios` and `android` folders. This step uses [Expo prebuild](https://docs.expo.dev/workflow/prebuild/).
 
 #### *If using asdf*
 * Run `asdf install` to install the proper versions of the technologies used listed in the `.tool-versions` file
@@ -74,7 +74,7 @@ See [Installing on Linux](install-linux.md) on setting up the project on Linux.
 
 ### Environment
 
-This project uses **TypeScript and React Native**. It would be best to use an 
+This project uses **TypeScript and React Native with [Expo](https://docs.expo.dev/)**. It would be best to use an 
 editor that can hook into the TypeScript language server (VSCode does this with 
 Intellisense, Vim does it with CoC). We also use eslint to catch common mistakes 
 and formatting errors. Most editors should support dynamic linting support while 
