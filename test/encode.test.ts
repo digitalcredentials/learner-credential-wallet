@@ -1,4 +1,4 @@
-import {encodeQueryParams, } from './encode';
+import { encodeQueryParams } from '../app/lib/encode';
 
 describe('encodeQueryParams', () => {
   // note this was added after encodeQueryParams was written, and it's not set in stone that
