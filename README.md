@@ -53,7 +53,7 @@ See [Installing on Linux](install-linux.md) on setting up the project on Linux.
 2. In root of project, run `npm i --legacy-peer-deps` to install the React Native dependencies.
    * Note: The app will crash if you try to use just `npm i` or `yarn` for example
    * (Optionally, if you use the `asdf` version manager run `asdf install` to install - more info in asdf section below)
-4. Run `npm run prebuild:ios` and `npm run prebuild:android` to set up the `ios` and `android` folders. This step uses [Expo prebuild](https://docs.expo.dev/workflow/prebuild/).
+3. Run `npm run prebuild:ios` and `npm run prebuild:android` to set up the `ios` and `android` folders. This step uses [Expo prebuild](https://docs.expo.dev/workflow/prebuild/).
 
 #### *If using asdf*
 * Run `asdf install` to install the proper versions of the technologies used listed in the `.tool-versions` file
