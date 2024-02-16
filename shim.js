@@ -1,6 +1,22 @@
 import { Platform } from 'react-native';
-
+// react-native-quick-crypto rewrites global.crypto
+import 'react-native-quick-crypto';
 const bi = require('big-integer');
+
+import * as ExpoCrypto from 'expo-crypto';
+
+const subtle = {
+  digest: (algorithm, data)=>{
+    // @digitalcredentials/jsonld-signatures calls this fn with an object
+    // rfd-canonize calls this with string
+    // both are valid options but expo-crypto only accepts string
+    const actualAlgorithm = typeof algorithm === 'string' ? algorithm : algorithm.name;
+    return ExpoCrypto.digest(actualAlgorithm.toUpperCase(), data);
+  },
+  // no other subtle methods appear to be needed
+};
+
+crypto.subtle = subtle;
 
 function patchedBigInt(value) {
   if (typeof value === 'string') {
