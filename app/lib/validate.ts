@@ -90,8 +90,7 @@ export async function verifyCredential(credential: Credential, registries: Regis
 
     return result;
   } catch (err) {
-    console.warn(err);
-    console.log(JSON.stringify(err, removeStackReplacer, 2));
+    console.warn('verifyCredential', err, JSON.stringify(err, removeStackReplacer, 2));
 
     throw new Error(CredentialError.CouldNotBeVerified);
   }

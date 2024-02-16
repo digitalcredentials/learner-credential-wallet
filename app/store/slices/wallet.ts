@@ -91,7 +91,11 @@ const initialize = createAsyncThunk('walletState/initialize', async ({ passphras
       throw err;
     }
   } else {
-    await dispatch(createProfile({ profileName: INITIAL_PROFILE_NAME }));
+    try {
+      await dispatch(createProfile({ profileName: INITIAL_PROFILE_NAME })).unwrap();
+    } catch(err) {
+      console.error('Profile creation failed:', err);
+    }
   }
 
   await dispatch(getAllRecords());
