@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, Text, View } from 'react-native';
+import {Linking, ScrollView, Text, View} from 'react-native';
 import { Button } from 'react-native-elements';
 import { FileLogger } from 'react-native-file-logger';
 import * as RNFS from 'react-native-fs';
@@ -88,7 +88,7 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
   return (
     <>
       <NavHeader title="Developer Settings" goBack={navigation.goBack} />
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.header}>General</Text>
         <Button {...buttonStyleProps} title="View developer logs" onPress={viewLogs} />
         <Button {...buttonStyleProps} title="Clear developer logs" onPress={clearLogs} />
@@ -100,7 +100,7 @@ export default function DeveloperScreen({ navigation }: DeveloperScreenProps): J
         <Button {...buttonStyleProps} title="Receive credential through deep link" onPress={receiveCredentialThroughDeepLink} />
         <Button {...buttonStyleProps} title="Credential share request with deep link" onPress={startShareRequest} />
         <View style={styles.spacer} />
-      </View>
+      </ScrollView>
     </>
   );
 }
