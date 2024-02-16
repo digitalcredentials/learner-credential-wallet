@@ -27,7 +27,14 @@
           "group.edu.mit.eduwallet"
         ]
       },
-      "associatedDomains": ["applinks:lcw.app/mobile"]
+      "associatedDomains": ["applinks:lcw.app/mobile"],
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": ["dccrequest"]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
