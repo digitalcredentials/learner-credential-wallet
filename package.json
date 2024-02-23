@@ -30,6 +30,9 @@
       }
     }
   },
+  "overrides": {
+    "@digitalbazaar/http-client": "4.1.0"
+  },
   "dependencies": {
     "@digitalcredentials/cborld": "^4.3.4",
     "@digitalcredentials/did-method-key": "^2.0.3",
@@ -54,6 +57,7 @@
     "big-integer": "^1.6.49",
     "bson": "4.4.1",
     "expo": "~50.0.6",
+    "expo-crypto": "~12.8.0",
     "expo-dev-client": "~3.3.8",
     "expo-secure-store": "~12.8.1",
     "expo-splash-screen": "~0.26.4",
@@ -104,8 +108,7 @@
     "text-encoding": "^0.7.0",
     "util": "^0.10.4",
     "validator": "^13.11.0",
-    "whatwg-fetch": "^3.6.20",
-    "expo-crypto": "~12.8.0"
+    "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
     "@react-native/eslint-config": "^0.73.2",
