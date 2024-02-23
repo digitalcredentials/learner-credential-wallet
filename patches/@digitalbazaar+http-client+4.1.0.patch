@@ -1,10 +1,12 @@
 diff --git a/node_modules/@digitalbazaar/http-client/package.json b/node_modules/@digitalbazaar/http-client/package.json
-index 4dd70e5..5a24632 100644
+index 4dd70e5..4f26c71 100644
 --- a/node_modules/@digitalbazaar/http-client/package.json
 +++ b/node_modules/@digitalbazaar/http-client/package.json
-@@ -5,16 +5,14 @@
+@@ -3,18 +3,15 @@
+   "version": "4.1.0",
+   "description": "An opinionated, isomorphic HTTP client.",
    "license": "BSD-3-Clause",
-   "type": "module",
+-  "type": "module",
    "main": "./dist/cjs/index.cjs",
 -  "exports": {
 -    "require": "./dist/cjs/index.cjs",
