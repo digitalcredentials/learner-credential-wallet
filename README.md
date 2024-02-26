@@ -65,12 +65,7 @@ See [Installing on Linux](install-linux.md) on setting up the project on Linux.
 2) In another terminal run `yarn android`
   * When running on android, open Android Studio and make sure the device you want to run on is selected (whether that is an emulator or a real device). 
   * Note: You might need to hit the play button in Android Studio for it to fully register which device to set to be used from the command line.
-3) In another terminal yarn `yarn ios [args]` where `[args]` depends on where you want to run the device 
-  * To run on an iOS simulator, you'll need to use the args `--simulator [name-of-device]`. The name of the device you want to use must be an accessible simulator setup in XCode.
-    * Example `yarn ios --simulator "iPhone 15 Pro Max"`
-  * To run on a real iOS device you'll need to use the args `--device [name-of-plugged-in-device]` (you'll be prompted to install the tools needed if you don't have them in the error output)
-    * The name of the device can be found in Settings -> General -> About -> `Name`
-    * Example: `yarn ios --device "iPhone 15"` (where `iPhone 15` is the name listed in the settings)
+3) In another terminal yarn `yarn ios`
 
 ### Environment
 
