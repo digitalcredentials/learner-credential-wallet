@@ -42,7 +42,7 @@ Prerequisites:
 * [nvm](https://collabnix.com/how-to-install-and-configure-nvm-on-mac-os/) or [asdf](https://asdf-vm.com/guide/getting-started.html#getting-started)
 * [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) or [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * [Node.js](https://nodejs.org/en/)
-* [Cocoapods](https://cocoapods.org/)
+* [Cocoapods](https://cocoapods.org/) (use brew, not gem, to install)
 * [XCode](https://developer.apple.com/xcode/)
 * [Android Studio](https://developer.android.com/studio)
 
