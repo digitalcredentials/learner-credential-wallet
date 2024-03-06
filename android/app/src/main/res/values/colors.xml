@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<resources>
-  <color name="splashscreen_background">#1F2937</color>
-  <color name="iconBackground">#1F2937</color>
-  <color name="colorPrimary">#023c69</color>
-  <color name="colorPrimaryDark">#1F2937</color>
-  <color name="activityBackground">#1F2937</color>
-</resources>

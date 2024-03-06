@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
-import { View } from 'react-native';
+import React, { useMemo } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -10,7 +9,7 @@ import { ReactHooksWrapper, setHook } from 'react-hooks-outside';
 
 import { RootNavigation, SetupNavigation, RootNavigationParamsList } from '../';
 import { RestartScreen, LoginScreen } from '../../screens';
-import { useAppLoading, useDynamicStyles, useLCWReceiveModule, useSelectedExchangeCredentials } from '../../hooks';
+import { useAppLoading, useDynamicStyles, useSelectedExchangeCredentials } from '../../hooks';
 import { selectWalletState } from '../../store/slices/wallet';
 import { EventProvider } from 'react-native-outside-press';
 import { deepLinkConfig } from '../../lib/deepLink';
@@ -20,10 +19,10 @@ export const navigationRef = createNavigationContainerRef<RootNavigationParamsLi
 
 // Enable global access to hooks
 setHook('selectedExchangeCredentials', useSelectedExchangeCredentials);
+SplashScreen.preventAutoHideAsync();
 
 export default function AppNavigation(): JSX.Element | null {
   const { mixins, theme } = useDynamicStyles();
-  useLCWReceiveModule();
 
   const navigatorTheme = useMemo(() => ({
     ...DefaultTheme,
@@ -54,21 +53,17 @@ export default function AppNavigation(): JSX.Element | null {
     }
   }
 
-  useEffect(() => {
-    SplashScreen.preventAutoHideAsync();
-  }, []);
-
   if (loading) {
     return <GlobalConfirmModal />;
   }
 
   return (
     <SafeAreaProvider>
-      <View onLayout={SplashScreen.hideAsync} />
       <StatusBar style={theme.statusBarStyle} />
       <GlobalConfirmModal />
       <EventProvider style={mixins.flex}>
         <NavigationContainer
+          onReady={SplashScreen.hideAsync}
           theme={navigatorTheme}
           ref={navigationRef}
           linking={deepLinkConfig}

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { RootState, getAllRecords } from '..';
+import { type RootState } from '..';
 import { GlobalModalPayload } from '../../components';
 import { isBiometricsSupported } from '../../lib/biometrics';
 import { importWalletOrProfileFrom } from '../../lib/import';
@@ -9,6 +9,7 @@ import { db, INITIAL_PROFILE_NAME } from '../../model';
 import { loadThemeName, saveThemeName } from '../../styles';
 import { createProfile } from './profile';
 import { Cache } from '../../lib/cache';
+import {getAllRecords} from '../getAllRecords';
 
 type InitializeParams = {
   passphrase: string;
@@ -64,9 +65,14 @@ const unlockWithBiometrics = createAsyncThunk('walletState/unlockWithBiometrics'
 });
 
 const initialize = createAsyncThunk('walletState/initialize', async ({ passphrase, enableBiometrics, existingData }: InitializeParams, { dispatch }) => {
-  await db.initialize(passphrase);
-  await db.unlock(passphrase);
-  
+  try {
+    await db.initialize(passphrase);
+    await db.unlock(passphrase);
+  } catch(err) {
+    console.error('Wallet initialization failed:', err);
+    return;
+  }
+
   if (enableBiometrics) {
     try {
       await db.enableBiometrics();
@@ -85,7 +91,11 @@ const initialize = createAsyncThunk('walletState/initialize', async ({ passphras
       throw err;
     }
   } else {
-    await dispatch(createProfile({ profileName: INITIAL_PROFILE_NAME }));
+    try {
+      await dispatch(createProfile({ profileName: INITIAL_PROFILE_NAME })).unwrap();
+    } catch(err) {
+      console.error('Profile creation failed:', err);
+    }
   }
 
   await dispatch(getAllRecords());
@@ -107,7 +117,7 @@ const reset = createAsyncThunk('walletState/reset', async () => {
 const toggleBiometrics = createAsyncThunk('walletState/toggleBiometrics', async (_, { getState, dispatch }) => {
   const state = await getState() as RootState;
   const { isBiometricsEnabled } = state.wallet;
-  
+
   if (isBiometricsEnabled) {
     await db.disableBiometrics();
   } else {

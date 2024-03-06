@@ -1,26 +1,33 @@
 name: iOS
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 18.x
-    - run: npm i --legacy-peer-deps
     - run: xcode-select -p
-    - run: pod install
-      working-directory: ios
-      name: Install pod dependencies
+    - uses: actions/checkout@v4
+    - name: Use Node.js LTS
+      uses: actions/setup-node@v4
+      with:
+        node-version: 'lts/*'
+    - run: npm i --legacy-peer-deps
+    # for some reason, ios prebuild fails if we don't run prebuild:android first
+    - run: npm run prebuild:android
+    - run: npm run prebuild:ios
     - name: Build iOS (debug)
       run: "xcodebuild \
-        -workspace ios/eduWallet.xcworkspace \
-        -scheme eduWallet \
+        -workspace ios/LearnerCredentialWallet.xcworkspace \
+        -scheme LearnerCredentialWallet \
         clean archive \
         -sdk iphoneos \
         -configuration Debug \
-        -UseModernBuildSystem=NO \
+        -UseModernBuildSystem=YES \
         -archivePath $PWD/eduWallet \
         CODE_SIGNING_ALLOWED=NO"

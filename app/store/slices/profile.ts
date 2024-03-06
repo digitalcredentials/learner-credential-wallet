@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllRecords, RootState } from '..';
+import { type RootState} from '..';
+import {getAllRecords} from '../getAllRecords';
 import { AddProfileRecordParams, ProfileRecord, ProfileRecordRaw } from '../../model';
 import { _getAllDidRecords } from './did';
 
@@ -15,7 +16,7 @@ const _getAllProfileRecords = createAsyncThunk('profileState/_getAllProfileRecor
   /* Update associated records */
   await dispatch(_getAllDidRecords());
 
-  return { 
+  return {
     rawProfileRecords: await ProfileRecord.getAllProfileRecords(),
   };
 });

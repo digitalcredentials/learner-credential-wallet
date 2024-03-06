@@ -1,33 +1,22 @@
 import { Platform } from 'react-native';
-
-if (typeof __dirname === 'undefined') global.__dirname = '/'
-if (typeof __filename === 'undefined') global.__filename = ''
-if (typeof process === 'undefined') {
-  global.process = require('process')
-} else {
-  const bProcess = require('process')
-  for (var p in bProcess) {
-    if (!(p in process)) {
-      process[p] = bProcess[p]
-    }
-  }
-}
-
-process.browser = false
-if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
-
-// global.location = global.location || { port: 80 }
-const isDev = typeof __DEV__ === 'boolean' && __DEV__
-process.env['NODE_ENV'] = isDev ? 'development' : 'production'
-if (typeof localStorage !== 'undefined') {
-  localStorage.debug = isDev ? '*' : ''
-}
-
-// If using the crypto shim, uncomment the following line to ensure
-// crypto is loaded first, so it can populate global.crypto
-// require('crypto')
-
+// react-native-quick-crypto rewrites global.crypto
+import 'react-native-quick-crypto';
 const bi = require('big-integer');
+
+import * as ExpoCrypto from 'expo-crypto';
+
+const subtle = {
+  digest: (algorithm, data)=>{
+    // @digitalcredentials/jsonld-signatures calls this fn with an object
+    // rfd-canonize calls this with string
+    // both are valid options but expo-crypto only accepts string
+    const actualAlgorithm = typeof algorithm === 'string' ? algorithm : algorithm.name;
+    return ExpoCrypto.digest(actualAlgorithm.toUpperCase(), data);
+  },
+  // no other subtle methods appear to be needed
+};
+
+crypto.subtle = subtle;
 
 function patchedBigInt(value) {
   if (typeof value === 'string') {

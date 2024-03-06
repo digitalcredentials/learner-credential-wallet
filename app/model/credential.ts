@@ -1,8 +1,8 @@
 import Realm from 'realm';
 import { ObjectID} from 'bson';
 
-import { db } from './';
 import { Credential } from '../types/credential';
+import {db} from './DatabaseAccess';
 
 /**
  * The DCC VC standard is in flux right now,
@@ -22,7 +22,7 @@ export type CredentialRecordRaw = CredentialRecordEntry & {
   readonly credential: Credential;
 }
 
-export class CredentialRecord implements CredentialRecordRaw {
+export class CredentialRecord extends Realm.Object<CredentialRecord> implements CredentialRecordRaw {
   readonly _id!: ObjectID;
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
@@ -77,11 +77,11 @@ export class CredentialRecord implements CredentialRecordRaw {
     };
   }
 
-  static async addCredentialRecord(params: AddCredentialRecordParams): Promise<CredentialRecordRaw> { 
+  static async addCredentialRecord(params: AddCredentialRecordParams): Promise<CredentialRecordRaw> {
     const rawCredentialRecord = CredentialRecord.rawFrom(params);
 
-    return db.withInstance((instance) => 
-      instance.write(() => 
+    return db.withInstance((instance) =>
+      instance.write(() =>
         instance.create<CredentialRecord>(CredentialRecord.schema.name, rawCredentialRecord).asRaw(),
       ),
     );

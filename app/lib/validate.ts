@@ -1,3 +1,4 @@
+// import '@digitalcredentials/data-integrity-rn';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { purposes } from '@digitalcredentials/jsonld-signatures';
 import { checkStatus } from '@digitalcredentials/vc-status-list';
@@ -8,7 +9,8 @@ import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { RegistryClient } from '@digitalcredentials/issuer-registry-client';
-import { extractCredentialsFrom, issuerInRegistries } from './verifiableObject';
+import { extractCredentialsFrom } from './verifiableObject';
+import {issuerInRegistries} from './issuerInRegistries';
 
 const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
 const suite = new Ed25519Signature2020();
@@ -88,8 +90,7 @@ export async function verifyCredential(credential: Credential, registries: Regis
 
     return result;
   } catch (err) {
-    console.warn(err);
-    console.log(JSON.stringify(err, removeStackReplacer, 2));
+    console.warn('verifyCredential', err, JSON.stringify(err, removeStackReplacer, 2));
 
     throw new Error(CredentialError.CouldNotBeVerified);
   }
