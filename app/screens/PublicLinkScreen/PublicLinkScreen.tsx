@@ -44,13 +44,15 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   useEffect(() => {
     const fetchData = async () => {
-      const raw_pdf = await convertSVGtoPDF(credential);
-      setPdf(raw_pdf);
-      console.log('---------');
-      console.log(raw_pdf);
-      console.log(typeof(raw_pdf));
-      console.log('---------');
-      if (raw_pdf !== null) {
+      let rawPdf;
+      try {
+        rawPdf = await convertSVGtoPDF(credential);
+        setPdf(rawPdf);
+      } catch (e) {
+        console.log('ERROR GENERATING PDF:');
+        console.log(e);
+      }
+      if (rawPdf !== null) {
         setShowExportToPdfButton(true);
       }
     };
@@ -74,7 +76,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   const handleShareAsPdf = async() => {
     if (pdf) {
-      Share.open({url: `file://${pdf.filepath}`});
+      Share.open({url: `file://${pdf.filePath}`});
     }
   };
 
