@@ -60,8 +60,8 @@ function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: Credent
           <View>
             {achievementImage && <CardImage source={achievementImage} accessibilityLabel={issuerName} />}
           </View>
-          <View style={styles.flexColumn}>
-            <View>
+          <View style={styles.spaceBetween}>
+            <View style={styles.flexRow}>
               <Text style={styles.headerInRow} accessibilityRole="header">{name}</Text>
             </View>
             <View>
