@@ -1,8 +1,9 @@
-import { Platform } from 'react-native';
-// react-native-quick-crypto rewrites global.crypto
 import 'react-native-quick-crypto';
-const bi = require('big-integer');
 
+// react-native-quick-crypto rewrites global.crypto
+// Buffer is exported to global by 'react-native-quick-crypto'
+import { Platform } from 'react-native';
+const bi = require('big-integer');
 import * as ExpoCrypto from 'expo-crypto';
 
 const subtle = {

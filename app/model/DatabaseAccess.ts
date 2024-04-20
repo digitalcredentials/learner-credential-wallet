@@ -9,14 +9,13 @@ import { DidRecord } from './did';
 import { resetBiometricKeychain, retrieveFromBiometricKeychain, storeInBiometricKeychain } from '../lib/biometrics';
 import { ProfileRecord } from './profile';
 import { runMigrations, schemaVersion } from './migration';
-import Crypto from 'react-native-quick-crypto';
+import { pbkdf2Sync } from 'react-native-quick-crypto';
 
 const models: Realm.ObjectClass[] = [
   CredentialRecord,
   DidRecord,
   ProfileRecord,
 ];
-
 
 const PRIVILEGED_KEY_KID = 'privileged_key';
 const PRIVILEGED_KEY_STATUS_ID = 'privileged_key_status';
@@ -105,7 +104,7 @@ class DatabaseAccess {
   public static async unlock(passphrase: string): Promise<void> {
     if (await this.isUnlocked()) return;
 
-    const key =  Crypto.pbkdf2Sync(
+    const key =  pbkdf2Sync(
       passphrase,
       await DatabaseAccess.salt(),
       PBKDF2_ITERATIONS,
