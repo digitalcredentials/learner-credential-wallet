@@ -116,7 +116,18 @@ async function credentialsFromJson(text: string): Promise<Credential[]> {
  */
 export async function credentialsFrom(text: string): Promise<Credential[]> {
   if (regexPattern.url.test(text)) {
-    const response = await fetch(text);
+    console.log('Attempting to fetch credential from URL...');
+    let response;
+    try {
+      response = await fetch(text);
+    } catch (e) {
+      console.log('Error while fetching credential:' + e);
+      throw e;
+    }
+
+    if (!response!.ok) {
+      throw new Error('Could not fetch credential from URL, status: ' + response.statusText);
+    }
     text = await response.text().then((t) => t.trim());
   }
 
@@ -128,7 +139,7 @@ export async function credentialsFrom(text: string): Promise<Credential[]> {
     return credentialsFromJson(text);
   }
 
-  throw new Error('No credentials were resolved from the text');
+  throw new Error(`Could not decode the credential from: ${text}`);
 }
 
 export function educationalOperationalCredentialFrom(credentialSubject: Subject): EducationalOperationalCredential | undefined {
