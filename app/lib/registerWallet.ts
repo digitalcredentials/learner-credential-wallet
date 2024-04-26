@@ -1,7 +1,7 @@
 import { Linking } from 'react-native';
 import { LinkConfig } from '../config';
 
-export async function registerWallet(): void {
+export async function registerWallet(): Promise<void> {
   Linking.openURL(LinkConfig.registerWalletUrl);
 
   // Issue a warning in case canOpenURL() is reporting as false
