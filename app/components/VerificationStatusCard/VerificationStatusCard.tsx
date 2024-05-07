@@ -93,8 +93,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
             details[LogId.RevocationStatus] === undefined ||
             details[LogId.RevocationStatus]
           }
-        />}
-        {hasCredentialStatus && hasSuspensionStatus &&
+        />
         <StatusItem
           positiveText="Has not been suspended by issuer"
           negativeText="Has been suspended by issuer"
@@ -102,7 +101,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
             details[LogId.SuspensionStatus] === undefined ||
             details[LogId.SuspensionStatus]
           }
-        />}
+        />
       </View>
     </>
   );
