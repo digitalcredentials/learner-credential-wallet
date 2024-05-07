@@ -16,7 +16,8 @@ enum LogId {
   ValidSignature = 'valid_signature',
   Expiration = 'expiration',
   IssuerDIDResolves = 'issuer_did_resolves',
-  RevocationStatus = 'revocation_status'
+  RevocationStatus = 'revocation_status',
+  SuspensionStatus = 'suspension_status'
 }
 
 export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): JSX.Element {
@@ -80,7 +81,18 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
         <StatusItem
           positiveText="Has not been revoked by issuer"
           negativeText="Has been revoked by issuer"
-          verified={details[LogId.RevocationStatus]}
+          verified={
+            details[LogId.RevocationStatus] === undefined ||
+            details[LogId.RevocationStatus]
+          }
+        />
+        <StatusItem
+          positiveText="Has not been suspended by issuer"
+          negativeText="Has been suspended by issuer"
+          verified={
+            details[LogId.SuspensionStatus] === undefined ||
+            details[LogId.SuspensionStatus]
+          }
         />
       </View>
     </>

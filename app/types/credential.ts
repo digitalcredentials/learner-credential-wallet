@@ -98,13 +98,13 @@ export type Credential = {
   readonly issuanceDate: string;         // https://w3c.github.io/vc-data-model/#issuance-date
   readonly expirationDate?: string;      // https://w3c.github.io/vc-data-model/#expiration
   readonly credentialSubject: Subject;   // https://w3c.github.io/vc-data-model/#credential-subject
-  readonly credentialStatus?: CredentialStatus;
+  readonly credentialStatus?: CredentialStatus | CredentialStatus[];
   readonly proof?: Proof;                // https://w3c.github.io/vc-data-model/#proofs-signatures
   readonly name?: string;
   readonly renderMethod?: RenderMethod[];
 }
 
-// https://w3c-ccg.github.io/vc-status-list-2021
+// https://www.w3.org/TR/vc-bitstring-status-list
 export type CredentialStatus = {
   readonly id: string;
   readonly type: string | string[];

@@ -1,15 +1,14 @@
 // import '@digitalcredentials/data-integrity-rn';
 import { Ed25519Signature2020 } from '@digitalcredentials/ed25519-signature-2020';
 import { purposes } from '@digitalcredentials/jsonld-signatures';
-import { checkStatus } from '@digitalcredentials/vc-status-list';
-import vc from '@digitalcredentials/vc';
+import * as vc from '@digitalcredentials/vc';
 
 import { VerifiablePresentation, PresentationError } from '../types/presentation';
 import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { RegistryClient } from '@digitalcredentials/issuer-registry-client';
-import { extractCredentialsFrom } from './verifiableObject';
+import { extractCredentialsFrom, getCredentialStatusChecker } from './verifiableObject';
 import {issuerInRegistries} from './issuerInRegistries';
 
 const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
@@ -38,16 +37,16 @@ export async function verifyPresentation(
   unsignedPresentation = true,
 ): Promise<VerifyResponse> {
   try {
-    const hasRevocation = extractCredentialsFrom(presentation)?.find(
+    const credential = extractCredentialsFrom(presentation)?.find(
       vc => vc.credentialStatus);
+    const checkStatus = credential ? getCredentialStatusChecker(credential) : undefined;
     const result = await vc.verify({
       presentation,
       presentationPurpose,
       suite,
       documentLoader,
       unsignedPresentation,
-      // Only check revocation status if any VC has a 'credentialStatus' property
-      checkStatus: hasRevocation ? checkStatus : undefined
+      checkStatus
     });
 
     if (!result.verified) {
@@ -69,14 +68,15 @@ export async function verifyCredential(credential: Credential, registries: Regis
   }
 
   try {
-    const hasStatusProperty = extractCredentialsFrom(credential)?.find(
+    const extractedCredential = extractCredentialsFrom(credential)?.find(
       vc => vc.credentialStatus);
+    const checkStatus = extractedCredential ? getCredentialStatusChecker(extractedCredential) : undefined;
     const result = await vc.verifyCredential({
-      credential,
+      credential: extractedCredential,
       suite,
       documentLoader,
       // Only check revocation status if VC has a 'credentialStatus' property
-      checkStatus: hasStatusProperty ? checkStatus : undefined,
+      checkStatus
     });
 
     // This logic catches the case where the verify response does not contain a `log` value
