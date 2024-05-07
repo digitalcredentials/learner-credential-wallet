@@ -8,9 +8,8 @@ import { Credential, CredentialError } from '../types/credential';
 
 import { securityLoader } from '@digitalcredentials/security-document-loader';
 import { RegistryClient } from '@digitalcredentials/issuer-registry-client';
-import { getCredentialStatusChecker } from './credentialStatus';
-import { issuerInRegistries } from './issuerInRegistries';
-import { extractCredentialsFrom } from './verifiableObject';
+import { extractCredentialsFrom, getCredentialStatusChecker } from './verifiableObject';
+import {issuerInRegistries} from './issuerInRegistries';
 
 const documentLoader = securityLoader({ fetchRemoteContexts: true }).build();
 const suite = new Ed25519Signature2020();
