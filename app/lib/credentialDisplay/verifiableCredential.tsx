@@ -5,8 +5,17 @@ import { View, Text } from 'react-native';
 import { CredentialStatusBadges } from '../../components';
 import { useDynamicStyles } from '../../hooks';
 import { DATE_FORMAT } from '../constants';
+import { getIssuanceDate } from '../credentialValidityPeriod';
 import type { CredentialCardProps, CredentialDisplayConfig } from '.';
-import { CardLink, CardDetail, dynamicStyleSheet, IssuerInfoButton, CardImage, issuerRenderInfoFrom, credentialSubjectRenderInfoFrom } from './shared';
+import {
+  CardLink,
+  CardDetail,
+  dynamicStyleSheet,
+  IssuerInfoButton,
+  CardImage,
+  issuerRenderInfoFrom,
+  credentialSubjectRenderInfoFrom
+} from './shared';
 
 export const verifiableCredentialDisplayConfig: CredentialDisplayConfig = {
   credentialType: 'VerifiableCredential',
@@ -26,11 +35,12 @@ export const verifiableCredentialDisplayConfig: CredentialDisplayConfig = {
 function VerifiableCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
-  const { credentialSubject, issuer, issuanceDate } = credential;
+  const { credentialSubject, issuer } = credential;
 
-  const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
+  const issuanceDate = getIssuanceDate(credential);
+  const formattedIssuanceDate = issuanceDate ? moment(issuanceDate).format(DATE_FORMAT) : 'N/A';
 
-  const { 
+  const {
     title,
     description,
     criteria,

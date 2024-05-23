@@ -4,8 +4,6 @@ import { Credential } from '../types/credential';
 import { VerifiablePresentation } from '../types/presentation';
 import { ResultLog, verifyCredential, verifyPresentation } from './validate';
 import { RegistryClient } from '@digitalcredentials/issuer-registry-client';
-import { checkStatus } from '@digitalcredentials/vc-bitstring-status-list';
-import { checkStatus as checkStatusLegacy } from '@digitalcredentials/vc-status-list';
 import { CredentialRecordRaw } from '../model';
 
 /**
@@ -63,24 +61,6 @@ export function extractCredentialsFrom(obj: VerifiableObject): Credential[] | nu
 
   return null;
 }
-
-export function getCredentialStatusChecker(credential: Credential) {
-  if (!credential.credentialStatus) {
-    return null;
-  }
-  const credentialStatuses = Array.isArray(credential.credentialStatus) ?
-    credential.credentialStatus :
-    [credential.credentialStatus];
-  const [credentialStatus] = credentialStatuses;
-  switch (credentialStatus.type) {
-    case 'BitstringStatusListEntry':
-      return checkStatus;
-    case 'StatusList2021Entry':
-      return checkStatusLegacy;
-    default:
-      return null;
-  }
-};
 
 /* Verification expiration = 30 days */
 const VERIFICATION_EXPIRATION = 1000 * 30;

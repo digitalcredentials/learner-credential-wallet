@@ -5,8 +5,17 @@ import { View, Text } from 'react-native';
 import { CredentialStatusBadges } from '../../components';
 import { useDynamicStyles } from '../../hooks';
 import { DATE_FORMAT } from '../constants';
+import { getExpirationDate, getIssuanceDate } from '../credentialValidityPeriod';
 import type { CredentialCardProps, CredentialDisplayConfig } from '.';
-import { CardLink, CardDetail, dynamicStyleSheet, IssuerInfoButton, CardImage, issuerRenderInfoFrom, credentialSubjectRenderInfoFrom } from './shared';
+import {
+  CardLink,
+  CardDetail,
+  dynamicStyleSheet,
+  IssuerInfoButton,
+  CardImage,
+  issuerRenderInfoFrom,
+  credentialSubjectRenderInfoFrom
+} from './shared';
 
 export const openBadgeCredentialDisplayConfig: CredentialDisplayConfig = {
   credentialType: 'OpenBadgeCredential',
@@ -26,10 +35,12 @@ export const openBadgeCredentialDisplayConfig: CredentialDisplayConfig = {
 function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
-  const { credentialSubject, issuer, issuanceDate, expirationDate, name } = credential;
+  const { credentialSubject, issuer, name } = credential;
 
-  const formattedIssuanceDate = moment(issuanceDate).format(DATE_FORMAT);
-  const formattedExpirationDate = expirationDate ? moment(expirationDate).format(DATE_FORMAT) : null;
+  const issuanceDate = getIssuanceDate(credential);
+  const expirationDate = getExpirationDate(credential);
+  const formattedIssuanceDate = issuanceDate ? moment(issuanceDate).format(DATE_FORMAT) : 'N/A';
+  const formattedExpirationDate = expirationDate ? moment(expirationDate).format(DATE_FORMAT) : 'N/A';
 
   const {
     description,
