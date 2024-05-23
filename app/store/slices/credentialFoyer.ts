@@ -60,6 +60,7 @@ function comparableStringFor(credential: Credential): string {
   const rawCredential = { ...credential } as Record<string, unknown>;
 
   delete rawCredential.issuanceDate;
+  delete rawCredential.validFrom;
   delete rawCredential.proof;
 
   return JSON.stringify(jcsCanonicalize(rawCredential));

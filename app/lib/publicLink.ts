@@ -1,6 +1,7 @@
 import { CredentialRecordRaw } from '../model';
 import { IssuerObject } from '../types/credential';
 import { Cache, CacheKey } from './cache';
+import { getExpirationDate, getIssuanceDate } from './credentialValidityPeriod';
 import { credentialIdFor, educationalOperationalCredentialFrom } from './decode';
 import * as verifierPlus from './verifierPlus';
 import { StoreCredentialResult } from './verifierPlus';
@@ -54,10 +55,12 @@ export async function linkedinUrlFrom(rawCredentialRecord: CredentialRecordRaw):
 
   const issuer = rawCredentialRecord.credential.issuer as IssuerObject;
   const title = eoc?.name ?? 'Verifiable Credential';
-  const issuanceDate = rawCredentialRecord.credential.issuanceDate &&
-    new Date(rawCredentialRecord.credential.issuanceDate);
-  const expirationDate = rawCredentialRecord.credential.expirationDate &&
-    new Date(rawCredentialRecord.credential.expirationDate);
+  const issuanceDateString = getIssuanceDate(rawCredentialRecord.credential);
+  const hasIssuanceDate = issuanceDateString !== undefined;
+  const issuanceDate = hasIssuanceDate && new Date(issuanceDateString);
+  const expirationDateString = getExpirationDate(rawCredentialRecord.credential);
+  const hasExpirationDate = expirationDateString !== undefined;
+  const expirationDate = hasExpirationDate && new Date(expirationDateString);
   const organizationInfo = `&name=${title}&organizationName=${issuer.name}`;
   const issuance = issuanceDate ? `&issueYear=${issuanceDate.getFullYear()}` +
     `&issueMonth=${new Date(issuanceDate).getMonth() + 1}` : '';

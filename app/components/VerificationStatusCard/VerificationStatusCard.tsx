@@ -8,7 +8,9 @@ import dynamicStyleSheet from './VerificationStatusCard.styles';
 import { useDynamicStyles } from '../../hooks';
 import { BulletList } from '../../components';
 import { DidRegistryContext } from '../../init/registries';
-import {issuerInRegistries} from '../../lib/issuerInRegistries';
+import { StatusPurpose, hasStatusPurpose } from '../../lib/credentialStatus';
+import { issuerInRegistries } from '../../lib/issuerInRegistries';
+import { getExpirationDate } from '../../lib/credentialValidityPeriod';
 
 const DATE_FORMAT = 'MMM D, YYYY';
 
@@ -24,7 +26,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const registries = useContext(DidRegistryContext);
 
-  const { expirationDate, issuer } = credential;
+  const { issuer } = credential;
 
   const registryNames = issuerInRegistries({ issuer, registries });
 
@@ -33,6 +35,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
     return acc;
   }, {}) || {};
 
+  const expirationDate = getExpirationDate(credential);
   const hasExpirationDate = expirationDate !== undefined;
   const expirationDateFmt = moment(expirationDate).format(DATE_FORMAT);
   const isExpired = moment() >= moment(expirationDate);
@@ -42,6 +45,10 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
       ? `(expired on ${expirationDateFmt})`
       : `(expires on ${expirationDateFmt})`
     : '';
+
+  const hasCredentialStatus = credential.credentialStatus !== undefined;
+  const hasRevocationStatus = hasStatusPurpose(credential, StatusPurpose.Revocation);
+  const hasSuspensionStatus = hasStatusPurpose(credential, StatusPurpose.Suspension);
 
   if (verifyPayload.error) {
     return (
@@ -78,6 +85,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
           negativeText={`Has expired ${expirationText}`}
           verified={details[LogId.Expiration]}
         />
+        {hasCredentialStatus && hasRevocationStatus &&
         <StatusItem
           positiveText="Has not been revoked by issuer"
           negativeText="Has been revoked by issuer"
@@ -85,7 +93,8 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
             details[LogId.RevocationStatus] === undefined ||
             details[LogId.RevocationStatus]
           }
-        />
+        />}
+        {hasCredentialStatus && hasSuspensionStatus &&
         <StatusItem
           positiveText="Has not been suspended by issuer"
           negativeText="Has been suspended by issuer"
@@ -93,7 +102,7 @@ export default function VerificationStatusCard({ credential, verifyPayload }: Ve
             details[LogId.SuspensionStatus] === undefined ||
             details[LogId.SuspensionStatus]
           }
-        />
+        />}
       </View>
     </>
   );
