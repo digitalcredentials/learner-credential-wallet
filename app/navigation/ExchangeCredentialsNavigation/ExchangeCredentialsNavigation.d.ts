@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import { ChapiCredentialRequest } from '../../lib/chapi';
+import { ChapiCredentialRequest } from '../../types/chapi';
 
 export type ExchangeCredentialsNavigationParamList = {
   ExchangeCredentials: { request: ChapiCredentialRequest; };
