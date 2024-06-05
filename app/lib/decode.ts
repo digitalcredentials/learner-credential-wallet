@@ -21,23 +21,6 @@ export const regexPattern = {
   json: /^{.*}$/s,
 };
 
-export function extractNameFromObv3Identifier (credentialSubject: Array<object> | object): string | null {
-  if(!credentialSubject?.identifier) {
-    return null;
-  }
-  
-  let identifiers;
-  if(!Array.isArray(credentialSubject.identifier)) {
-    identifiers = [credentialSubject.identifier];
-  } else {
-    identifiers = credentialSubject.identifier;
-  }
-  
-  const nameIdentifier = identifiers.find(i => i.identifierType === 'name');
-  
-  return nameIdentifier?.identifierHash || null;
-}
-
 export function isDeepLink(text: string): boolean {
   return text.startsWith('dccrequest://request?') || text.startsWith('org.dcconsortium://request?');
 }

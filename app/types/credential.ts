@@ -66,6 +66,12 @@ type SubjectExtensions = {
   readonly studentId?: StudentId;
   // Open Badges v3
   readonly achievement?: EducationalOperationalCredential | EducationalOperationalCredential[];
+  readonly identifier?: OBV3IdentifierObject | OBV3IdentifierObject[];
+}
+
+export type OBV3IdentifierObject = {
+  readonly identityType?: string;
+  readonly identityHash?: string;
 }
 
 export type Subject = SubjectExtensions & {
