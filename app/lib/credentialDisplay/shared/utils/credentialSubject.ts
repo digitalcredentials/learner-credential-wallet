@@ -1,7 +1,8 @@
 import moment from 'moment';
 import { Subject } from '../../../../types/credential';
 import { DATE_FORMAT } from '../../../constants';
-import { extractNameFromOBV3Identifier, educationalOperationalCredentialFrom } from '../../../decode';
+import { educationalOperationalCredentialFrom } from '../../../decode';
+import { extractNameFromOBV3Identifier } from '../../../extractNameFromOBV3Identifier';
 import { imageSourceFrom } from './image';
 
 type CredentialRenderInfo = {
@@ -20,7 +21,7 @@ type CredentialRenderInfo = {
 
 export function credentialSubjectRenderInfoFrom(credentialSubject: Subject): CredentialRenderInfo {
 
-  const subjectName = credentialSubject?.name ?? extractNameFromOBV3Identifier(credentialSubject.identifier) ?? null;
+  const subjectName = credentialSubject?.name ?? extractNameFromOBV3Identifier(credentialSubject) ?? null;
   const degreeName = credentialSubject.degree?.name ?? null;
 
   const eoc = educationalOperationalCredentialFrom(credentialSubject);
