@@ -1,4 +1,4 @@
-import { checkStatus } from '@digitalcredentials/vc-bitstring-status-list';
+//import { checkStatus } from '@digitalcredentials/vc-bitstring-status-list';
 import { checkStatus as checkStatusLegacy } from '@digitalcredentials/vc-status-list';
 import { Credential } from '../types/credential';
 
