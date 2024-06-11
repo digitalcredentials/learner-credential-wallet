@@ -25,9 +25,10 @@ jobs:
       run: "xcodebuild \
         -workspace ios/LearnerCredentialWallet.xcworkspace \
         -scheme LearnerCredentialWallet \
-        clean archive \
         -sdk iphoneos \
         -configuration Debug \
+        -destination generic/platform=iOS \
         -UseModernBuildSystem=YES \
         -archivePath $PWD/eduWallet \
+        clean archive \
         CODE_SIGNING_ALLOWED=NO"
