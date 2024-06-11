@@ -23,6 +23,7 @@
       "buildNumber": "80",
       "supportsTablet": true,
       "bundleIdentifier": "edu.mit.eduwallet",
+      "deploymentTarget": "13.0",
       "entitlements": {
         "com.apple.security.application-groups": [
           "group.edu.mit.eduwallet"
