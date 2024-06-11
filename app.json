@@ -1,10 +1,10 @@
 {
   "displayName": "Learner Credential Wallet",
   "expo": {
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": "2.1.0",
+    "version": "2.1.0",
     "name": "Learner Credential Wallet",
     "slug": "learner-credential-wallet",
-    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "backgroundColor": "#1F2937",
@@ -20,6 +20,7 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber": "80",
       "supportsTablet": true,
       "bundleIdentifier": "edu.mit.eduwallet",
       "entitlements": {
