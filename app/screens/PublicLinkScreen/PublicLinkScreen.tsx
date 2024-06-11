@@ -76,7 +76,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
 
   const handleShareAsPdf = async() => {
     if (pdf) {
-      Share.open({url: `file://${pdf.filePath}`});
+      Share.open({url: `file://${pdf.filepath}`});
     }
   };
 
