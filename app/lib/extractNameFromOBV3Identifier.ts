@@ -1,8 +1,8 @@
 import type { Subject } from '../types/credential';
 
-export function extractNameFromOBV3Identifier (credentialSubject: Subject): string | null {
+export function extractNameFromOBV3Identifier (credentialSubject: Subject): string | undefined {
   if(!credentialSubject?.identifier) {
-    return null;
+    return undefined;
   }
 
   let identifiers;
@@ -14,5 +14,5 @@ export function extractNameFromOBV3Identifier (credentialSubject: Subject): stri
 
   const nameIdentifier = identifiers.find(i => i.identityType === 'name');
     
-  return nameIdentifier?.identityHash || null;
+  return nameIdentifier?.identityHash || undefined;
 }
