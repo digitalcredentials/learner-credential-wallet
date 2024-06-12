@@ -3,15 +3,15 @@ import { extractNameFromOBV3Identifier } from '../app/lib/extractNameFromOBV3Ide
 
 describe('extractNameFromOBV3Identifier', () => {
   it('should return null when there is no identifier object', async () => {
-    expect(extractNameFromOBV3Identifier({id : '123'})).toEqual(null);
+    expect(extractNameFromOBV3Identifier({id : '123'})).toEqual(undefined);
   });
 
   it('should return null when the identifier object is empty', async () => {
-    expect(extractNameFromOBV3Identifier({  identifier: {} })).toEqual(null);
+    expect(extractNameFromOBV3Identifier({  identifier: {} })).toEqual(undefined);
   });
 
   it('should return null when the identityType is invalid', async () => {
-    expect(extractNameFromOBV3Identifier({ identifier: { identityType: 'something'} })).toEqual(null);
+    expect(extractNameFromOBV3Identifier({ identifier: { identityType: 'something'} })).toEqual(undefined);
   });
 
  it('should return name from a valid OBV3 identifier object', async () => {
