@@ -83,4 +83,5 @@ ios_old
 
 # generate the native folders by expo prebuild command
 ios
+*.xcarchive
 android
