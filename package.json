@@ -12,7 +12,7 @@
     "postinstall": "npx patch-package",
     "fix-deps": "npx expo install --check",
     "prebuild:ios": "EXPO_NO_TELEMETRY=1 EXPO_NO_GIT_STATUS=1 npx expo prebuild --clean -p ios",
-    "prebuild:android": "EXPO_NO_TELEMETRY=1 EXPO_NO_GIT_STATUS=1 npx expo prebuild --clean -p android && ./disableAndroidFlipper.sh"
+    "prebuild:android": "EXPO_NO_TELEMETRY=1 EXPO_NO_GIT_STATUS=1 npx expo prebuild --clean -p android"
   },
   "expo": {
     "autolinking": {

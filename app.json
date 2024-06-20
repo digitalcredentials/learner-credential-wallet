@@ -38,6 +38,7 @@
       }
     },
     "android": {
+      "versionCode": 80,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#1F2937"
@@ -59,7 +60,7 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "package": "edu.wallet"
+      "package": "app.lcw"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
