@@ -1,5 +1,24 @@
 # learner-credential-wallet Changelog
 
+## 2.1.0 - build 80
+First official release to app stores post RN Upgrade and conversion to Expo. Releases are now back on `main` branch.
+
+### Added
+- Add support for the OBv3 name property (derived from `identifierHash` when `identifierType == 'name'`).
+
+## 2.0.24 - build 79 (Pre-RN Upgrade `demo` branch)
+### Changed
+- Fix 'Register Wallet' button on Android.
+
+## 2.0.23 - build 78 (Pre-RN Upgrade `demo` branch)
+### Changed
+- Update sample VC templates from dev menu.
+- Fix PDF generation Share call.
+
+## 2.0.21 - build 76
+### Changed
+- Update to latest Bitstring Status List dependency.
+
 ## 2.0.8 - build 63
 ### Changed
 - Fix 'Android add button not clickable' issue #449
