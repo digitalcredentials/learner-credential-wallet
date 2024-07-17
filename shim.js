@@ -1,9 +1,10 @@
 import { Platform } from 'react-native';
-// react-native-quick-crypto rewrites global.crypto
 import 'react-native-quick-crypto';
 const bi = require('big-integer');
 
 import * as ExpoCrypto from 'expo-crypto';
+
+global.crypto = {};
 
 const subtle = {
   digest: (algorithm, data)=>{
