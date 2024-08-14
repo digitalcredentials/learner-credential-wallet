@@ -20,7 +20,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "80",
+      "buildNumber": "81",
       "supportsTablet": true,
       "bundleIdentifier": "edu.mit.eduwallet",
       "deploymentTarget": "13.0",
@@ -39,7 +39,7 @@
       }
     },
     "android": {
-      "versionCode": 80,
+      "versionCode": 81,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#1F2937"
