@@ -2,7 +2,7 @@ import type {Config} from 'jest';
 
 const packagesToTransformWithBabel = [
   '@react-native',
-  '@digitalbazaar/http-client'
+  '@digitalcredentials/http-client'
 ];
 
 const transformIgnorePatterns = [
