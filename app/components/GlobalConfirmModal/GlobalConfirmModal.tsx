@@ -7,14 +7,14 @@ import { selectWalletState } from '../../store/slices/wallet';
 import { ConfirmModal } from '..';
 import { clearGlobalModal } from '../../lib/globalModal';
 
-export default function GlobalConfirmModal(): JSX.Element {
+export default function GlobalConfirmModal(): React.ReactElement {
   const { mixins } = useDynamicStyles();
   const { globalModal } = useSelector(selectWalletState);
   const { body, onConfirm, onCancel, ...confirmModalDisplayProps } = globalModal || {};
-  
+
   const isModalOpen = globalModal !== null;
   const isBodyText = typeof body === 'string';
-  
+
   function onRequestClose(): void {
     clearGlobalModal();
   }

@@ -6,7 +6,7 @@ import dynamicStyleSheet from './MenuItem.styles';
 import type { MenuItemProps } from './MenuItem.d';
 import { useDynamicStyles } from '../../hooks';
 
-export default function MenuItem({ icon, title, onPress }: MenuItemProps): JSX.Element {
+export default function MenuItem({ icon, title, onPress }: MenuItemProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   return (

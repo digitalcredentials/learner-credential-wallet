@@ -6,7 +6,7 @@ import type { AcceptCredentialsNavigationParamList } from '..';
 
 const Stack = createStackNavigator<AcceptCredentialsNavigationParamList>();
 
-export default function AcceptCredentialsNavigation(): JSX.Element {
+export default function AcceptCredentialsNavigation(): React.ReactElement {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ApproveCredentialsScreen" component={ApproveCredentialsScreen} />

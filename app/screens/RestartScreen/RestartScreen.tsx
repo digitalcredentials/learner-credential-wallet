@@ -9,7 +9,7 @@ import walletImage from '../../assets/wallet.png';
 import appConfig from '../../../app.json';
 import { useDynamicStyles } from '../../hooks';
 
-export default function RestartScreen(): JSX.Element {
+export default function RestartScreen(): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
 
   function exit() {

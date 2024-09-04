@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../hooks';
 import { selectWalletState, updateThemeName } from '../../store/slices/wallet';
 import { defaultTheme, findThemeBy, ThemeContext, ThemeContextValue, themes } from '../../styles';
 
-export default function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
+export default function ThemeProvider({ children }: ThemeProviderProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { themeName } = useSelector(selectWalletState);
 

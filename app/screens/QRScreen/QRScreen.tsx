@@ -38,7 +38,7 @@ export default function QRScreen({ navigation, route }: QRScreenProps)  {
   }, [status, requestPermission]);
 
 
-  function Instructions(): JSX.Element {
+  function Instructions(): React.ReactElement {
     return (
       <Text style={styles.instructionText}>
         {instructionText}
@@ -84,7 +84,7 @@ export default function QRScreen({ navigation, route }: QRScreenProps)  {
   //   navigation.goBack();
   // }
 
-  // function NoCameraPermission(): JSX.Element {
+  // function NoCameraPermission(): React.ReactElement {
   //   return (
   //     <View>
   //       {

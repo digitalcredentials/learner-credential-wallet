@@ -7,11 +7,11 @@ import { ConfirmModalProps } from './ConfirmModal.d';
 
 import dynamicStyleSheet from './ConfirmModal.style';
 
-/** 
- * TODO: Right now the accessibility focus throws errors on Android 
+/**
+ * TODO: Right now the accessibility focus throws errors on Android
  * when returning from the share UI. Those errors must be resolved before
  * this can be enabled. This disable flag is a temporary fix.
- */ 
+ */
 const ENABLE_ACCESSIBILITY_FOCUS = false;
 
 export default function ConfirmModal({
@@ -28,7 +28,7 @@ export default function ConfirmModal({
   confirmText = 'Confirm',
   cancelText = 'Cancel',
   children,
-}: ConfirmModalProps): JSX.Element {
+}: ConfirmModalProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
 
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -68,7 +68,7 @@ export default function ConfirmModal({
           <View style={styles.modalBackground} />
         </TouchableWithoutFeedback>
         <View style={styles.modalContainer}>
-          <Text 
+          <Text
             style={styles.modalTitle}
             ref={titleRef}
             accessibilityRole="header"

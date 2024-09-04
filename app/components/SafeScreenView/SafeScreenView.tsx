@@ -9,7 +9,7 @@ import { useDynamicStyles } from '../../hooks';
 export default function SafeScreenView({
   children,
   ...rest
-}: SafeScreenViewProps): JSX.Element {
+}: SafeScreenViewProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
 
   return (

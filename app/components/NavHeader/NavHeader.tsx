@@ -11,14 +11,14 @@ export default function NavHeader({
   title,
   goBack,
   ...headerProps
-}: NavHeaderProps): JSX.Element {
+}: NavHeaderProps): React.ReactElement {
   const { mixins } = useDynamicStyles();
   const [headerRef, focusHeader] = useAccessibilityFocus<Text>();
 
   useEffect(focusHeader, []);
 
   const leftComponent = goBack ? (
-    <AccessibleView 
+    <AccessibleView
       label="Back"
       accessibilityRole="button"
       onPress={goBack}
@@ -28,12 +28,12 @@ export default function NavHeader({
         style={mixins.headerIcon}
       />
     </AccessibleView>
-  ) : undefined; 
+  ) : undefined;
 
   const centerComponent = (
-    <Text 
+    <Text
       style={mixins.headerTitle}
-      accessibilityLabel={`${title} Screen`} 
+      accessibilityLabel={`${title} Screen`}
       ref={headerRef}
     >
       {title}

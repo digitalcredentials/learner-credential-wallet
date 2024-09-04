@@ -11,7 +11,7 @@ type MoreMenuButtonProps = {
   children: ReactNode;
 }
 
-export default function MoreMenuButton({ children }: MoreMenuButtonProps): JSX.Element {
+export default function MoreMenuButton({ children }: MoreMenuButtonProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 

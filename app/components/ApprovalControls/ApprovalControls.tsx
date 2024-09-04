@@ -19,7 +19,7 @@ import { ObjectID } from 'bson';
 enum StatusIcon {
   Schedule = 'schedule',
   Close = 'close',
-  Done = 'done',
+  Done = 'done'
 }
 
 type ApprovalControlsProps = {
@@ -30,7 +30,7 @@ type ApprovalControlsProps = {
 type ApprovalButtonProps = {
   title: string;
   onPress: () => void;
-  primary?: boolean; 
+  primary?: boolean;
 }
 
 const iconFor = (status: ApprovalStatus): StatusIcon => ({
@@ -57,7 +57,7 @@ const defaultMessageFor = (status: ApprovalStatus): ApprovalMessage => ({
   [ApprovalStatus.Errored]: ApprovalMessage.Errored,
 })[status];
 
-function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.Element {
+function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
 
   return (
@@ -71,7 +71,7 @@ function ApprovalButton({ title, onPress, primary }: ApprovalButtonProps): JSX.E
   );
 }
 
-export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): JSX.Element {
+export default function ApprovalControls({ pendingCredential, profileRecordId }: ApprovalControlsProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const { status, messageOverride } = pendingCredential;

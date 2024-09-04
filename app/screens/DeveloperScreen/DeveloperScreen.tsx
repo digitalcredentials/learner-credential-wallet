@@ -17,7 +17,7 @@ import { revokedCredential } from '../../mock/revokedCredential';
 import { NavigationUtil } from '../../lib/navigationUtil';
 import { shareData } from '../../lib/shareData';
 
-export default function DeveloperScreen({ navigation }: DeveloperScreenProps): JSX.Element {
+export default function DeveloperScreen({ navigation }: DeveloperScreenProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
 

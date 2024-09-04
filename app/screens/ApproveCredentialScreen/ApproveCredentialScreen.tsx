@@ -9,7 +9,7 @@ import dynamicStyleSheet from './ApproveCredentialScreen.styles';
 import { useDynamicStyles, usePendingCredential } from '../../hooks';
 import { navigationRef } from '../../navigation';
 
-export default function ApproveCredentialScreen({ navigation, route }: ApproveCredentialScreenProps): JSX.Element {
+export default function ApproveCredentialScreen({ navigation, route }: ApproveCredentialScreenProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { pendingCredentialId, profileRecordId } = route.params;
   const pendingCredential = usePendingCredential(pendingCredentialId);

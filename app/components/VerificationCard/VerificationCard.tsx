@@ -28,7 +28,7 @@ const DATE_FORMAT = 'MMM D, YYYY';
  *   1) Pass in a `credential` to generate a `verifyPayload` and render the status.
  *   2) Pass in a `verifyPayload` to render the status (cannot be a button).
  */
-export default function VerificationCard({ rawCredentialRecord, verifyPayload, isButton, showDetails = false }: VerificationCardProps): JSX.Element {
+export default function VerificationCard({ rawCredentialRecord, verifyPayload, isButton, showDetails = false }: VerificationCardProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const generatedVerifyPayload = useVerifyCredential(rawCredentialRecord, true);
   const { credential } = rawCredentialRecord || {};
@@ -51,7 +51,7 @@ export default function VerificationCard({ rawCredentialRecord, verifyPayload, i
     }
   }
 
-  function VerificationContent(): JSX.Element {
+  function VerificationContent(): React.ReactElement {
     if (loading) {
       return (
         <View style={styles.flexRow}>

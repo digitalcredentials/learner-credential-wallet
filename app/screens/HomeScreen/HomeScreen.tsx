@@ -14,7 +14,7 @@ import { CredentialRecordRaw } from '../../model';
 import { useAppDispatch, useDynamicStyles, useShareCredentials } from '../../hooks';
 import { deleteCredential, selectRawCredentialRecords } from '../../store/slices/credential';
 
-export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element {
+export default function HomeScreen({ navigation }: HomeScreenProps): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
 
   const rawCredentialRecords = useSelector(selectRawCredentialRecords);
@@ -93,7 +93,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps): JSX.Element
     }
   }
 
-  function AddCredentialButton(): JSX.Element {
+  function AddCredentialButton(): React.ReactElement {
     return (
       <Button
         title="Add Credential"

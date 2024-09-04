@@ -32,7 +32,7 @@ export const verifiableCredentialDisplayConfig: CredentialDisplayConfig = {
   }
 };
 
-function VerifiableCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
+function VerifiableCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
   const { credentialSubject, issuer } = credential;

@@ -7,7 +7,7 @@ import dynamicStyleSheet from './DetailsScreen.styles';
 import { DetailsScreenProps } from './DetailsScreen.d';
 import { useDynamicStyles } from '../../hooks';
 
-export default function DetailsScreen({ navigation, route }: DetailsScreenProps): JSX.Element {
+export default function DetailsScreen({ navigation, route }: DetailsScreenProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { header, details, goBack = navigation.goBack } = route.params;
 

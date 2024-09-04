@@ -8,7 +8,7 @@ import { useResetNavigationOnBlur } from '../../hooks';
 
 const Stack = createStackNavigator<CredentialNavigationParamList>();
 
-export default function CredentialNavigation({ navigation }: CredentialNavigationProps): JSX.Element {
+export default function CredentialNavigation({ navigation }: CredentialNavigationProps): React.ReactElement {
   useResetNavigationOnBlur(navigation);
 
   return (

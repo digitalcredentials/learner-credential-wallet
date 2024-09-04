@@ -6,7 +6,7 @@ import { StatusBadgeProps } from './StatusBadge.d';
 import dynamicStyleSheet from './StatusBadge.styles';
 import { useDynamicStyles } from '../../hooks';
 
-export default function StatusBadge({ label, color, icon, backgroundColor }: StatusBadgeProps): JSX.Element {
+export default function StatusBadge({ label, color, icon, backgroundColor }: StatusBadgeProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const containerStyle = { backgroundColor };
   const labelStyle = { color };

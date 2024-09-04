@@ -10,7 +10,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { hasPublicLink } from '../../lib/publicLink';
 
 
-export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackgroundColor }: CredentialStatusBadgesProps): JSX.Element {
+export default function CredentialStatusBadges({ rawCredentialRecord, badgeBackgroundColor }: CredentialStatusBadgesProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const checkPublicLink = useAsyncCallback<boolean>(hasPublicLink);
   const verifyCredential = useVerifyCredential(rawCredentialRecord);

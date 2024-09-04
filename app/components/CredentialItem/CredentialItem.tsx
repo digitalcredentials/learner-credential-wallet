@@ -20,7 +20,7 @@ export default function CredentialItem({
   rawCredentialRecord,
   credential,
   showStatusBadges = false,
-}: CredentialItemProps): JSX.Element {
+}: CredentialItemProps): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
 
   const verifyCredential = useVerifyCredential(rawCredentialRecord);
@@ -40,7 +40,7 @@ export default function CredentialItem({
     accessibilityState: { checked: checkable ? selected : undefined },
   };
 
-  function LeftContent(): JSX.Element | null {
+  function LeftContent(): React.ReactElement | null {
     if (hideLeft) return null;
 
     if (checkable) {
@@ -70,7 +70,7 @@ export default function CredentialItem({
     return <CardImage source={image} accessibilityLabel={subtitle} size={theme.issuerIconSize - 8} />;
   }
 
-  function StatusBadges(): JSX.Element | null {
+  function StatusBadges(): React.ReactElement | null {
     if (!showStatusBadges || !rawCredentialRecord) return null;
 
     return (
@@ -81,7 +81,7 @@ export default function CredentialItem({
     );
   }
 
-  function Chevron(): JSX.Element | null {
+  function Chevron(): React.ReactElement | null {
     if (!chevron) return null;
 
     return (

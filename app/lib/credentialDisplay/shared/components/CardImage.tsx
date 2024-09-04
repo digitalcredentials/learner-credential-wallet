@@ -12,7 +12,7 @@ type CardImageProps = {
   size?: number,
 };
 
-export default function CardImage({ source, accessibilityLabel, defaultIcon = 'certificate', size }: CardImageProps): JSX.Element | null {
+export default function CardImage({ source, accessibilityLabel, defaultIcon = 'certificate', size }: CardImageProps): React.ReactElement | null {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   if (size === undefined) {

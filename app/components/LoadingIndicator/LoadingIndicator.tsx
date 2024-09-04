@@ -14,7 +14,7 @@ import AccessibleView from '../AccessibleView/AccessibleView';
  */
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export default function LoadingIndicator({ loading }: LoadingIndicatorProps): JSX.Element {
+export default function LoadingIndicator({ loading }: LoadingIndicatorProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const [percent, setPercent] = useState(25);
 

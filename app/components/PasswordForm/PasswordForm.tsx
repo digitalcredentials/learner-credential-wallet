@@ -16,7 +16,7 @@ type PasswordFormProps = {
 
 const PASSWORD_LENGTH_REQUIREMENT = 6;
 
-export default function PasswordForm({ focusOnMount, onChangePassword, style, textInputBackgroundColor }: PasswordFormProps): JSX.Element {
+export default function PasswordForm({ focusOnMount, onChangePassword, style, textInputBackgroundColor }: PasswordFormProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');

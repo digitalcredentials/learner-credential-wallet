@@ -13,10 +13,10 @@ import { useDynamicStyles } from '../../hooks';
 export default function CredentialSelectionScreen({
   navigation,
   route
-}: CredentialSelectionScreenProps): JSX.Element {
+}: CredentialSelectionScreenProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const { title, instructionText, onSelectCredentials, singleSelect, credentialFilter, goBack = navigation.goBack } = route.params;
-  
+
   const [selected, setSelected] = useState<number[]>([]);
   const allItems = useSelector(selectRawCredentialRecords);
   const filteredItems = useMemo(() => credentialFilter ? allItems.filter(credentialFilter) : allItems, [allItems]);
@@ -30,9 +30,9 @@ export default function CredentialSelectionScreen({
     }
   }
 
-  function renderItem({ item, index }: RenderItemProps): JSX.Element {
+  function renderItem({ item, index }: RenderItemProps): React.ReactElement {
     const { credential } = item;
-    
+
     const onSelectItem = () => {
       toggleItem(index);
       if (singleSelect) onSelectCredentials([item]);
@@ -52,9 +52,9 @@ export default function CredentialSelectionScreen({
     );
   }
 
-  
 
-  function ShareButton(): JSX.Element | null {
+
+  function ShareButton(): React.ReactElement | null {
     if (selected.length === 0 || singleSelect) {
       return null;
     }

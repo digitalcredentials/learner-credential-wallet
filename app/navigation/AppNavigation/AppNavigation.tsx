@@ -21,7 +21,7 @@ export const navigationRef = createNavigationContainerRef<RootNavigationParamsLi
 setHook('selectedExchangeCredentials', useSelectedExchangeCredentials);
 SplashScreen.preventAutoHideAsync();
 
-export default function AppNavigation(): JSX.Element | null {
+export default function AppNavigation(): React.ReactElement | null {
   const { mixins, theme } = useDynamicStyles();
 
   const navigatorTheme = useMemo(() => ({
@@ -39,7 +39,7 @@ export default function AppNavigation(): JSX.Element | null {
     needsRestart,
   } = useSelector(selectWalletState);
 
-  function renderScreen(): JSX.Element | null {
+  function renderScreen(): React.ReactElement | null {
     if (needsRestart) {
       return <RestartScreen />;
     } else if (isUnlocked && isInitialized) {

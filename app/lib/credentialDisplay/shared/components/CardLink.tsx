@@ -7,7 +7,7 @@ type CardLinkProps = {
   url: string | null,
 }
 
-export default function CardLink({ url }: CardLinkProps): JSX.Element | null {
+export default function CardLink({ url }: CardLinkProps): React.ReactElement | null {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
 
   if (url === null) {

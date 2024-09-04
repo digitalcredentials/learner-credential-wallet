@@ -13,7 +13,7 @@ import { useAccessibilityFocus, useAppDispatch, useAsyncValue, useDynamicStyles 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getBiometryIconName } from '../../lib/biometrics';
 
-export default function LoginScreen(): JSX.Element {
+export default function LoginScreen(): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   const dispatch = useAppDispatch();

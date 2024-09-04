@@ -16,7 +16,7 @@ import type { ImportFileModalHandle } from '../../components';
 import { navigationRef } from '../../navigation';
 
 
-export default function AddExistingProfileScreen({ navigation }: AddExistingProfileScreenProps): JSX.Element {
+export default function AddExistingProfileScreen({ navigation }: AddExistingProfileScreenProps): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const importModalRef = useRef<ImportFileModalHandle>(null);
@@ -31,7 +31,7 @@ export default function AddExistingProfileScreen({ navigation }: AddExistingProf
     }
 
     navigation.navigate('ManageProfilesScreen');
-  } 
+  }
 
   async function importProfile(data: string) {
     const reportDetails = await importProfileFrom(data);

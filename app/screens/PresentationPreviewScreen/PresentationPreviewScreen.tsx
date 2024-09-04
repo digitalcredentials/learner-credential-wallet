@@ -11,7 +11,7 @@ import { useDynamicStyles, useShareCredentials } from '../../hooks';
 export default function PresentationPreviewScreen({
   navigation,
   route,
-}: PresentationPreviewScreenProps): JSX.Element {
+}: PresentationPreviewScreenProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const { selectedCredentials } = route.params;
   const share = useShareCredentials();

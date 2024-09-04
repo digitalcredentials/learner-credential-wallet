@@ -12,7 +12,7 @@ type CredentialDetailProps = {
   inRow?: boolean,
 }
 
-export default function CardDetail({ label, value, isMarkdown = false, inRow = false}: CredentialDetailProps): JSX.Element | null {
+export default function CardDetail({ label, value, isMarkdown = false, inRow = false}: CredentialDetailProps): React.ReactElement | null {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { isDarkTheme } = useThemeContext();
 
@@ -58,18 +58,18 @@ export default function CardDetail({ label, value, isMarkdown = false, inRow = f
     inRow ?
       (<View style={[styles.dataContainer, styles.flexRow]}>
         <Text style={styles.dataLabel}>{`${label} : `}</Text>
-        {isMarkdown ? 
-          <Markdown style={markdownStyles}>{value}</Markdown> 
-          : 
+        {isMarkdown ?
+          <Markdown style={markdownStyles}>{value}</Markdown>
+          :
           <Text style={styles.dataLabel}>{value}</Text>
         }
       </View>)
-      : 
+      :
       (<View style={styles.dataContainer}>
         <Text style={styles.dataLabel}>{label}</Text>
-        {isMarkdown ? 
-          <Markdown style={markdownStyles}>{value}</Markdown> 
-          : 
+        {isMarkdown ?
+          <Markdown style={markdownStyles}>{value}</Markdown>
+          :
           <Text style={styles.dataValue}>{value}</Text>
         }
       </View>)

@@ -11,7 +11,7 @@ import { BackupItemModalProps } from './BackupItemModal.d';
 import { useDynamicStyles } from '../../hooks';
 
 
-export default function BackupItemModal({ onRequestClose, open, onBackup, backupItemName, backupModalText }: BackupItemModalProps): JSX.Element {
+export default function BackupItemModal({ onRequestClose, open, onBackup, backupItemName, backupModalText }: BackupItemModalProps): React.ReactElement {
   const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
   const [enablePassword, setEnablePassword] = useState(false);
   const [password, setPassword] = useState<string>();

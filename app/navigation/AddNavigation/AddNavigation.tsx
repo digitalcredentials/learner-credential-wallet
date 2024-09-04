@@ -7,7 +7,7 @@ import type { AddNavigationProps, AddNavigationParamList } from '..';
 
 const Stack = createStackNavigator<AddNavigationParamList>();
 
-export default function AddNavigation({ navigation }: AddNavigationProps ): JSX.Element {
+export default function AddNavigation({ navigation }: AddNavigationProps ): React.ReactElement {
   useResetNavigationOnBlur(navigation);
 
   return (

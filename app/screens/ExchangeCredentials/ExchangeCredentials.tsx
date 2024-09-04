@@ -15,7 +15,7 @@ import { NavigationUtil } from '../../lib/navigationUtil';
 import { delay } from '../../lib/time';
 import { ExchangeCredentialsProps } from './ExchangeCredentials.d';
 
-export default function ExchangeCredentials({ route }: ExchangeCredentialsProps): JSX.Element {
+export default function ExchangeCredentials({ route }: ExchangeCredentialsProps): React.ReactElement {
   const { params } = route;
   const { request } = params;
 
