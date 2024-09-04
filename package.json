@@ -40,7 +40,7 @@
     "@digitalcredentials/ed25519-verification-key-2020": "^4.0.0",
     "@digitalcredentials/issuer-registry-client": "^3.0.0",
     "@digitalcredentials/security-document-loader": "^6.0.0",
-    "@digitalcredentials/vc": "^8.0.0",
+    "@digitalcredentials/vc": "^8.0.1",
     "@digitalcredentials/vc-bitstring-status-list": "^1.0.0",
     "@digitalcredentials/vc-status-list": "^9.0.0",
     "@digitalcredentials/vpqr": "^2.2.1",

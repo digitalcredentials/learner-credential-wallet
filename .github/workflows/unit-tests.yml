@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  jest:
 
     runs-on: ubuntu-latest
 
