@@ -74,6 +74,16 @@
           "enableMicrophonePermission": false,
           "enableCodeScanner": true
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "packagingOptions": {
+              "pickFirst": ["**/libcrypto.so"]
+            }
+          }
+        }
       ]
     ]
   }
