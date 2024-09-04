@@ -16,9 +16,14 @@ declare module '@digitalcredentials/lru-memoize';
 declare module 'jsonld-document-loader';
 declare module '@interop/did-web-resolver';
 declare module 'json-canonicalize';
+declare module 'react-native-animated-ellipsis';
+declare module 'react-native-html-to-pdf';
 declare module 'react-native-keychain';
+declare module 'react-native-receive-sharing-intent';
+declare module 'react-native-swipeable';
 declare module 'react-hooks-outside';
 declare module 'validator';
 declare module '@microsoft/msrcrypto';
 
 declare module '*.png';
+declare module '*.json';
