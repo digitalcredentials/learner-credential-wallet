@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useAsyncCallback } from 'react-async-hook';
 import { Text, View } from 'react-native';
-import AnimatedEllipsis from 'rn-animated-ellipsis';
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
