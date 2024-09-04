@@ -20,3 +20,5 @@ declare module 'react-native-keychain';
 declare module 'react-hooks-outside';
 declare module 'validator';
 declare module '@microsoft/msrcrypto';
+
+declare module '*.png';
