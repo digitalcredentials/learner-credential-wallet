@@ -16,7 +16,7 @@ import { displayGlobalModal } from '../../lib/globalModal';
 import { hasPublicLink } from '../../lib/publicLink';
 import { verificationResultFor } from '../../lib/verifiableObject';
 import { DidRegistryContext } from '../../init/registries';
-import { LinkConfig } from '../../config';
+import { LinkConfig } from '../../../config';
 
 export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenProps): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);

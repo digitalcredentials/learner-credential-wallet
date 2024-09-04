@@ -7,7 +7,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import OutsidePressHandler from 'react-native-outside-press';
 import Share from 'react-native-share';
 
-import { LinkConfig } from '../../config';
+import { LinkConfig } from '../../../config';
 import { PublicLinkScreenProps } from './PublicLinkScreen.d';
 import dynamicStyleSheet from './PublicLinkScreen.styles';
 import { LoadingIndicatorDots, NavHeader } from '../../components';

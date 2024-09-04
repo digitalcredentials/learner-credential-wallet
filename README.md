@@ -105,7 +105,7 @@ Overridable configuration lives in two places:
 
 1. [`app.json`](./app.json) - created by Expo, contains app name, icon, splash
    page color, etc.
-2. [`app/config/index.ts`](./app/config/index.ts) - contains everything else,
+2. [`config.ts`](./config.ts) - contains everything else,
    including a list of Known DID Registries, deep link schemes, app website URLs,
    and so on.
 
