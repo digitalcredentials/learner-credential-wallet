@@ -21,7 +21,7 @@ type CredentialRequestHandlerProps = {
 
 export default function CredentialRequestHandler({
   credentialRequestParams, rawProfileRecord, onFailed
-}: CredentialRequestHandlerProps): JSX.Element {
+}: CredentialRequestHandlerProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);

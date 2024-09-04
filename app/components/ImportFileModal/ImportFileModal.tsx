@@ -26,7 +26,7 @@ function ImportFileModal({
   importItem,
   onFinished,
   textConfig,
-}: ImportFileModalProps, ref: ForwardedRef<ImportFileModalHandle>): JSX.Element | null {
+}: ImportFileModalProps, ref: ForwardedRef<ImportFileModalHandle>): React.ReactElement | null {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
 
   const [password, setPassword] = useState('');

@@ -7,12 +7,12 @@ import { ViewSourceScreenProps } from './ViewSourceScreen.d';
 import { useDynamicStyles } from '../../hooks';
 import { Button } from 'react-native-elements';
 
-export default function ViewSourceScreen({ navigation, route }: ViewSourceScreenProps): JSX.Element {
+export default function ViewSourceScreen({ navigation, route }: ViewSourceScreenProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const { data, screenTitle = 'View Source', onPressButton, buttonTitle, noWrap } = route.params;
   const scrollRef = useRef<ScrollView>(null);
-  
-  function BottomButton(): JSX.Element | null {
+
+  function BottomButton(): React.ReactElement | null {
     if (buttonTitle === undefined) return null;
 
     return (
@@ -33,9 +33,9 @@ export default function ViewSourceScreen({ navigation, route }: ViewSourceScreen
     <>
       <NavHeader title={screenTitle} goBack={navigation.goBack} />
       <View style={styles.container}>
-        <ScrollView 
-          ref={scrollRef} 
-          style={styles.scrollView} 
+        <ScrollView
+          ref={scrollRef}
+          style={styles.scrollView}
           contentContainerStyle={styles.scrollViewInner}
         >
           <ScrollView horizontal contentContainerStyle={[styles.scrollViewHorizontalInner, noWrap && styles.noWrap]}>

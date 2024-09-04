@@ -9,7 +9,7 @@ import { makeSelectDidFromProfile } from '../../store/selectorFactories';
 import { useSelectorFactory } from '../../hooks/useSelectorFactory';
 import { useDynamicStyles } from '../../hooks';
 
-export default function DebugScreen({ navigation, route }: DebugScreenProps): JSX.Element {
+export default function DebugScreen({ navigation, route }: DebugScreenProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { rawCredentialRecord, rawProfileRecord } = route.params;
   const rawDidRecord = useSelectorFactory(makeSelectDidFromProfile, { rawProfileRecord });
@@ -18,7 +18,7 @@ export default function DebugScreen({ navigation, route }: DebugScreenProps): JS
     navigation.goBack();
   }
 
-  function Exit(): JSX.Element {
+  function Exit(): React.ReactElement {
     return (
       <Button
         buttonStyle={styles.exitButton}

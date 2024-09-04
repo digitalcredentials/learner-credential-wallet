@@ -112,6 +112,7 @@ class DatabaseAccess {
       32,
     );
     // each byte is 2 hex characters, reaching the necessary 64 characters
+    // @ts-ignore
     const keyString = key.toString('hex');
     await Promise.all([
       SecureStore.setItemAsync(PRIVILEGED_KEY_STATUS_ID, UNLOCKED),

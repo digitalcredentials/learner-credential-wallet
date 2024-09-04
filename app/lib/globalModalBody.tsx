@@ -11,7 +11,7 @@ type GlobalModalBodyProps = {
 export default function GlobalModalBody({
   message,
   loading=false
-}: GlobalModalBodyProps): JSX.Element {
+}: GlobalModalBodyProps): React.ReactElement {
   const { mixins } = useDynamicStyles();
   return (
     <>
@@ -23,6 +23,6 @@ export default function GlobalModalBody({
   );
 }
 
-export const getGlobalModalBody = (message: string, loading?: boolean): JSX.Element => {
+export const getGlobalModalBody = (message: string, loading?: boolean): React.ReactElement => {
   return <GlobalModalBody message={message} loading={loading} />;
 };

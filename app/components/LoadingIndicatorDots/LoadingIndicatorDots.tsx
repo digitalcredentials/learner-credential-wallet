@@ -5,7 +5,7 @@ import { useDynamicStyles } from '../../hooks';
 
 import dynamicStyleSheet from './LoadingIndicatorDots.styles';
 
-export default function LoadingIndicatorDots(): JSX.Element {
+export default function LoadingIndicatorDots(): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
 
   return (

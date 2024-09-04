@@ -26,7 +26,7 @@ import { registerWallet } from '../../lib/registerWallet';
 
 const Stack = createStackNavigator<SettingsNavigationParamList>();
 
-function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItemProps): JSX.Element {
+function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItemProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   const _rightComponent = rightComponent || (
@@ -53,7 +53,7 @@ function SettingsItem({ title, onPress, rightComponent, disabled }: SettingsItem
   );
 }
 
-function Settings({ navigation }: SettingsProps): JSX.Element {
+function Settings({ navigation }: SettingsProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   const dispatch = useAppDispatch();
@@ -140,7 +140,7 @@ function Settings({ navigation }: SettingsProps): JSX.Element {
   );
 }
 
-function About({ navigation }: AboutProps): JSX.Element {
+function About({ navigation }: AboutProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const version = DeviceInfo.getVersion();
   const buildNumber = DeviceInfo.getBuildNumber();
@@ -185,7 +185,7 @@ function About({ navigation }: AboutProps): JSX.Element {
   );
 }
 
-export default function SettingsNavigation({ navigation }: SettingsNavigationProps): JSX.Element {
+export default function SettingsNavigation({ navigation }: SettingsNavigationProps): React.ReactElement {
   useResetNavigationOnBlur(navigation);
 
   return (

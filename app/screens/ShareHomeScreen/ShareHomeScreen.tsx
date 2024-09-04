@@ -18,7 +18,7 @@ import { verificationResultFor } from '../../lib/verifiableObject';
 import { DidRegistryContext } from '../../init/registries';
 import { LinkConfig } from '../../config';
 
-export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenProps): JSX.Element {
+export default function ShareHomeScreen({ navigation, route }: ShareHomeScreenProps): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const { shareRequestParams } = route.params || {};
   const registries = useContext(DidRegistryContext);

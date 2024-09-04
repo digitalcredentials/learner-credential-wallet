@@ -12,7 +12,7 @@ type IssuerInfoButtonProps = {
   onPress: (issuerId: string) => void,
 }
 
-export default function IssuerInfoButton({ issuerId, issuerName, onPress }: IssuerInfoButtonProps): JSX.Element | null {
+export default function IssuerInfoButton({ issuerId, issuerName, onPress }: IssuerInfoButtonProps): React.ReactElement | null {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   function _onPress() {
@@ -28,7 +28,7 @@ export default function IssuerInfoButton({ issuerId, issuerName, onPress }: Issu
         {' '}
         {issuerId && <View style={styles.infoIcon}><MaterialIcons name="info-outline" size={19} color={theme.color.textPrimary} style={styles.infoIcon} /></View>}
       </Text>
-    </TouchableOpacity> 
+    </TouchableOpacity>
   );
 }
 

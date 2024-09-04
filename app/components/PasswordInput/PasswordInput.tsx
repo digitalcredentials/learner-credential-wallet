@@ -24,14 +24,14 @@ function PasswordInput({
   inputRef,
   highlightError,
   ...textInputProps
-}: PasswordInputProps, ref: Ref<View>): JSX.Element {
+}: PasswordInputProps, ref: Ref<View>): React.ReactElement {
   const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
   const _inputRef = inputRef || useRef<RNTextInput>(null);
   const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
   return (
-    <AccessibleView 
-      ref={ref} 
+    <AccessibleView
+      ref={ref}
       style={styles.container}
       label={`${label}, Input${value && `, containing ${value.length} characters`}`}
       onPress={() => _inputRef.current?.focus()}

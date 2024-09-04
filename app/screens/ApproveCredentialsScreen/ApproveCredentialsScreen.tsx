@@ -11,7 +11,7 @@ import dynamicStyleSheet from './ApproveCredentialsScreen.styles';
 import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function ApproveCredentialsScreen({ navigation, route }: ApproveCredentialsScreenProps): JSX.Element {
+export default function ApproveCredentialsScreen({ navigation, route }: ApproveCredentialsScreenProps): React.ReactElement {
   const { mixins, styles } = useDynamicStyles(dynamicStyleSheet);
 
   const dispatch = useAppDispatch();
@@ -20,10 +20,10 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
 
   const displayedCredentials = useSelector(selectPendingCredentials);
   const pendingCredentials = useMemo(
-    () => displayedCredentials.filter(({ status }) => 
-      status === ApprovalStatus.Pending 
+    () => displayedCredentials.filter(({ status }) =>
+      status === ApprovalStatus.Pending
       || status === ApprovalStatus.PendingDuplicate
-    ), 
+    ),
     [displayedCredentials]
   );
 
@@ -33,11 +33,11 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
   async function goToHome() {
     await dispatch(clearFoyer());
     if (navigationRef.isReady()) {
-      navigationRef.navigate('HomeNavigation', { 
+      navigationRef.navigate('HomeNavigation', {
         screen: 'CredentialNavigation',
         params: {
           screen: 'HomeScreen',
-        }, 
+        },
       });
     }
   }
@@ -51,7 +51,7 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
     }
   }
 
-  function Done(): JSX.Element {
+  function Done(): React.ReactElement {
     return (
       <Button
         buttonStyle={styles.doneButton}
@@ -86,8 +86,8 @@ export default function ApproveCredentialsScreen({ navigation, route }: ApproveC
 
   return (
     <>
-      <NavHeader 
-        title="Available Credentials" 
+      <NavHeader
+        title="Available Credentials"
         rightComponent={<Done />}
       />
       <CredentialRequestHandler

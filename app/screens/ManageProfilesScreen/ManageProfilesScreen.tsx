@@ -13,10 +13,10 @@ import { createProfile } from '../../store/slices/profile';
 import { ManageProfilesScreenProps } from './ManageProfilesScreen.d';
 import dynamicStyleSheet from './ManageProfilesScreen.styles';
 
-export default function ManageProfilesScreen({ navigation }: ManageProfilesScreenProps): JSX.Element {
+export default function ManageProfilesScreen({ navigation }: ManageProfilesScreenProps): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [profileName, setProfileName] = useState('');
-  const [modalIsOpen, setModalIsOpen] = useState(false); 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const dispatch = useAppDispatch();
 
   const rawProfileRecords = useSelectorFactory(makeSelectProfilesWithCredentials);
@@ -105,7 +105,7 @@ export default function ManageProfilesScreen({ navigation }: ManageProfilesScree
         ListFooterComponent={ListHeader}
         contentContainerStyle={styles.container}
         data={flatListData}
-        renderItem={({ item }) => 
+        renderItem={({ item }) =>
           <ProfileItem rawProfileRecord={item} />
         }
       />

@@ -35,7 +35,7 @@ const forFade: ForFadeType = ({ current }) => ({
   },
 });
 
-export default function SetupNavigation(): JSX.Element {
+export default function SetupNavigation(): React.ReactElement {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, gestureEnabled: false }}

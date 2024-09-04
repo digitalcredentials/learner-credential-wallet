@@ -5,7 +5,7 @@ import { useDynamicStyles } from '../../hooks';
 import dynamicStyleSheet from './BulletList.style';
 import { BulletListProps } from './BulletList.d';
 
-export default function BulletList({ items, style }: BulletListProps): JSX.Element {
+export default function BulletList({ items, style }: BulletListProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
 
   return (

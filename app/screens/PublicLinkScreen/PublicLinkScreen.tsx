@@ -25,7 +25,7 @@ export enum PublicLinkScreenMode {
   ShareCredential
 }
 
-export default function PublicLinkScreen ({ navigation, route }: PublicLinkScreenProps): JSX.Element {
+export default function PublicLinkScreen ({ navigation, route }: PublicLinkScreenProps): React.ReactElement {
   const { styles, mixins, theme } = useDynamicStyles(dynamicStyleSheet);
 
   const share = useShareCredentials();

@@ -12,7 +12,7 @@ LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
 
-export default function App(): JSX.Element {
+export default function App(): React.ReactElement | null {
   return (
     <Provider store={store}>
       <ThemeProvider>

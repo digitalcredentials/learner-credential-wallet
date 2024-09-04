@@ -32,7 +32,7 @@ export const openBadgeCredentialDisplayConfig: CredentialDisplayConfig = {
   }
 };
 
-function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): JSX.Element {
+function OpenBadgeCredentialCard({ rawCredentialRecord, onPressIssuer }: CredentialCardProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
   const { credentialSubject, issuer, name } = credential;

@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback, View, ViewProps } from 'react-native';
 
 export type AccessibleViewProps = PropsWithChildren<ViewProps & {
   label: string;
-  onPress?: () => void; 
+  onPress?: () => void;
   innerViewProps?: ViewProps;
 }>
 
@@ -12,23 +12,23 @@ export type AccessibleViewProps = PropsWithChildren<ViewProps & {
  * with the provided `label` prop. Additional props will be passed to both
  * containing views.
  */
-function AccessibleView ({ 
+function AccessibleView ({
   label,
   onPress,
   children,
-  ...rest 
-}: AccessibleViewProps, ref: Ref<View>): JSX.Element {
+  ...rest
+}: AccessibleViewProps, ref: Ref<View>): React.ReactElement {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View 
+      <View
         accessibilityLabel={label}
         accessible={true}
         ref={ref}
         {...rest}
       >
-        <View 
-          accessibilityElementsHidden={true} 
-          importantForAccessibility="no-hide-descendants" 
+        <View
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
           {...rest}
         >
           {children}

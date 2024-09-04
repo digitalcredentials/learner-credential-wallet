@@ -10,7 +10,7 @@ import dynamicStyleSheet from './VerificationStatusScreen.styles';
 export default function VerificationStatusScreen({
   navigation,
   route,
-}: VerificationStatusScreenProps): JSX.Element {
+}: VerificationStatusScreenProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { credential, verifyPayload } = route.params;
 

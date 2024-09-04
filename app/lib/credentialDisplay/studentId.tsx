@@ -20,7 +20,7 @@ export const studentIdDisplayConfig: CredentialDisplayConfig = {
   },
 };
 
-function StudentIdCard({ rawCredentialRecord }: CredentialCardProps) : JSX.Element {
+function StudentIdCard({ rawCredentialRecord }: CredentialCardProps) : React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;

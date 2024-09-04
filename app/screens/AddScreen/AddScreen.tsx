@@ -20,7 +20,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { cleanCopy } from '../../lib/encode';
 import { NavigationUtil } from '../../lib/navigationUtil';
 
-export default function AddScreen(): JSX.Element {
+export default function AddScreen(): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [inputValue, setInputValue] = useState('');
   const dispatch = useAppDispatch();

@@ -19,7 +19,7 @@ enum ActiveModal {
   Backup,
 }
 
-export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX.Element {
+export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): React.ReactElement {
   const { styles, } = useDynamicStyles(dynamicStyleSheet);
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
 
@@ -70,7 +70,7 @@ export default function ProfileItem({ rawProfileRecord }: ProfileItemProps): JSX
   );
 }
 
-function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
   const [newName, setNewName] = useState(rawProfileRecord.profileName);
   const dispatch = useAppDispatch();
@@ -109,7 +109,7 @@ function RenameModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
   );
 }
 
-function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): React.ReactElement {
   const backupProfile = () => exportProfile(rawProfileRecord);
 
   return (
@@ -122,7 +122,7 @@ function BackupModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JS
   );
 }
 
-function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): JSX.Element {
+function DeleteModal({ rawProfileRecord, onRequestClose }: ActionModalProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const [errorMessage, setErrorMessage] = useState<string>();
   const dispatch = useAppDispatch();

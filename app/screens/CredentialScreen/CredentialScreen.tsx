@@ -13,7 +13,7 @@ import { useSelectorFactory } from '../../hooks/useSelectorFactory';
 import { PublicLinkScreenMode } from '../../screens';
 import { credentialItemPropsFor } from '../../lib/credentialDisplay';
 
-export default function CredentialScreen({ navigation, route }: CredentialScreenProps): JSX.Element {
+export default function CredentialScreen({ navigation, route }: CredentialScreenProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const dispatch = useAppDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -31,11 +31,11 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
         screen: 'CredentialNavigation',
         params: {
           screen: 'PublicLinkScreen',
-          params: { 
+          params: {
             rawCredentialRecord,
             screenMode: PublicLinkScreenMode.ShareCredential
           },
-        } 
+        }
       });
     }
   }
@@ -70,7 +70,7 @@ export default function CredentialScreen({ navigation, route }: CredentialScreen
     navigation.goBack();
   }
 
-  function HeaderRightComponent(): JSX.Element | null {
+  function HeaderRightComponent(): React.ReactElement | null {
     if (noShishKabob) {
       return null;
     }

@@ -13,7 +13,7 @@ const NO_URL = 'None';
 
 export default function IssuerInfoScreen({
   navigation, route
-}: IssuerInfoScreenProps): JSX.Element | null {
+}: IssuerInfoScreenProps): React.ReactElement | null {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { issuerId } = route.params;
   const registries = useContext(DidRegistryContext);
@@ -23,7 +23,7 @@ export default function IssuerInfoScreen({
 
   const { name, url, location } = issuerInfo || {};
 
-  function IssuerLink(): JSX.Element {
+  function IssuerLink(): React.ReactElement {
     if (!url || url === NO_URL) {
       return <Text style={styles.dataValue}>{NO_URL}</Text>;
     }

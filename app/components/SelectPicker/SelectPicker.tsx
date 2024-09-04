@@ -11,7 +11,7 @@ type SelectPickerProps<T> = DropDownPickerProps<T> & {
   multiple?: never;
 }
 
-export default function SelectPicker<T extends ValueType>({ items: initialItems, value, onChangeValue, label }: SelectPickerProps<T>): JSX.Element {
+export default function SelectPicker<T extends ValueType>({ items: initialItems, value, onChangeValue, label }: SelectPickerProps<T>): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState(initialItems);

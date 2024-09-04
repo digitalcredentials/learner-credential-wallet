@@ -12,7 +12,7 @@ import { useResetNavigationOnBlur } from '../../hooks';
 
 const Stack = createStackNavigator<ShareNavigationParamsList>();
 
-export default function ShareNavigation({ navigation }: ShareNavigationProps): JSX.Element {
+export default function ShareNavigation({ navigation }: ShareNavigationProps): React.ReactElement {
   useResetNavigationOnBlur(navigation);
 
   return (

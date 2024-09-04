@@ -19,15 +19,15 @@ const Tab = createBottomTabNavigator<HomeNavigationParamList>();
 
 const labelSuffix = Platform.OS === 'ios' ? ', tab' : '';
 
-export default function HomeNavigation(): JSX.Element {
+export default function HomeNavigation(): React.ReactElement {
   const { styles, theme } = useDynamicStyles(dynamicStyleSheet);
 
   return (
     <Tab.Navigator
-      screenOptions={{ 
-        headerShown: false, 
-        tabBarShowLabel: false, 
-        unmountOnBlur: true, 
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        unmountOnBlur: true,
         tabBarStyle: styles.barStyle,
         tabBarActiveTintColor: theme.color.iconActive,
         tabBarInactiveTintColor: theme.color.iconInactive,

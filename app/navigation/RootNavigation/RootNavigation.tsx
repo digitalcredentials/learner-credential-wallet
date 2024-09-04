@@ -18,7 +18,7 @@ import {
 
 const Stack = createStackNavigator<RootNavigationParamsList>();
 
-export default function RootNavigation(): JSX.Element {
+export default function RootNavigation(): React.ReactElement {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeNavigation" component={HomeNavigation} />

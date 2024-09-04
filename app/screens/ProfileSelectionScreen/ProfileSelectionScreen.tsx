@@ -11,7 +11,7 @@ import { useDynamicStyles, useSelectorFactory } from '../../hooks';
 
 import { makeSelectProfileForPendingCredentials } from '../../store/selectorFactories/makeSelectProfileForPendingCredentials';
 
-export default function ProfileSelectionScreen({ navigation, route }: ProfileSelectionScreenProps): JSX.Element {
+export default function ProfileSelectionScreen({ navigation, route }: ProfileSelectionScreenProps): React.ReactElement {
   const { styles, mixins } = useDynamicStyles(dynamicStyleSheet);
   const rawProfileRecords = useSelector(selectRawProfileRecords);
   const associatedProfile = useSelectorFactory(makeSelectProfileForPendingCredentials);

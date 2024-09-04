@@ -22,7 +22,7 @@ enum LogId {
   SuspensionStatus = 'suspension_status'
 }
 
-export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): JSX.Element {
+export default function VerificationStatusCard({ credential, verifyPayload }: VerificationStatusCardProps): React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const registries = useContext(DidRegistryContext);
 

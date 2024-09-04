@@ -11,7 +11,7 @@ import { useAppDispatch, useDynamicStyles } from '../../hooks';
 import { getAllRecords } from '../../store';
 import type { ImportFileModalHandle } from '../../components';
 
-export default function RestoreWalletScreen({ navigation }: RestoreWalletScreenProps): JSX.Element {
+export default function RestoreWalletScreen({ navigation }: RestoreWalletScreenProps): React.ReactElement {
   const { styles, theme, mixins } = useDynamicStyles(dynamicStyleSheet);
   const importModalRef = useRef<ImportFileModalHandle>(null);
   const dispatch = useAppDispatch();

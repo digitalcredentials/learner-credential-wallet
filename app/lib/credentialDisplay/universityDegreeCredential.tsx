@@ -20,7 +20,7 @@ export const universityDegreeCredentialDisplayConfig: CredentialDisplayConfig = 
   },
 };
 
-function UniversityDegreeCredentialCard({ rawCredentialRecord }: CredentialCardProps) : JSX.Element {
+function UniversityDegreeCredentialCard({ rawCredentialRecord }: CredentialCardProps) : React.ReactElement {
   const { styles } = useDynamicStyles(dynamicStyleSheet);
   const { credential } = rawCredentialRecord;
   const { credentialSubject } = credential;
