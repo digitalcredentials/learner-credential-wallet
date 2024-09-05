@@ -84,6 +84,7 @@
             },
             "compileSdkVersion": 34,
             "targetSdkVersion": 34,
+            "minSdkVersion": 34,
             "buildToolsVersion": "34.0.0"
           }
         }
