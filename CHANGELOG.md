@@ -1,11 +1,17 @@
 # learner-credential-wallet Changelog
+## 2.1.2 - build 82
+
+### Fixed
+- Fix signature verification (`@sphereon/isomorphic-webcrypto` was failing upstream in `jsonld-signatures`),
+  and has been replaced with `expo-crypto` usage. Also fixes StatusList `Buffer` error.
+
 ## 2.1.1 - build 81
 
 ### Changed
-Update to latest library versions, add support for VC DM 2.0.
+- Update to latest library versions, add support for VC DM 2.0.
 
 ## 2.1.0 - build 80
-First official release to app stores post RN Upgrade and conversion to Expo. Releases are now back on `main` branch.
+- First official release to app stores post RN Upgrade and conversion to Expo. Releases are now back on `main` branch.
 
 ### Added
 - Add support for the OBv3 name property (derived from `identifierHash` when `identifierType == 'name'`).

@@ -1,11 +1,16 @@
 import { Platform } from 'react-native';
 import 'react-native-quick-crypto';
-const bi = require('big-integer');
+import * as bi from 'big-integer';
+
+// Used in @digitalcredentials/vc-status-list
+import { Buffer } from '@craftzdog/react-native-buffer';
 
 import * as ExpoCrypto from 'expo-crypto';
 
 // eslint-disable-next-line no-undef
 global.crypto = {};
+// eslint-disable-next-line no-undef
+global.Buffer = Buffer;
 
 const subtle = {
   digest: (algorithm, data)=>{
