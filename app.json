@@ -1,8 +1,8 @@
 {
   "displayName": "Learner Credential Wallet",
   "expo": {
-    "runtimeVersion": "2.1.1",
-    "version": "2.1.1",
+    "runtimeVersion": "2.1.2",
+    "version": "2.1.2",
     "name": "Learner Credential Wallet",
     "slug": "learner-credential-wallet",
     "orientation": "portrait",
@@ -20,7 +20,7 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "81",
+      "buildNumber": "82",
       "supportsTablet": true,
       "bundleIdentifier": "edu.mit.eduwallet",
       "deploymentTarget": "13.0",
@@ -39,7 +39,7 @@
       }
     },
     "android": {
-      "versionCode": 81,
+      "versionCode": 82,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#1F2937"
