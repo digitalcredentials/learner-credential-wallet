@@ -4,11 +4,22 @@
 ### Fixed
 - Fix signature verification (`@sphereon/isomorphic-webcrypto` was failing upstream in `jsonld-signatures`),
   and has been replaced with `expo-crypto` usage. Also fixes StatusList `Buffer` error.
+- Update Target API Level #633
+- "Issued To" Not Displaying When Using Identifier in CredentialSubject #632
+- Wallet not verifying creds #638
+- After issuing VC via CHAPI, LCW shows error #547
+- Error: crypto.subtle not found (IOS ISSUE) #554
+- 'Select to Speak' accessibility control on Android causes bottom nav row to disappear #405
+- Check more markdown/HTML in achievement.criteria.narrative #470
 
 ## 2.1.1 - build 81
 
 ### Changed
 - Update to latest library versions, add support for VC DM 2.0.
+
+### Fixed
+- Title adjustment on BGV credential #531
+- Register Wallet button not working on Android on Build 58+. #607
 
 ## 2.1.0 - build 80
 - First official release to app stores post RN Upgrade and conversion to Expo. Releases are now back on `main` branch.
