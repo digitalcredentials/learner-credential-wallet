@@ -1,6 +1,10 @@
 # learner-credential-wallet Changelog
-## 2.1.2 - build 82
 
+## 2.1.3 - build 83
+### Fixed
+- Fix verifyCredential not working without a credentialStatus #644
+
+## 2.1.2 - build 82
 ### Fixed
 - Fix signature verification (`@sphereon/isomorphic-webcrypto` was failing upstream in `jsonld-signatures`),
   and has been replaced with `expo-crypto` usage. Also fixes StatusList `Buffer` error.
@@ -13,7 +17,6 @@
 - Check more markdown/HTML in achievement.criteria.narrative #470
 
 ## 2.1.1 - build 81
-
 ### Changed
 - Update to latest library versions, add support for VC DM 2.0.
 
