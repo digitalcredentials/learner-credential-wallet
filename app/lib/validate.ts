@@ -73,7 +73,7 @@ export async function verifyCredential(credential: Credential, registries: Regis
       vc => vc.credentialStatus);
     const checkStatus = extractedCredential ? getCredentialStatusChecker(extractedCredential) : undefined;
     const result = await vc.verifyCredential({
-      credential: extractedCredential,
+      credential,
       suite,
       documentLoader,
       // Only check revocation status if VC has a 'credentialStatus' property
