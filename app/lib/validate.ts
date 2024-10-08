@@ -69,9 +69,7 @@ export async function verifyCredential(credential: Credential, registries: Regis
   }
 
   try {
-    const extractedCredential = extractCredentialsFrom(credential)?.find(
-      vc => vc.credentialStatus);
-    const checkStatus = extractedCredential ? getCredentialStatusChecker(extractedCredential) : undefined;
+    const checkStatus = credential.credentialStatus ? getCredentialStatusChecker(credential) : undefined;
     const result = await vc.verifyCredential({
       credential,
       suite,
