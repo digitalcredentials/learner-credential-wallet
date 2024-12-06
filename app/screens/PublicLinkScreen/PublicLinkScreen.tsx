@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, Linking, TextInput as RNTextInput, Platform } from 'react-native';
+import { View, ScrollView, Linking, TextInput as RNTextInput, Platform, Image } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
@@ -36,17 +36,34 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
   const [justCreated, setJustCreated] = useState(false);
   const [pdf, setPdf] = useState<PDF | null>(null);
   const [showExportToPdfButton, setShowExportToPdfButton] = useState(false);
-
+  const [qrCodeBase64, setQrCodeBase64] = useState<string | null>(null); // State to store base64 data URL of QR code
+  
+  const qrCodeRef = useRef<any>(null); // Reference to QRCode component to access toDataURL
   const isVerified = useVerifyCredential(rawCredentialRecord)?.result.verified;
   const inputRef = useRef<RNTextInput | null>(null);
   const disableOutsidePressHandler = inputRef.current?.isFocused() ?? false;
   const selectionColor = Platform.select({ ios: theme.color.brightAccent, android: theme.color.highlightAndroid });
 
+
+  useEffect(() => {
+    if (qrCodeRef.current) {
+      // Once the ref is available, extract the base64 data URL for the QR code
+      qrCodeRef.current.toDataURL((dataUrl: string) => {
+        setQrCodeBase64(dataUrl);
+      });
+    }
+  }, [qrCodeRef, publicLink]); // Re-run when publicLink changes
+
   useEffect(() => {
     const fetchData = async () => {
+      if (!qrCodeBase64 || publicLink) {
+        console.log('QR code or public link is missing.');
+        //return;
+      }
       let rawPdf;
       try {
-        rawPdf = await convertSVGtoPDF(credential);
+        // Pass qrCodeBase64 directly to the function
+        rawPdf = await convertSVGtoPDF(credential, publicLink, qrCodeBase64); 
         setPdf(rawPdf);
       } catch (e) {
         console.log('ERROR GENERATING PDF:');
@@ -58,7 +75,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
     };
 
     fetchData();
-  }, []);
+  }, [qrCodeBase64, publicLink]); // Run when qrCodeBase64 or publicLink changes
 
   const screenTitle = {
     [PublicLinkScreenMode.Default]: 'Public Link',
@@ -73,12 +90,6 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
       body: <LoadingIndicatorDots />
     });
   }
-
-  const handleShareAsPdf = async() => {
-    if (pdf) {
-      Share.open({url: `file://${pdf.filePath}`});
-    }
-  };
 
   function displayErrorModal(err: Error) {
     function goToErrorSource() {
@@ -107,6 +118,63 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
         </>
       )
     });
+  }
+
+  // Function to handle PDF generation
+  async function handleGeneratePDF() {
+    if (!qrCodeBase64) {
+      console.error('QR code base64 not available.');
+      return;
+    }
+    try {
+      const generatedPdf = await convertSVGtoPDF(credential, publicLink, qrCodeBase64);  // Pass the QR code data URL to PDF generator
+      setPdf(generatedPdf);  // Store the generated PDF
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+    if (pdf) {
+      Share.open({url: `file://${pdf.filePath}`});
+    }
+  }
+
+  // Button press handler for exporting PDF
+  async function handleShareAsPdfButton() {
+    if (!isVerified) {
+      return displayNotVerifiedModal(); // Show modal if the credential isn't verified
+    }
+    // Prompt for confirmation before proceeding
+    const confirmed = await displayGlobalModal({
+      title: 'Are you sure?',
+      confirmText: 'Export to PDF',
+      cancelOnBackgroundPress: true,
+      body: (
+        <>
+          <Text style={mixins.modalBodyText}>
+            {publicLink !== null
+              ? 'This will export your credential to PDF.'
+              : 'You must create a public link before exporting to PDF. The link will automatically expire 1 year after creation.'
+            }
+          </Text>
+          <Button
+            buttonStyle={mixins.buttonClear}
+            titleStyle={[mixins.buttonClearTitle, mixins.modalLinkText]}
+            containerStyle={mixins.buttonClearContainer}
+            title="What does this mean?"
+            onPress={() => Linking.openURL(`${LinkConfig.appWebsite.faq}#public-link`)}
+          />
+        </>
+      )
+    });
+
+    if (!confirmed) return;
+
+    if (!publicLink) {
+    // If the public link isn't created, create it before generating the PDF
+      await createPublicLink();
+    }
+
+    // Now that we have the public link, generate the PDF
+    await handleGeneratePDF();
   }
 
   function displayNotVerifiedModal() {
@@ -403,7 +471,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                 containerStyle={mixins.buttonIconContainer}
                 titleStyle={mixins.buttonIconTitle}
                 iconRight
-                onPress={handleShareAsPdf}
+                onPress={handleShareAsPdfButton}
                 icon={
                   <Ionicons
                     name="document-text"
@@ -449,6 +517,7 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                   </Text>
                 </View>
               )}
+  
               {publicLink !== null && (
                 <View style={styles.bottomSection}>
                   <Text style={mixins.paragraphText}>
@@ -456,7 +525,11 @@ export default function PublicLinkScreen ({ navigation, route }: PublicLinkScree
                   </Text>
                   <View style={styles.qrCodeContainer}>
                     <View style={styles.qrCode}>
-                      <QRCode value={publicLink} size={200}/>
+                      <QRCode
+                        value={publicLink}  // The value to encode in the QR code
+                        size={200}  // The size of the QR code
+                        getRef={(ref) => (qrCodeRef.current = ref)}  // Set the ref to access toDataURL
+                      />
                     </View>
                   </View>
                 </View>

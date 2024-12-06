@@ -3,12 +3,18 @@ import Handlebars from 'handlebars';
 import { Credential } from '../types/credential';
 import { PDF } from '../types/pdf';
 
-export async function convertSVGtoPDF(credential: Credential): Promise<PDF | null> {
-  if (!credential['renderMethod']) {
-    return null;
+export async function convertSVGtoPDF(
+  credential: Credential, publicLink: string | null, qrCodeBase64: string | null): Promise<PDF | null> {
+  if (!credential['renderMethod'] || !publicLink || !qrCodeBase64) {
+    return null;  // Ensure we have the necessary data
   }
+
   const templateURL = credential.renderMethod?.[0].id; // might want to sort if there are more than one renderMethod
+ 
   let source = '';
+  const data = { credential };
+
+  // Fetch the template content
   if (templateURL) {
     try {
       const response = await fetch(templateURL);
@@ -21,9 +27,8 @@ export async function convertSVGtoPDF(credential: Credential): Promise<PDF | nul
     }
   }
 
+  source = source.replace(`{{ qr_code }}`, `"${'data:image/png;base64, ' + qrCodeBase64}"`); 
   const template = Handlebars.compile(source);
-
-  const data = { 'credential': credential };
   const svg = template(data);
 
   const options = {
@@ -32,5 +37,6 @@ export async function convertSVGtoPDF(credential: Credential): Promise<PDF | nul
     base64: false,
   };
   const pdf = await RNHTMLtoPDF.convert(options);
+
   return pdf;
 }
