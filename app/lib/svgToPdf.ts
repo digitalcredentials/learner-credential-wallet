@@ -12,7 +12,7 @@ export async function convertSVGtoPDF(
   const templateURL = credential.renderMethod?.[0].id; // might want to sort if there are more than one renderMethod
  
   let source = '';
-  const data = { credential };
+  const data = { credential: credential, qr_code: qrCodeBase64 };
 
   // Fetch the template content
   if (templateURL) {
