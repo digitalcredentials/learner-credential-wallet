@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, Linking, TextInput as RNTextInput, Platform, Image } from 'react-native';
+import { View, ScrollView, Linking, TextInput as RNTextInput, Platform } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
