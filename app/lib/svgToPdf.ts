@@ -27,7 +27,7 @@ export async function convertSVGtoPDF(
     }
   }
 
-  source = source.replace(`{{ qr_code }}`, `"${'data:image/png;base64, ' + qrCodeBase64}"`); 
+  source = source.replace(`{{ qr_code }}`, `'${'data:image/png;base64, ' + qrCodeBase64}'`); 
   const template = Handlebars.compile(source);
   const svg = template(data);
 
